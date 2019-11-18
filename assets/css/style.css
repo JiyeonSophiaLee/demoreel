@@ -1,0 +1,167 @@
+
+
+
+/* Style */
+html{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+body {
+    background: #0d0905;
+}
+
+h1, h2{
+    color: #23190E;
+    font-size:0.1em
+}
+/* Box Model */
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/* Type */
+
+body, input, select, textarea, h3 {
+    color: #e0cdba;
+    font-family: 'Playfair Display', serif;
+    font-size: 13pt;
+    font-weight: 300;
+    line-height: 0.3;
+}
+
+
+
+/* name */
+#title{
+    background:#0d0905;
+    margin-top: 6em;
+    margin-bottom:6em;
+}
+    #title #name {
+        padding-top: 4em; /*this is top padding*/
+        background-size: cover;
+        background-position: top;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }   
+        #title #name .largeFont {
+            font-size: 6em;
+            font-weight: 300;
+            color: #e0cdba;
+            line-height: 1em;
+            margin: 0 0 0.5em 0;
+            padding-left: 17px;
+            align-self: baseline;
+        }
+        #title #name .smallFont {
+            font-size: 3em;
+            font-weight: 300;
+            color: #e0cdba;
+            line-height: 1em;
+            margin: 0 0 0.5em 0;
+            padding: 0;
+            align-self: baseline;
+        }
+    #title .container1{
+        position: relative;
+        width: 800px;
+        height: 7px;
+        margin: 50px auto;
+        background: #e0cdba;
+        justify-content: center;
+    }
+    #title .container1 .box{
+        position: relative;
+    }
+    #title #article {
+        text-align: center;
+        font-size: 1.2m;
+        padding-top: 0px;
+        padding-bottom:2em;  /*this is bottom padding*/
+    }
+        #title #article .smallFont{
+            padding-left: 2em;
+        }
+/* Thumbnails */
+
+
+.thumbnails {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    position: relative;
+    margin: 0 0 4em -2em;
+    justify-content: center;
+
+}
+
+        .thumbnails a {
+            -moz-transition: all 0.2s ease;
+            -webkit-transition: all 0.2s ease;
+            -ms-transition: all 0.2s ease;
+            transition: all 0.2s ease;
+            border-bottom: none;
+            display: block;
+            width: 100%;
+            margin: 0 0 2em 0;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: 0;
+            overflow: hidden;
+            padding: 4px;
+            
+        }
+            .thumbnails a img {
+                width: 500px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            .thumbnails a h3 {
+                font-size: 1.4em;
+                font-weight: 300;
+				margin: 1em;
+            }
+            .thumbnails a:hover {
+				background-color: rgba(255, 255, 255, 0.25);
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
+            }
+
+        #demoreel a{ 
+            background-color:#381910;
+        }
+
+        #lighting a{ 
+            background-color:#46311D;
+        }
+
+        .thumbnails > div {
+            display: -moz-flex;
+            display: -webkit-flex;
+            display: -ms-flex;
+            display: flex;
+            -moz-flex-direction: column;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+        .thumbnails > div > :last-child {
+            margin-bottom: 0;
+        }
