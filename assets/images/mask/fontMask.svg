@@ -1,0 +1,178 @@
+<!-- MASKS -->
+<div>
+	<h2><code>&lt;mask&gt;</code></h2>
+</div>
+
+<div>
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<radialGradient id="radial-gradient">
+					<stop stop-color="white" offset="0"/>
+					<stop stop-color="black" offset="1"/>
+				</radialGradient>
+				<pattern id="pattern" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+					<circle cx="5" cy="5" r="5" fill="url(#radial-gradient)"/>
+					<animate attributeType="XML"
+									 attributeName="x"
+									 type="translate"
+									 from="-100"
+									 to="100"
+									 dur="2s"
+									 fill="freeze"
+									 repeatCount="indefinite"/>
+				</pattern>
+
+				<mask id="pattern-mask" x="0" y="0" width="100" height="100">
+					<rect x="0" y="0" width="100" height="100" fill="url(#pattern)"/>
+				</mask>
+			</defs>
+
+			<circle cx="50" cy="50" r="50" fill="#732797" mask="url(#pattern-mask)"/>
+		</svg>
+		<figcaption>Pattern Mask w/Shapes & SMIL</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<mask id="SVGMask" mask-type="luminance" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+					<style>
+					#rect {
+						mask-image: url(#SVGMask);
+						mask-mode: luminance;
+					}
+					</style>
+					<radialGradient id="radialFill">
+						<stop stop-color="white" offset="0"/>
+						<stop stop-color="black" offset="1"/>
+					</radialGradient>
+					<circle fill="url(#radialFill)" cx="0.5" cy="0.5" r="0.5"/>
+				</mask>
+			</defs>
+			<rect id="rect" width="100" height="100" fill="#78289E"/>
+		</svg>
+		<figcaption>Mask Mode / Mask Image : Bundled Styles</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<mask id="txt-mask">
+					<radialGradient id="gradient-fill">
+						<stop stop-color="white" offset="0"/>
+						<stop stop-color="black" offset="1"/>
+					</radialGradient>
+					<text x="0" y="50" font-family="Arial" fill="url(#gradient-fill)" font-size="20">SVG Mask</text>
+				</mask>
+			</defs>
+			<rect width="100" height="100" fill="#B63FC4" mask="url(#txt-mask)"/>
+		</svg>
+		<figcaption>Text Mask</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<mask id="shape-mask">
+					<circle id="outer" cx="50" cy="50" r="50" fill="white"/>
+					<circle id="inner" cx="50" cy="50" r="20" fill="black"/>
+				</mask>
+			</defs>
+			<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://images.unsplash.com/photo-1508186736123-44a5fcb36f9f?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7ff4199971d35554c59bbf8e0b229534" mask="url(#shape-mask)"></image>
+		</svg>
+		<figcaption>Image w/SVG Shape Mask</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<defs>
+				<mask id="image-mask">
+					<image width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xlink:href="https://images.unsplash.com/photo-1508186736123-44a5fcb36f9f?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7ff4199971d35554c59bbf8e0b229534"/>
+				</mask>
+			</defs>
+			<circle id="inner" cx="50" cy="50" r="50" fill="#211CB7" mask="url(#image-mask)"/>
+		</svg>
+		<figcaption>SVG Shape w/Image Mask</figcaption>
+	</figure>
+</div>
+
+<!-- CLIPS -->
+<div>
+	<h2><code>&lt;clipPath&gt;</code></h2>
+</div>
+
+<div>
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+			<defs>
+				<text x="0" y="65" id="text" font-family="Arial" font-weight="bold" font-size="52" stroke="#E29122" stroke-width="2">Clip</text>
+				<clipPath id="text-img-clip">
+					<use xlink:href="#text"/>
+				</clipPath>
+			</defs>
+			<!-- If you want a stroke on the clip you need to execute the clip path in this way using `use` to grab your clip path shape -->
+			<text x="0" y="65" id="text" font-family="Arial" font-weight="bold" font-size="52" stroke="#E29122" stroke-width="2">Clip</text>
+			<image width="100%" height="100%" preserveAspectRatio="xMinYMin slice" xlink:href="https://images.unsplash.com/photo-1508186736123-44a5fcb36f9f?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7ff4199971d35554c59bbf8e0b229534" clip-path="url(#text-img-clip)" />
+		</svg>
+		<figcaption>SVG Image w/Text Clip & Stroke</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+			<defs>
+				<clipPath id="smil-clip">
+					<circle cx="50" cy="50" r="50">
+						<animateTransform attributeName="transform"
+															attributeType="XML"
+															type="scale"
+															from="0"
+															to="1"
+															dur="2.5s"
+															fill="freeze"
+															repeatCount="indefinite"/>
+					</circle>
+				</clipPath>
+			</defs>
+
+			<image width="100%" height="100%" preserveAspectRatio="xMinYMin slice" xlink:href="https://images.unsplash.com/photo-1508186736123-44a5fcb36f9f?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7ff4199971d35554c59bbf8e0b229534" clip-path="url(#smil-clip)" />
+		</svg>
+		<figcaption>SVG Image w/Shape Clip & SMIL</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+			<defs>
+				<clipPath id="my-clip">
+					<title>My Clip Path</title>
+					<desc>a clipped path using a circle as the clipping shape</desc>
+					<rect x="100" y="0" width="100" height="100">
+					<animate attributeType="XML"
+									 attributeName="x"
+									 type="translate"
+									 from="-100"
+									 to="100"
+									 dur="2.5s"
+									 fill="freeze"
+									 repeatCount="indefinite"/>
+					</rect>
+				</clipPath>
+			</defs>
+			<circle clip-path="url(#my-clip)" width="50" height="50" cx="50" r="50" cy="50" fill="#31238C"/>
+		</svg>
+		<figcaption>Shape Clip & SMIL</figcaption>
+	</figure>
+
+	<figure>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+			<defs>
+				<clipPath id="img-clip">
+					<ellipse cx="25" cy="25" rx="25" ry="25"/>
+				</clipPath>
+			</defs>
+
+			<image width="100%" height="100%" preserveAspectRatio="xMinYMin slice" xlink:href="https://images.unsplash.com/photo-1508186736123-44a5fcb36f9f?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=7ff4199971d35554c59bbf8e0b229534" clip-path="url(#img-clip)"/>
+		</svg>
+		<figcaption>SVG Shape Clip & Image</figcaption>
+	</figure>
+</div>
