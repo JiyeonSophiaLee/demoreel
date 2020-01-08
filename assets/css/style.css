@@ -1,167 +1,365 @@
 
+/**
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Header
+ *   2.1 - Demo
+ *   2.2 - Title
+ *   3.3 - Widgets
+ * 4.0 - Front page
+ *   4.1 Custom bricks
+ * 5.0 - Content
+ *   5.1 - Entry Meta
+ *   5.2 - Entry Content
+ *   5.3 - Galleries
+ *   5.4 - Slider
+ *   5.5 - Social Buttons
+ *   5.6 - Comments
+ *   5.7 - Searchform
+ *   5.8 - Archives
+ *   5.9 - WPML
+ *   5.10 - Post formats
+ *   5.11 Single post author
+ *   5.12 Single post navigation
+ *   5.13 Related posts
+ * 6.0 - Media Queries
+ *   6.1 - Responsive Menu
+ *   6.2 - High Resolution
+ * 7.0 - Print
+ * ----------------------------------------------------------------------------
+ */
 
 
-/* Style */
-html{
+
+
+/**
+ * 1.0 Basic Structure
+ * ----------------------------------------------------------------------------
+ */
+
+ html, body, h1, h2 ,h3, div, section, img, iframe, a{
+    /* font-family: 'Quicksand', sans-serif; */
+    
+    color: #e0cdba;
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-}
-
-body {
+    display: block;
+    text-align: center;
+  }
+  
+  body {
     background: #0d0905;
-}
-
-h1, h2{
+  }
+  
+  img{
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  h1, h2{
     color: #23190E;
-    font-size:0.1em
-}
-/* Box Model */
-
-*, *:before, *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    font-size: 0.1rem;
+  }
+  
+  *, *:before, *:after {
     box-sizing: border-box;
-}
-
-
-/* Type */
-
-body, input, select, textarea, h3 {
-    color: #e0cdba;
-    font-family: 'Playfair Display', serif;
-    font-size: 13pt;
-    font-weight: 300;
-    line-height: 0.3;
-}
-
-
-
-/* name */
-#title{
-    background:#0d0905;
-    margin-top: 6em;
-    margin-bottom:6em;
-}
-    #title #name {
-        padding-top: 4em; /*this is top padding*/
-        background-size: cover;
-        background-position: top;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }   
-        #title #name .largeFont {
-            font-size: 6em;
-            font-weight: 300;
-            color: #e0cdba;
-            line-height: 1em;
-            margin: 0 0 0.5em 0;
-            padding-left: 17px;
-            align-self: baseline;
-        }
-        #title #name .smallFont {
-            font-size: 3em;
-            font-weight: 300;
-            color: #e0cdba;
-            line-height: 1em;
-            margin: 0 0 0.5em 0;
-            padding: 0;
-            align-self: baseline;
-        }
-    #title .container1{
-        position: relative;
-        width: 800px;
-        height: 7px;
-        margin: 50px auto;
-        background: #e0cdba;
-        justify-content: center;
-    }
-    #title .container1 .box{
-        position: relative;
-    }
-    #title #article {
-        text-align: center;
-        font-size: 1.2m;
-        padding-top: 0px;
-        padding-bottom:2em;  /*this is bottom padding*/
-    }
-        #title #article .smallFont{
-            padding-left: 2em;
-        }
-/* Thumbnails */
-
-
-.thumbnails {
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: flex;
-    -moz-flex-direction: row;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
+  }
+  
+  
+  /**
+  * 2.0 Header
+  * ----------------------------------------------------------------------------
+  */
+  
+  #header{
+    display: inline-grid;
+    /* grid-template-rows: 3fr 2fr; */
     position: relative;
-    margin: 0 0 4em -2em;
-    justify-content: center;
+    /* margin-bottom: 2vw; */
+    max-width: 972px;
+    }
+  
+  
+    /**
+    * 2.1 - Demo
+    *
+    * z-index:
+    *   1-->name
+    *   2-->nameContainerMask
+    *   3-->lineContainer
+    *
+    * ----------------------------------------------------------------------------
+    */
+  
+    #demo{
+      position: relative;
+    }
+      #demo >* {
+        width: inherit;
+        height: inherit;
+        top: 0;
+        left: 0;
+      }
+      #demoImage{
+        /* visibility: hidden; */
+      }
+      #nameContainerMask{
+        visibility: hidden;
+        position: absolute;
+        z-index: 2;
+        animation: nameContainerMaskAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01); /* this animation must be th same as lineAniContainer  */
+      }
+       @keyframes nameContainerMaskAni{
+      } 
 
-}
+      /* #SVGtextMask{
+        position:absolute;
+        top:0;
+      } */
 
-        .thumbnails a {
-            -moz-transition: all 0.2s ease;
-            -webkit-transition: all 0.2s ease;
-            -ms-transition: all 0.2s ease;
-            transition: all 0.2s ease;
-            border-bottom: none;
-            display: block;
-            width: 100%;
-            margin: 0 0 2em 0;
-            text-align: center;
-            border-radius: 4px;
-            cursor: pointer;
-            outline: 0;
-            overflow: hidden;
-            padding: 4px;
-            
+      #demoVideo {
+        position:absolute;
+        width:100%;
+        height:100%;
+        z-index: 4;
+        visibility: hidden;
+      }
+        
+      
+      
+  /**
+  * 2.2 - Title
+  * ----------------------------------------------------------------------------
+  *
+  */
+    #title{
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      top:0;
+      grid-row:1;
+      font-family: 'Playfair Display', serif;
+      animation: test 3s ;
+    }
+      #title .largeFont {
+          font-size: 110px;
+      }
+      /* @media (max-width:972px){
+          #title .largeFont {
+              font-size: 11.3vmin;
+          }
+      } */
+      #title .smallFont {
+          font-size: 45px;
+      }
+      /* @media (max-width:600px){
+          #title .smallFont {
+              font-size: 6vmin;
+          }
+      } */
+      #title .smallerFont {
+          font-size: 18px;
+      }
+
+      #name{
+        z-index: -1; /* origianlly it is [1], controlled by javascirpt*/
+        position:absolute;
+        transform-origin: 50% 50%;
+        /* font-family: inherit; */
+        animation: nameAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
+      }
+      
+      @keyframes nameAni{
+      }
+      
+    /* line */
+    #lineContainer{
+      position: absolute;
+      animation: lineAniContainer 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
+      z-index: -1;  /* origianlly it is [3], controlled by javascirpt*/
+    }
+      @keyframes lineAniContainer{
+         
+        } 
+        #lineContainer .line{
+          margin: 0 auto;
+          width: 800px;
+          height: 2px;
+          background: #e0cdba;
+          animation: lineAni 5s;
         }
-            .thumbnails a img {
-                width: 500px;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
+        @media(max-width:972px){
+            #lineContainer .line{
+                width: 83vmin;
+                height: 0.3vmin
             }
-            .thumbnails a h3 {
-                font-size: 1.4em;
-                font-weight: 300;
-				margin: 1em;
+        }
+            @keyframes lineAni{
+                0%{
+                    transform: 
+                        scale(0, 1);
+                }
+                7%{
+                    transform: 
+                        scale(1, 1)
+                }
             }
-            .thumbnails a:hover {
-				background-color: rgba(255, 255, 255, 0.25);
-				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 0 0.5em 0 #FF6382;
+
+
+    /* info */
+    #info {
+      position:absolute;
+      /* font-family: inherit; */
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 3vmin;
+      z-index: -1;/* origianlly it is [2], controlled by javascirpt*/
+      animation: infoAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
+    }
+    /* @media(max-width:700px){
+        #info{
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+    }*/
+    @keyframes infoAni{
+        /*
+      0%, 5%{
+          transform: translateY(-20vmin);
+          clip-path: inset(0 0 100% 0);
+      }
+      34%{
+          clip-path: inset(0 0 0 0);
+      }
+      35%{
+          transform: translateY(-48vmin);
+          opacity: 1;
+      }
+      80%{
+          transform: translateY(1.5vmin);
+      }
+      100%{
+          transform: translateY(0);
+      }*/
+    } 
+  
+  /* holly */
+  #holly{            
+    display: flex;
+    flex-direction: row;
+  
+  }
+    /* holly Nav */
+      #hollyNav{
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        flex-direction: column;
+        flex-shrink: 1; 
+        flex-grow: 1;
+        margin-right:5vw;
+      }
+        @media(max-width:1000px){
+            #hollyNav {
+                display: none;
             }
-
-        #demoreel a{ 
-            background-color:#381910;
         }
-
-        #lighting a{ 
-            background-color:#46311D;
+          /* icons */
+            #hollyNav img{
+                width: 4em;
+                height: 4em;
+                
+            }
+            @media(max-width:1000px){
+                #hollyNav img{
+                    display: none;
+                }
+            }
+  
+    /* holly main */
+    #hollyMain{
+      font-family: 'Marvel', sans-serif;
+      font-size: 1.4em;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #hollyMain h3{
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.1em;
+    }
+  
+      /* Thumbnails */
+        .thumbnails {
+          display: flex;
+          /* flex-direction: row;*/
         }
-
-        .thumbnails > div {
-            display: -moz-flex;
-            display: -webkit-flex;
-            display: -ms-flex;
-            display: flex;
-            -moz-flex-direction: column;
-            -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            padding-right: 1em;
-            padding-left: 1em;
+          .thumbnails img{
+            border-radius: 10px;
+          }
+            .thumbnails .field{
+              font-size: inherit;
+              display: grid;
+              grid-gap: 5rem;
+            }
+            /* @media(max-width:1000px){
+                .thumbnails .field{
+                    display:grid;
+                    grid-template-columns: 1fr 1fr;
+                }
+            } */
+                .thumbnails .field section{
+                  font-size: inherit;
+                  display: grid;
+                  /* grid-template-columns:550px 350px; */
+                  height: 350px;
+                 
+                }
+                
+                /* @media(max-width:1000px){
+                    .thumbnails .field section{
+                        display:grid;
+                        grid-template-columns: 1fr;
+                        grid-template-rows: 1fr 1fr;
+                        height: 500px;
+                    }
+                } */
+                  .thumbnails .field section a{
+                    grid-column: 1/1;
+                    grid-row: 1;
+                    max-width: 550px;
+                    z-index: 2;
+                  }
+                    .thumbnails .field section a img{
+                      z-index: -1;
+                      box-shadow:0 1px 70px 100px rgba(224, 176, 176, 0.07);
+                    }
+                  .thumbnails .field section >div{
+                    grid-column: 1/2;
+                    grid-row: 1;
+                    font-size: inherit;
+                    margin: 1.5rem;
+                    background: rgba(53, 47, 37, 0.501);
+                    /* border:0.3rem solid rgba(233, 212, 150, 0.3); */
+                    border-radius: 15px;
+                  }
+                    .thumbnails .text{
+                      margin-left:530px;
+                    }
+                
+                    
+    /* holly asdie  */
+    #hollyAside{
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 1;  
+        flex-grow: 1;
+        margin-left:10vw;
+    }
+    @media(max-width:1000px){
+        #hollyAside {
+            display: none;
         }
-        .thumbnails > div > :last-child {
-            margin-bottom: 0;
-        }
+    }
+  
