@@ -300,19 +300,21 @@ h1, h2{
                 grid-template-columns: auto auto;
                 /* display: flex; */
                 font-family: 'Marvel', sans-serif;
-                color: rgb(191, 140, 140);
-                font-size: 1.4em;
+                color: #e0cdba;
+                font-size: 1.4rem;
                 justify-content: center;
+                grid-gap: 1rem;
                 /* flex-direction: column; */
               }
                 #hollyMain h3{
                   font-family: 'Rajdhani', sans-serif;
                   font-size: 2.1em;
+                  color:#f23364;
                 }
                 #thumbnails .field{
                   font-size: inherit;
                   display: grid;
-                  grid-gap: 5rem;
+                  grid-gap: 1rem;
                 }
                   /* @media(max-width:1000px){
                       #thumbnails .field{
@@ -333,16 +335,21 @@ h1, h2{
                       content: '';
                       background-position: center;
                       margin: 1rem;
-                      background: rgba(53, 47, 37, 0.501);
+                      border: rgba(72, 61, 49, 0.7) solid 3px ;
                       border-radius: 0.4rem;
-                      /* box-shadow:
-                        5px 3.4px 12.4px rgba(228, 175, 87, 0.031),
-                        5px 8.7px 31.4px rgba(228, 175, 87, 0.044),
-                        5px 17.7px 64.1px rgba(228, 175, 87, 0.056),
-                        5px 36.5px 132.1px rgba(228, 175, 87, 0.069),
-                        5px 100px 362px rgba(228, 175, 87, 0.1); */
+                      background: rgba(72, 61, 49, 0.2);
+                      
                       }
                       
+                      #thumbnails .field section:hover::before{
+                        border: rgba(248, 231, 212, 0.856) solid 4px ;
+                        box-shadow:
+                          0 0px 0.8px rgba(228, 175, 87, 0.124),
+                          0 0px 2px rgba(228, 175, 87, 0.177),
+                          0 0px 4.4px rgba(228, 175, 87, 0.223),
+                          0 0px 10.6px rgba(228, 175, 87, 0.276),
+                          0 0px 26px rgba(228, 175, 87, 0.5);
+                        }
                       /* @media(max-width:1000px){
                           #thumbnails .field section{
                               display:grid;
@@ -351,6 +358,7 @@ h1, h2{
                               height: 500px;
                           }
                       } */
+
                       #thumbnails .field section a{
                           grid-column: 1/2;
                           grid-row: 1;
@@ -370,7 +378,7 @@ h1, h2{
                           #thumbnails .text{
                             grid-column: 1/2;
                           }
-                      
+
                             
             /* holly asdie  */
             #hollyAside{
