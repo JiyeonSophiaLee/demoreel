@@ -14,26 +14,25 @@
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Marvel&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
     
-    <!-- <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet"> -->
-    <link rel="stylesheet" href="test3.css">
+    <link rel="stylesheet" href="assets\css\sytle.css">
     <meta name="viewport"  content="width=device-width, initial-scale=1.0"/>
   
         
 </head>
-<body>
+<body id='body'>
 <!-- holly sprit -->
   <section id="holly">
     <!-- holly sprit (Nav) -->
       <nav id="hollyNav">
         <div id='icons'>
-          <img src="assets/images/icons/Maya.svg" alt="">
-          <img src="assets/images/icons/Vray.svg" alt="">
-          <img src="assets/images/icons/Arnold.svg" alt="">
-          <img src="assets/images/icons/Zbrush.svg" alt="">
-          <img src="assets/images/icons/SubstancDesigner.svg" alt="">
-          <img src="assets/images/icons/SubstancePainter.svg" alt="">
+          <div id='maya' class='icon'></div>
+          <div id='vray' class='icon'></div>
+          <div id='arnold' class='icon'></div>
+          <div id='zbrush' class='icon'></div>
+          <div id='substanceDesigner' class='icon'></div>
+          <div id='substancePainter' class='icon'></div>
         </div>
       </nav>
 
@@ -101,7 +100,8 @@
                   
                   <div class="field" id="lighting">
 
-                      <section id="tableScene">
+                      <section id="tableScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                            
                           <a href="sunrise_scenesunrise_scene">
                               <img src="assets/images/projects/table_scene/table_thumbnail.jpg" />
                           </a>
@@ -113,10 +113,11 @@
                                   <p>I didn't model everything in the scene, but I retextured 95% of them to create the color and texture for maching the mood.</p>
                               </div>
                           </div>
-                          <div class='bg'></div>
+                          <div class='shadow'></div>
+                          
                       </section>
 
-                      <section id="chandelierScene">
+                      <section id="chandelierScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
                           <a href="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg">
                               <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" />
                           </a>
@@ -128,9 +129,10 @@
                                   <p>I brought each frames into nuke, and installed a camera to make them animated. There were some flaws, so I compensated with defects in Nuke.</p>
                               </div>
                           </div>
+                          <div class='shadow'></div>
                       </section>
 
-                      <section id="sunriseScene">
+                      <section id="sunriseScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
                               <a href="assets/images/projects/sunrise_scene/sunrise_thumbnail.png">
                                   <img src="assets/images/projects/sunrise_scene/sunrise_thumbnail.png" />
                               </a>
@@ -142,27 +144,28 @@
                                       <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
                                       <p>Finally, I wrap up with curve with xgen in Maya.</p>
                                   </div>
-
                               </div>
+                              <div class='shadow'></div>
                       </section>
                   </div>
                   
                   <div class="field" id="painting">
-                      <section id="painting2">
-                          <a href="assets/images/paintings/painting2.jpg">
-                              <img src="assets/images/paintings/painting2.jpg" alt="" />
-                          </a>
-                          <div class="thumbnailText">
-                              <div class='text'>
-                                  <h3>painting2</h3>
-                                  <p>This shot shows whole environment of the project.</p>
-                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                              </div>
-                          </a>
+                      <section id="painting2" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                            <a href="assets/images/paintings/painting2.jpg">
+                                <img src="assets/images/paintings/painting2.jpg" alt="" />
+                            </a>
+                            <div class="thumbnailText">
+                                <div class='text'>
+                                    <h3>painting2</h3>
+                                    <p>This shot shows whole environment of the project.</p>
+                                    <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                    <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                    <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                                </div>
+                            </div>
+                            <div class='shadow'></div>
                       </section>
-                      <section id="painting1">
+                      <section id="painting1"  onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
                           <a href="assets/images/paintings/painting1.jpg">
                               <img src="assets/images/paintings/painting1.jpg" alt="" />
                           </a>
@@ -174,7 +177,8 @@
                                   <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
                                   <p>Finally, I wrap up with curve with xgen in Maya.</p>
                               </div>
-                          </a>
+                            </div>
+                            <div class='shadow'></div>
                       </section>
                   </div>
 
