@@ -76,10 +76,7 @@ h1, h2{
       align-items: end;
       justify-content: center;
       flex-direction: column;
-      flex-shrink: 0; 
-      flex-grow: 1;
-      margin-right:1vw;
-      margin-left:1vw;
+      margin:3rem        
     }
       @media(max-width:1000px){
           #hollyNav {
@@ -92,27 +89,57 @@ h1, h2{
             grid-gap: 2rem;
           }
           #hollyNav #icons .icon{
-            width:5rem;
-            height:5rem;
-            background: teal;
+            width:6rem;
+            height:6rem;
+            /* background:#9c805f; */
+            border: #3f8b87 solid 5px;
+            border-radius: 6rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          #hollyNav #icons .icon:hover{
+            border: #abe0de solid 5px;
+            box-shadow:
+            0 1.5px 6px -5px rgba(63, 139, 135, 0.152),
+            0 3.9px 15.1px -5px rgba(63, 139, 135, 0.217),
+            0 8px 30.8px -5px rgba(63, 139, 135, 0.273),
+            0 16.4px 63.5px -5px rgba(63, 139, 135, 0.338),
+            0 45px 174px -5px rgba(63, 139, 135, 0.49),
+            inset 0 5px 50px -5px rgba(63, 139, 135, 0.49);
+          }
+          #hollyNav #icons .icon div{
+            width:4rem;
+            height:4rem;
+            background:#3f8b87;
+          }
+
+          #hollyNav #icons .icon div:hover{
+            background: #abe0de;
+            /* box-shadow:
+            0 1.5px 6px -5px rgba(63, 139, 135, 0.152),
+            0 3.9px 15.1px -5px rgba(63, 139, 135, 0.217),
+            0 8px 30.8px -5px rgba(63, 139, 135, 0.273),
+            0 16.4px 63.5px -5px rgba(63, 139, 135, 0.338),
+            0 45px 174px -5px rgba(63, 139, 135, 0.49); */
           }
             #maya{
-              mask: url(assets/images/icons/Maya.svg);
+              -webkit-mask: url(assets/images/icons/Maya.svg);
             }
             #vray{
-              mask: url(assets/images/icons/Vray.svg);
+              -webkit-mask: url(assets/images/icons/Vray.svg);
             }
             #arnold{
-              mask: url(assets/images/icons/arnold.svg);
+              -webkit-mask: url(assets/images/icons/arnold.svg);
             }
             #zbrush{
-              mask: url(assets/images/icons/Zbrush.svg);
+              -webkit-mask: url(assets/images/icons/Zbrush.svg);
             }
             #substanceDesigner{
-              mask: url(assets/images/icons/SubstancDesigner.svg);
+              -webkit-mask: url(assets/images/icons/SubstancDesigner.svg);
             }
             #substancePainter{
-              mask: url(assets/images/icons/SubstancePainter.svg);
+              -webkit-mask: url(assets/images/icons/SubstancePainter.svg);
             }
           @media(max-width:1000px){
               #hollyNav img{
@@ -169,10 +196,11 @@ h1, h2{
           #demoImage{
             /* visibility: hidden; */
           }
+          
           #nameContainerMask{
             visibility: hidden;
             position: absolute;
-            z-index: 2;
+            z-index: 3;
             animation: nameContainerMaskAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01); /* this animation must be th same as lineAniContainer  */
           }
           @keyframes nameContainerMaskAni{
@@ -187,8 +215,17 @@ h1, h2{
             position:absolute;
             width:100%;
             height:100%;
-            z-index: 4;
-            visibility: hidden;
+            z-index: 0;
+            animation: demoVideo 3.8s;
+            /* visibility: hidden; */
+          }
+          @keyframes demoVideo{
+            0%,99%{
+              visibility: hidden;
+            }
+            100%{
+              visibility: visible;
+            }
           }
             
           
@@ -363,12 +400,12 @@ background-blend-mode: normal; */
                     #thumbnails .field section:hover::before{
                       border: rgba(248, 215, 212, 0.856) solid 4px ;
                       box-shadow:
-                        0 1.5px 6px -50px rgba(242, 51, 100, 0.152),
-                        0 3.9px 15.1px -50px rgba(242, 51, 100, 0.217),
-                        0 8px 30.8px -50px rgba(242, 51, 100, 0.273),
-                        0 16.4px 63.5px -50px rgba(242, 51, 100, 0.338),
-                        0 45px 174px -50px rgba(242, 51, 100, 0.49),
-                        inset 0 45px 50px -50px rgba(242, 51, 100, 0.49);
+                        0 1.5px 6px -30px rgba(242, 51, 100, 0.152),
+                        0 3.9px 15.1px -30px rgba(242, 51, 100, 0.217),
+                        0 8px 30.8px -30px rgba(242, 51, 100, 0.273),
+                        0 16.4px 63.5px -30px rgba(242, 51, 100, 0.338),
+                        0 45px 174px -30px rgba(242, 51, 100, 0.49),
+                        inset 0 45px 50px -30px rgba(242, 51, 100, 0.49);
                       animation: lightAni .7s linear;
                       }
                       @keyframes lightAni{
@@ -407,9 +444,8 @@ background-blend-mode: normal; */
                       grid-row:1;
                       z-index: -3;
                       position: relative;
-                      scale: 0.95 0.95;
-                      transform: translate(20px, 20px);
-                      filter: blur(4px);
+                      transform: translate(1vmax,1vmax) scale(0.95);
+                      filter: blur(5px);
                       border-radius: 15px;
                     }
                     #thumbnails .field section a{
@@ -435,11 +471,11 @@ background-blend-mode: normal; */
                           
           /* holly asdie  */
           #hollyAside{
-              display: flex;
+              /* display: flex;
               flex-direction: column;
               flex-shrink: 1;  
               flex-grow: 1;
-              margin-left:10vw;
+              margin-left:10vw; */
           }
           @media(max-width:1000px){
               #hollyAside {
