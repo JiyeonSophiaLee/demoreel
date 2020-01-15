@@ -13,39 +13,58 @@
 
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style_prefixer.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
+    
+    <link rel="stylesheet" href="assets\css\sytle.css">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0"/>
+  
         
 </head>
-<body>
+<body id='body'>
+<!-- holly sprit -->
+  <section id="holly">
+    <!-- holly sprit (Nav) -->
+      <nav id="hollyNav">
+        <div id='icons'>
+          <div id='maya' class='icon'></div>
+          <div id='vray' class='icon'></div>
+          <div id='arnold' class='icon'></div>
+          <div id='zbrush' class='icon'></div>
+          <div id='substanceDesigner' class='icon'></div>
+          <div id='substancePainter' class='icon'></div>
+        </div>
+      </nav>
 
-<!-- Title -->
-<h3>This is the second version of designing website working in process</h3>
-    <div id="header">
+        <!-- holly sprit (Main) -->
+          <section id="hollyMain">
+            <!-- Headher -->
+              <div id="header">
 
-        <!-- Demoreel -->
-            <section id="demo">
-                <div class=background></div>
-                <img src="assets\images\projects\table_scene\snippet.jpg" id="demoImage" width="972px" alt="">
-                
-                <!-- <video controls preload="auto" muted id="demoVideo" width="972px">
-                        <source src="assets/video/demoreel/demoreel_v02.mp4" type="video/mp4">
-                </video> -->
-                <iframe id="demoVideo" class="demoVideo" width="972" height="546" frameborder="0"
-                    data-src="https://player.vimeo.com/video/374348394?autoplay=1&color=e0cdba&title=0&byline=0&portrait=0&muted=1" 
-                    width="640" height="360" 
-                    frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
-                </iframe>
-                
-            </section>
- 
+                <!-- Demoreel -->
+                  <section id="demo">
+                   
+                    <div id="demoImage">
+                        <img id ="demoStandardimage" src="assets\images\projects\table_scene\snippet.jpg" alt=""></img>
+                    </div>
+                      
+                    <div id="nameContainerMask">
+                        <img src="assets\images\projects\table_scene\snippet.jpg" alt="" >
+                    </div> 
+                    
+                    <iframe id="demoVideo" class="demoVideo" frameborder="0"
+                                        data-src="https://player.vimeo.com/video/374348394?autoplay=1&color=e0cdba&title=0&byline=0&portrait=0&muted=1" 
+                                        allow="autoplay; fullscreen" allowfullscreen>
+                                    </iframe>
+                    
+              
 
-        <!-- Name -->
-            <div id="nameContainerMask">
-                <img src="assets\images\projects\table_scene\snippet.jpg" alt="" width="972px">
-            </div> 
-            <section id="nameContainer">   
-                    <section id="name">
+                  </section>
+
+                <!-- Title -->
+                <section id="title">
+
+                    <div id="name">
                         <span id="jiyeon">
                             <span class="largeFont">J</span><span class="smallFont">iyeon</span>
                         </span>
@@ -56,191 +75,160 @@
                             <span class="largeFont">L</span>
                             <sapn class="smallFont">ee</span>
                         </span>
+                    </div>
+                
+
+
+                    <!-- Line -->
+                    <div id="lineContainer">
+                        <div class="line"></div>
+                    </div>
+
+
+                    <!-- Article -->
+                    <section id="info">
+                        <span class="smallerFont">3D Artist/3D Lighting Artst</span>
+                        <span class="smallerFont">jiyeon.sophia.lee@gmail.com</span>
+                        <span class="smallerFont">San Francisco, California</span>
                     </section>
-            </section>
-            
+                </section>
 
+              </div>
 
-        <!-- Line -->
-            <div id="lineContainer">
-                <div class="line"></div>
-            </div>
-    
+            <!-- Thumbnails -->
+              <div id="thumbnails">
+                  
+                  <div class="field" id="lighting">
 
-        <!-- Article -->
-            <section id="info">
-                <div class="smallFont">3D Artist / 3D Lighting Artst</div>
-                <div class="smallFont">jiyeon.sophia.lee@gmail.com</div>
-                <div class="smallFont">San Francisco, California</div>
-            </section>
-        
+                      <section id="tableScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                            
+                          <a href="sunrise_scenesunrise_scene">
+                              <img src="assets/images/projects/table_scene/table_thumbnail.jpg" />
+                          </a>
+                          <div class="thumbnailText">
+                              <div class='text'>
+                                  <h3>Table scene</h3>
+                                  <p>This scene is the first shot for my solo project.</p>
+                                  <p>The big interesting things were PBR shader, SSS shader and render settings.</p>
+                                  <p>I didn't model everything in the scene, but I retextured 95% of them to create the color and texture for maching the mood.</p>
+                              </div>
+                          </div>
+                          <div class='shadow'></div>
+                          
+                      </section>
 
-        <!-- text Mask -->
-            <div id="textMask">
-                <svg width="972px" height="546px" >  
-                    <defs>  
-                    <mask id="text-mask-1">  
-                            <rect x="0" y="0" width="100%" height="100%" fill="black" />
-                            <g>
-                                <g>
-                                    <rect x="0" y="400" width="1000px" height="8px" transform="rotate(140 350 430)" fill="white"/>
-                                    <!-- <animateTransform 
-                                    attributeName="transform" 
-                                    begin="0s" 
-                                    dur="1.5s" 
-                                    type="rotate" 
-                                    from="150 400 400" 
-                                    to="180 400 400" 
-                                    keySplines="0.94 0.01 0.99 0.09"
-                                    values="150 400 400; 180 400 400 ;150 400 400"
-                                    repeatCount="1"
-                                    additive="sum" 
-                                    /> -->
-                                </g>
-                                <g>
-                                    <rect x="0" y="420" width="1000px" height="6px" transform="rotate(140 500 450)" fill="white"/>
-                                    <!-- <animateTransform 
-                                    attributeName="transform" 
-                                    begin="0s" 
-                                    dur="1.5s" 
-                                    type="rotate" 
-                                    from="150 800 400" 
-                                    to="180 800 400" 
-                                    keySplines="0.94 0.01 0.99 0.09"
-                                    values="150 800 400; 180 800 400 ;150 800 400"
-                                    repeatCount="1"
-                                    additive="sum"
-                                    /> -->
-                                </g>
+                      <section id="chandelierScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                          <a href="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg">
+                              <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" />
+                          </a>
+                          <div class="thumbnailText">
+                              <div class='text'>                                        
+                                  <h3>Chandelier scene.</h3>
+                                  <p>Rendering refracted objects took long time.</p>
+                                  <p>For saving render time, in 2 shots out of 3 shots in this scence, I just rendered only each frame for each shots.</p>
+                                  <p>I brought each frames into nuke, and installed a camera to make them animated. There were some flaws, so I compensated with defects in Nuke.</p>
+                              </div>
+                          </div>
+                          <div class='shadow'></div>
+                      </section>
 
-                                <animateTransform 
-                                    attributeName="transform" 
-                                    begin="0s" 
-                                    dur="1.5s" 
-                                    type="rotate" 
-                                    from="0 486 400" 
-                                    to="0 486 400" 
-                                    calcMode="spline"
-                                    keySplines="0.15 0.53 0.85 0.33; 0.15 0.53 0.85 0.33"
-                                    values="0 486 400; 30 486 400 ;0 486 400"
-                                    repeatCount="1"
-                                    additive="sum"
-                                    />
-                                <animateTransform
-                                    attributeName="transform" 
-                                    begin="0s"
-                                    dur="1.7s"
-                                    type="translate"
-                                    from="0 0"
-                                    to="0 -200"
-                                    repeatCount="1"
-                                    keySplines="0.64 0.15 0.22 1; 0.58 0 0.75 0.74"
-                                    calcMode="spline"
-                                    keyTimes="0 ; 0.5 ; 1"
-                                    values="0 0 ; 0 -200 ; 0 0"
-                                    additive="sum"
-                                    />
-                            </g>
-
-                            <g>
-                                <rect x="0" y="440" width="1000px" height="430px" fill="black"/>
-                                <animateTransform 
-                                attributeName="transform" 
-                                begin=".7s" 
-                                dur="1s" 
-                                type="translate" 
-                                from="0 0" 
-                                to="0 -240"
-                                calcMode="spline"
-                                keySplines="0.59 0.05 0.33 1"
-                                values="0 0 ;0 -240"
-                                repeatCount="0"
-                                additive="sum"
-                                />
-                            </g>
-                    </mask>  
-                    </defs>
-                    <image class="image" 
-                        xlink:href="assets\images\projects\table_scene\snippet.jpg"
-                        x="0" y="0" width="972px" height="546px" 
-                        style="mask:url(#text-mask-1)" />
-                    <!-- <image width="660" height="495" xlink:href="http://www.vanseodesign.com/blog/wp-content/uploads/2013/09/strawberry-fields.jpg" mask="url(#text-mask-2)"/>   -->
-                </svg>
-            </div>
-    </div>
-        
-   
-
-<!-- holly sprit -->
-    <section id="holly">
-        <!-- holly sprit (Nav) -->
-            <nav id="hollyNav">
-                <img src="assets\images\icons\Maya.svg" alt="">
-            </nav>
-
-            
-        <!-- holly sprit (Main) -->
-            <section id="hollyMain">
-                <!-- Thumbnails -->
-                    <section class="thumbnails">
-                        <!-- <div id="demoreel">
-                            <a href="assets/images/demoreel/demoreel_thumbnail.jpg">
-                                <img src="assets/images/demoreel/demoreel_thumbnail.jpg" alt="" />
-                                <h3>Demoreel</h3>
+                      <section id="sunriseScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                              <a href="assets/images/projects/sunrise_scene/sunrise_thumbnail.png">
+                                  <img src="assets/images/projects/sunrise_scene/sunrise_thumbnail.png" />
+                              </a>
+                              <div class="thumbnailText">
+                                  <div class='text'>
+                                      <h3>Sun rise scene</h3>
+                                      <p>This shot shows whole environment of the project.</p>
+                                      <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                      <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                      <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                                  </div>
+                              </div>
+                              <div class='shadow'></div>
+                      </section>
+                  </div>
+                  
+                  <div class="field" id="painting">
+                      <section id="painting2" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                            <a href="assets/images/paintings/painting2.jpg">
+                                <img src="assets/images/paintings/painting2.jpg" alt="" />
                             </a>
-                        </div> -->
-                        <div id="lighting">
-
-                            <section id="tableScene">
-                                <a href="sunrise_scenesunrise_scene">
-                                    <img src="assets/images/projects/table_scene/table_thumbnail.jpg" alt="" />
-                                </a>
-                                <div class="thumbnailText">
-                                    <h3>Table scene</h3>
-                                    <p>This scene is the first shot for my solo project.</p>
-                                    <p>The big interesting things were PBR shader, SSS shader and render settings.</p>
-                                    <p>I didn't model 80% objects in the scene, but I retextured 95% of them to create the color and texture for maching the mood.</p>
+                            <div class="thumbnailText">
+                                <div class='text'>
+                                    <h3>painting2</h3>
+                                    <p>This shot shows whole environment of the project.</p>
+                                    <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                    <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                    <p>Finally, I wrap up with curve with xgen in Maya.</p>
                                 </div>
-                            </section>
+                            </div>
+                            <div class='shadow'></div>
+                      </section>
+                      <section id="painting1"  onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                          <a href="assets/images/paintings/painting1.jpg">
+                              <img src="assets/images/paintings/painting1.jpg" alt="" />
+                          </a>
+                          <div class="thumbnailText">
+                              <div class='text'>
+                                  <h3>painting1</h3>
+                                  <p>This shot shows whole environment of the project.</p>
+                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                              </div>
+                            </div>
+                            <div class='shadow'></div>
+                      </section>
+                  </div>
 
-                            <section id="chandelierScene">
-                                <a href="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg">
-                                    <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" alt="" />
-                                </a>
-                                <div class="thumbnailText">
-                                    <h3>Chandelier scene.</h3>
-                                    <p>Rendering refracted objects took long time.</p>
-                                    <p>For saving render time, in 2 shots out of 3 shots in this scence, I just rendered only each frame for each shots.</p>
-                                    <p>I brought each frames into nuke, and installed a camera to make them animated. There were some flaws, so I compensated with defects in Nuke.</p>
-                                </div>
-                            </section>
+                  <!-- <div class="field" id="teamProject">
+                      <section id="painting2">
+                          <a href="assets/images/paintings/painting2.jpg">
+                              <img src="assets/images/paintings/painting2.jpg" alt="" />
+                          </a>
+                          <div class="thumbnailText">
+                              <div class='text'>
+                                  <h3>painting2</h3>
+                                  <p>This shot shows whole environment of the project.</p>
+                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                              </div>
+                          </a>
+                      </section>
+                      <section id="painting1">
+                          <a href="assets/images/paintings/painting1.jpg">
+                              <img src="assets/images/paintings/painting1.jpg" alt="" />
+                          </a>
+                          <div class="thumbnailText">
+                              <div class='text'>
+                                  <h3>painting1</h3>
+                                  <p>This shot shows whole environment of the project.</p>
+                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                              </div>
+                          </a>
+                      </section>
+                  </div> -->
 
-                            <section id="sunriseScene">
-                                    <a href="assets/images/projects/sunrise_scene/sunrise_thumbnail.png">
-                                        <img src="assets/images/projects/sunrise_scene/sunrise_thumbnail.png" alt="" />
-                                    </a>
-                                    <div class="thumbnailText">
-                                        <h3>SunRise scene</h3>
-                                        <p>This shot shows whole environment of the project.</p>
-                                        <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                        <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                        <p>Finally, I wrap up with curve with xgen in Maya.</p>
+              </div>
 
-                                    </div>
-                                </section>
-                        </div>
-                        
-                    </section>
-            </section>
-        <!-- holly sprit (Aside) -->
-            <section id="hollyAside">
-               <h1>Jiyeon Lee</h1> <h2>Sophia</h2>
-            </section>
+          </section>
+    <!-- holly sprit (Aside) -->
+      <section id="hollyAside">
+        <h1>Jiyeon Lee</h1> <h2>Sophia</h2>
+      </section>
+
     </section>
 
     <!-- js script -->
+        <!-- <script src="assets\js\jquery.js"></script> -->
+        <script src="assets\js\title-animation.js"></script>
         <script src="assets\js\main.js"></script>
                 
 </body>
+
 
 </html>
