@@ -124,22 +124,28 @@ h1, h2{
             0 45px 174px -5px rgba(63, 139, 135, 0.49); */
           }
             #maya{
-              -webkit-mask: url(assets/images/icons/Maya.svg);
+              -webkit-mask-image: url(assets/images/icons/Maya.svg);
+              mask-image: url(assets/images/icons/Maya.svg);
             }
             #vray{
-              -webkit-mask: url(assets/images/icons/Vray.svg);
+              -webkit-mask-image: url(assets/images/icons/Vray.svg);
+              mask-image: url(assets/images/icons/Vray.svg);
             }
             #arnold{
-              -webkit-mask: url(assets/images/icons/arnold.svg);
+              -webkit-mask-image: url(assets/images/icons/arnold.svg);
+              mask-image: url(assets/images/icons/arnold.svg);
             }
             #zbrush{
-              -webkit-mask: url(assets/images/icons/Zbrush.svg);
+              -webkit-mask-image: url(assets/images/icons/Zbrush.svg);
+              mask-image: url(assets/images/icons/Zbrush.svg);
             }
             #substanceDesigner{
-              -webkit-mask: url(assets/images/icons/SubstancDesigner.svg);
+              -webkit-mask-image: url(assets/images/icons/SubstancDesigner.svg);
+              mask-image: url(assets/images/icons/SubstancDesigner.svg);
             }
             #substancePainter{
-              -webkit-mask: url(assets/images/icons/SubstancePainter.svg);
+              -webkit-mask-image: url(assets/images/icons/SubstancePainter.svg);
+              mask-image: url(assets/images/icons/SubstancePainter.svg);
             }
           @media(max-width:1000px){
               #hollyNav img{
@@ -384,6 +390,7 @@ h1, h2{
 .bg{
 /* background:repeating-linear-gradient(90deg, transparent 0%, transparent 4rem, #201911 4rem, #201911 4.2rem), repeating-linear-gradient(#0d0905 0%, #0d0905 4rem, #201911 4rem, #201911 4.2rem);
 background-blend-mode: normal; */
+border-style: none;
 }     
                   #thumbnails .field section::before{
                     grid-column: 1/3;
