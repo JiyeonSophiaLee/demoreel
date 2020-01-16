@@ -132,8 +132,8 @@ h1, h2{
               mask-image: url(../images/icons/Vray.svg);
             }
             #arnold{
-              -webkit-mask-image: url(../images/icons/arnold.svg);
-              mask-image: url(../images/icons/arnold.svg);
+              -webkit-mask-image: url(../images/icons/Arnold.svg);
+              mask-image: url(../images/icons/Arnold.svg);
             }
             #zbrush{
               -webkit-mask-image: url(../images/icons/Zbrush.svg);
