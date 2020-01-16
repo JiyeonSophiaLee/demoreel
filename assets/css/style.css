@@ -124,28 +124,28 @@ h1, h2{
             0 45px 174px -5px rgba(63, 139, 135, 0.49); */
           }
             #maya{
-              -webkit-mask-image: url(assets/images/icons/Maya.svg);
-              mask-image: url(assets/images/icons/Maya.svg);
+              -webkit-mask-image: url(../images/icons/Maya.svg);
+              mask-image: url(../images/icons/Maya.svg);
             }
             #vray{
-              -webkit-mask-image: url(assets/images/icons/Vray.svg);
-              mask-image: url(assets/images/icons/Vray.svg);
+              -webkit-mask-image: url(../images/icons/Vray.svg);
+              mask-image: url(../images/icons/Vray.svg);
             }
             #arnold{
-              -webkit-mask-image: url(assets/images/icons/arnold.svg);
-              mask-image: url(assets/images/icons/arnold.svg);
+              -webkit-mask-image: url(../images/icons/arnold.svg);
+              mask-image: url(../images/icons/arnold.svg);
             }
             #zbrush{
-              -webkit-mask-image: url(assets/images/icons/Zbrush.svg);
-              mask-image: url(assets/images/icons/Zbrush.svg);
+              -webkit-mask-image: url(../images/icons/Zbrush.svg);
+              mask-image: url(../images/icons/Zbrush.svg);
             }
             #substanceDesigner{
-              -webkit-mask-image: url(assets/images/icons/SubstancDesigner.svg);
-              mask-image: url(assets/images/icons/SubstancDesigner.svg);
+              -webkit-mask-image: url(../images/icons/SubstancDesigner.svg);
+              mask-image: url(../images/icons/SubstancDesigner.svg);
             }
             #substancePainter{
-              -webkit-mask-image: url(assets/images/icons/SubstancePainter.svg);
-              mask-image: url(assets/images/icons/SubstancePainter.svg);
+              -webkit-mask-image: url(../images/icons/SubstancePainter.svg);
+              mask-image: url(../images/icons/SubstancePainter.svg);
             }
           @media(max-width:1000px){
               #hollyNav img{
