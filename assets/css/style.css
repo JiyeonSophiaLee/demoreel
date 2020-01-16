@@ -388,9 +388,9 @@ h1, h2{
                   }
                  
 .bg{
-/* background:repeating-linear-gradient(90deg, transparent 0%, transparent 4rem, #201911 4rem, #201911 4.2rem), repeating-linear-gradient(#0d0905 0%, #0d0905 4rem, #201911 4rem, #201911 4.2rem);
-background-blend-mode: normal; */
-border-style: none;
+/* background:repeating-linear-gradient(90deg, transparent 0%, transparent 4rem, #201911 4rem, #201911 4.2rem), repeating-linear-gradient(#0d0905 0%, #0d0905 4rem, #201911 4rem, #201911 4.2rem);*/
+background-blend-mode: overlay, normal, normal, normal; 
+/* height:100vh; */
 }     
                   #thumbnails .field section::before{
                     grid-column: 1/3;
