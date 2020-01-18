@@ -8,7 +8,6 @@ const header=document.getElementById('header'),
 function getCenterPosition(targetId){
     var target=document.getElementById(targetId),
         targetWidth=target.getBoundingClientRect().width;
-        console.log(targetWidth);
         return targetWidth/2
 }
 
@@ -24,8 +23,6 @@ window.onload = function() {
     const demoStandardimage =document.getElementById('demoStandardimage');
     const demoStandardimageBCR=demoStandardimage.getBoundingClientRect();
     const cssStyleHERP=''
-
-    console.log(demoStandardimageBCR);
     
     function findKeyframesRule(rule) {
         var ss = document.styleSheets,
@@ -38,7 +35,6 @@ window.onload = function() {
             try {
                     ssCssRule = ss[i].rules || ss[i].cssRules;
                 } catch (e) {
-                    console.warn("Can't read the css rules of: " + ss[i].href, e);
                     continue;
                 }
             
@@ -54,18 +50,16 @@ window.onload = function() {
         return null;
     }
 
+    console.log(findKeyframesRule('infoAni'));
     // this is [head] margin-botton;
-    header.style.marginBottom=(demoStandardimageBCR.height*0.65)+"px";
+    // header.style.marginBottom=(demoStandardimageBCR.height*0.65)+"px";
 
 
     // this is [name] animation
     var nameCenter=getCenterPosition('name'),
         demoImageCenter=getCenterPosition('demoImage');
-    console.log('this is nameCenter: ',nameCenter);
-    console.log('this is demoImage: ',demoImageCenter);
 
     var height=demoStandardimageBCR.height*1.07
-    console.log("this is name height",height);
 
     name.style.left=demoImageCenter-nameCenter+'px';
     name.style.transform='translateY('+(demoStandardimageBCR.height*1.07)+'px)';
@@ -89,8 +83,6 @@ window.onload = function() {
 
     // this is [lineContainer] animation
     var lineContainerCenter=getCenterPosition('lineContainer');
-    console.log('this is lineContainerCenter: ',lineContainerCenter);
-    console.log('this is left: ',demoImageCenter-lineContainerCenter);
 
     lineContainer.style.left=demoImageCenter-lineContainerCenter+'px';
     lineContainer.style.transform='translateY('+(demoStandardimageBCR.height*1.43)+'px)';
@@ -122,8 +114,6 @@ window.onload = function() {
 
     // this is [info] animation
     var infoCenter=getCenterPosition('info');
-    console.log('this is infoCenter: ',infoCenter);
-    console.log('this is left: ',demoImageCenter-infoCenter);
 
     info.style.left=demoImageCenter-infoCenter+'px';
     info.style.transform='translateY('+(demoStandardimageBCR.height*1.53)+'px)';

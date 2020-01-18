@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
     
     <link rel="stylesheet" href="assets/css/style.css">
-    <meta name="viewport"  content="width=device-width, initial-scale=1.0"/>
   
         
 </head>
@@ -37,193 +36,194 @@
         </div>
       </nav>
 
-        <!-- holly sprit (Main) -->
-          <section id="hollyMain">
-            <!-- Headher -->
-              <div id="header">
+    <!-- holly sprit (Main) -->
+      <section id="hollyMain">
+        <!-- Headher -->
+          <div id="header">
 
-                <!-- Demoreel -->
-                  <section id="demo">
-                   
-                    <div id="demoImage">
-                        <img id ="demoStandardimage" src="assets\images\projects\table_scene\snippet.jpg" alt=""></img>
-                    </div>
-                      
-                    <div id="nameContainerMask">
-                        <img src="assets\images\projects\table_scene\snippet.jpg" alt="" >
-                    </div> 
-                    
-                    <iframe id="demoVideo" class="demoVideo" frameborder="0"
-                                        data-src="https://player.vimeo.com/video/374348394?autoplay=1&color=e0cdba&title=0&byline=0&portrait=0&muted=1" 
-                                        allow="autoplay; fullscreen" allowfullscreen>
-                                    </iframe>
-                    
+            <!-- Demoreel -->
+              <section id="demo">
+                
+                <div id="demoImage">
+                  <img id ="demoStandardimage" src="assets\images\projects\table_scene\snippet.jpg" alt=""></img>
+                </div>
+                
+                <div id="nameContainerMask">
+                  <img src="assets\images\projects\table_scene\snippet.jpg" alt="" >
+                </div> 
+                
+                <iframe id="demoVideo" class="demoVideo" frameborder="0"
+                  data-src="https://player.vimeo.com/video/374348394?autoplay=1&color=e0cdba&title=0&byline=0&portrait=0&muted=1" 
+                  allow="autoplay; fullscreen" allowfullscreen>
+                </iframe>
+                
+          
+
+              </section>
+
+            <!-- Title -->
+            <section id="title">
+
+                <div id="name">
+                    <span id="jiyeon">
+                        <span class="largeFont">J</span><span class="smallFont">iyeon</span>
+                    </span>
+                    <span id="sophia">
+                        <span class="largeFont">&nbsp;{ Sophia }&nbsp;</span>
+                    </span>
+                    <span id="lee">
+                        <span class="largeFont">L</span>
+                        <sapn class="smallFont">ee</span>
+                    </span>
+                </div>
+            
+
+
+                <!-- Line -->
+                <div id="lineContainer">
+                    <div class="line"></div>
+                </div>
+
+
+                <!-- Article -->
+                <section id="info">
+                    <span class="smallerFont">3D Artist/3D Lighting Artst</span>
+                    <span class="smallerFont">jiyeon.sophia.lee@gmail.com</span>
+                    <span class="smallerFont">San Francisco, California</span>
+                </section>
+            </section>
+
+          </div>
+
+        <!-- Thumbnails -->
+          <div id="thumbnails">
               
+              <div class="field" id="lighting">
 
+                  <section id="tableScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                        
+                      <a href="sunrise_scenesunrise_scene">
+                          <img src="assets/images/projects/table_scene/table_thumbnail.jpg" />
+                      </a>
+                      <div class="thumbnailText">
+                          <div class='text'>
+                              <h3>Table scene</h3>
+                              <p>This scene is the first shot for my solo project.</p>
+                              <p>The big interesting things were PBR shader, SSS shader and render settings.</p>
+                              <p>I didn't model everything in the scene, but I retextured 95% of them to create the color and texture for maching the mood.</p>
+                          </div>
+                      </div>
+                      <div class='shadow'></div>
+                      
                   </section>
 
-                <!-- Title -->
-                <section id="title">
+                  <section id="chandelierScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                      <a href="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg">
+                          <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" />
+                      </a>
+                      <div class="thumbnailText">
+                          <div class='text'>                                        
+                              <h3>Chandelier scene.</h3>
+                              <p>Rendering refracted objects took long time.</p>
+                              <p>For saving render time, in 2 shots out of 3 shots in this scence, I just rendered only each frame for each shots.</p>
+                              <p>I brought each frames into nuke, and installed a camera to make them animated. There were some flaws, so I compensated with defects in Nuke.</p>
+                          </div>
+                      </div>
+                      <div class='shadow'></div>
+                  </section>
 
-                    <div id="name">
-                        <span id="jiyeon">
-                            <span class="largeFont">J</span><span class="smallFont">iyeon</span>
-                        </span>
-                        <span id="sophia">
-                            <span class="largeFont">&nbsp;{ Sophia }&nbsp;</span>
-                        </span>
-                        <span id="lee">
-                            <span class="largeFont">L</span>
-                            <sapn class="smallFont">ee</span>
-                        </span>
-                    </div>
-                
-
-
-                    <!-- Line -->
-                    <div id="lineContainer">
-                        <div class="line"></div>
-                    </div>
-
-
-                    <!-- Article -->
-                    <section id="info">
-                        <span class="smallerFont">3D Artist/3D Lighting Artst</span>
-                        <span class="smallerFont">jiyeon.sophia.lee@gmail.com</span>
-                        <span class="smallerFont">San Francisco, California</span>
-                    </section>
-                </section>
-
-              </div>
-
-            <!-- Thumbnails -->
-              <div id="thumbnails">
-                  
-                  <div class="field" id="lighting">
-
-                      <section id="tableScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
-                            
-                          <a href="sunrise_scenesunrise_scene">
-                              <img src="assets/images/projects/table_scene/table_thumbnail.jpg" />
+                  <section id="sunriseScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                          <a href="assets/images/projects/sunrise_scene/sunrise_thumbnail.png">
+                              <img src="assets/images/projects/sunrise_scene/sunrise_thumbnail.png" />
                           </a>
                           <div class="thumbnailText">
                               <div class='text'>
-                                  <h3>Table scene</h3>
-                                  <p>This scene is the first shot for my solo project.</p>
-                                  <p>The big interesting things were PBR shader, SSS shader and render settings.</p>
-                                  <p>I didn't model everything in the scene, but I retextured 95% of them to create the color and texture for maching the mood.</p>
+                                  <h3>Sun rise scene</h3>
+                                  <p>This shot shows whole environment of the project.</p>
+                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
                               </div>
                           </div>
                           <div class='shadow'></div>
-                          
-                      </section>
-
-                      <section id="chandelierScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
-                          <a href="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg">
-                              <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" />
-                          </a>
-                          <div class="thumbnailText">
-                              <div class='text'>                                        
-                                  <h3>Chandelier scene.</h3>
-                                  <p>Rendering refracted objects took long time.</p>
-                                  <p>For saving render time, in 2 shots out of 3 shots in this scence, I just rendered only each frame for each shots.</p>
-                                  <p>I brought each frames into nuke, and installed a camera to make them animated. There were some flaws, so I compensated with defects in Nuke.</p>
-                              </div>
+                  </section>
+              </div>
+              
+              <div class="field" id="painting">
+                  <section id="painting2" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                        <a href="assets/images/paintings/painting2.jpg">
+                            <img src="assets/images/paintings/painting2.jpg" alt="" />
+                        </a>
+                        <div class="thumbnailText">
+                            <div class='text'>
+                                <h3>painting2</h3>
+                                <p>This shot shows whole environment of the project.</p>
+                                <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                                <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                                <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                            </div>
+                        </div>
+                        <div class='shadow'></div>
+                  </section>
+                  <section id="painting1"  onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
+                      <a href="assets/images/paintings/painting1.jpg">
+                          <img src="assets/images/paintings/painting1.jpg" alt="" />
+                      </a>
+                      <div class="thumbnailText">
+                          <div class='text'>
+                              <h3>painting1</h3>
+                              <p>This shot shows whole environment of the project.</p>
+                              <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                              <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                              <p>Finally, I wrap up with curve with xgen in Maya.</p>
                           </div>
-                          <div class='shadow'></div>
-                      </section>
-
-                      <section id="sunriseScene" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
-                              <a href="assets/images/projects/sunrise_scene/sunrise_thumbnail.png">
-                                  <img src="assets/images/projects/sunrise_scene/sunrise_thumbnail.png" />
-                              </a>
-                              <div class="thumbnailText">
-                                  <div class='text'>
-                                      <h3>Sun rise scene</h3>
-                                      <p>This shot shows whole environment of the project.</p>
-                                      <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                      <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                      <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                                  </div>
-                              </div>
-                              <div class='shadow'></div>
-                      </section>
-                  </div>
-                  
-                  <div class="field" id="painting">
-                      <section id="painting2" onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
-                            <a href="assets/images/paintings/painting2.jpg">
-                                <img src="assets/images/paintings/painting2.jpg" alt="" />
-                            </a>
-                            <div class="thumbnailText">
-                                <div class='text'>
-                                    <h3>painting2</h3>
-                                    <p>This shot shows whole environment of the project.</p>
-                                    <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                    <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                    <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                                </div>
-                            </div>
-                            <div class='shadow'></div>
-                      </section>
-                      <section id="painting1"  onmouseover="lightLeaking(this)" onmouseout="lightLeakingOff(this)">
-                          <a href="assets/images/paintings/painting1.jpg">
-                              <img src="assets/images/paintings/painting1.jpg" alt="" />
-                          </a>
-                          <div class="thumbnailText">
-                              <div class='text'>
-                                  <h3>painting1</h3>
-                                  <p>This shot shows whole environment of the project.</p>
-                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                              </div>
-                            </div>
-                            <div class='shadow'></div>
-                      </section>
-                  </div>
-
-                  <!-- <div class="field" id="teamProject">
-                      <section id="painting2">
-                          <a href="assets/images/paintings/painting2.jpg">
-                              <img src="assets/images/paintings/painting2.jpg" alt="" />
-                          </a>
-                          <div class="thumbnailText">
-                              <div class='text'>
-                                  <h3>painting2</h3>
-                                  <p>This shot shows whole environment of the project.</p>
-                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                              </div>
-                          </a>
-                      </section>
-                      <section id="painting1">
-                          <a href="assets/images/paintings/painting1.jpg">
-                              <img src="assets/images/paintings/painting1.jpg" alt="" />
-                          </a>
-                          <div class="thumbnailText">
-                              <div class='text'>
-                                  <h3>painting1</h3>
-                                  <p>This shot shows whole environment of the project.</p>
-                                  <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
-                                  <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
-                                  <p>Finally, I wrap up with curve with xgen in Maya.</p>
-                              </div>
-                          </a>
-                      </section>
-                  </div> -->
-
+                        </div>
+                        <div class='shadow'></div>
+                  </section>
               </div>
 
-          </section>
+              <!-- <div class="field" id="teamProject">
+                  <section id="painting2">
+                      <a href="assets/images/paintings/painting2.jpg">
+                          <img src="assets/images/paintings/painting2.jpg" alt="" />
+                      </a>
+                      <div class="thumbnailText">
+                          <div class='text'>
+                              <h3>painting2</h3>
+                              <p>This shot shows whole environment of the project.</p>
+                              <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                              <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                              <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                          </div>
+                      </a>
+                  </section>
+                  <section id="painting1">
+                      <a href="assets/images/paintings/painting1.jpg">
+                          <img src="assets/images/paintings/painting1.jpg" alt="" />
+                      </a>
+                      <div class="thumbnailText">
+                          <div class='text'>
+                              <h3>painting1</h3>
+                              <p>This shot shows whole environment of the project.</p>
+                              <p>There isn't only xgen but lots of other materials, such as fur, wood, fabric, sss objets. It was first time using Substance Designer.</p>
+                              <p>I used fur library first to create randamly guid curves on the rug, then brought them into zbrush to comb them.</p>
+                              <p>Finally, I wrap up with curve with xgen in Maya.</p>
+                          </div>
+                      </a>
+                  </section>
+              </div> -->
+
+          </div>
+
+      </section>
     <!-- holly sprit (Aside) -->
       <section id="hollyAside">
-        <h1>Jiyeon Lee</h1> <h2>Sophia</h2>
       </section>
 
-    </section>
-
+  </section>
+  <section>
+  <h1>Jiyeon Lee</h1> <h2>Sophia</h2>
+</section>
     <!-- js script -->
         <!-- <script src="assets\js\jquery.js"></script> -->
         <script src="assets\js\title-animation.js"></script>
