@@ -338,10 +338,11 @@ h3{
               display: flex;
               justify-content: center;
             }
-              /* #thumbnails .field{
+              #thumbnails .field{
                 display: flex;
                 flex-direction: column;
-              } */
+                align-content: space-around;
+              }
               #thumbnails .field section{
                 font-size: inherit;
                 display: grid;
