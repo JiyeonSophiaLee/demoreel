@@ -215,39 +215,40 @@ h3{
           grid-row: 1;
           grid-column: 1;
         }
+
           #demoImage{
             animation: demoImageAni 3.5s forwards;
-            position: relative;
-            /* visibility: hidden; */
+            visibility: hidden;
           }
-          @keyframes demoImageAni{
-            0%, 80%{
+          /* @keyframes demoImageAni{
+            0%,90%{
               opacity: 1;
             }
             100%{
               opacity: 0;
             }
-          }
+          } */
           
           #nameContainerMask{
-            /* visibility: hidden; */
+            visibility: hidden;
             position: absolute;
             top: 0;
             z-index: 3;
             animation: nameContainerMaskAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01) forwards; 
           }
           @keyframes nameContainerMaskAni{
+            /* 0%,10%{clip-path: inset(92.25px 0 0 0)} */
           } 
 
           
           #demoVideo {
+            /* visibility: hidden; */
             position: absolute;
             top:0;
             width: 100%;
             height:100%;
-            /* z-index: 0; */
+            z-index: 0;
             animation: demoVideo 3.8s;
-            /* visibility: hidden; */
           }
           /* @keyframes demoVideo{
             0%,99%{
@@ -266,8 +267,8 @@ h3{
       *
       */
         #title{
-          grid-column: 1;
-          grid-row: 2;
+          /* grid-column: 1;
+          grid-row: 2; */
           display: grid;
           align-items: center;
           justify-content: center;
@@ -275,24 +276,24 @@ h3{
           margin-left: 3px;
         }
           #name{
-            z-index: -1; /* origianlly it is [1], controlled by javascirpt*/
-            position:absolute;
+            z-index: 1;
+            /* position:absolute; */
             transform-origin: 50% 50%;
             top: 0;
             animation: nameAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
           }
-          @keyframes nameAni{
-          }
+          /* @keyframes nameAni{
+          } */
           /* line */
         #lineContainer{
-          position: absolute;
+          /* position: absolute; */
           top: 0;
           animation: lineAniContainer 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
-          z-index: -1;  /* origianlly it is [3], controlled by javascirpt*/
+          z-index: 4;
         }
-        @keyframes lineAniContainer{
+        /* @keyframes lineAniContainer{
             
-        } 
+        }  */
           #lineContainer .line{
             margin: 0 auto;
             width: 800px;
@@ -318,16 +319,16 @@ h3{
               }
               /* info */
         #info {
-          position:absolute;
+          /* position:absolute; */
           top:0;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           grid-gap: 3vmin;
-          z-index: -1;/* origianlly it is [2], controlled by javascirpt*/
+          z-index: 2;
           animation: infoAni 3s cubic-bezier(0.78,-0.01, 0.3, 1.01);
         }
-        @keyframes infoAni{
-        }
+        /* @keyframes infoAni{
+        } */
 .bg{
   /* background:repeating-linear-gradient(90deg, transparent 0%, transparent 4rem, #201911 4rem, #201911 4.2rem), repeating-linear-gradient(#0d0905 0%, #0d0905 4rem, #201911 4rem, #201911 4.2rem); */
   background-blend-mode: overlay, normal, normal, normal; 
