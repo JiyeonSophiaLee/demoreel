@@ -7,7 +7,7 @@ let workBorder = {
   h: document.getElementById('workBorder').parentElement.clientHeight,
   border: 10,
   multiply: 1,
-  scale: 1,
+  scale: 0.95,
   radius: 9,
   speed: [1, 5],
   color: 'none',
@@ -17,6 +17,8 @@ let workBorder = {
   strokeLineCap: 'square' //square, butt or round
 }
 
+const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
+
 
 
 
@@ -24,10 +26,10 @@ function createPath(borders) {
 
   let path = borders.element;
 
-  let x = borders.x + borders.strokeWidth / 2;
-  let y = borders.y + borders.strokeWidth / 2;
-  let h = borders.h - borders.strokeWidth;
-  let w = borders.w - borders.strokeWidth;
+  let x = borders.x;
+  let y = borders.y;
+  let h = borders.h;
+  let w = borders.w;
   let r = borders.border;
   let scale = borders.scale;
 
@@ -35,7 +37,18 @@ function createPath(borders) {
   let points = [];
   let pointsTween = [];
 
-  function getPath(borders) {
+
+
+
+  function getDataPoints(borders){
+    x = x + borders.strokeWidth / 2;
+    y = y + borders.strokeWidth / 2;
+    h = h - borders.strokeWidth;
+    w = w - borders.strokeWidth;
+
+    points = [];
+    pointsTween = [];
+
     if (r > w / 2)
       r = w / 2 - 10;
 
@@ -75,7 +88,7 @@ function createPath(borders) {
     }
 
 
-
+    
 
     //----svg path-------------------------
 
@@ -205,11 +218,11 @@ function createPath(borders) {
 
 
 
-    //---------------------------------------------------------------------------------------------------------------------------------------------------
+    //-------Scale----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-
+    
     let oldW = w;
     let oldH = h;
 
@@ -271,9 +284,9 @@ function createPath(borders) {
       }
     }
 
-
+    
     getTweenPoints(borders, cardinal, line);
-
+    
 
     function setPositions() {
       return positions = {
@@ -310,9 +323,21 @@ function createPath(borders) {
           y: y + r
         }
       };
+  
+  
+  
     }
+    
+    return {data:data, points:points, pointsTween:pointsTween}
+    
+  }
 
-    path.setAttribute("d", data);
+  function getPath(borders) {
+    
+    let dataPoints = getDataPoints(borders);
+
+
+    path.setAttribute("d", dataPoints.data);
     path.setAttributeNS(null, 'fill', borders.color);
 
 
@@ -330,6 +355,9 @@ function createPath(borders) {
   }
 
   getPath(borders);
+
+  
+
   //---Update Size----------------------------------------------------------------------
 
 
@@ -346,8 +374,6 @@ function createPath(borders) {
   });
 
 
-
-
   //---onClick---------------------------------------------------------------
 
 
@@ -355,76 +381,119 @@ function createPath(borders) {
     animateBorder()
   });
 
-  function animateBorder() {
+  
 
-    let tl = new TimelineMax({
-      onUpdate: update
-    });
 
-    for (let i = 0; i < points.length; i++) {
+  function animateBorder(){
+    
 
-      let duration = random(borders['speed'][0], borders['speed'][1]);
+    let padding = parseFloat(window.getComputedStyle(borders.element.parentElement.parentElement.parentElement).paddingTop) * 2;
 
-      let tween = TweenMax.to(points[i], duration, {
-        x: pointsTween[i].x,
-        y: pointsTween[i].y,
-        repeat: -1,
-        yoyo: true,
-        ease: Sine.easeInOut
-      });
+    
+    
+    console.log(innerWidth*(menuWidth.max/100)/2)
+    borders.element.parentElement.parentElement.style.width = innerWidth*menuWidth.max/2/100 - padding + "px";
+    borders.element.parentElement.parentElement.style.height = innerHeight/2 - padding + "px";
 
-      tl.add(tween, -random(duration));
-    }
+    w=innerWidth*(menuWidth.max/100)/2 - padding;
+    h=innerHeight/2 - padding;
+    // x=x-padding;
+    // y=y-padding;
+  
+    let biggerPath = getDataPoints(borders);
+    
 
-    function tweenCardinal(data, closed, tension) {
+    // TweenMax.to(borders.path,1,{path:biggerPath.data});
+    let animate = document.createElementNS(SVG_NAMESPACE_URI,'animate')
+    
+    console.log(biggerPath.data)
+    animate.setAttribute('attributeName','d');
+    animate.setAttribute('attributeType','XML');
+    animate.setAttribute('to',biggerPath.data);
+    animate.setAttribute('dur','1');
+    animate.setAttribute('keySplines','0.8 0 1 1');
+    animate.setAttribute('repeatCount','0');
+    animate.setAttribute('fill','freeze');
+    path.appendChild(animate);
+    animate.beginElement();
 
-      if (data.length < 1) return "M0 0";
-      if (tension == null) tension = 1;
+    // path.setAttribute("d", biggerPath.data);
 
-      var size = data.length - (closed ? 0 : 1);
-      var path = "M" + data[0].x + " " + data[0].y + " C";
+    
 
-      for (var i = 0; i < size; i++) {
+  
 
-        var p0, p1, p2, p3;
+    // setTimeout(
+    //   function wavyAnimation() {
 
-        if (closed) {
-          p0 = data[(i - 1 + size) % size];
-          p1 = data[i];
-          p2 = data[(i + 1) % size];
-          p3 = data[(i + 2) % size];
+    //     let tl = new TimelineMax({
+    //       onUpdate: update
+    //     });
 
-        } else {
-          p0 = i == 0 ? data[0] : data[i - 1];
-          p1 = data[i];
-          p2 = data[i + 1];
-          p3 = i == size - 1 ? p2 : data[i + 2];
-        }
+    //     for (let i = 0; i < points.length; i++) {
 
-        var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-        var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+    //       let duration = random(borders['speed'][0], borders['speed'][1]);
 
-        var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-        var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+    //       let tween = TweenMax.to(points[i], duration, {
+    //         x: pointsTween[i].x,
+    //         y: pointsTween[i].y,
+    //         repeat: -1,
+    //         yoyo: true,
+    //         ease: Sine.easeInOut
+    //       });
 
-        path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-      }
+    //       tl.add(tween, -random(duration));
+    //     }
 
-      return closed ? path + "z" : path;
-    }
+    //     function tweenCardinal(data, closed, tension) {
 
-    function update() {
-      path.setAttribute("d", tweenCardinal(points, true, 1));
+    //       if (data.length < 1) return "M0 0";
+    //       if (tension == null) tension = 1;
 
-      // console.log(window.getComputedStyle(work).getPropertyValue('width'));
-      // h = window.getComputedStyle(work).getPropertyValue('height');
+    //       var size = data.length - (closed ? 0 : 1);
+    //       var path = "M" + data[0].x + " " + data[0].y + " C";
 
-      getPath(borders);
+    //       for (var i = 0; i < size; i++) {
 
-    }
+    //         var p0, p1, p2, p3;
+
+    //         if (closed) {
+    //           p0 = data[(i - 1 + size) % size];
+    //           p1 = data[i];
+    //           p2 = data[(i + 1) % size];
+    //           p3 = data[(i + 2) % size];
+
+    //         } else {
+    //           p0 = i == 0 ? data[0] : data[i - 1];
+    //           p1 = data[i];
+    //           p2 = data[i + 1];
+    //           p3 = i == size - 1 ? p2 : data[i + 2];
+    //         }
+
+    //         var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+    //         var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+
+    //         var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+    //         var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+
+    //         path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+    //       }
+
+    //       return closed ? path + "z" : path;
+    //     }
+
+    //     function update() {
+    //       path.setAttribute("d", tweenCardinal(points, true, 1)
+    //       );
+
+    //     }
+
+    //   },2000
+    // );
   }
 
 }
+
 
 // function updateSize(borders){
 
@@ -453,7 +522,3 @@ function random(min, max) {
 }
 
 createPath(workBorder);
-// updateSize(workBorder);
-// window.addEventListener("resize", function() {
-//   updateSize(workBorder); 
-// });

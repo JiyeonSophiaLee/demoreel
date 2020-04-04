@@ -3,7 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+
+#body{
   display:flex;
   flex-direction: row;
   background:rgba(11, 11, 11, 1);
@@ -27,10 +28,12 @@ div{
   font-size: 18px;
 }
 
-  #demo, #menu{
-    flex-basis: 50%;
-    flex-grow:1;
-    transition: flex-basis 1s ease-in-out;
+   #menu{
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 50%;
+    /* flex-grow:1; */
+    transition: width 1s linear;
   }
   #demo{
     align-self: center;
@@ -44,10 +47,10 @@ div{
     flex-direction: row;
   }
     #menu li{
-      flex-basis: 45%;
+      flex: 1 0 45%;
       display: flex;
       cursor: pointer;
-      margin:0.3rem;
+      /* padding:0.3rem; */
       list-style:none;
       height:50%;
     }
@@ -60,12 +63,14 @@ div{
       display:grid;
       align-content: center;
       text-align: center;
+      /* transition: width 1s linear, height 1s linear; */
+
     }
 
     #menu #work{
       justify-content: flex-end;
       
-      transition: all 1s ease-in-out;
+      /* transition: all 1s ease-in-out; */
     }
 
       #menu #work div{
@@ -77,6 +82,7 @@ div{
           position:absolute;
           width:inherit;
           height:inherit;
+          
         }
           /* #menu #work svg rect{
             fill: none;
@@ -107,18 +113,7 @@ div{
         align-self: flex-start;
       }
 
-    /* Menu Animation */
-
-    .center{
-      animation: centerAni 1s forwards;
-    }
-    @keyframes centerAni{
-      from{
-        justify-content: flex-end;
-        align-self: flex-end;
-      }
-      to{
-        justify-content: center;
-        align-self: flex-end;
-      }
-    }
+.test{
+  flex-basis: 90;
+}
+      
