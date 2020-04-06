@@ -7,8 +7,8 @@ let workBorder = {
   h: document.getElementById('workBorder').parentElement.clientHeight,
   border: 10,
   multiply: 1,
-  scale: 0.95,
-  radius: 9,
+  scale: 1,
+  radius: 10,
   speed: [1, 5],
   color: 'none',
   stroke: true,
@@ -26,8 +26,8 @@ function createPath(borders) {
 
   let path = borders.element;
 
-  let x = borders.x;
-  let y = borders.y;
+  let x = borders.x + borders.strokeWidth / 2;
+  let y = borders.y + borders.strokeWidth / 2;
   let h = borders.h;
   let w = borders.w;
   let r = borders.border;
@@ -38,13 +38,12 @@ function createPath(borders) {
   let pointsTween = [];
 
 
-
+  console.log(x);
 
   function getDataPoints(borders){
-    x = x + borders.strokeWidth / 2;
-    y = y + borders.strokeWidth / 2;
-    h = h - borders.strokeWidth;
-    w = w - borders.strokeWidth;
+
+    h = h - borders.strokeWidth ;
+    w = w - borders.strokeWidth ;
 
     points = [];
     pointsTween = [];
@@ -236,6 +235,8 @@ function createPath(borders) {
       position(i).y = position(i).y - (h - oldH) / 2;
     }
 
+    //----------------------------------
+
     data = "M" + position(0).x + " " + position(0).y + line(positions, 1).line + cardinal(positions, 2).cardinal + line(positions, 3).line + cardinal(positions, 4).cardinal + line(positions, 5).line + cardinal(positions, 6).cardinal + line(positions, 7).line + cardinal(positions, 0).cardinal;
 
     pushPoints(cardinal, 0);
@@ -327,7 +328,7 @@ function createPath(borders) {
   
   
     }
-    
+
     return {data:data, points:points, pointsTween:pointsTween}
     
   }
@@ -383,7 +384,6 @@ function createPath(borders) {
 
   
 
-
   function animateBorder(){
     
 
@@ -391,33 +391,47 @@ function createPath(borders) {
 
     
     
-    console.log(innerWidth*(menuWidth.max/100)/2)
+
     borders.element.parentElement.parentElement.style.width = innerWidth*menuWidth.max/2/100 - padding + "px";
     borders.element.parentElement.parentElement.style.height = innerHeight/2 - padding + "px";
 
-    w=innerWidth*(menuWidth.max/100)/2 - padding;
-    h=innerHeight/2 - padding;
+    // w=innerWidth*(menuWidth.max/100)/2 - padding;
+    // h=innerHeight/2 - padding;
     // x=x-padding;
     // y=y-padding;
   
-    let biggerPath = getDataPoints(borders);
+    // let biggerPath = getDataPoints(borders);
+
+
+    // let biggerPathData= biggerPath.data;
+    // let pathData = {data:data};
+
+    // gsap.to(pathData,{duration:1,
+    //   data:biggerPathData,
+    //   onUpdate:function(){
+
+    //     w=window.getComputedStyle(path.parentElement).width,
+    //     path.setAttribute("d", biggerPathData),
+    //     console.log('parent',window.getComputedStyle(path.parentElement).width)
+    //   }})
+
     
 
-    // TweenMax.to(borders.path,1,{path:biggerPath.data});
-    let animate = document.createElementNS(SVG_NAMESPACE_URI,'animate')
+    // // TweenMax.to(borders.path,1,{path:biggerPath.data});
+    // let animate = document.createElementNS(SVG_NAMESPACE_URI,'animate')
     
-    console.log(biggerPath.data)
-    animate.setAttribute('attributeName','d');
-    animate.setAttribute('attributeType','XML');
-    animate.setAttribute('to',biggerPath.data);
-    animate.setAttribute('dur','1');
-    animate.setAttribute('keySplines','0.8 0 1 1');
-    animate.setAttribute('repeatCount','0');
-    animate.setAttribute('fill','freeze');
-    path.appendChild(animate);
-    animate.beginElement();
+    // console.log(biggerPath.data)
+    // animate.setAttribute('attributeName','d');
+    // animate.setAttribute('attributeType','XML');
+    // animate.setAttribute('to',biggerPath.data);
+    // animate.setAttribute('dur','5');
+    // animate.setAttribute('keySplines','0.8 0 1 1');
+    // animate.setAttribute('repeatCount','0');
+    // animate.setAttribute('fill','freeze');
+    // path.appendChild(animate);
+    // animate.beginElement();
 
-    // path.setAttribute("d", biggerPath.data);
+    // // path.setAttribute("d", biggerPath.data);
 
     
 
@@ -425,68 +439,81 @@ function createPath(borders) {
 
     // setTimeout(
     //   function wavyAnimation() {
+    // console.log(w)
+      
 
-    //     let tl = new TimelineMax({
-    //       onUpdate: update
-    //     });
+    let biggerPath;
+    
+        let tl = new TimelineMax({
+          onUpdate: update
+        });
 
-    //     for (let i = 0; i < points.length; i++) {
+        for (let i = 0; i < points.length; i++) {
 
-    //       let duration = random(borders['speed'][0], borders['speed'][1]);
+          let duration = random(borders['speed'][0], borders['speed'][1]);
 
-    //       let tween = TweenMax.to(points[i], duration, {
-    //         x: pointsTween[i].x,
-    //         y: pointsTween[i].y,
-    //         repeat: -1,
-    //         yoyo: true,
-    //         ease: Sine.easeInOut
-    //       });
+          let tween = TweenMax.to(points[i], duration, {
+            x: pointsTween[i].x,
+            y: pointsTween[i].y,
+            repeat: -1,
+            yoyo: true,
+            ease: Sine.easeInOut
+          });
 
-    //       tl.add(tween, -random(duration));
-    //     }
+          tl.add(tween, -random(duration));
+        }
 
-    //     function tweenCardinal(data, closed, tension) {
+        function tweenCardinal(data, closed, tension) {
 
-    //       if (data.length < 1) return "M0 0";
-    //       if (tension == null) tension = 1;
+          if (data.length < 1) return "M0 0";
+          if (tension == null) tension = 1;
 
-    //       var size = data.length - (closed ? 0 : 1);
-    //       var path = "M" + data[0].x + " " + data[0].y + " C";
+          var size = data.length - (closed ? 0 : 1);
+          var path = "M" + data[0].x + " " + data[0].y + " C";
 
-    //       for (var i = 0; i < size; i++) {
+          for (var i = 0; i < size; i++) {
 
-    //         var p0, p1, p2, p3;
+            var p0, p1, p2, p3;
 
-    //         if (closed) {
-    //           p0 = data[(i - 1 + size) % size];
-    //           p1 = data[i];
-    //           p2 = data[(i + 1) % size];
-    //           p3 = data[(i + 2) % size];
+            if (closed) {
+              p0 = data[(i - 1 + size) % size];
+              p1 = data[i];
+              p2 = data[(i + 1) % size];
+              p3 = data[(i + 2) % size];
 
-    //         } else {
-    //           p0 = i == 0 ? data[0] : data[i - 1];
-    //           p1 = data[i];
-    //           p2 = data[i + 1];
-    //           p3 = i == size - 1 ? p2 : data[i + 2];
-    //         }
+            } else {
+              p0 = i == 0 ? data[0] : data[i - 1];
+              p1 = data[i];
+              p2 = data[i + 1];
+              p3 = i == size - 1 ? p2 : data[i + 2];
+            }
 
-    //         var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-    //         var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+            var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+            var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
 
-    //         var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-    //         var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+            var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+            var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
 
-    //         path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-    //       }
+            path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+          }
 
-    //       return closed ? path + "z" : path;
-    //     }
+          return closed ? path + "z" : path;
+        }
+        
+        function update() {
+          
+          
+          path.setAttribute("d", tweenCardinal(points,true,1)),
+          w=parseFloat(window.getComputedStyle(path.parentElement).width),
+          h=parseFloat(window.getComputedStyle(path.parentElement).height),
+          // console.log(w),
+          // console.log(),
+          biggerPath = getDataPoints(borders)
+          // console.log(run.data)
 
-    //     function update() {
-    //       path.setAttribute("d", tweenCardinal(points, true, 1)
-    //       );
+          console.log(pointsTween);
 
-    //     }
+        }
 
     //   },2000
     // );

@@ -63,7 +63,7 @@ div{
       display:grid;
       align-content: center;
       text-align: center;
-      /* transition: width 1s linear, height 1s linear; */
+      transition: width 1s linear, height 1s linear;
 
     }
 
