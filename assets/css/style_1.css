@@ -33,7 +33,7 @@ div{
     flex-shrink: 0;
     width: 50%;
     /* flex-grow:1; */
-    transition: width 1s linear;
+    /* transition: width 1s linear; */
   }
   #demo{
     align-self: center;
@@ -47,7 +47,7 @@ div{
     flex-direction: row;
   }
     #menu li{
-      flex: 1 0 45%;
+      flex: 1 0 50%;
       display: flex;
       cursor: pointer;
       /* padding:0.3rem; */
@@ -63,9 +63,10 @@ div{
       display:grid;
       align-content: center;
       text-align: center;
-      transition: width 1s linear, height 1s linear;
+      /* transition: width 1s linear, height 1s linear; */
 
     }
+
 
     #menu #work{
       justify-content: flex-end;
@@ -93,7 +94,7 @@ div{
 
     #skill{
       
-      justify-content: left;
+      justify-content: flex-start;
     }
       #skill div{
         align-self:flex-end;
@@ -109,11 +110,12 @@ div{
       justify-content: flex-start;
       
     }
-      #info{
+      #info div{
         align-self: flex-start;
       }
 
-.test{
-  flex-basis: 90;
+/* menu transition */
+.menutransition{
+  transition: width 1s linear, height 1s linear, flex 1s linear;
 }
       
