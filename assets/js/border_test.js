@@ -1,6 +1,6 @@
 function border(id){
   this.id = id;
-  this.element = document.getElementById(id),
+  this.elem = document.getElementById(id),
   this.x= 0;
   this.y= 0;
   this.w = document.getElementById('workBorder').parentElement.clientWidth;
@@ -28,79 +28,83 @@ function createBorderPath(borders) {
 
   this.borders = borders;
 
-  let path = borders.element;
+  this.path = borders.elem;
 
   this.x = borders.x + borders.strokeWidth / 2;
   this.y = borders.y + borders.strokeWidth / 2;
   this.h = borders.h;
   this.w = borders.w;
-  this.r = borders.border;
+  this.border = borders.border;
   this.scale = borders.scale;
 
   this.data;
   this.points = [];
   this.pointsTween = [];
 
-  this.padding = parseFloat(window.getComputedStyle(borders.element.parentElement.parentElement.parentElement).paddingTop) * 2;
+  this.padding = parseFloat(window.getComputedStyle(borders.elem.parentElement.parentElement.parentElement).paddingTop) * 2;
 
   this.getPath(this);
+
+  this.updateSizeHandler = this.updateSize.bind(this);
+  window.addEventListener('resize',this.updateSizeHandler);
+
 
 }
 
 createBorderPath.prototype.getDataPoints = function() {
   
-  this.h = this.h - this.borders.strokeWidth;
-  this.w = this.w - this.borders.strokeWidth;
+  let h = this.h - this.borders.strokeWidth;
+  let w = this.w - this.borders.strokeWidth;
 
   let points = [];
   let pointsTween = [];
 
   let borders = this.borders
 
-  if (this.r > this.w / 2){
-    return this.r = this.w / 2 - 10;
+  if (this.border > w / 2){
+    return this.border = w / 2 - 10;
   }
-
-  
+ 
   let getPositions = function(){
     return {
       position0: {
-        x: this.x + this.r,
+        x: this.x + borders.border,
         y: this.y
       },
       position1: {
-        x: this.x + this.w - this.r,
+        x: this.x + w - borders.border,
         y: this.y
       },
       position2: {
-        x: this.x + this.w,
-        y: this.y + this.r
+        x: this.x + w,
+        y: this.y + borders.border
       },
       position3: {
-        x: this.x + this.w,
-        y: this.y + this.h - this.r
+        x: this.x + w,
+        y: this.y + h - borders.border
       },
       position4: {
-        x: this.x + this.w - this.r,
-        y: this.y + this.h
+        x: this.x + w - borders.border,
+        y: this.y + h
       },
       position5: {
-        x: this.x + this.r,
-        y: this.y + this.h
+        x: this.x + borders.border,
+        y: this.y + h
       },
       position6: {
         x: this.x,
-        y: this.y + this.h - this.r
+        y: this.y + h - borders.border
       },
       position7: {
         x: this.x,
-        y: this.y + this.r
+        y: this.y + borders.border
       }
     }
   }
   
 
   let positions = getPositions.call(this);
+  
 
 
 
@@ -118,7 +122,7 @@ createBorderPath.prototype.getDataPoints = function() {
 
       if (borders.multiply <= 1) {
 
-        line += "L" + positions['position'+num].x + " " + positions['position'+0].y;
+        line += "L" + positions['position'+num].x + " " + positions['position'+num].y;
 
         points.push({
           x: positions['position'+num].x,
@@ -156,6 +160,7 @@ createBorderPath.prototype.getDataPoints = function() {
       }
 
     }
+
 
     function getCardinal(positions, num) {
 
@@ -228,26 +233,28 @@ createBorderPath.prototype.getDataPoints = function() {
     }
 
 
+
+
   //-------Scale----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
 
-  let oldW = this.w;
-  let oldH = this.h;
+  let oldW = w;
+  let oldH = h;
 
-  this.w = this.w * borders.scale;
-  this.h = this.h * borders.scale;
+  w = w * borders.scale;
+  h = h * borders.scale;
+
 
   positions = getPositions.call(this);
 
 
   for (let i = 0; Object.keys(positions).length > i; i++) {
-    positions['position'+i].x = positions['position'+i].x - (this.w - oldW) / 2;
-    positions['position'+i].y = positions['position'+i].y - (this.h - oldH) / 2; 
+    positions['position'+i].x = positions['position'+i].x - (w - oldW) / 2;
+    positions['position'+i].y = positions['position'+i].y - (h - oldH) / 2; 
   }
-
 
 
     //----------------------------------
@@ -266,23 +273,102 @@ createBorderPath.prototype.getDataPoints = function() {
     pushPoints(getCardinal, 6);
     pushPoints(getLine, 7);
 
+    getTweenPoints.call(this)
+    
+
     function pushPoints(curve, num) {
       for (let i = 0; i < curve(positions, num).points.length; i++) {
         points.push(curve(positions, num).points[i]);
       }
     }
   
-    
+    function getTweenPoints() {
+      let radius = this.borders.radius;
+      
+      w = w - radius * 2;
+      h = h - radius * 2;
+
+      positions = getPositions.call(this);
+
+      for (let i = 0; Object.keys(positions).length > i; i++) {
+        positions['position'+i].x = positions['position'+i].x + radius;
+        positions['position'+i].y = positions['position'+i].y + radius;
+      }
+
+      pushPointsTween(getCardinal, 0);
+      pushPointsTween(getLine, 1);
+      pushPointsTween(getCardinal, 2);
+      pushPointsTween(getLine, 3);
+      pushPointsTween(getCardinal, 4);
+      pushPointsTween(getLine, 5);
+      pushPointsTween(getCardinal, 6);
+      pushPointsTween(getLine, 7);
+
+      
+      function pushPointsTween(curve, num) {
+        for (let i = 0; i < curve(positions, num).points.length; i++) {
+          pointsTween.push(curve(positions, num).points[i]);
+        }
+      }
+   
+    }
+  
+    return {
+      data: data,
+      points: points,
+      pointsTween: pointsTween
+    }
 
 }
 
 createBorderPath.prototype.getPath = function() {
 
-  this.getDataPoints(this);
+  let dataPoints = this.getDataPoints(this);
 
- 
+  this.path.setAttribute("d", dataPoints.data);
+  this.path.setAttributeNS(null, 'fill', this.borders.color);
+
+
+
+
+  //---Stroke--------------------------------------------------------------------
+
+
+
+  if (this.borders.stroke === true) {
+    this.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+    this.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth);
+  }
+
 }
 
+createBorderPath.prototype.updateSize = function() {
+  let elem = this.borders.elem;
+  let parent = elem.parentElement.parentElement.parentElement.parentElement;
+
+  let getWidth = elem.parentElement.clientWidth;
+  let getHeight = elem.parentElement.clientHeight;
+
+  // if (this.parent.clientWidth == this.parent.parentElement.clientWidth / 2) {
+console.log(parent)    
+    this.w = getWidth;
+    this.h = getHeight
+
+    this.getPath.call(this);
+  
+  // } else {
+
+  //   borders.element.parentElement.parentElement.style.width = innerWidth * workTransitionValue.max / 2 / 100 - padding + 'px'
+  //   borders.element.parentElement.parentElement.style.height = innerHeight / 2 - padding + "px";
+
+  //   w = getWidth
+  //   h = getHeight
+
+  //   getPath(borders);
+
+  //   createWavyAnimation()
+  // }
+}
 
 //-----   finish creating border   >>>-----------------------------------------------------------------
 
@@ -307,6 +393,6 @@ function random(min, max) {
 //----expandMenu-------------------------------------------------------------------------
 
 
-let workBorder = new border('work');
+let workBorder = new border('workBorder');
 
 new createBorderPath(workBorder);
