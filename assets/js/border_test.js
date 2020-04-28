@@ -47,6 +47,8 @@ function createBorderPath(borders) {
   this.w = borders.w;
   this.border = borders.border;
   this.scale = borders.scale;
+  this.allElems = this.getAllElems(this);
+  this.restElems = this.getRestElems(this);
 
   this.data;
   this.points = [];
@@ -55,6 +57,8 @@ function createBorderPath(borders) {
   this.padding = parseFloat(window.getComputedStyle(this.borders.elem.parentElement.parentElement.parentElement).paddingTop) * 2;
   this.expanded = false;
   this.stop = false;
+  this.animated = false;
+  this.resize = false;
 
   //----call path-----
 
@@ -63,36 +67,64 @@ function createBorderPath(borders) {
   //-----------------
   
   
-  
   this.expandMenuHandler = this.expandMenu.bind(this);
   this.updateSizeHandler = this.updateSize.bind(this);
+  this.creatWavyAnimationHandler = this.createWavyAnimation.bind(this);
 
-  this.familyElem.addEventListener('click', this.expandMenuHandler);
+
   window.addEventListener('resize', this.updateSizeHandler);
+  this.familyElem.addEventListener('click', this.expandMenuHandler);
+  this.familyElem.addEventListener('click', this.creatWavyAnimationHandler);
+  
+  
+}
 
+
+createBorderPath.prototype.restElemsEventListener = function(listener,handler){
+  let id = this.restElems[0].id.charAt(0).toUpperCase()  + this.restElems[0].id.slice(1);
+  let runBorderId = eval('run' + id + 'Border'); 
+
+
+  for(let i =0; i<this.restElems.length; i++){
+    
+    if(listener=='add'){
+      
+      this.restElems[i].addEventListener('click', runBorderId[handler]);
+    }else{
+      
+      this.restElems[i].removeEventListener('click', runBorderId[handler]);
+    }
+//  document.getElementById('skill').removeEventListener('click',runBorderId.expandMenuHandler);
+  // document.getElementById('skill').removeEventListener('click',runBorderId[handler]);
   }
+}
+
+
 
   createBorderPath.prototype.expandMenu = function() {
-    
-    let allElems = this.getAllElems(this);
+    console.log(this.borders.elem.id)
     let widthBigger = this.getLeftRight(this).widthBigger;
     let widthSmaller = this.getLeftRight(this).widthSmaller;
     let heightBigger = this.getUpDown(this).heightBigger;
     let heightSmaller = this.getUpDown(this).heightSmaller;
-  
 
+  //---below options are for wavy animation-------------------------
+
+  //---------------------------------------------------------------------------
+    
     this.familyElem.removeEventListener('click', this.expandMenuHandler);
-    this.familyElem.firstElementChild.classList.add('menutransition');
+    this.restElemsEventListener('remove','expandMenuHandler');
 
-    // if (parseFloat(this.familyParent.clientWidth) == parseFloat(this.familyParent.parentElement.clientWidth / 2)) {
+    this.familyElem.firstElementChild.classList.add('menutransition');
+    
     if (menuExpanded == false) {
   
       menuExpanded = true;
 
       this.familyParent.style.width = this.borders.transitionValue['max'] + '%';
       
-      for (let i = 0; i < allElems.length; i++) {
-        allElems[i].classList.add("menutransition")
+      for (let i = 0; i < this.allElems.length; i++) {
+        this.allElems[i].classList.add("menutransition")
       }
 
 
@@ -121,8 +153,8 @@ function createBorderPath(borders) {
 
     } else if (biggerElem != this.familyElem) {
       
-      for (let i = 0; i < allElems.length; i++) {
-        allElems[i].classList.add("menutransition")
+      for (let i = 0; i < this.allElems.length; i++) {
+        this.allElems[i].classList.add("menutransition")
       }
     
       for (let i = 0; i < widthBigger.length; i++) {
@@ -138,10 +170,10 @@ function createBorderPath(borders) {
         heightSmaller[i].style.height = (100 - this.transitionValue['flexBasis']) + '%';
       }
   
-      for (let i = 0; i < allElems.length; i++) {
-        allElems[i].firstElementChild.classList.add("menutransition")
-        allElems[i].firstElementChild.style.width = '';
-        allElems[i].firstElementChild.style.height = '';
+      for (let i = 0; i < this.allElems.length; i++) {
+        this.allElems[i].firstElementChild.classList.add("menutransition")
+        this.allElems[i].firstElementChild.style.width = '';
+        this.allElems[i].firstElementChild.style.height = '';
       }
   
       this.familyElem.firstElementChild.style.width = this.familyParent.parentElement.clientWidth * ((this.transitionValue['max'] / 100) * (this.transitionValue['flexBasis'] / 100)) - this.padding + "px";
@@ -155,10 +187,10 @@ function createBorderPath(borders) {
       menuExpanded= false;
       this.familyParent.style.width = this.transitionValue['min'] + '%';
     
-      for (let i = 0; i < allElems.length; i++) {
-        allElems[i].classList.add("menutransition")
-        allElems[i].style.flex = '';
-        allElems[i].style.height = '';
+      for (let i = 0; i < this.allElems.length; i++) {
+        this.allElems[i].classList.add("menutransition")
+        this.allElems[i].style.flex = '';
+        this.allElems[i].style.height = '';
       }
       this.familyElem.firstElementChild.style.width = '';
       this.familyElem.firstElementChild.style.height = '';
@@ -169,12 +201,27 @@ function createBorderPath(borders) {
     setTimeout(() => {
       this.familyElem.firstElementChild.classList.remove('menutransition');
 
-      for (let i = 0; i < allElems.length; i++) {
-        allElems[i].classList.remove("menutransition")
+      for (let i = 0; i < this.allElems.length; i++) {
+        this.allElems[i].classList.remove("menutransition")
       }
       this.familyElem.addEventListener('click', this.expandMenuHandler)
+      this.restElemsEventListener('add','expandMenuHandler');
     }, this.transitionValue.duration * 1000);
 
+
+    
+  if(biggeredElem.id == 'work'){ 
+    runWorkBorder.creatWavyAnimationHandler();
+
+  }else if (biggeredElem.id == 'skill'){
+    runSkillBorder.creatWavyAnimationHandler();
+
+  }else if (biggeredElem.id == 'paint'){
+    runPaintBorder.creatWavyAnimationHandler();
+
+  }else if (biggeredElem.id == 'skill'){
+    runInfoBorder.creatWavyAnimationHandler();
+  }
   };
   
   createBorderPath.prototype.getLeftRight = function() {
@@ -277,7 +324,17 @@ function createBorderPath(borders) {
   
     return allElems;
   }
+  createBorderPath.prototype.getRestElems = function(){
+    let restElems = [];
 
+    for(let i=0; i<this.familyParent.childNodes.length; i++){
+      if(this.familyParent.childNodes[i].nodeType == 1 && this.familyParent.childNodes[i] != this.familyElem){
+        restElems.push(this.familyParent.childNodes[i]);
+      }
+    }
+
+    return restElems;
+  }
 
 //----expandMenu-------------------------------------------------------------------------
 
@@ -575,9 +632,10 @@ function createBorderPath(borders) {
   };
 
   createBorderPath.prototype.updateSize = function() {
-    
-    if (this.familyElem.clientWidth == this.familyParent.clientWidth / 2) {
-
+    this.resize = true;
+    // if (this.familyElem.clientWidth == this.familyParent.clientWidth / 2) {
+    if (menuExpanded==false) {
+console.log('if is working')
     this.w = this.borders.elem.parentElement.clientWidth;
     this.h = this.borders.elem.parentElement.clientHeight;
   
@@ -589,67 +647,71 @@ function createBorderPath(borders) {
       this.h = this.borders.elem.parentElement.parentElement.clientHeight;
 
       this.getPath.call(this);
-  
-      console.log(this.w)
-      // createWavyAnimation()
+      
+      this.createWavyAnimation(this)
     }
+    setTimeout(() => {
+      this.resize = false;
+    }, 500);
   };
 
   createBorderPath.prototype.createWavyAnimation = function(){
-  
+    
+    if(this.resize == false){
+    this.expanded = this.expanded == false ? this.expanded = true : this.expanded = false;
+    this.stop = stop == true ? stop = false : stop = false;
+    }
       this.borders.familyElem.removeEventListener('click',this.creatWavyAnimationHandler);
-    
-      this.expanded = this.expanded == false ? this.expanded = true : this.expanded = false;
-      this.stop = stop == true ? stop = false : stop = false;
-    
-      let animated = false;
-    
+
       let tl = gsap.timeline({
         onUpdate: update,
         onUpdateParams: [this]
       });
-    
-      if (this.expanded == false) {
-        setTimeout(() => {
-          this.stop = true;
-          this.borders.familyElem.addEventListener('click',this.creatWavyAnimationHandler);
-        }, this.borders.transitionValue.duration * 1000)
-      }
-    
-      setTimeout(() => {
-        for (let i = 0; i < this.points.length; i++) {
-    
-          let duration = random(this.borders['speed'][0], this.borders['speed'][1]);
-    
-          let tween = gsap.to(this.points[i], {
-            duration: duration,
-            x: this.pointsTween[i].x,
-            y: this.pointsTween[i].y,
-            repeat: -1,
-            yoyo: true,
-            ease: Sine.easeInOut
-          });
-    
-          tl.add(tween, -random(duration));
-    
-        }
-        animated = true;
-        this.borders.familyElem.addEventListener('click',this.creatWavyAnimationHandler);
-      }, this.borders.transitionValue.duration * 1000 + 100);
-    
-    
+
       tl.to(this.path, {
         duration: this.borders.transitionValue.duration,
         x: 0,
         y: 0
       });
-      if (this.expanded == false) {
-        tl.paused(2);
-      }
-    
-      function update(self) {
+
+      if (this.expanded == true) {
+        setTimeout(() => {
+          for (let i = 0; i < this.points.length; i++) {
+      
+            let duration = random(this.borders['speed'][0], this.borders['speed'][1]);
+      
+            let tween = gsap.to(this.points[i], {
+              duration: duration,
+              x: this.pointsTween[i].x,
+              y: this.pointsTween[i].y,
+              repeat: -1,
+              yoyo: true,
+              ease: Sine.easeInOut
+            });
+      
+            tl.add(tween, -random(duration));
+      
+          }
+          this.animated = true;
+          
+          this.borders.familyElem.addEventListener('click',this.creatWavyAnimationHandler);
+         
+        }, this.borders.transitionValue.duration * 1000);
         
-        if (animated == true && self.expanded == true) {
+      }else{
+        setTimeout(() => {
+          this.stop = true;
+          this.borders.familyElem.addEventListener('click',this.creatWavyAnimationHandler);
+         
+          this.animated = false;
+        }, this.borders.transitionValue.duration * 1000)
+      }
+      
+     
+      function update(self) {
+        // console.log('this.expanded',self.expanded)
+// console.log(self.animated)
+        if (self.animated == true && self.expanded == true) {
     
           self.path.setAttribute("d", tweenCardinal(self.points, true, 0.3))
     
@@ -657,8 +719,8 @@ function createBorderPath(borders) {
         } else {
           self.path.setAttribute("d", self.data),
     
-            self.w = parseFloat(window.getComputedStyle(self.path.parentElement).width),
-            self.h = parseFloat(window.getComputedStyle(self.path.parentElement).height),
+            self.w = parseFloat(window.getComputedStyle(self.path.parentElement.parentElement).width),
+            self.h = parseFloat(window.getComputedStyle(self.path.parentElement.parentElement).height),
     
             self.getPath(self)
     
@@ -668,51 +730,92 @@ function createBorderPath(borders) {
           tl.pause()
         }
       }
-    };
-    
-    function tweenCardinal(data, closed, tension) {
-    
-      if (data.length < 1) return "M0 0";
-      if (tension == null) tension = 1;
-    
-      var size = data.length - (closed ? 0 : 1);
-      var path = "M" + data[0].x + " " + data[0].y + " C";
-    
-      for (var i = 0; i < size; i++) {
-    
-        var p0, p1, p2, p3;
-    
-        if (closed) {
-          p0 = data[(i - 1 + size) % size];
-          p1 = data[i];
-          p2 = data[(i + 1) % size];
-          p3 = data[(i + 2) % size];
-    
-        } else {
-          p0 = i == 0 ? data[0] : data[i - 1];
-          p1 = data[i];
-          p2 = data[i + 1];
-          p3 = i == size - 1 ? p2 : data[i + 2];
-        }
-    
-        var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-        var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-    
-        var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-        var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-    
-        path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-      }
-    
-      return closed ? path + "z" : path;
-    }
 
+
+      function tweenCardinal(data, closed, tension) {
     
+        if (data.length < 1) return "M0 0";
+        if (tension == null) tension = 1;
+      
+        var size = data.length - (closed ? 0 : 1);
+        var path = "M" + data[0].x + " " + data[0].y + " C";
+      
+        for (var i = 0; i < size; i++) {
+      
+          var p0, p1, p2, p3;
+      
+          if (closed) {
+            p0 = data[(i - 1 + size) % size];
+            p1 = data[i];
+            p2 = data[(i + 1) % size];
+            p3 = data[(i + 2) % size];
+      
+          } else {
+            p0 = i == 0 ? data[0] : data[i - 1];
+            p1 = data[i];
+            p2 = data[i + 1];
+            p3 = i == size - 1 ? p2 : data[i + 2];
+          }
+      
+          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+      
+          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+      
+          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+        }
+      
+        return closed ? path + "z" : path;
+      }
+    };
+
+  createBorderPath.prototype.getAllElems = function() {
+    let allElems = [];
+  
+    for (let i = 0; i < this.familyParent.childNodes.length; i++) {
+      if (this.familyParent.childNodes[i].nodeType == 1) {
+        allElems.push(this.familyParent.childNodes[i]);
+      }
+    }
+  
+    return allElems;
+  }
+    
+    
+
+//-----   finish creating border   >>>-----------------------------------------------------------------
+  
+  
+  
+function random(min, max) {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+  if (min > max) {
+    var tmp = min;
+    min = max;
+    max = tmp;
+  }
+  return min + (max - min) * Math.random();
+}
+
+
+
+
+
 let workBorder = new border('work');
 let skillBorder = new border('skill');
+// let paintBorder = new border('paint');
+// let infoBorder = new border('info');
 
 let runWorkBorder = new createBorderPath(workBorder);
 let runSkillBorder = new createBorderPath(skillBorder);
+
+
+// let runPaintBorder = new createBorderPath(paintBorder);
+// let runInfoBorder = new createBorderPath(infoBorder);
 
 
 // runSkillBorder.creatWavyAnimationHandler()
