@@ -47,7 +47,8 @@ div{
     flex-direction: row;
   }
     #menu li{
-      flex: 1 0 50%;
+      /* flex: 1 0 50%;  */
+      width:50%;
       display: flex;
       cursor: pointer;
       /* padding:0.3rem; */
@@ -92,13 +93,19 @@ div{
           }*/
 
 
-    #skill{
-      
+    #menu #skill{
       justify-content: flex-start;
     }
-      #skill div{
+      #menu #skill div{
         align-self:flex-end;
+        border:none;
       }
+        #menu #skill svg{
+          /* position:absolute; */
+          width:inherit;
+          height:inherit;
+          
+        }
     #paint{
       justify-content: flex-end;
       
