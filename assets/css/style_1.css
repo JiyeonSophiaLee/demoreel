@@ -5,6 +5,7 @@
 }
 
 #body{
+  margin:20px;
   display:flex;
   flex-direction: row;
   background:rgba(11, 11, 11, 1);
@@ -32,8 +33,6 @@ div{
     flex-grow: 0;
     flex-shrink: 0;
     width: 50%;
-    /* flex-grow:1; */
-    /* transition: width 1s linear; */
   }
   #demo{
     align-self: center;
@@ -47,50 +46,37 @@ div{
     flex-direction: row;
   }
     #menu li{
-      /* flex: 1 0 50%;  */
       width:50%;
       display: flex;
       cursor: pointer;
-      /* padding:0.3rem; */
+      padding:0.2rem;
       list-style:none;
       height:50%;
     }
     #menu li div{
-      border-style:solid;
+      /* border-style:solid;
       border-width:0.5vw;
-      border-radius: 0.7rem; 
+      border-radius: 0.7rem;  */
       width:10vw;
       height:10vw;
       display:grid;
       align-content: center;
       text-align: center;
-      /* transition: width 1s linear, height 1s linear; */
-
     }
 
 
     #menu #work{
       justify-content: flex-end;
-      
-      /* transition: all 1s ease-in-out; */
     }
-
       #menu #work div{
         align-self: flex-end;
-        /* border-image:linear-gradient(-45deg, #C5102D , #DC832E 80%) 1; */
         border:none;
       }
         #menu #work svg{
           position:absolute;
           width:inherit;
-          height:inherit;
-          
+          height:inherit; 
         }
-          /* #menu #work svg rect{
-            fill: none;
-            width:10vw;
-            height:10vw; 
-          }*/
 
 
     #menu #skill{
@@ -101,25 +87,40 @@ div{
         border:none;
       }
         #menu #skill svg{
-          /* position:absolute; */
+          position:absolute;
           width:inherit;
           height:inherit;
-          
         }
-    #paint{
+
+
+    #menu #paint{
       justify-content: flex-end;
       
     }
-      #paint div{
+      #menu #paint div{
         align-self: flex-start;
+        border:none;
       }
+        #menu #paint svg{
+          position:absolute;
+          width:inherit;
+          height:inherit; 
+        }
+
+
     #info{
       justify-content: flex-start;
       
     }
       #info div{
         align-self: flex-start;
+        border:none;
       }
+        #menu #info svg{
+          position:absolute;
+          width:inherit;
+          height:inherit; 
+        }
 
 /* menu transition */
 .menutransition{

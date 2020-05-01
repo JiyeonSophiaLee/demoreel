@@ -21,8 +21,13 @@
         <li id='work'>
             <div>          
                 <svg>
-                    <path id='workBorder'></path>
-                    <!-- <text  x="50%" y="50%" >WORK</text> -->
+                    <defs>
+                        <linearGradient id="workColorLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"  stop-color="#dc842d"/>
+                            <stop offset="100%"  stop-color="#c5102d"/>
+                        </linearGradient>
+                    </defs>
+                    <path id='workBorder' stroke="url(#workColorLinear)"></path>
                 </svg>
                 WORK
             </div>
@@ -31,22 +36,49 @@
         <li id='skill'>
             <div>
                 <svg>
-                    <path id='skillBorder'></path>
-                    
+                    <defs>
+                        <linearGradient id="skillColorLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"  stop-color="#30d76d"/>
+                            <stop offset="100%"  stop-color="#2fa0c1"/>
+                        </linearGradient>
+                    </defs>
+                    <path id='skillBorder' stroke="url(#skillColorLinear)"></path>
                 </svg>
                 SKILL
             </div>
             </div>
         </li>
         <li id='paint'>
-            <div>PAINT</div>
+            <div>
+                <svg>
+                    <defs>
+                        <linearGradient id="paintColorLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"  stop-color="#17aea7"/>
+                            <stop offset="100%"  stop-color="#e1952e"/>
+                        </linearGradient>
+                    </defs>
+                    <path id='paintBorder' stroke="url(#paintColorLinear)"></path>
+                </svg>
+                PAINT
+            </div>
         </li>
         <li id='info'>
-            <div>INFO</div>
+            <div>
+                <svg>
+                    <defs>
+                        <linearGradient id="infoColorLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%"  stop-color="#e73f85"/>
+                            <stop offset="100%"  stop-color="#67b1dd"/>
+                        </linearGradient>
+                    </defs>
+                    <path id='infoBorder' stroke="url(#infoColorLinear)"></path>
+                </svg>
+                INFO
+            </div>
         </li>
     </section>
 </body>
 
 <script src="assets/js/main.js"></script>
-<script src="assets/js/border_test.js"></script>
+<script src="assets/js/border.js"></script>
 </html>
