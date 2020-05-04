@@ -14,7 +14,7 @@ function border(id) {
   this.speed = [1, 5];
   this.color = 'none';
   this.stroke = true;
-  // this.strokeColor = 'url(#workColorLinear)';
+  // this.strokeColor = 'none';
   this.strokeWidth = 5;
   this.strokeWidthUnit = 'px';
   this.strokeLineCap = 'square'; //square, butt or round
@@ -727,12 +727,14 @@ createBorderPath.prototype.createWavyAnimation = function() {
   function update(self) {
 
     if (animating == true && self.expanding == true) {
-
-      self.path.setAttribute("d", tweenCardinal(self.points, true, 0.3))
+      self.path.setAttributeNS(null, 'stroke', 'ivory');
+      self.path.setAttribute("d", tweenCardinal(self.points, true, 0.1))
+      
 
 
     } else {
-
+      self.path.setAttributeNS(null, 'stroke', 'url(#'+self.borders.elem.id+'Color');
+      // console.log(self.borders.elem.id +'Color')
       self.path.setAttribute("d", self.data),
 
         self.w = parseFloat(window.getComputedStyle(self.path.parentElement.parentElement).width),
