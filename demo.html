@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="assets/css/style_1.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
 
@@ -13,7 +13,10 @@
 <body id='body'>
     <section id='demo'>
         <div id='demoImage'>
-            <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" alt="">
+            <div >
+                <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+            <!-- <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" alt=""> -->
             <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" alt="" srcset="">  
         </div>
     </section>
@@ -21,7 +24,7 @@
     <section id='menu' class="menutransition"> 
 
         <li id='work'>
-            <div id='workDiv'>          
+            <div>          
                 <svg>
                     <defs>
                         <defs>
@@ -53,34 +56,32 @@
                             <stop offset="0%"  stop-color="#3c26cd"/>
                             <stop offset="100%"  stop-color="#34a68f"/>
                         </linearGradient>
-                        <linearGradient id="workBorderColorDull" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"  stop-color="#635d8b"/>
-                            <stop offset="100%"  stop-color="#5d7d76"/>
-                        </linearGradient>
+
                     </defs>
-                    <path id='workBorderExtra1' fill='none' stroke="url(#workBorderColor)"></path>
+                    <path id='workBorderExtra1' fill='none' stroke="#4b2fff"></path>
+                    <path id='workBorderExtra2' fill='none' stroke="#50ffdc"></path>
                     <path id='workBorder'></path>
                 </svg>
-                WORK
+                <div class='text'>WORK</div>
             </div>
             
         </li>
         <li id='skill'>
-            <div id='skillDiv'>
+            <div>
                 <svg>
                     <defs>
+
                         <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%"  stop-color="#ff1f1f"/>
                             <stop offset="100%"  stop-color="#d8b43d"/>
                         </linearGradient>
-                        <linearGradient id="skillBorderColorDull" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%"  stop-color="#734b4b"/>
-                            <stop offset="100%"  stop-color="#ae9f63"/>
-                        </linearGradient>
+
                     </defs>
+                    <path id='skillBorderExtra1' fill='none' stroke="#ff1f1f"></path>
+                    <path id='skillBorderExtra2' fill='none' stroke="#d8b43d"></path>
                     <path id='skillBorder' ></path>
                 </svg>
-                SKILL
+                <div class='text'>SKILL</div>
             </div>
             </div>
         </li>
@@ -88,36 +89,36 @@
             <div>
                 <svg>
                     <defs>
+
                         <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
                             <stop offset="0%"  stop-color="#7111d1"/>
                             <stop offset="100%"  stop-color="#db5513"/>
                         </linearGradient>
-                        <linearGradient id="paintBorderColorDull" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%"  stop-color="#70558b"/>
-                            <stop offset="100%"  stop-color="#936d5b"/>
-                        </linearGradient>
+
                     </defs>
+                    <path id='paintBorderExtra1' fill='none' stroke="#7111d1"></path>
+                    <path id='paintBorderExtra2' fill='none' stroke="#db5513"></path>
                     <path id='paintBorder'></path>
                 </svg>
-                PAINT
+                <div class='text'>PAINT</div>
             </div>
         </li>
         <li id='info'>
             <div>
                 <svg>
                     <defs>
+                        
                         <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%"  stop-color="#f233ae"/>
                             <stop offset="100%"  stop-color="#3396df"/>
                         </linearGradient>
-                        <linearGradient id="infoBorderColorDull" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"  stop-color="#ae789a"/>
-                            <stop offset="100%"  stop-color="#6f8ca0"/>
-                        </linearGradient>
+
                     </defs>
+                    <path id='infoBorderExtra1' fill='none' stroke="#7111d1"></path>
+                    <path id='infoBorderExtra2' fill='none' stroke="#db5513"></path>
                     <path id='infoBorder' ></path>
                 </svg>
-                INFO
+                <div class='text'>INFO</div>
             </div>
         </li>
     </section>

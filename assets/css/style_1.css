@@ -68,12 +68,35 @@ div{
       width:10vw;
       height:10vw;
       display:grid;
-      align-content: center;
-      text-align: center;
-      border-radius: 10px;
+      justify-items: center;
+      align-items: center;
+      
     }
-    #menu li div:hover{
-      box-shadow:0px 0px 7px #ffffff, inset 0px 0px 7px #ffffff
+    #menu li > div:hover{
+      border-radius: 6px;
+      /* box-shadow: 0px 0px 7px #ffffff, 0px 0px 7px #ffffff, inset 0px 0px 7px #ffffff inset 0px 0px 7px #ffffff */
+      /* box-shadow:
+        0 0px 0.5px rgba(255, 255, 255, 0.348),
+        0 0px 1.3px rgba(255, 255, 255, 0.5),
+        0 0px 3px rgba(255, 255, 255, 0.652),
+        0 0px 10px rgba(255, 255, 255, 1),
+        inset 0 0px 0.5px rgba(255, 255, 255, 0.348),
+        inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
+        inset 0 0px 3px rgba(255, 255, 255, 0.652),
+        inset 0 0px 10px rgba(255, 255, 255, 1) */
+
+      box-shadow:
+        0 0px 1.3px rgba(255, 255, 255, 0.5),
+        0 0px 10px rgba(255, 255, 255, 1),
+        inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
+        inset 0 0px 10px rgba(255, 255, 255, 1)
+    }
+    #menu li div .text{
+      position:absolute;
+    }
+
+    #menu li div svg{
+      position: relative;;
     }
 
     #menu #work{
@@ -83,11 +106,7 @@ div{
         align-self: flex-end;
         border:none;
       }
-        #menu #work svg{
-          position:absolute;
-          width:inherit;
-          height:inherit; 
-        }
+        
 
 
     #menu #skill{
@@ -97,11 +116,6 @@ div{
         align-self:flex-end;
         border:none;
       }
-        #menu #skill svg{
-          position:absolute;
-          width:inherit;
-          height:inherit;
-        }
 
 
     #menu #paint{
@@ -112,11 +126,6 @@ div{
         align-self: flex-start;
         border:none;
       }
-        #menu #paint svg{
-          position:absolute;
-          width:inherit;
-          height:inherit; 
-        }
 
 
     #info{
@@ -127,11 +136,8 @@ div{
         align-self: flex-start;
         border:none;
       }
-        #menu #info svg{
-          position:absolute;
-          width:inherit;
-          height:inherit; 
-        }
+
+
 
 /* menu transition */
 .menutransition{
