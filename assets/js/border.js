@@ -1,21 +1,22 @@
+
 function border(id) {
   this.familyid = id;
   this.familyElem = document.getElementById(id);
   this.id = id + 'Border';
   this.elem = document.getElementById(this.id),
-    this.x = 0;
+  this.x = 0;
   this.y = 0;
   this.w = document.getElementById(this.id).parentElement.parentElement.clientWidth;
   this.h = document.getElementById(this.id).parentElement.parentElement.clientHeight;
-  this.border = 6;
-  this.multiply = 2;
+  this.border = 10;
+  this.multiply = 1;
   this.scale = 1;
-  this.radius = 5;
-  this.speed = [1, 5];
+  this.radius = 20;
+  this.speed = [1, 3];
   this.color = 'none';
   this.stroke = true;
   this.strokeColor = 'url(#' + this.elem.id + 'Color)';
-  this.strokeWidth = 5;
+  this.strokeWidth = 4;
   this.strokeWidthUnit = 'px';
   this.strokeLineCap = 'square'; //square, butt or round
   this.transitionValue = new transitionValue;
@@ -28,9 +29,9 @@ let biggeredElem = 'none';
 let menuExpanded = false;
 
 
+
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
-let hello = 'world'
 
 
 function createBorderPath(borders) {
@@ -42,14 +43,14 @@ function createBorderPath(borders) {
   this.path = borders.elem;
 
 
-  this.x = borders.x + borders.strokeWidth / 2;
-  this.y = borders.y + borders.strokeWidth / 2;
-  this.h = borders.h;
-  this.w = borders.w;
+  this.x = borders.x + borders.strokeWidth/2;
+  this.y = borders.y + borders.strokeWidth/2;
+  this.w = borders.w - borders.strokeWidth;
+  this.h = borders.h - borders.strokeWidth;
   this.border = borders.border;
   this.scale = borders.scale;
   this.allElems = this.getAllElems(this);
-  this.restElems = this.getRestElems(this);
+  this.restElems = getRestElems(this.familyElem);
 
   this.data;
   this.points = [];
@@ -63,11 +64,12 @@ function createBorderPath(borders) {
 
   //----call path-----
 
-  this.getPath(this);
-  this.createStroke(this);
+  // this.getPath(this);
+  // this.createStroke(this);
+  // this.createRectBorder(this)
 
   //-----------------
-
+  
 
   this.expandMenuHandler = this.expandMenu.bind(this);
   this.updateSizeHandler = this.updateSize.bind(this);
@@ -82,13 +84,13 @@ function createBorderPath(borders) {
 
 
     this.expandMenu(this);
-    this.createWavyAnimation(this);
+    // this.createWavyAnimation(this);
 
 
     setTimeout(() => {
       this.familyElem.addEventListener('click', this.callClickEvent);
       this.restElemsEventListener('add', 'callClickEvent')
-    }, this.transitionValue.duration * 1000 + 200);
+    }, this.transitionValue.duration * 1000 + 400);
 
   }
 
@@ -103,13 +105,12 @@ function createBorderPath(borders) {
 
 }
 
-
 createBorderPath.prototype.restElemsEventListener = function(listener, handler) {
-
+  
   for (let i = 0; i < this.restElems.length; i++) {
     let id = this.restElems[i].id.charAt(0).toUpperCase() + this.restElems[i].id.slice(1);
     let runBorderId = eval('run' + id + 'Border');
-
+    
     if (listener == 'add') {
 
       this.restElems[i].addEventListener('click', runBorderId[handler]);
@@ -120,10 +121,11 @@ createBorderPath.prototype.restElemsEventListener = function(listener, handler) 
   }
 }
 
+
 //---- expand Menu -------------------------------------------------------------------------
 
 createBorderPath.prototype.expandMenu = function() {
-
+  
   let widthBigger = this.getLeftRight(this).widthBigger;
   let widthSmaller = this.getLeftRight(this).widthSmaller;
   let heightBigger = this.getUpDown(this).heightBigger;
@@ -135,6 +137,7 @@ createBorderPath.prototype.expandMenu = function() {
   if (menuExpanded == false) {
 
     menuExpanded = true;
+    biggerElem = this.familyElem;
 
     this.familyParent.style.width = this.borders.transitionValue['max'] + '%';
 
@@ -159,7 +162,7 @@ createBorderPath.prototype.expandMenu = function() {
     this.familyElem.firstElementChild.style.width = this.familyParent.parentElement.clientWidth * ((this.transitionValue['max'] / 100) * (this.transitionValue['width'] / 100)) - this.padding + "px";
     this.familyElem.firstElementChild.style.height = this.familyParent.parentElement.clientHeight * (this.transitionValue['width'] / 100) - this.padding + "px";
 
-    biggerElem = this.familyElem;
+    
 
 
     for (let i = 0; i < document.getElementsByClassName('text').length; i++) {
@@ -179,6 +182,9 @@ createBorderPath.prototype.expandMenu = function() {
     }, this.borders.transitionValue.duration * 1000 + 100)
 
   } else if (biggerElem != this.familyElem) {
+
+    biggeredElem = biggerElem;
+    biggerElem = this.familyElem;
 
     for (let i = 0; i < this.allElems.length; i++) {
       this.allElems[i].classList.add("menutransition")
@@ -206,8 +212,7 @@ createBorderPath.prototype.expandMenu = function() {
     this.familyElem.firstElementChild.style.width = this.familyParent.parentElement.clientWidth * ((this.transitionValue['max'] / 100) * (this.transitionValue['width'] / 100)) - this.padding + "px";
     this.familyElem.firstElementChild.style.height = this.familyParent.parentElement.clientHeight * (this.transitionValue['width'] / 100) - this.padding + "px";
 
-    biggeredElem = biggerElem;
-    biggerElem = this.familyElem;
+   
 
     for (let i = 0; i < document.getElementsByClassName('text').length; i++) {
       if (document.getElementsByClassName('text')[i].innerHTML == biggerElem.id.toUpperCase()) {
@@ -230,6 +235,9 @@ createBorderPath.prototype.expandMenu = function() {
   } else {
 
     menuExpanded = false;
+    biggeredElem = 'none';
+    biggerElem = 'none';
+
     this.familyParent.style.width = this.transitionValue['min'] + '%';
 
     for (let i = 0; i < this.allElems.length; i++) {
@@ -239,8 +247,7 @@ createBorderPath.prototype.expandMenu = function() {
     }
     this.familyElem.firstElementChild.style.width = '';
     this.familyElem.firstElementChild.style.height = '';
-    biggeredElem = 'none';
-    biggerElem = 'none';
+
 
     this.borders.elem.parentElement.style.width = 'inherit';
     this.borders.elem.parentElement.style.height = 'inherit';
@@ -390,25 +397,37 @@ createBorderPath.prototype.getAllElems = function() {
   return allElems;
 }
 
-createBorderPath.prototype.getRestElems = function() {
-  let restElems = [];
 
-  for (let i = 0; i < this.familyParent.childNodes.length; i++) {
-    if (this.familyParent.childNodes[i].nodeType == 1 && this.familyParent.childNodes[i] != this.familyElem) {
-      restElems.push(this.familyParent.childNodes[i]);
-    }
-  }
+//---- create rectangle border ------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
-  return restElems;
+createBorderPath.prototype.createRectBorder = function(){
+
+  this.path.setAttributeNS(null, 'x' , this.x)
+  this.path.setAttributeNS(null, 'y' , this.y)
+  this.path.setAttributeNS(null, 'rx' , this.borders.border)
+  this.path.setAttributeNS(null, 'ry' , this.borders.border)
+  this.path.setAttributeNS(null, 'width' , this.w)
+  this.path.setAttributeNS(null, 'height' , this.h)
+  this.path.setAttributeNS(null, 'fill', this.borders.color);
+  this.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+  this.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth);
+
 }
 
-//---- create Border -------------------------------------------------------------------------
+createBorderPath.prototype.animRectBorder = function(){
+
+
+
+}
+//---- create Border ----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 
 createBorderPath.prototype.getDataPoints = function() {
 
-  let h = this.h - this.borders.strokeWidth;
-  let w = this.w - this.borders.strokeWidth;
+  let h = this.h ;
+  let w = this.w ;
 
   let points = [];
   let pointsTween = [];
@@ -623,13 +642,13 @@ createBorderPath.prototype.getDataPoints = function() {
   //----------------------------------
   data = "M" + positions['position' + 0].x + " " + positions['position' + 0].y + getLine(positions, 1).line + getCardinal(positions, 2).cardinal + getLine(positions, 3).line + getCardinal(positions, 4).cardinal + getLine(positions, 5).line + getCardinal(positions, 6).cardinal + getLine(positions, 7).line + getCardinal(positions, 0).cardinal;
 
-  // pushPoints(getCardinal, 0);
+  pushPoints(getCardinal, 0);
   pushPoints(getLine, 1);
-  // pushPoints(getCardinal, 2);
+  pushPoints(getCardinal, 2);
   pushPoints(getLine, 3);
-  // pushPoints(getCardinal, 4);
+  pushPoints(getCardinal, 4);
   pushPoints(getLine, 5);
-  // pushPoints(getCardinal, 6);
+  pushPoints(getCardinal, 6);
   pushPoints(getLine, 7);
 
   getTweenPoints.call(this)
@@ -653,17 +672,17 @@ createBorderPath.prototype.getDataPoints = function() {
     positions = getPositions.call(this);
 
     for (let i = 0; Object.keys(positions).length > i; i++) {
-      positions['position' + i].x = positions['position' + i].x - (newOldW - oldW) / 2 + (this.borders.extraBorderSpace / 2) + radius;
-      positions['position' + i].y = positions['position' + i].y - (newOldH - oldH) / 2 + (this.borders.extraBorderSpace / 2) + radius;
+      positions['position' + i].x = positions['position' + i].x - (newOldW - oldW) / 2 + (this.borders.extraBorderSpace ) + radius;
+      positions['position' + i].y = positions['position' + i].y - (newOldH - oldH) / 2 + (this.borders.extraBorderSpace ) + radius;
     }
 
-    // pushPointsTween(getCardinal, 0);
+    pushPointsTween(getCardinal, 0);
     pushPointsTween(getLine, 1);
-    // pushPointsTween(getCardinal, 2);
+    pushPointsTween(getCardinal, 2);
     pushPointsTween(getLine, 3);
-    // pushPointsTween(getCardinal, 4);
+    pushPointsTween(getCardinal, 4);
     pushPointsTween(getLine, 5);
-    // pushPointsTween(getCardinal, 6);
+    pushPointsTween(getCardinal, 6);
     pushPointsTween(getLine, 7);
 
 
@@ -692,7 +711,6 @@ createBorderPath.prototype.getPath = function() {
   this.pointsTween = dataPoints.pointsTween;
 
 
-
   this.path.setAttribute("d", dataPoints.data);
   this.path.setAttributeNS(null, 'fill', this.borders.color);
 
@@ -711,6 +729,8 @@ createBorderPath.prototype.updateSize = function() {
 
   this.resize = true;
   document.getElementById('demoSVG').style.filter = 'none'
+
+  
 
   if (menuExpanded == false) {
 
@@ -737,7 +757,7 @@ createBorderPath.prototype.updateSize = function() {
 
   }
 
-
+  
   setTimeout(() => {
     document.getElementById('demoSVG').style.filter = 'blur(4.5px)'
     this.resize = false;
@@ -746,7 +766,8 @@ createBorderPath.prototype.updateSize = function() {
 };
 
 
-//---- create Wavy Animation -------------------------------------------------------------------------
+//---- create Wavy Animation --------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 createBorderPath.prototype.createWavyAnimation = function() {
 
@@ -763,8 +784,6 @@ createBorderPath.prototype.createWavyAnimation = function() {
   if (this.resize == false) {
     this.expanding = this.expanding == false ? this.expanding = true : this.expanding = false;
     this.stop = stop == true ? stop = false : stop = false;
-
-
   }
 
   let tl = gsap.timeline({
@@ -872,7 +891,7 @@ createBorderPath.prototype.createWavyAnimation = function() {
         document.getElementById(this.borders.elem.id + 'Extra1').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth * 1.5 + this.borders.strokeWidthUnit);
         document.getElementById(this.borders.elem.id + 'Extra2').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
       }
-    }, this.borders.transitionValue.duration * 1000 + 100);
+    }, this.borders.transitionValue.duration * 1000 + 300);
 
   } else {
     
@@ -886,7 +905,7 @@ createBorderPath.prototype.createWavyAnimation = function() {
       animating = false;
 
 
-    }, this.borders.transitionValue.duration * 1000 + 100)
+    }, this.borders.transitionValue.duration * 1000 + 300)
   }
 
   function update(self) {
@@ -1001,6 +1020,18 @@ function random(min, max) {
 }
 
 
+
+// function getRestElems (elem) {
+//   let restElems = [];
+
+//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+//     if (elem.parentElement.childNodes[i].nodeType == 1 && elem.parentElement.childNodes[i] != elem) {
+//       restElems.push(elem.parentElement.childNodes[i]);
+//     }
+//   }
+
+//   return restElems;
+// }
 
 
 let workBorder = new border('work');

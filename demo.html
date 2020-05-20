@@ -7,50 +7,36 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
-
+   
 </head>
 <body id='body'>
     <section id='demo'>
         <div id='demoImage'>
-            <div >
-                <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <div>
+                <p>Sophia</p>
+                <p>Jiyeon Lee</p>
             </div>
+            <!-- <div> -->
+                <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" id='demoVideo' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                <iframe src="" id='demoVideo' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <!-- </div> -->
             <!-- <img src="assets/images/projects/chandelier_scene/chandelier_thumbnail.jpg" alt=""> -->
             <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" alt="" srcset="">  
+            <!-- <div>
+                <p>3D Artist</p>
+                <p>Fronthand Engineer</p>
+            </div> -->
         </div>
     </section>
 
-    <section id='menu' class="menutransition"> 
+    <section id='menu'> 
 
         <li id='work'>
             <div>          
                 <svg>
                     <defs>
-                        <defs>
-
-                            <filter id="glow" height="300%" width="300%" x="-75%" y="-75%">
-                                <!-- Thicken out the original shape -->
-                                <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="thicken" />
-                        
-                                <!-- Use a gaussian blur to create the soft blurriness of the glow -->
-                                <feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
-                        
-                                <!-- Change the colour -->
-                                <feFlood flood-color="rgb(255,255,255)" result="glowColor" />
-                        
-                                <!-- Color in the glows -->
-                                <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
-                        
-                                <!--	Layer the effects together -->
-                                <feMerge>
-                                    <feMergeNode in="softGlow_colored"/>
-                                    <feMergeNode in="SourceGraphic"/>
-                                </feMerge>
-                        
-                            </filter>
-                        
-                        </defs>
 
                         <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%"  stop-color="#3c26cd"/>
@@ -60,7 +46,10 @@
                     </defs>
                     <path id='workBorderExtra1' fill='none' stroke="#4b2fff"></path>
                     <path id='workBorderExtra2' fill='none' stroke="#50ffdc"></path>
-                    <path id='workBorder'></path>
+                    <!-- <path id='workBorder'></path> -->
+                    <rect id='workBorder'></rect>
+                    <!-- <rect  x="0" y="0" rx="20" ry="20" width="49" height="150" fill = 'red' stroke = 'yellow' stroke-width='5'></rect> -->
+                    
                 </svg>
                 <div class='text'>WORK</div>
             </div>
@@ -79,7 +68,8 @@
                     </defs>
                     <path id='skillBorderExtra1' fill='none' stroke="#ff1f1f"></path>
                     <path id='skillBorderExtra2' fill='none' stroke="#d8b43d"></path>
-                    <path id='skillBorder' ></path>
+                    <!-- <path id='skillBorder' ></path> -->
+                    <rect id='skillBorder'></rect>
                 </svg>
                 <div class='text'>SKILL</div>
             </div>

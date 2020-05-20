@@ -1,8 +1,8 @@
 *{
   margin: 0;
   padding: 0;
-  width: inherit;
-  height: inherit;
+  /* width: inherit;
+  height: inherit; */
   box-sizing: border-box;
 }
 
@@ -35,22 +35,34 @@ div{
       position: relative;
       width: inherit;
       height: inherit;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       /* margin:3rem; */
     }
-      #demo #demoImage div iframe{
+      #demo #demoImage div{
+        /* position: relative; */
+        width: auto;
+        height: auto;
+        /* text-align: center; */
+        /* margin:3rem; */
+      }
+      #demo #demoImage iframe{
         max-width: 70%;
         /* max-height: 70%; */
         margin: auto;
+        border: solid;
+        border-radius: 7px;
+        visibility: hidden;
       }
       #demo #demoImage img{
         position: absolute;
-        top:-7%;
+        top:0;
         left:0;
         width: inherit;
         height: inherit;
         z-index: -1;
-        filter: blur(4.5px);
+        /* filter: blur(4.5px); */
       }
   #menu{
     display:flex;
@@ -89,7 +101,9 @@ div{
     }
 
     #menu li div svg{
-      position: relative;;
+      position: relative;
+      width: inherit;
+      height: inherit;
     }
 
     #menu #work{
