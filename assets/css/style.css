@@ -48,12 +48,12 @@ div{
         /* margin:3rem; */
       }
       #demo #demoImage iframe{
-        max-width: 70%;
+        width: 70%;
         /* max-height: 70%; */
         margin: auto;
         border: solid;
         border-radius: 7px;
-        visibility: hidden;
+        /* visibility: hidden; */
       }
       #demo #demoImage img{
         position: absolute;
@@ -84,27 +84,32 @@ div{
       width:10vw;
       height:10vw;
       display:grid;
-      justify-items: center;
-      align-items: center;
-      
+      text-align: center ;
+      position: relative;
+      /* margin: auto; */
+      /* justify-items: center; */
     }
     #menu li > div:hover{
-      border-radius: 6px;
+      border-radius: 10px;
       box-shadow:
-        0 0px 1.3px rgba(255, 255, 255, 0.5),
-        0 0px 10px rgba(255, 255, 255, 1),
-        inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
-        inset 0 0px 10px rgba(255, 255, 255, 1)
+      0 0px 1.3px rgba(255, 255, 255, 0.5),
+      0 0px 10px rgba(255, 255, 255, 1),
+      inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
+      inset 0 0px 10px rgba(255, 255, 255, 1)
     }
-    #menu li div .text{
-      position:absolute;
-    }
-
-    #menu li div svg{
-      position: relative;
-      width: inherit;
-      height: inherit;
-    }
+    
+      #menu li div svg{
+        position: relative;
+        width: inherit;
+        height: inherit;
+      }
+      
+      #menu li div .text{
+        align-items: center;
+        width: inherit;
+        height: inherit;
+        position:absolute;
+      }
 
     #menu #work{
       justify-content: flex-end;
