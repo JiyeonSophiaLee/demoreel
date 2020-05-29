@@ -8,17 +8,16 @@ function border(id) {
   this.w = document.getElementById(this.id).parentElement.parentElement.clientWidth;
   this.h = document.getElementById(this.id).parentElement.parentElement.clientHeight;
   this.border = 10;
-  this.multiply = 1;
+  this.multiply = 3;
   this.scale = 1;
-  this.radius = 20;
-  this.speed = [1, 3];
+  this.radius = 10;
+  this.speed = [2, 3];
   this.color = 'none';
   this.stroke = true;
-  this.strokeColor = 'url(#' + this.path.id + 'Color)';
+  this.strokeColor = `url(#${this.path.id}Color)`;
   this.strokeWidth = 4;
   this.strokeWidthUnit = 'px';
   this.strokeLineCap = 'square'; //square, butt or round
-  this.transitionValue = new transitionValue;
   this.margin = 0;
   this.extraBorderSpace = 5;
 }
@@ -29,12 +28,13 @@ function border(id) {
 
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
+// let transitionValue = new transitionValue;
 
 let requestAni = null;
 let f = 0;
 let fSmaller = 0;
 let dir = 1;
-// let NF = this.borders.transitionValue.duration * 60;
+let NF = transitionValue.duration * 63;
 
 
 
@@ -45,11 +45,16 @@ function createBorderPath(borders) {
   this.elemParent = this.borders.elem.parentElement;
 
 
-  this.x = borders.x + borders.strokeWidth/2;
-  this.y = borders.y + borders.strokeWidth/2;
-  this.w = borders.w - borders.strokeWidth;
-  this.h = borders.h - borders.strokeWidth;
-  
+  this.x = this.borders.x + this.borders.strokeWidth/2 + this.borders.radius;
+  this.y = this.borders.y + this.borders.strokeWidth/2 + this.borders.radius;
+  this.w = this.borders.w - this.borders.strokeWidth;
+  this.h = this.borders.h - this.borders.strokeWidth;
+
+
+  // function resetXY(){
+  //   this.x = borders.x + borders.strokeWidth/2 + this.borders.radius;
+  //   this.y = borders.y + borders.strokeWidth/2 + this.borders.radius;
+  // }
   // this.allElems = this.getAllElems(this);
   // this.restElems = getRestElems(this.borders.elem);
 
@@ -74,10 +79,10 @@ function createBorderPath(borders) {
   this.createRectBorder(this)
 
   //-----------------
-  
+
 // this.animRectBorderHandler = this.animRectBorder.bind(this);
   // this.expandMenuHandler = this.expandMenu.bind(this);
-  // this.updateSizeHandler = this.updateSize.bind(this);
+  this.updateSizeHandler = this.updateSize.bind(this);
   // this.creatWavyAnimationHandler = this.createWavyAnimation.bind(this);
   // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
   // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
@@ -95,11 +100,11 @@ function createBorderPath(borders) {
   //   setTimeout(() => {
   //     this.borders.elem.addEventListener('click', this.callClickEvent);
   //     this.restElemsEventListener('add', 'callClickEvent')
-  //   }, this.borders.transitionValue.duration * 1000 + 400);
+  //   }, transitionValue.duration * 1000 + 400);
 
   // }
 
-  // window.addEventListener('resize', this.updateSizeHandler);
+  window.addEventListener('resize', this.updateSizeHandler);
   // this.borders.elem.addEventListener('click', this.callClickEvent);
 
 
@@ -111,11 +116,11 @@ function createBorderPath(borders) {
 }
 
 // createBorderPath.prototype.restElemsEventListener = function(listener, handler) {
-  
+
 //   for (let i = 0; i < this.restElems.length; i++) {
 //     let id = this.restElems[i].id.charAt(0).toUpperCase() + this.restElems[i].id.slice(1);
 //     let runBorderId = eval('run' + id + 'Border');
-    
+
 //     if (listener == 'add') {
 
 //       this.restElems[i].addEventListener('click', runBorderId[handler]);
@@ -131,13 +136,14 @@ function createBorderPath(borders) {
 
 createBorderPath.prototype.expandMenuIf = function(allElems) {
   
-  let widthBigger = this.getLeftRight(this).widthBigger;
-  let widthSmaller = this.getLeftRight(this).widthSmaller;
-  let heightBigger = this.getUpDown(this).heightBigger;
-  let heightSmaller = this.getUpDown(this).heightSmaller;
+  let leftRight = this.getLeftRight(this);
+  let upDown = this.getUpDown(this);
 
-  
-  // this.borders.elem.firstElementChild.classList.add('menutransition');
+  let widthBigger = leftRight.widthBigger;
+  let widthSmaller = leftRight.widthSmaller;
+  let heightBigger = upDown.heightBigger;
+  let heightSmaller = upDown.heightSmaller;
+
 
   // if (menuExpanded == false) {
 
@@ -150,16 +156,16 @@ createBorderPath.prototype.expandMenuIf = function(allElems) {
       allElems.firstElementChild.classList.add("menutransition")
     }
   })
-  
 
-  
-  
-  this.elemParent.style.width = this.borders.transitionValue['max'] + '%';
-  
-  widthBigger.forEach((widthBigger)=> widthBigger.style.width = this.borders.transitionValue['width'] + '%' )
-  widthSmaller.forEach((widthSmaller)=> widthSmaller.style.width = (100 - this.borders.transitionValue['width']) + '%' )
-  heightBigger.forEach((heightBigger)=> heightBigger.style.height = this.borders.transitionValue['width'] + '%' )
-  heightSmaller.forEach((heightSmaller)=> heightSmaller.style.height = (100 - this.borders.transitionValue['width']) + '%')
+
+
+
+  this.elemParent.style.width = transitionValue['max'] + '%';
+
+  widthBigger.forEach((widthBigger)=> widthBigger.style.width = transitionValue['width'] + '%' )
+  widthSmaller.forEach((widthSmaller)=> widthSmaller.style.width = (100 - transitionValue['width']) + '%' )
+  heightBigger.forEach((heightBigger)=> heightBigger.style.height = transitionValue['width'] + '%' )
+  heightSmaller.forEach((heightSmaller)=> heightSmaller.style.height = (100 - transitionValue['width']) + '%')
 
 
 
@@ -174,13 +180,12 @@ createBorderPath.prototype.expandMenuIf = function(allElems) {
 
 
   this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-  this.animRectBorderBigger(this)
-  
-  
+  this.animRectBorder(this)
+
 
 
   setTimeout(() => {
-    
+
     this.borders.elem.firstElementChild.style.width = '100%'
     this.borders.elem.firstElementChild.style.height = '100%'
 
@@ -193,28 +198,30 @@ createBorderPath.prototype.expandMenuIf = function(allElems) {
       }
 
     })
-  }, this.borders.transitionValue.duration * 1000);
+  }, transitionValue.duration * 1000);
 
   //   for (let i = 0; i < document.getElementsByClassName('text').length; i++) {
   //     if (document.getElementsByClassName('text')[i].innerHTML == this.borders.familyElem.id.toUpperCase()) {
   //       document.getElementsByClassName('text')[i].style.visibility = 'hidden'
   //     }
   //   }
-  
+
   //   document.getElementById('demoSVG').style.filter = 'none'
-  
-  
+
+
     // setTimeout(() => {
-    
-  
+
+
     //   // document.getElementById('demoSVG').style.filter = 'blur(4.5px)'
-    // }, this.borders.transitionValue.duration * 1000 + 100)
+    // }, transitionValue.duration * 1000 + 100)
 }
 
 
 createBorderPath.prototype.expandMenuElseIf = function(allElems) {
-  this.smallMenuSize = this.borders.elem.firstElementChild.clientWidth;
 
+  // console.log('expand menu else if');
+  this.smallMenuSize = this.borders.elem.firstElementChild.clientWidth;
+  this.biggeredElemPath = biggeredElem == null ? 1 : document.getElementById(biggeredElem.id + 'Border');
 
   let widthBigger = this.getLeftRight(this).widthBigger;
   let widthSmaller = this.getLeftRight(this).widthSmaller;
@@ -232,22 +239,21 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
   // document.getElementById('work').firstElementChild.classList.add("menutransition");
   // biggeredElem.firstElementChild.classList.add("menutransition")
 
-  
 
-  widthBigger.forEach((widthBigger)=> widthBigger.style.width = this.borders.transitionValue['width'] + '%' )
-  widthSmaller.forEach((widthSmaller)=> widthSmaller.style.width = (100 - this.borders.transitionValue['width']) + '%' )
-  heightBigger.forEach((heightBigger)=> heightBigger.style.height = this.borders.transitionValue['width'] + '%' )
-  heightSmaller.forEach((heightSmaller)=> heightSmaller.style.height = (100 - this.borders.transitionValue['width']) + '%')
-  
 
-  
-  
-  
-  
+  widthBigger.forEach((widthBigger)=> widthBigger.style.width = transitionValue['width'] + '%' )
+  widthSmaller.forEach((widthSmaller)=> widthSmaller.style.width = (100 - transitionValue['width']) + '%' )
+  heightBigger.forEach((heightBigger)=> heightBigger.style.height = transitionValue['width'] + '%' )
+  heightSmaller.forEach((heightSmaller)=> heightSmaller.style.height = (100 - transitionValue['width']) + '%')
+
+
+
+
+
+
   this.subMenuChanging()
   this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
   this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
-  
   // biggeredElem.firstElementChild.style.width = this.smallMenuSize + 'px';
   // biggeredElem.firstElementChild.style.height = this.smallMenuSize + 'px';
   biggeredElem.firstElementChild.classList.add("menutransition");
@@ -257,7 +263,7 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 
 
   // biggeredElem.firstElementChild.firstElementChild.classList.add("menutransition");
-  
+
   // biggeredElem.firstElementChild.firstElementChild.style.width = this.smallMenuSize+'px';
   // biggeredElem.firstElementChild.firstElementChild.style.height = this.smallMenuSize+'px';
 
@@ -268,8 +274,19 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 
 
   this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-  
-  this.animRectBorderBigger(this)
+  this.biggeredElemPath.setAttributeNS(null, 'stroke', eval(biggeredElem.id+'Border').strokeColor);
+
+  //--- stop biggredElem wavy animation ---------------------------------------------------------
+  // console.log('stop wavey', biggeredElem.id);
+
+
+  document.getElementById(biggeredElem.id+'BorderWavy1').setAttribute('d','');
+  document.getElementById(biggeredElem.id+'BorderWavy2').setAttribute('d','');
+  eval('run'+biggeredElem.id.charAt(0).toUpperCase() + biggeredElem.id.slice(1)+'Border').stopTl()
+  //-----------------------------------------------------------------------------------------------
+  this.animRectBorder(this)
+
+  // console.log(document.getElementById(biggeredElem.id+'BorderWavy1'))
   // this.animRectBorderSmaller(this)
 
 
@@ -279,11 +296,12 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
   //       document.getElementsByClassName('text')[i].style.visibility = 'hidden';
   //     }
   //   }
-  
+
 setTimeout(() => {
-    // biggeredElem.firstElementChild.style.width = '';
-    // biggeredElem.firstElementChild.style.height = '';
-    
+
+    this.borders.elem.firstElementChild.style.width = '100%'
+    this.borders.elem.firstElementChild.style.height = '100%'
+
   allElems.forEach((allElems)=> {
     allElems.classList.remove("menutransition")
     biggeredElem.firstElementChild.classList.remove("menutransition");
@@ -293,7 +311,9 @@ setTimeout(() => {
     }
   })
 
-}, this.borders.transitionValue.duration * 1000);
+}, transitionValue.duration * 1000);
+}
+
 //--------------------------------------------------------------------------------------------------------
   //   setTimeout(() => {
   //     this.borders.elem.firstElementChild.style.width = '100%';
@@ -305,15 +325,16 @@ setTimeout(() => {
   //       }
   //     }
 
-  //   }, this.borders.transitionValue.duration * 1000 + 100)
+  //   }, transitionValue.duration * 1000 + 100)
 
+  createBorderPath.prototype.expandMenuElse = function(){
   // } else {
 
   //   menuExpanded = false;
   //   biggeredElem = 'none';
   //   biggerElem = 'none';
 
-  //   this.elemParent.style.width = this.borders.transitionValue['min'] + '%';
+  //   this.elemParent.style.width = transitionValue['min'] + '%';
 
   //   for (let i = 0; i < this.allElems.length; i++) {
   //     this.allElems[i].classList.add("menutransition")
@@ -338,7 +359,7 @@ setTimeout(() => {
   //       }
   //     }
   //     document.getElementById('demoSVG').style.filter = 'blur(4.5px)'
-  //   }, this.borders.transitionValue.duration * 1000);
+  //   }, transitionValue.duration * 1000);
 
   // }
 
@@ -352,7 +373,7 @@ setTimeout(() => {
 
   //   }
 
-  // }, this.borders.transitionValue.duration * 1000);
+  // }, transitionValue.duration * 1000);
 
 
 
@@ -371,6 +392,10 @@ setTimeout(() => {
   // }
 
 };
+
+
+
+
 
 createBorderPath.prototype.getLeftRight = function() {
 
@@ -448,20 +473,20 @@ createBorderPath.prototype.getUpDown = function() {
 createBorderPath.prototype.getFirstNum = function() {
 
   let j = 0;
+
   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
     j = j + 1;
     if (this.elemParent.childNodes[i].nodeType != 1) {
       j = j - 1;
     }
     if (this.elemParent.childNodes[i] === this.borders.elem) {
-
       return j;
     }
   }
 }
 createBorderPath.prototype.subMenuChanging = function(){
-  this.subMenuChangingWidth = this.elemParent.parentElement.clientWidth * ((this.borders.transitionValue['max'] / 100) * (this.borders.transitionValue['width'] / 100)) - this.padding;
-  this.subMenuChangingHeight =  this.elemParent.parentElement.clientHeight * (this.borders.transitionValue['width'] / 100) - this.padding
+  this.subMenuChangingWidth = this.elemParent.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['width'] / 100)) - this.padding;
+  this.subMenuChangingHeight =  this.elemParent.parentElement.clientHeight * (transitionValue['width'] / 100) - this.padding
 }
 // createBorderPath.prototype.getAllElems = function() {
 //   let allElems = [];
@@ -481,6 +506,12 @@ createBorderPath.prototype.subMenuChanging = function(){
 
 createBorderPath.prototype.createRectBorder = function(){
 
+  this.borders.path.parentElement.style.width = this.borders.w + this.borders.radius * 2 + 'px';
+  this.borders.path.parentElement.style.height = this.borders.h + this.borders.radius * 2 + 'px';
+  this.borders.path.parentElement.style.top = `-${this.borders.radius}px`;
+  this.borders.path.parentElement.style.left = `-${this.borders.radius}px`;
+
+
   this.borders.path.setAttributeNS(null, 'x' , this.x)
   this.borders.path.setAttributeNS(null, 'y' , this.y)
   this.borders.path.setAttributeNS(null, 'rx' , this.borders.border)
@@ -493,47 +524,54 @@ createBorderPath.prototype.createRectBorder = function(){
 
 }
 
-createBorderPath.prototype.animRectBorderBigger = function(){
+createBorderPath.prototype.animRectBorder = function(){
   f += dir;
-  let NF = this.borders.transitionValue.duration * 60 + 3;
-  
-  let biggeredElemPath = document.getElementById(biggeredElem.id + 'Border');
-  
-  
-  // let goalWidth = this.borders.elem.firstElementChild.clientWidth - this.borders.strokeWidth
-  // let goalHeight = this.borders.elem.firstElementChild.clientHeight - this.borders.strokeWidth
-  // let widthUnit = goalWidth / NF;
-  // let currentWidth = this.borders.path.parentElement.parentElement.clientWidth;
-  
-  
-  this.borders.path.setAttribute('width',this.borders.elem.firstElementChild.clientWidth - this.borders.strokeWidth);
-  this.borders.path.setAttribute('height',this.borders.elem.firstElementChild.clientHeight - this.borders.strokeWidth);
-  
+
+  this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.borders.radius*2 + 'px';
+  this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.borders.radius*2 + 'px';
+  this.borders.path.setAttributeNS(null,'width',this.borders.elem.firstElementChild.clientWidth - this.borders.strokeWidth);
+  this.borders.path.setAttributeNS(null,'height',this.borders.elem.firstElementChild.clientHeight - this.borders.strokeWidth);
 
 
-  if(biggeredElem != 'none'){
-    biggeredElemPath.parentElement.style.width =  biggeredElemPath.parentElement.parentElement.clientWidth + 'px';
-    biggeredElemPath.parentElement.style.height = biggeredElemPath.parentElement.parentElement.clientHeight + 'px';
-    biggeredElemPath.setAttribute('width', biggeredElemPath.parentElement.clientWidth - this.borders.strokeWidth);
-    biggeredElemPath.setAttribute('height', biggeredElemPath.parentElement.clientHeight - this.borders.strokeWidth);
+
+  if(biggeredElem != null){
+
+    // console.log(document.getElementById(biggeredElem.id+'BorderWavy1'))
+    this.biggeredElemPath.parentElement.style.width =  this.biggeredElemPath.parentElement.parentElement.clientWidth + this.borders.radius*2 + 'px';
+    // console.log( this.biggeredElemPath.parentElement.parentElement, this.biggeredElemPath.parentElement.parentElement.clientWidth ,this.biggeredElemPath.parentElement.parentElement.clientHeight + this.borders.radius*2)
+    // console.log(this.biggeredElemPath.parentElement.clientWidth , this.biggeredElemPath.parentElement.parentElement.clientWidth + this.borders.radius*2 )
+    this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.borders.radius*2 + 'px';
+    this.biggeredElemPath.setAttributeNS(null,'width', this.biggeredElemPath.parentElement.parentElement.clientWidth - this.borders.strokeWidth);
+    this.biggeredElemPath.setAttributeNS(null,'height', this.biggeredElemPath.parentElement.parentElement.clientHeight - this.borders.strokeWidth);
   }
 
   if(!(f%NF)){
     this.stopAni();
-    this.borders.path.setAttribute('width',this.subMenuChangingWidth-this.borders.strokeWidth);
-    this.borders.path.setAttribute('height',this.subMenuChangingHeight-this.borders.strokeWidth);
-    
 
-    biggeredElemPath.parentElement.style.width = '';
-    biggeredElemPath.parentElement.style.height = '';
-    biggeredElemPath.setAttribute('width', this.smallMenuSize - this.borders.strokeWidth);
-    biggeredElemPath.setAttribute('height', this.smallMenuSize - this.borders.strokeWidth);
+    this.w = this.subMenuChangingWidth - this.borders.strokeWidth ;
+    this.h = this.subMenuChangingHeight - this.borders.strokeWidth ;
+
+    this.borders.path.parentElement.style.width = this.w + this.borders.radius*2 + 'px';
+    this.borders.path.parentElement.style.height = this.h + + this.borders.radius*2 + 'px';
+    this.borders.path.setAttributeNS(null,'width',this.w);
+    this.borders.path.setAttributeNS(null,'height',this.h);
+
+
+    // if(biggeredElem != null){
+    //   this.biggeredElemPath.parentElement.style.width = '';
+    //   this.biggeredElemPath.parentElement.style.height = '';
+    //   this.biggeredElemPath.setAttribute('width', this.smallMenuSize - this.borders.strokeWidth);
+    //   this.biggeredElemPath.setAttribute('height', this.smallMenuSize - this.borders.strokeWidth);
+    // }
     f = 0;
+
+    this.createWavyAnimation(this);
+
     return
   }
 
-  requestAni = requestAnimationFrame(()=>this.animRectBorderBigger(this));
-  
+  requestAni = requestAnimationFrame(()=>this.animRectBorder(this));
+
 }
 
 
@@ -541,287 +579,121 @@ createBorderPath.prototype.stopAni = function() {
   cancelAnimationFrame(requestAni);
   requestAni = null;
 }
+
 //---- create Border ----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 
 
-// createBorderPath.prototype.getDataPoints = function() {
-
-//   let h = this.h ;
-//   let w = this.w ;
-
-//   let points = [];
-//   let pointsTween = [];
-
-//   let borders = this.borders
-
-//   if (this.borders.border > w / 2) {
-//     return this.borders.border = w / 2 - 10;
-//   }
-
-//   //----setup svg size---------------------------------------------
-
-//   this.borders.elem.parentElement.style.width = this.borders.elem.parentElement.parentElement.clientWidth + 'px';
-//   this.borders.elem.parentElement.style.height = this.borders.elem.parentElement.parentElement.clientHeight + 'px';
-
-//   //---------------------------------------------------------------
-
-//   let getPositions = function() {
-//     return {
-//       position0: {
-//         x: this.x + borders.border,
-//         y: this.y
-//       },
-//       position1: {
-//         x: this.x + w - borders.border,
-//         y: this.y
-//       },
-//       position2: {
-//         x: this.x + w,
-//         y: this.y + borders.border
-//       },
-//       position3: {
-//         x: this.x + w,
-//         y: this.y + h - borders.border
-//       },
-//       position4: {
-//         x: this.x + w - borders.border,
-//         y: this.y + h
-//       },
-//       position5: {
-//         x: this.x + borders.border,
-//         y: this.y + h
-//       },
-//       position6: {
-//         x: this.x,
-//         y: this.y + h - borders.border
-//       },
-//       position7: {
-//         x: this.x,
-//         y: this.y + borders.border
-//       }
-//     }
-//   }
-
-
-//   let positions = getPositions.call(this);
-
-
-
-
-//   //----svg path-------------------------
-
-
-
-
-//   function getLine(positions, num) {
-
-//     let line = " ";
-//     let points = [];
-
-//     if (borders.multiply <= 1) {
-
-//       line += "L" + positions['position' + num].x + " " + positions['position' + num].y;
-
-//       points.push({
-//         x: positions['position' + num].x,
-//         y: positions['position' + num].y
-//       });
-
-//     } else {
-
-//       let slice = borders.multiply;
-
-//       let length = {
-//         x: positions['position' + num].x - positionMinus(num).x,
-//         y: positions['position' + num].y - positionMinus(num).y
-//       }
-
-//       for (let j = slice; j > 0; j--) {
-
-//         line += "L";
-
-//         line += positionMinus(num).x + length.x / j + " ";
-//         line += positionMinus(num).y + length.y / j + " ";
-
-//         points.push({
-//           x: positionMinus(num).x + length.x / j,
-//           y: positionMinus(num).y + length.y / j
-//         })
-
-//       }
-
-//     }
-
-//     return {
-//       line: line,
-//       points: points
-//     }
-
-//   }
-
-//   function getCardinal(positions, num) {
-
-//     let r = borders.border;
-//     let cardinal = " ";
-//     let points = [];
-
-//     let x1, y1, x2, y2;
-
-
-//     if (positions['position' + num].x - positionPlus(num).x == 0) {
-
-//       x1 = positions['position' + num].x - positionMinus(num).x > 0 ? positionMinus(num).x + r / 2 : positionMinus(num).x - r / 2;
-//       y1 = positionMinus(num).y;
-
-//       x2 = positions['position' + num].x;
-//       y2 = positions['position' + num].y - positionMinus(num).y > 0 ? positions['position' + num].y - r / 2 : positions['position' + num].y + r / 2;
-
-//     } else {
-
-//       x1 = positionMinus(num).x;
-//       y1 = positions['position' + num].y - positionMinus(num).y > 0 ? positionMinus(num).y + r / 2 : positionMinus(num).y - r / 2;
-
-//       x2 = positions['position' + num].x - positionMinus(num).x > 0 ? positions['position' + num].x - r / 2 : positions['position' + num].x + r / 2;
-//       y2 = positions['position' + num].y;
-
-//     }
-
-//     cardinal += "C" + x1 + " " + y1 + " " + x2 + " " + y2 + " " + positions['position' + num].x + " " + positions['position' + num].y;
-
-//     points.push({
-//       x: positions['position' + num].x,
-//       y: positions['position' + num].y
-//     });
-
-//     return {
-//       cardinal: cardinal,
-//       points: points
-//     };
-//   }
-
-
-
-
-//   //---get positions of an object------------------------------------------------------------------------------------------------------------  
-
-
-
-
-//   function positionMinus(num) {
-//     function getMinus(num) {
-//       let getMinus = (num - 1 + Object.keys(positions).length) % Object.keys(positions).length;
-
-//       return getMinus;
-//     }
-
-//     return positions['position' + getMinus(num)];
-//   }
-
-//   function positionPlus(num) {
-//     function getPlus(num) {
-//       let getPlus = (num + 1 + Object.keys(positions).length) % Object.keys(positions).length;
-
-//       return getPlus;
-//     }
-
-//     return positions['position' + getPlus(num)];
-//   }
-
-
-
-
-//   //-------Scale & Margin   //  svg size for Extra Border Space----------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-//   let oldW = w;
-//   let oldH = h;
-
-//   w = w * borders.scale - borders.margin * 2;
-//   h = h * borders.scale - borders.margin * 2;
-
-//   this.borders.elem.parentElement.style.width = this.borders.elem.parentElement.clientWidth + this.borders.extraBorderSpace * 2 + 'px';
-//   this.borders.elem.parentElement.style.height = this.borders.elem.parentElement.clientHeight + this.borders.extraBorderSpace * 2 + 'px';
-
-//   this.borders.elem.parentElement.style.top = '-' + (this.borders.extraBorderSpace) + 'px'
-//   this.borders.elem.parentElement.style.left = '-' + (this.borders.extraBorderSpace) + 'px'
-
-//   positions = getPositions.call(this);
-
-
-
-//   for (let i = 0; Object.keys(positions).length > i; i++) {
-//     positions['position' + i].x = positions['position' + i].x - (w - oldW) / 2 + (this.borders.extraBorderSpace);
-//     positions['position' + i].y = positions['position' + i].y - (h - oldH) / 2 + (this.borders.extraBorderSpace);
-//   }
-
-
-
-
-//   //----------------------------------
-//   data = "M" + positions['position' + 0].x + " " + positions['position' + 0].y + getLine(positions, 1).line + getCardinal(positions, 2).cardinal + getLine(positions, 3).line + getCardinal(positions, 4).cardinal + getLine(positions, 5).line + getCardinal(positions, 6).cardinal + getLine(positions, 7).line + getCardinal(positions, 0).cardinal;
-
-//   pushPoints(getCardinal, 0);
-//   pushPoints(getLine, 1);
-//   pushPoints(getCardinal, 2);
-//   pushPoints(getLine, 3);
-//   pushPoints(getCardinal, 4);
-//   pushPoints(getLine, 5);
-//   pushPoints(getCardinal, 6);
-//   pushPoints(getLine, 7);
-
-//   getTweenPoints.call(this)
-
-
-//   function pushPoints(curve, num) {
-//     for (let i = 0; i < curve(positions, num).points.length; i++) {
-//       points.push(curve(positions, num).points[i]);
-//     }
-//   }
-
-//   function getTweenPoints() {
-//     let radius = this.borders.radius;
-
-//     let newOldW = w;
-//     let newOldH = h;
-
-//     w = w - radius * 2;
-//     h = h - radius * 2;
-
-//     positions = getPositions.call(this);
-
-//     for (let i = 0; Object.keys(positions).length > i; i++) {
-//       positions['position' + i].x = positions['position' + i].x - (newOldW - oldW) / 2 + (this.borders.extraBorderSpace ) + radius;
-//       positions['position' + i].y = positions['position' + i].y - (newOldH - oldH) / 2 + (this.borders.extraBorderSpace ) + radius;
-//     }
-
-//     pushPointsTween(getCardinal, 0);
-//     pushPointsTween(getLine, 1);
-//     pushPointsTween(getCardinal, 2);
-//     pushPointsTween(getLine, 3);
-//     pushPointsTween(getCardinal, 4);
-//     pushPointsTween(getLine, 5);
-//     pushPointsTween(getCardinal, 6);
-//     pushPointsTween(getLine, 7);
-
-
-//     function pushPointsTween(curve, num) {
-//       for (let i = 0; i < curve(positions, num).points.length; i++) {
-//         pointsTween.push(curve(positions, num).points[i]);
-//       }
-//     }
-
-//   }
-
-//   return {
-//     data: data,
-//     points: points,
-//     pointsTween: pointsTween
-//   }
-
-// };
+createBorderPath.prototype.getDataPoints = function() {
+
+  let w = this.w + this.borders.radius;
+  let h = this.h + this.borders.radius;
+
+
+  this.x = this.borders.x + this.borders.strokeWidth/2 + this.borders.radius - this.borders.radius/2;
+  this.y = this.borders.y + this.borders.strokeWidth/2 + this.borders.radius - this.borders.radius/2;
+  // this.x = this.x - this.borders.radius/2;
+  // this.y = this.y - this.borders.radius/2;
+
+  let points = [];
+  let pointsTween = [];
+
+  if (this.borders.border > this.borders.w / 2) {
+    return this.borders.border = this.borders.w / 2 - 10;
+  }
+
+  let getPositions = function() {
+    return {
+      position0: {
+        x: this.x + this.borders.border,
+        y: this.y
+      },
+      position1: {
+        x: this.x + w - this.borders.border,
+        y: this.y
+      },
+      position2: {
+        x: this.x + w,
+        y: this.y + this.borders.border
+      },
+      position3: {
+        x: this.x + w,
+        y: this.y + h - this.borders.border
+      },
+      position4: {
+        x: this.x + w - this.borders.border,
+        y: this.y + h
+      },
+      position5: {
+        x: this.x + this.borders.border,
+        y: this.y + h
+      },
+      position6: {
+        x: this.x,
+        y: this.y + h - this.borders.border
+      },
+      position7: {
+        x: this.x,
+        y: this.y + this.borders.border
+      }
+    }
+  }
+
+
+  let positions = getPositions.call(this);
+
+
+  points1 = getMutipliedPoints(this,positions,0);
+  points2 = getMutipliedPoints(this,positions,1);
+
+  //--- get points for tween ---------------------------------------------------------------------------------
+
+  w = this.w - this.borders.radius;
+  h = this.h - this.borders.radius;
+
+  this.x = this.x + this.borders.radius;
+  this.y = this.y + this.borders.radius;
+
+
+  positions = getPositions.call(this);
+  pointsTween1 = getMutipliedPoints(this,positions,0)
+  pointsTween2 = getMutipliedPoints(this,positions,1)
+
+  return {points1:points1,points2:points2 , pointsTween1:pointsTween1,pointsTween2:pointsTween2}
+
+  function getMutipliedPoints(self,positions,plusNum){
+    let slice = self.borders.multiply + plusNum;
+    let slicedLength =[];
+
+    Object.values(positions).forEach((value,i,arr)=>{
+
+      if((i%2)==0){
+
+        let length = {
+          x: arr[i+1].x - value.x,
+          y: arr[i+1].y - value.y
+        }
+        //---smoodness of wavy animation---------
+
+        slicedLength.push({
+          x: value.x,
+          y: value.y
+        })
+
+        //----------------------------------------
+        for(let j=1; j < slice +1; j++){
+          slicedLength.push({
+            x : value.x  + (length.x * ( j / slice)),
+            y : value.y + (length.y * ( j / slice))
+          })
+        }
+
+      }
+    })
+    return slicedLength;
+  }
+
+};
 
 // createBorderPath.prototype.getPath = function() {
 
@@ -845,286 +717,159 @@ createBorderPath.prototype.stopAni = function() {
 //   }
 // }
 
-// createBorderPath.prototype.updateSize = function() {
-
-
-//   this.resize = true;
-//   document.getElementById('demoSVG').style.filter = 'none'
-
-  
-
-//   if (menuExpanded == false) {
-
-//     this.w = this.borders.elem.parentElement.parentElement.clientWidth;
-//     this.h = this.borders.elem.parentElement.parentElement.clientHeight;
-
-//     this.getPath.call(this);
-
-//   } else {
-
-//     this.w = this.borders.elem.parentElement.parentElement.clientWidth;
-//     this.h = this.borders.elem.parentElement.parentElement.clientHeight;
-
-//     this.getPath.call(this);
-
-
-//     if (this.borders.familyElem.id == biggerElem.id) {
-
-//       document.getElementById(this.borders.elem.id + 'Extra1').setAttribute("stroke-width", '0px');
-//       document.getElementById(this.borders.elem.id + 'Extra2').setAttribute("stroke-width", '0px');
-
-//       this.createWavyAnimation(this)
-//     }
-
+createBorderPath.prototype.updateSize = function() {
+  // console.log('update size ', this.borders.elem.id);
+  //   this.resize = true;
+  //   document.getElementById('demoSVG').style.filter = 'none'
+//   if(this.borders.elem.id == biggerElem.id){
+// console.log(this.borders.elem.firstElementChild.clientWidth + this.borders.radius*2,this.borders.elem.id)
 //   }
+this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.borders.radius*2 + 'px'
+this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.borders.radius*2 + 'px'
+this.borders.path.setAttributeNS(null,'width',this.borders.elem.firstElementChild.clientWidth - this.borders.strokeWidth);
+this.borders.path.setAttributeNS(null,'height',this.borders.elem.firstElementChild.clientHeight - this.borders.strokeWidth);
 
-  
-//   setTimeout(() => {
-//     document.getElementById('demoSVG').style.filter = 'blur(4.5px)'
-//     this.resize = false;
-//   }, 1);
-
-// };
+// console.log('menuExpanded', menuExpanded, this);
+  if (menuExpanded) {
+    if (this.borders.elem == biggerElem) {
+      this.w = this.borders.elem.firstElementChild.clientWidth - this.borders.strokeWidth;
+      this.h = this.borders.elem.firstElementChild.clientHeight - this.borders.strokeWidth;
+      this.createWavyAnimation(this);
+    }
+  }
+};
 
 
 // //---- create Wavy Animation --------------------------------------------------------------------
 // //-----------------------------------------------------------------------------------------------
 
-// createBorderPath.prototype.createWavyAnimation = function() {
-
-//   let animating = false;
-
-//   let newPoints1 = [];
-//   let newPointsTween1 = [];
-//   let newPoints2 = [];
-//   let newPointsTween2 = [];
-
-//   let strokeColor = this.borders.strokeColor;
 
 
-//   if (this.resize == false) {
-//     this.expanding = this.expanding == false ? this.expanding = true : this.expanding = false;
-//     this.stop = stop == true ? stop = false : stop = false;
-//   }
+createBorderPath.prototype.createWavyAnimation = function() {
+  // console.log('createWavyAnimation ', this.borders.elem.id);
 
-//   let tl = gsap.timeline({
-//     onUpdate: update,
-//     onUpdateParams: [this]
-//   });
-//   tl.to(this.borders.path, {
-//     duration: this.borders.transitionValue.duration + 0.1,
-//     x: 0,
-//     y: 0
-//   });
-
-
-//   if (this.expanding == true) {
-
-//     this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-
-//     setTimeout(() => {
-//       //------- get new Points for extraBorderSpace ---------------
-//       let originalW = this.w;
-//       let originalH = this.h;
-//       let originalXY = this.points;
-
-//       this.w = this.w - this.borders.extraBorderSpace;
-//       this.h = this.h - this.borders.extraBorderSpace;
-
-//       this.getDataPoints(this)
-
-//       for (let i = 0; i < this.points.length; i++) {
-//         let x = this.points[i].x + this.borders.extraBorderSpace / 2;
-//         let y = this.points[i].y + this.borders.extraBorderSpace / 2;
-
-//         newPoints1.push({
-//           x: x,
-//           y: y
-//         });
-//         newPoints2.push({
-//           x: x,
-//           y: y
-//         });
-//       }
-
-//       //------- get new PointsTween for extraBorderSpace ------------------------------------------------------
-
-//       this.w = originalW + this.borders.extraBorderSpace;
-//       this.h = originalH + this.borders.extraBorderSpace;
-
-//       this.getDataPoints(this)
-
-//       for (let i = 0; i < this.points.length; i++) {
-//         let x = originalXY[i].x - this.borders.extraBorderSpace / 2;
-//         let y = originalXY[i].y - this.borders.extraBorderSpace / 2;
-
-//         newPointsTween1.push({
-//           x: x,
-//           y: y
-//         });
-//         newPointsTween2.push({
-//           x: x,
-//           y: y
-//         });
-//       }
+  if (!this.tl) {
+    // console.log('creating new');
+    this.tl = gsap.timeline({
+      onUpdate: update,
+      onUpdateParams: [this]
+      
+    });
+    let dataPoints = this.getDataPoints(this);
+  
+    let points1 = dataPoints.points1;
+    let points2 = dataPoints.points2;
 
 
-//       for (let i = 0; i < this.points.length; i++) {
+    let pointsTween1 = dataPoints.pointsTween1;
+    let pointsTween2 = dataPoints.pointsTween2;
+
+  } else {
+    this.tl.resume();
+    
+    
+    dataPoints = this.getDataPoints(this);
+    
+    points1 = dataPoints.points1;
+    points2 = dataPoints.points2;
+    
+    
+    pointsTween1 = dataPoints.pointsTween1;
+    pointsTween2 = dataPoints.pointsTween2;
+  }
 
 
-//         let duration = random(this.borders['speed'][0], this.borders['speed'][1]);
+      for (let i = 0; i < points1.length; i++) {
+
+        let duration = random(this.borders['speed'][0], this.borders['speed'][1]);
 
 
-//         //   // let tween = gsap.to(this.points[i], {
-//         //   //   duration: duration,
-//         //   //   x: this.pointsTween[i].x,
-//         //   //   y: this.pointsTween[i].y,
-//         //   //   repeat: -1,
-//         //   //   yoyo: true,
-//         //   //   ease: Sine.easeInOut
-//         //   // });
 
-//         let tween1 = gsap.to(newPoints1[i], {
-//           duration: duration,
-//           x: newPointsTween1[i].x,
-//           y: newPointsTween1[i].y,
-//           repeat: -1,
-//           yoyo: true,
-//           ease: Sine.easeInOut
-//         });
+        // let tween1 = gsap.to(this.points[i], {
+        //   duration: duration,
+        //   x: this.pointsTween[i].x,
+        //   y: this.pointsTween[i].y,
+        //   repeat: -1,
+        //   yoyo: true,
+        //   ease: Sine.easeInOut
+        // });
 
-//         let tween2 = gsap.to(newPoints2[i], {
-//           duration: duration,
-//           x: newPointsTween2[i].x,
-//           y: newPointsTween2[i].y,
-//           repeat: -1,
-//           yoyo: true,
-//           ease: Sine.easeInOut
-//         });
+        let tween1 = gsap.to(points1[i], {
+          duration: duration,
+          x: pointsTween1[i].x,
+          y: pointsTween1[i].y,
+          repeat: -1,
+          yoyo: true,
+          ease: Sine.easeInOut
+        });
+
+        let tween2 = gsap.to(points2[i], {
+          duration: duration,
+          x: pointsTween2[i].x,
+          y: pointsTween2[i].y,
+          repeat: -1,
+          yoyo: true,
+          ease: Sine.easeInOut
+        });
 
 //         //   // tl.add(tween, -random(duration));
-//         tl.add(tween1, -random(duration))
-//         tl.add(tween2, -random(duration))
-//       }
-//       animating = true;
+        this.tl.add(tween1, -random(duration))
+        this.tl.add(tween2, -random(duration))
+      }
 
-//       if (this.expanding) {
-//         document.getElementById(this.borders.elem.id + 'Extra1').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth * 1.5 + this.borders.strokeWidthUnit);
-//         document.getElementById(this.borders.elem.id + 'Extra2').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
-//       }
-//     }, this.borders.transitionValue.duration * 1000 + 300);
+      document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth * 1.3 + this.borders.strokeWidthUnit);
+      document.getElementById(this.borders.elem.id + 'BorderWavy2').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth * 1.3 + this.borders.strokeWidthUnit);
 
-//   } else {
-    
-//     this.borders.path.setAttributeNS(null, 'stroke', strokeColor);
-
-//     document.getElementById(this.borders.elem.id + 'Extra1').setAttributeNS(null, 'stroke-width', 0 + this.borders.strokeWidthUnit);
-//     document.getElementById(this.borders.elem.id + 'Extra2').setAttributeNS(null, 'stroke-width', 0 + this.borders.strokeWidthUnit);
-
-//     setTimeout(() => {
-//       this.stop = true;
-//       animating = false;
+    function update(self) {
+    console.log('update', self.borders.elem.id);
+    document.getElementById(self.borders.elem.id + 'BorderWavy1').setAttribute('d', tweenCardinal(points1, true, 0.5))
+    document.getElementById(self.borders.elem.id + 'BorderWavy2').setAttribute('d', tweenCardinal(points2, true, 0.5))
+  }
 
 
-//     }, this.borders.transitionValue.duration * 1000 + 300)
-//   }
+  function tweenCardinal(data, closed, tension) {
+    //console.log('tween Cardinal ', data);
+    if (data.length < 1) return "M0 0";
+    if (tension == null) tension = 1;
 
-//   function update(self) {
+    var size = data.length - (closed ? 0 : 1);
+    var path = "M" + data[0].x + " " + data[0].y + " C";
 
-//     if (animating == true && self.expanding == true) {
+    for (var i = 0; i < size; i++) {
 
-//       document.getElementById(self.borders.elem.id + 'Extra1').setAttribute('d', tweenCardinal(newPoints1, true, 0.2))
-//       document.getElementById(self.borders.elem.id + 'Extra2').setAttribute('d', tweenCardinal(newPoints2, true, 0.2))
+      var p0, p1, p2, p3;
 
+      if (closed) {
+        p0 = data[(i - 1 + size) % size];
+        p1 = data[i];
+        p2 = data[(i + 1) % size];
+        p3 = data[(i + 2) % size];
 
-//     } else {
+      } else {
+        p0 = i == 0 ? data[0] : data[i - 1];
+        p1 = data[i];
+        p2 = data[i + 1];
+        p3 = i == size - 1 ? p2 : data[i + 2];
+      }
 
-//       self.path.setAttribute("d", self.data),
+      var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+      var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
 
-//         self.w = parseFloat(window.getComputedStyle(self.path.parentElement.parentElement).width),
-//         self.h = parseFloat(window.getComputedStyle(self.path.parentElement.parentElement).height),
+      var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+      var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
 
-//         self.getPath(self)
-//     }
-//     if (self.stop) {
+      path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+    }
 
-//       tl.pause()
-//     }
-//   }
+    return closed ? path + "z" : path;
+  }
 
+};
 
-//   function tweenCardinal(data, closed, tension) {
-
-//     if (data.length < 1) return "M0 0";
-//     if (tension == null) tension = 1;
-
-//     var size = data.length - (closed ? 0 : 1);
-//     var path = "M" + data[0].x + " " + data[0].y + " C";
-
-//     for (var i = 0; i < size; i++) {
-
-//       var p0, p1, p2, p3;
-
-//       if (closed) {
-//         p0 = data[(i - 1 + size) % size];
-//         p1 = data[i];
-//         p2 = data[(i + 1) % size];
-//         p3 = data[(i + 2) % size];
-
-//       } else {
-//         p0 = i == 0 ? data[0] : data[i - 1];
-//         p1 = data[i];
-//         p2 = data[i + 1];
-//         p3 = i == size - 1 ? p2 : data[i + 2];
-//       }
-
-//       var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-//       var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-
-//       var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-//       var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-
-//       path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-//     }
-
-//     return closed ? path + "z" : path;
-//   }
-
-// };
-
-// createBorderPath.prototype.getAllElems = function() {
-//   let allElems = [];
-
-//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-//     if (this.elemParent.childNodes[i].nodeType == 1) {
-//       allElems.push(this.elemParent.childNodes[i]);
-//     }
-//   }
-
-//   return allElems;
-// }
-
-// //---- Hoverover -------------------------------------------------------------------------
-
-
-// createBorderPath.prototype.hoveroverOn = function() {
-
-//   // this.borders.path.setAttributeNS(null, 'filter', 'url(#glow)');
-//   if (this.expanding == false) {
-//     this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-//   }
-
-// }
-// createBorderPath.prototype.hoveroverOff = function() {
-
-//   // this.borders.path.setAttributeNS(null, 'filter', 'none');
-//   if (this.expanding == false) {
-//     this.borders.path.setAttributeNS(null, 'stroke', 'url(#' + this.borders.elem.id + 'Color)');
-//   }
-// }
-
-//-----   finish creating border   >>>-----------------------------------------------------------------
-
+createBorderPath.prototype.stopTl = function(){
+  // console.log('stoping.....');
+  this.tl.pause(0);
+}
 
 
 function random(min, max) {
@@ -1141,18 +886,6 @@ function random(min, max) {
 }
 
 
-
-// function getRestElems (elem) {
-//   let restElems = [];
-
-//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
-//     if (elem.parentElement.childNodes[i].nodeType == 1 && elem.parentElement.childNodes[i] != elem) {
-//       restElems.push(elem.parentElement.childNodes[i]);
-//     }
-//   }
-
-//   return restElems;
-// }
 
 
 let workBorder = new border('work');

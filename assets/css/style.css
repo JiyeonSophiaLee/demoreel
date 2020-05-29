@@ -100,8 +100,8 @@ div{
     
       #menu li div svg{
         position: relative;
-        width: inherit;
-        height: inherit;
+        /* width: inherit;
+        height: inherit; */
       }
       
       #menu li div .text{
