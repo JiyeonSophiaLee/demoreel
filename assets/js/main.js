@@ -18,7 +18,8 @@ function getTransitionValue() {
   this.min = 50;
   this.max = 65;
   this.duration = 1;
-  this.width = 65;
+  this.menuMax = 65;
+  this.menuMin = 50;
 };
 
 let transitionValue = new getTransitionValue();
@@ -45,6 +46,7 @@ window.addEventListener('resize',()=>{
   
   // clearTimeout(resizeFinish);
   // resizeFinish = setTimeout(() => setSize(), 150);
+  
 })
 
 
@@ -55,43 +57,54 @@ function menuController(id){
   this.elem = document.getElementById(id);
   this.allElems = this.getAllElems(this)
   this.restElems = this.getRestElems(this);
+  // this.path = document.getElementById(this.elem.id+'Border')
   // transitionValue = new transitionValue()
 
 
 
   // runWorkBorder.createRectBorder();
+  // function expandMenuCB(self,callback){
+  //   self.expandMenu(self)
+  //   callback(this)
+  // }
+  // function removeEventCB(self){
+  //   self.elem.addEventListener('click', self.callClickEvent);
+  //   self.restElemsEventListener('add', 'callClickEvent')
+  // }
 
   this.expandMenuHandler = this.expandMenu.bind(this);
+  // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+  // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
 
   this.callClickEvent = () =>{
 
-    callbackAddEvent(this,() =>{
+    // callbackAddEvent(this,() =>{
       
         this.elem.removeEventListener('click', this.callClickEvent);
         this.restElemsEventListener('remove', 'callClickEvent');
 
-        this.expandMenu(this);
+        // this.callCB(()=>this.expandMenuCB(()=>this.removeEventCB()))
+        // this.expandMenuCB(()=>{this.removeEventCB(this)})
+        this.expandMenu();
         
      
-    })
+    // })
     
   }
 
-  
-  function callbackAddEvent(self,callback){
-    callback();
-    
-    setTimeout(() => {
-      self.elem.addEventListener('click', self.callClickEvent);
-      ('calling event listener')
-      self.restElemsEventListener('add', 'callClickEvent');
-      
-    }, transitionValue.duration * 1000);
-  }
 
 
 
   this.elem.addEventListener('click',this.callClickEvent);
+  // this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
+  // this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
+}
+
+
+menuController.prototype.removeEventCB = function(){
+  console.log('add')
+  this.elem.addEventListener('click', this.callClickEvent)
+  this.restElemsEventListener('add', 'callClickEvent')
 }
 
 menuController.prototype.expandMenu = function(){
@@ -103,7 +116,8 @@ menuController.prototype.expandMenu = function(){
 
     this.allElems.forEach((elem,i)=>{
       if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenuIf(this.allElems)
+        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
+        
         eval(elem.id + 'MenuUtilities').expandMenuIf()
       }
     })
@@ -116,25 +130,24 @@ menuController.prototype.expandMenu = function(){
 
     this.allElems.forEach((elem,i)=>{
       if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenuElseIf(this.allElems)
+        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
+        
         // eval(elem.id + 'MenuUtilities').expandMenuElseIf()
       }
     })
 
   }else{
-
-    this.allElems.forEach((elem,i)=>{
-      if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenuElse(this.allElems)
-        // eval(elem.id + 'MenuUtilities').expandMenuElse()
-      }
-    })
-
     menuExpanded =false;
     biggerElem = null;
     biggeredElem = null;
 
-
+    this.allElems.forEach((elem,i)=>{
+      if(this.allElems[i]==this.elem){
+        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
+        
+        // eval(elem.id + 'MenuUtilities').expandMenuElse()
+      }
+    })
   }
 
 }
@@ -165,6 +178,7 @@ menuController.prototype.getRestElems =function() {
   return restElems;
 }
 
+
 menuController.prototype.restElemsEventListener = function(listener, handler) {
   
   for (let i = 0; i < this.restElems.length; i++) {
@@ -177,6 +191,7 @@ menuController.prototype.restElemsEventListener = function(listener, handler) {
     }
   }
 }
+
 
 function menuUtilities(id){
   
