@@ -3,16 +3,14 @@
 // let paint = document.getElementById('paint')
 // let info = document.getElementById('info')
 
+let demo = document.getElementById('demo')
 let demoVideo = document.getElementById('demoVideo');
+let demoSVG = document.getElementById('demoSVG');
+let demoContainer = document.getElementById('demoContainer')
 
 let menuExpanded = false;
 let biggerElem = null
 let biggeredElem = null
-
-
-
-// demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
-
 
 function getTransitionValue() {
   this.min = 50;
@@ -24,28 +22,19 @@ function getTransitionValue() {
 
 let transitionValue = new getTransitionValue();
 
-
-
-
 let resizeFinish;
 
-// let menuSize = { width : innerWidth * transitionValue.max / 100 , height : innerHeight};
-// let demoSize = { width : innerWidth - menuSize.width , height : innerHeight};
-// let biggerElemSize = { width : menuSize.width * transitionValue.max / 100 , height : menuSize.height * transitionValue.max / 100};
-// let smallerElemSize = { width : menuSize.width - biggerElemSize.width , height : menuSize.height - biggerElemSize.height};
+demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
 
-// function setSize(){
-//   menuSize = { width : innerWidth * transitionValue.max / 100 , height : innerHeight};
-//   demoSize = { width : innerWidth - menuSize.width , height : innerHeight};
-//   biggerElemSize = { width : menuSize.width * transitionValue.max / 100 , height : menuSize.height * transitionValue.max / 100};
-//   smallerElemSize = { width : menuSize.width - biggerElemSize.width , height : menuSize.height - biggerElemSize.height};
-// }
+
 window.addEventListener('resize',()=>{
-
-  // demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
+  demoSVG.classList.remove('blurSVG')
+  demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
   
-  // clearTimeout(resizeFinish);
-  // resizeFinish = setTimeout(() => setSize(), 150);
+  clearTimeout(resizeFinish);
+  resizeFinish = setTimeout(() => {
+    demoSVG.classList.add('blurSVG')
+  }, 200);
   
 })
 
@@ -60,17 +49,6 @@ function menuController(id){
   // this.path = document.getElementById(this.elem.id+'Border')
   // transitionValue = new transitionValue()
 
-
-
-  // runWorkBorder.createRectBorder();
-  // function expandMenuCB(self,callback){
-  //   self.expandMenu(self)
-  //   callback(this)
-  // }
-  // function removeEventCB(self){
-  //   self.elem.addEventListener('click', self.callClickEvent);
-  //   self.restElemsEventListener('add', 'callClickEvent')
-  // }
 
   this.expandMenuHandler = this.expandMenu.bind(this);
   // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
@@ -92,14 +70,10 @@ function menuController(id){
     
   }
 
-
-
-
   this.elem.addEventListener('click',this.callClickEvent);
   // this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
   // this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 }
-
 
 menuController.prototype.removeEventCB = function(){
   console.log('add')
@@ -108,7 +82,6 @@ menuController.prototype.removeEventCB = function(){
 }
 
 menuController.prototype.expandMenu = function(){
-
   if (menuExpanded == false){
     menuExpanded = true;
     biggerElem = this.elem;
@@ -117,8 +90,7 @@ menuController.prototype.expandMenu = function(){
     this.allElems.forEach((elem,i)=>{
       if(this.allElems[i]==this.elem){
         eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
-        
-        eval(elem.id + 'MenuUtilities').expandMenuIf()
+        eval(elem.id + 'MenuUtilities').expandMenu()
       }
     })
     // runWorkBorder.animRectBorder(transitionValue)
@@ -149,10 +121,7 @@ menuController.prototype.expandMenu = function(){
       }
     })
   }
-
 }
-
-
 
 menuController.prototype.getAllElems = function() {
   let allElems = [];
@@ -178,7 +147,6 @@ menuController.prototype.getRestElems =function() {
   return restElems;
 }
 
-
 menuController.prototype.restElemsEventListener = function(listener, handler) {
   
   for (let i = 0; i < this.restElems.length; i++) {
@@ -193,64 +161,36 @@ menuController.prototype.restElemsEventListener = function(listener, handler) {
 }
 
 
+
+
+
+
+//--- menu Utiliti controller------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 function menuUtilities(id){
   
   this.elem = document.getElementById(id);
-  // transitionValue = new transitionValue;
-  // this.restElems = getRestElems(this.elem);
-
-  // // handeler ----------------------------------------------------------------
-
-  // this.resizeHandler = this.resize.bind(this);
-  // this.expandMenuHandler = this.expandMenu.bind(this);
-
-
-
-
-  // this.callClickEvent = () =>{
-    
-  //   this.elem.removeEventListener('click', this.callClickEvent);
-  //   this.restElemsEventListener('remove', 'callClickEvent')
-
-
-
-  //   this.expandMenu(this)
-
-
-
-  //   setTimeout(() => {
-  //     this.elem.addEventListener('click', this.callClickEvent);
-  //     this.restElemsEventListener('add', 'callClickEvent')
-  //   }, transitionValue.duration *1000 +250);
-  // }
-
-
-  // window.addEventListener('resize',this.resizeHandler);
-  // this.elem.addEventListener('click',this.callClickEvent);
+  
 
 }
 
 
-// menuUtilities.prototype.restElemsEventListener = function(listener, handler) {
-//   for (let i = 0; i < this.restElems.length; i++) {
-//     let controllerId = eval(this.restElems[i].id+'Controller')
-
-//     if (listener == 'add') {
-//       this.restElems[i].addEventListener('click', controllerId[handler]);
-//     } else {
-//       this.restElems[i].removeEventListener('click', controllerId[handler]);
-//     }
-//   }
-// }
-
-// menuUtilities.prototype.test = function(restElems){
-//   console.log(restElems)
-// }
-
-menuUtilities.prototype.expandMenuIf = function(){
+menuUtilities.prototype.expandMenu = function(){
   
+  document.getElementById('demoSVG').classList.remove('blurSVG');
+
+  // demoVideo.classList.add('menutransition');
+
+  if (menuExpanded && biggeredElem == null) {
     // demoVideo.classList.add('menutransition');
-    
+    demoVideo.style.height = demo.parentElement.clientWidth * (transitionValue.min * 100) * parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
     // demoVideo.style.height =  demoSize.height * (parseFloat(window.getComputedStyle(demoVideo).maxWidth) / 100)  * (9/16)  +'px';
 
   //   setTimeout(() => {
@@ -266,10 +206,6 @@ menuUtilities.prototype.expandMenuIf = function(){
   
   // }else{
   
-  //   menuExpandedController = false;
-  //   biggerElemController = 'none';
-  //   biggeredElemController = 'none';
-    
 
 
   //   demoVideo.classList.add('menutransition');
@@ -280,37 +216,15 @@ menuUtilities.prototype.expandMenuIf = function(){
   //     demoVideo.classList.remove('menutransition');
   //   }, transitionValue.duration * 1000);
 
-  // }
-  
+  }
+  setTimeout(() => {
+    demoSVG.classList.add('blurSVG');
+  }, transitionValue.duration * 1000);
 }
 
 
 //---- general Function ------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
-
-// function getAllElems(elem) {
-//   let allElems = [];
-
-//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
-//     if (elem.parentElement.childNodes[i].nodeType == 1) {
-//       allElems.push(elem.parentElement.childNodes[i]);
-//     }
-//   }
-
-//   return allElems;
-// }
-
-// function getRestElems (elem) {
-//   let restElems = [];
-
-//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
-//     if (elem.parentElement.childNodes[i].nodeType == 1 && elem.parentElement.childNodes[i] != elem) {
-//       restElems.push(elem.parentElement.childNodes[i]);
-//     }
-//   }
-
-//   return restElems;
-// }
 
 
 

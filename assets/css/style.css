@@ -31,7 +31,8 @@ div{
     height: 100%;
     align-self: center;
   }
-    #demo #demoImage{
+    
+    #demo #demoContainer{
       position: relative;
       width: inherit;
       height: inherit;
@@ -40,22 +41,23 @@ div{
       justify-content: center;
       /* margin:3rem; */
     }
-      #demo #demoImage div{
+      /* #demo #demoContainer div{ */
         /* position: relative; */
-        width: auto;
-        height: auto;
+        /* width: auto;
+        height: auto; */
         /* text-align: center; */
         /* margin:3rem; */
-      }
-      #demo #demoImage iframe{
+      /* } */
+      #demo #demoContainer iframe{
         width: 70%;
         /* max-height: 70%; */
         margin: auto;
-        border: solid;
+        border: solid 0.6vw rgba(255,255,255,0.1);
         border-radius: 7px;
+        box-sizing: content-box;
         /* visibility: hidden; */
       }
-      #demo #demoImage img{
+      #demo #demoContainer img{
         position: absolute;
         top:0;
         left:0;
@@ -151,8 +153,11 @@ div{
 
 
 
-/* menu transition */
+/* additional css for js */
 .menutransition{
   transition: width 1s linear, height 1s linear, flex 1s linear;
+}
+.blurSVG{
+  filter:blur(3px);
 }
       
