@@ -61,8 +61,6 @@ function menuController(id){
         this.elem.removeEventListener('click', this.callClickEvent);
         this.restElemsEventListener('remove', 'callClickEvent');
 
-        // this.callCB(()=>this.expandMenuCB(()=>this.removeEventCB()))
-        // this.expandMenuCB(()=>{this.removeEventCB(this)})
         this.expandMenu();
         
      
@@ -87,40 +85,24 @@ menuController.prototype.expandMenu = function(){
     biggerElem = this.elem;
     
 
+
+  }else if(biggerElem != this.elem){
+    biggeredElem = biggerElem;
+    biggerElem = this.elem;
+
+
+  }else{
+    menuExpanded =false;
+    biggerElem = null;
+    biggeredElem = null;
+  }
     this.allElems.forEach((elem,i)=>{
       if(this.allElems[i]==this.elem){
         eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
         eval(elem.id + 'MenuUtilities').expandMenu()
       }
     })
-    // runWorkBorder.animRectBorder(transitionValue)
-    // workMenuUtilities.test(this.restElems)
-
-  }else if(biggerElem != this.elem){
-    biggeredElem = biggerElem;
-    biggerElem = this.elem;
-
-    this.allElems.forEach((elem,i)=>{
-      if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
-        
-        // eval(elem.id + 'MenuUtilities').expandMenuElseIf()
-      }
-    })
-
-  }else{
-    menuExpanded =false;
-    biggerElem = null;
-    biggeredElem = null;
-
-    this.allElems.forEach((elem,i)=>{
-      if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
-        
-        // eval(elem.id + 'MenuUtilities').expandMenuElse()
-      }
-    })
-  }
+  
 }
 
 menuController.prototype.getAllElems = function() {
@@ -184,42 +166,37 @@ function menuUtilities(id){
 
 menuUtilities.prototype.expandMenu = function(){
   
-  document.getElementById('demoSVG').classList.remove('blurSVG');
-
+  
   // demoVideo.classList.add('menutransition');
-
+  
   if (menuExpanded && biggeredElem == null) {
-    // demoVideo.classList.add('menutransition');
-    demoVideo.style.height = demo.parentElement.clientWidth * (transitionValue.min * 100) * parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
-    // demoVideo.style.height =  demoSize.height * (parseFloat(window.getComputedStyle(demoVideo).maxWidth) / 100)  * (9/16)  +'px';
-
-  //   setTimeout(() => {
-  //     demoVideo.classList.remove('menutransition');
-  //   }, transitionValue.duration * 1000);
-
-  // }else if(biggerElemController != this.elem){
-  
-  //   biggeredElemController = biggerElemController;
-  //   biggerElemController = this.elem;
     
-    
+    document.getElementById('demoSVG').classList.remove('blurSVG');
+
+    demoVideo.classList.add('menutransition');
+    demoVideo.style.height = (demo.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
   
-  // }else{
-  
-
-
-  //   demoVideo.classList.add('menutransition');
-    
-  //   demoVideo.style.height =  (( demoVideo.parentElement.clientWidth / (100 - transitionValue.max ) * 100 ) * ( transitionValue.min / 100 )) * (parseFloat(window.getComputedStyle(demoVideo).maxWidth) / 100)  * (9/16)  +'px';
-
-  //   setTimeout(() => {
-  //     demoVideo.classList.remove('menutransition');
-  //   }, transitionValue.duration * 1000);
-
-  }
   setTimeout(() => {
     demoSVG.classList.add('blurSVG');
+    demoVideo.classList.remove('menutransition');
   }, transitionValue.duration * 1000);
+
+  }else if(biggerElem == this.elem) {
+    
+  
+  }else{
+  
+    document.getElementById('demoSVG').classList.remove('blurSVG');
+
+    demoVideo.classList.add('menutransition');
+    demoVideo.style.height = (demo.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
+
+  setTimeout(() => {
+    demoSVG.classList.add('blurSVG');
+    demoVideo.classList.remove('menutransition');
+  }, transitionValue.duration * 1000);
+  }
+
 }
 
 
