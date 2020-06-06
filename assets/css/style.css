@@ -5,6 +5,9 @@
   height: inherit; */
   box-sizing: border-box;
 }
+:root{
+  --topTileHeight:10vw;
+}
 
 #body{
   margin:10px;
@@ -26,130 +29,165 @@ div{
   font-family: 'Text Me One', sans-serif;
   font-size: 18px;
 }
-  #demo{
-    width: 100%;
-    height: 100%;
-    align-self: center;
-  }
-    
+
+
+    #demo{
+      width: 50%;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    } 
+      #demo #name{
+        text-align: end;
+        width: 70%;
+        margin: auto;
+        height:var(--topTileHeight);
+        flex-shrink: 1;
+      }
+      #demo #name p:first-child{
+        font-size: 7vw;
+        font-family: 'Poiret One', cursive;
+      }
+      @media (min-width:1000px){
+        #demo #name p:first-child{
+          font-size: 77.7px;
+        }
+      }
+      #demo #name p:last-child{
+        font-size: 3vw;
+        font-family: 'Dosis', sans-serif;
+        position: relative;
+        top:-1vw
+      }
+      
     #demo #demoContainer{
-      position: relative;
-      width: inherit;
-      height: inherit;
+      position: relative;;
+      width: 100%;
+      height: 100%;
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      /* margin:3rem; */
     }
-      /* #demo #demoContainer div{ */
-        /* position: relative; */
-        /* width: auto;
-        height: auto; */
-        /* text-align: center; */
-        /* margin:3rem; */
-      /* } */
       #demo #demoContainer iframe{
         width: 70%;
         /* max-height: 70%; */
         margin: auto;
-        border: solid 0.6vw rgba(255,255,255,0.1);
-        border-radius: 15px;
+        border: solid 0.6vw rgba(255,255,255,0.25);
+        border-radius: 10px;
         box-sizing: content-box;
-        /* visibility: hidden; */
+        visibility: hidden;
       }
       #demo #demoContainer img{
         position: absolute;
         top:0;
         left:0;
-        width: inherit;
-        height: inherit;
+        width: 100%;
+        height: 100%;
         z-index: -1;
         /* filter: blur(4.5px); */
       }
-  #menu{
-    display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-grow: 0;
-    flex-shrink: 0;
-    width: 50%;
-  }
-    #menu li{
-      width:50%;
-      display: flex;
-      cursor: pointer;
-      padding:0.5vw;
-      list-style:none;
-      height:50%;
+    #menu {
+      display:flex;
+      flex-direction: column;
+      width: 50%;
     }
-    #menu li div{
-      width:10vw;
-      height:10vw;
-      display:grid;
-      text-align: center ;
-      position: relative;
-      /* margin: auto; */
-      /* justify-items: center; */
-    }
-    #menu li > div:hover{
-      border-radius: 10px;
-      box-shadow:
-      0 0px 1.3px rgba(255, 255, 255, 0.5),
-      0 0px 10px rgba(255, 255, 255, 1),
-      inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
-      inset 0 0px 10px rgba(255, 255, 255, 1)
-    }
-    
-      #menu li div svg{
-        position: relative;
-        /* width: inherit;
-        height: inherit; */
-      }
-      
-      #menu li div .text{
-        align-items: center;
-        width: inherit;
-        height: inherit;
-        position:absolute;
-      }
+      #menu #topMenu{ 
+        list-style: none;
+        font-family: 'Poiret One', cursive;
+        font-size: 2.3vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 1vw 0 1vw 0;
+        height:var(--topTileHeight);
 
-    #menu #work{
-      justify-content: flex-end;
-    }
-      #menu #work div{
-        align-self: flex-end;
-        border:none;
       }
+      #bottomMenu{
+        display:flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        flex-grow: 1;
+        flex-shrink: 0;
+        width: 100%;
+      }
+        #bottomMenu li{
+          width:50%;
+          display: flex;
+          cursor: pointer;
+          padding :0.5vw;
+          list-style:none;
+          height:50%;
+        }
+        #bottomMenu li div{
+          width:10vw;
+          height:10vw;
+          display:grid;
+          text-align: center ;
+          position: relative;
+          /* margin: auto; */
+          /* justify-items: center; */
+        }
+        #bottomMenu li > div:hover{
+          border-radius: 10px;
+          box-shadow:
+          0 0px 1.3px rgba(255, 255, 255, 0.5),
+          0 0px 10px rgba(255, 255, 255, 1),
+          inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
+          inset 0 0px 10px rgba(255, 255, 255, 1)
+        }
         
+          #bottomMenu li div svg{
+            position: relative;
+            /* width: inherit;
+            height: inherit; */
+          }
+          
+          #bottomMenu li div .text{
+            align-items: center;
+            width: inherit;
+            height: inherit;
+            position:absolute;
+          }
+
+        #bottomMenu #work{
+          justify-content: flex-end;
+        }
+          #bottomMenu #work div{
+            align-self: flex-end;
+            border:none;
+          }
+            
 
 
-    #menu #skill{
-      justify-content: flex-start;
-    }
-      #menu #skill div{
-        align-self:flex-end;
-        border:none;
-      }
+        #bottomMenu #skill{
+          justify-content: flex-start;
+        }
+          #bottomMenu #skill div{
+            align-self:flex-end;
+            border:none;
+          }
 
 
-    #menu #paint{
-      justify-content: flex-end;
-      
-    }
-      #menu #paint div{
-        align-self: flex-start;
-        border:none;
-      }
+        #bottomMenu #paint{
+          justify-content: flex-end;
+          
+        }
+          #bottomMenu #paint div{
+            align-self: flex-start;
+            border:none;
+          }
 
 
-    #info{
-      justify-content: flex-start;
-      
-    }
-      #info div{
-        align-self: flex-start;
-        border:none;
-      }
+        #info{
+          justify-content: flex-start;
+          
+        }
+          #info div{
+            align-self: flex-start;
+            border:none;
+          }
 
 
 

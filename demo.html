@@ -7,113 +7,114 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
    
 </head>
 <body id='body'>
     <section id='demo'>
+        <div id='name'>
+            <p>SOPHIA</p>
+            <p>JIYEON LEE</p>
+        </div>
         <div id='demoContainer' >
-            <!-- <div>
-                <p>Sophia</p>
-                <p>Jiyeon Lee</p>
-            </div> -->
-            <!-- <div> -->
-                <iframe   src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" id='demoVideo' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                
-            <!-- </div> -->
-            
+            <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" id='demoVideo' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
             <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" class="blurSVG" alt="" srcset="">  
-            <!-- <div>
-                <p>3D Artist</p>
-                <p>Fronthand Engineer</p>
-            </div> -->
         </div>
     </section>
 
     <section id='menu'> 
+        <div id='topMenu'>
+            <li>work</li>
+            <li>paint</li>
+            <li>skill</li>
+            <li>info</li>
+        </div>
+        <div id='bottomMenu'>
+            <li id='work'>
+                <div>          
+                    <svg>
+                        <defs>
 
-        <li id='work'>
-            <div>          
-                <svg>
-                    <defs>
+                            <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%"  stop-color="#3c26cd"/>
+                                <stop offset="100%"  stop-color="#34a68f"/>
+                            </linearGradient>
 
-                        <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"  stop-color="#3c26cd"/>
-                            <stop offset="100%"  stop-color="#34a68f"/>
-                        </linearGradient>
-
-                    </defs>
-                    <path id='workBorderWavy1' fill='none' stroke="#4b2fff"></path>
-                    <path id='workBorderWavy2' fill='none' stroke="#50ffdc"></path>
-                    <!-- <path id='workBorder'></path> -->
-                    <rect id='workBorder'></rect>
-                    <!-- <rect  x="0" y="0" rx="20" ry="20" width="49" height="150" fill = 'red' stroke = 'yellow' stroke-width='5'></rect> -->
-                    
-                </svg>
-                <div class='text'>WORK</div>
-            </div>
-            
-        </li>
-        <li id='skill'>
-            <div>
-                <svg>
-                    <defs>
-
-                        <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%"  stop-color="#ff1f1f"/>
-                            <stop offset="100%"  stop-color="#d8b43d"/>
-                        </linearGradient>
-
-                    </defs>
-                    <path id='skillBorderWavy1' fill='none' stroke="#ff1f1f"></path>
-                    <path id='skillBorderWavy2' fill='none' stroke="#d8b43d"></path>
-                    <!-- <path id='skillBorder' ></path> -->
-                    <rect id='skillBorder'></rect>
-                </svg>
-                <div class='text'>SKILL</div>
-            </div>
-            </div>
-        </li>
-        <li id='paint'>
-            <div>
-                <svg>
-                    <defs>
-
-                        <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%"  stop-color="#7111d1"/>
-                            <stop offset="100%"  stop-color="#db5513"/>
-                        </linearGradient>
-
-                    </defs>
-                    <path id='paintBorderWavy1' fill='none' stroke="#7111d1"></path>
-                    <path id='paintBorderWavy2' fill='none' stroke="#db5513"></path>
-                    <!-- <path id='paintBorder'></path> -->
-                    <rect id='paintBorder'></rect>
-                </svg>
-                <div class='text'>PAINT</div>
-            </div>
-        </li>
-        <li id='info'>
-            <div>
-                <svg>
-                    <defs>
+                        </defs>
+                        <path id='workBorderWavy1' fill='none' stroke="#4b2fff"></path>
+                        <path id='workBorderWavy2' fill='none' stroke="#50ffdc"></path>
+                        <!-- <path id='workBorder'></path> -->
+                        <rect id='workBorder'></rect>
+                        <!-- <rect  x="0" y="0" rx="20" ry="20" width="49" height="150" fill = 'red' stroke = 'yellow' stroke-width='5'></rect> -->
                         
-                        <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%"  stop-color="#f233ae"/>
-                            <stop offset="100%"  stop-color="#3396df"/>
-                        </linearGradient>
+                    </svg>
+                    <div class='text'>WORK</div>
+                </div>
+                
+            </li>
+            <li id='skill'>
+                <div>
+                    <svg>
+                        <defs>
 
-                    </defs>
-                    <path id='infoBorderWavy1' fill='none' stroke="#7111d1"></path>
-                    <path id='infoBorderWavy2' fill='none' stroke="#db5513"></path>
-                    <!-- <path id='infoBorder' ></path> -->
-                    <rect id='infoBorder' ></rect>
-                </svg>
-                <div class='text'>INFO</div>
-            </div>
-        </li>
+                            <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%"  stop-color="#ff1f1f"/>
+                                <stop offset="100%"  stop-color="#d8b43d"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='skillBorderWavy1' fill='none' stroke="#ff1f1f"></path>
+                        <path id='skillBorderWavy2' fill='none' stroke="#d8b43d"></path>
+                        <!-- <path id='skillBorder' ></path> -->
+                        <rect id='skillBorder'></rect>
+                    </svg>
+                    <div class='text'>SKILL</div>
+                </div>
+            
+            </li>
+            <li id='paint'>
+                <div>
+                    <svg>
+                        <defs>
+
+                            <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%"  stop-color="#7111d1"/>
+                                <stop offset="100%"  stop-color="#db5513"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='paintBorderWavy1' fill='none' stroke="#7111d1"></path>
+                        <path id='paintBorderWavy2' fill='none' stroke="#db5513"></path>
+                        <!-- <path id='paintBorder'></path> -->
+                        <rect id='paintBorder'></rect>
+                    </svg>
+                    <div class='text'>PAINT</div>
+                </div>
+            </li>
+            <li id='info'>
+                <div>
+                    <svg>
+                        <defs>
+                            
+                            <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%"  stop-color="#f233ae"/>
+                                <stop offset="100%"  stop-color="#3396df"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='infoBorderWavy1' fill='none' stroke="#7111d1"></path>
+                        <path id='infoBorderWavy2' fill='none' stroke="#db5513"></path>
+                        <!-- <path id='infoBorder' ></path> -->
+                        <rect id='infoBorder' ></rect>
+                    </svg>
+                    <div class='text'>INFO</div>
+                </div>
+            </li>
+        </div>
     </section>
+
 </body>
 
 <script src="assets/js/main.js"></script>

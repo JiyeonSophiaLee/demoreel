@@ -1,12 +1,9 @@
-// let work = document.getElementById('work')
-// let skill = document.getElementById('skill')
-// let paint = document.getElementById('paint')
-// let info = document.getElementById('info')
-
-let demo = document.getElementById('demo')
-let demoVideo = document.getElementById('demoVideo');
-let demoSVG = document.getElementById('demoSVG');
-let demoContainer = document.getElementById('demoContainer')
+const DEMO__ = document.getElementById('demo');
+const DEMO_VIDEO = document.getElementById('demoVideo');
+const DEMO_SVG = document.getElementById('demoSVG');
+const MENU__ = document.getElementById('menu')
+const TOP_MENU = document.getElementById('topMenu')
+// const BOTTOM_MENU = document.getElementById('bottomMenu')
 
 let menuExpanded = false;
 let biggerElem = null
@@ -24,16 +21,16 @@ let transitionValue = new getTransitionValue();
 
 let resizeFinish;
 
-demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
+DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
 
 
 window.addEventListener('resize',()=>{
-  demoSVG.classList.remove('blurSVG')
-  demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';
+  DEMO_SVG.classList.remove('blurSVG')
+  DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
   
   clearTimeout(resizeFinish);
   resizeFinish = setTimeout(() => {
-    demoSVG.classList.add('blurSVG')
+    DEMO_SVG.classList.add('blurSVG')
   }, 200);
   
 })
@@ -46,31 +43,19 @@ function menuController(id){
   this.elem = document.getElementById(id);
   this.allElems = this.getAllElems(this)
   this.restElems = this.getRestElems(this);
-  // this.path = document.getElementById(this.elem.id+'Border')
-  // transitionValue = new transitionValue()
-
 
   this.expandMenuHandler = this.expandMenu.bind(this);
-  // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
-  // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
 
   this.callClickEvent = () =>{
-
-    // callbackAddEvent(this,() =>{
       
         this.elem.removeEventListener('click', this.callClickEvent);
         this.restElemsEventListener('remove', 'callClickEvent');
 
         this.expandMenu();
-        
-     
-    // })
     
   }
 
   this.elem.addEventListener('click',this.callClickEvent);
-  // this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
-  // this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 }
 
 menuController.prototype.removeEventCB = function(){
@@ -166,19 +151,16 @@ function menuUtilities(id){
 
 menuUtilities.prototype.expandMenu = function(){
   
-  
-  // demoVideo.classList.add('menutransition');
-  
   if (menuExpanded && biggeredElem == null) {
     
-    document.getElementById('demoSVG').classList.remove('blurSVG');
+    DEMO_SVG.classList.remove('blurSVG');
 
-    demoVideo.classList.add('menutransition');
-    demoVideo.style.height = (demo.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
+    DEMO_VIDEO.classList.add('menutransition');
+    DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
   
   setTimeout(() => {
-    demoSVG.classList.add('blurSVG');
-    demoVideo.classList.remove('menutransition');
+    DEMO_SVG.classList.add('blurSVG');
+    DEMO_VIDEO.classList.remove('menutransition');
   }, transitionValue.duration * 1000);
 
   }else if(biggerElem == this.elem) {
@@ -186,14 +168,14 @@ menuUtilities.prototype.expandMenu = function(){
   
   }else{
   
-    document.getElementById('demoSVG').classList.remove('blurSVG');
+    DEMO_SVG.classList.remove('blurSVG');
 
-    demoVideo.classList.add('menutransition');
-    demoVideo.style.height = (demo.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
+    DEMO_VIDEO.classList.add('menutransition');
+    DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
 
   setTimeout(() => {
-    demoSVG.classList.add('blurSVG');
-    demoVideo.classList.remove('menutransition');
+    DEMO_SVG.classList.add('blurSVG');
+    DEMO_VIDEO.classList.remove('menutransition');
   }, transitionValue.duration * 1000);
   }
 
@@ -205,7 +187,7 @@ menuUtilities.prototype.expandMenu = function(){
 
 
 
-// demoVideo.addEventListener('click',()=>{console.log('this is working');demoVideo.style.height = parseFloat(window.getComputedStyle(demoVideo).width) * (9/16) +'px';})
+// DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
 
 let workMenuUtilities = new menuUtilities('work');
 let skillMenuUtilities = new menuUtilities('skill');
