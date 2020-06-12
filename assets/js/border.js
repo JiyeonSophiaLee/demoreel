@@ -7,16 +7,16 @@ function border(id) {
   this.y = 0;
   this.w = document.getElementById(this.id).parentElement.parentElement.clientWidth;
   this.h = document.getElementById(this.id).parentElement.parentElement.clientHeight;
-  this.border = 10;
-  this.multiply = 3;
+  this.border = 5;
+  this.multiply = 4;
   this.scale = 1;
   this.radius = 10;
   this.speed = [2, 3];
   this.color = 'none';
   this.stroke = true;
   this.strokeColor = `url(#${this.path.id}Color)`;
-  this.strokeWidth = 4;
-  this.strokeWidthUnit = 'px';
+  this.strokeWidth = 0.5;
+  this.strokeWidthUnit = 'vw';
   this.strokeLineCap = 'square'; //square, butt or round
   this.margin = 0;
   this.extraBorderSpace = 5;
@@ -391,7 +391,7 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttributeNS(null, 'height', this.h)
   this.borders.path.setAttributeNS(null, 'fill', this.borders.color);
   this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
-  this.borders.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth);
+  this.borders.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
 
 }
 
@@ -748,13 +748,10 @@ createBorderPath.prototype.stopTl = function() {
 //-----------------------------------------------------------------------------------------------
 
 createBorderPath.prototype.hoveroverOn = function() {
-  if (menuExpanded == false) {
     this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-  }
-
 }
 createBorderPath.prototype.hoveroverOff = function() {
-  if (menuExpanded == false) {
+    if(this.borders.elem != biggerElem){
     this.borders.path.setAttributeNS(null, 'stroke', 'url(#' + this.borders.path.id + 'Color)');
   }
 }

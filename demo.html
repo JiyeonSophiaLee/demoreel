@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400&display=swap" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
    
 </head>
@@ -19,7 +20,10 @@
             <p>JIYEON LEE</p>
         </div>
         <div id='demoContainer' >
-            <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1" id='demoVideo' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <div id='demoVideo'>
+                <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                <div></div>
+            </div>
             <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" class="blurSVG" alt="" srcset="">  
         </div>
     </section>
@@ -38,13 +42,13 @@
                         <defs>
 
                             <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%"  stop-color="#3c26cd"/>
-                                <stop offset="100%"  stop-color="#34a68f"/>
+                                <stop offset="10%"  stop-color="#dc3323"/>
+                                <stop offset="90%"  stop-color="#d4742b"/>
                             </linearGradient>
 
                         </defs>
-                        <path id='workBorderWavy1' fill='none' stroke="#4b2fff"></path>
-                        <path id='workBorderWavy2' fill='none' stroke="#50ffdc"></path>
+                        <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
+                        <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
                         <!-- <path id='workBorder'></path> -->
                         <rect id='workBorder'></rect>
                         <!-- <rect  x="0" y="0" rx="20" ry="20" width="49" height="150" fill = 'red' stroke = 'yellow' stroke-width='5'></rect> -->
@@ -60,13 +64,13 @@
                         <defs>
 
                             <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%"  stop-color="#ff1f1f"/>
-                                <stop offset="100%"  stop-color="#d8b43d"/>
+                                <stop offset="10%"  stop-color="#a83fd1"/>
+                                <stop offset="90%"  stop-color="#c0315b"/>
                             </linearGradient>
 
                         </defs>
-                        <path id='skillBorderWavy1' fill='none' stroke="#ff1f1f"></path>
-                        <path id='skillBorderWavy2' fill='none' stroke="#d8b43d"></path>
+                        <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
+                        <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
                         <!-- <path id='skillBorder' ></path> -->
                         <rect id='skillBorder'></rect>
                     </svg>
@@ -80,13 +84,13 @@
                         <defs>
 
                             <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%"  stop-color="#7111d1"/>
-                                <stop offset="100%"  stop-color="#db5513"/>
+                                <stop offset="10%"  stop-color="#e1952e"/>
+                                <stop offset="90%"  stop-color="#30ab98"/>
                             </linearGradient>
 
                         </defs>
-                        <path id='paintBorderWavy1' fill='none' stroke="#7111d1"></path>
-                        <path id='paintBorderWavy2' fill='none' stroke="#db5513"></path>
+                        <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
+                        <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
                         <!-- <path id='paintBorder'></path> -->
                         <rect id='paintBorder'></rect>
                     </svg>
@@ -99,13 +103,13 @@
                         <defs>
                             
                             <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%"  stop-color="#f233ae"/>
-                                <stop offset="100%"  stop-color="#3396df"/>
+                                <stop offset="10%"  stop-color="#c856b1"/>
+                                <stop offset="90%"  stop-color="#4badd1"/>
                             </linearGradient>
 
                         </defs>
-                        <path id='infoBorderWavy1' fill='none' stroke="#7111d1"></path>
-                        <path id='infoBorderWavy2' fill='none' stroke="#db5513"></path>
+                        <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
+                        <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
                         <!-- <path id='infoBorder' ></path> -->
                         <rect id='infoBorder' ></rect>
                     </svg>

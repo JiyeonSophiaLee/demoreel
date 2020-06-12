@@ -27,7 +27,7 @@
 /*   Fonts   */
 div{
   font-family: 'Text Me One', sans-serif;
-  font-size: 18px;
+  /* font-size: 18px; */
 }
 
 
@@ -46,21 +46,32 @@ div{
         flex-shrink: 1;
       }
       #demo #name p:first-child{
-        font-size: 7vw;
+        font-size: 7.5vw;
         font-family: 'Poiret One', cursive;
       }
-      @media (min-width:1000px){
-        #demo #name p:first-child{
-          font-size: 77.7px;
-        }
-      }
       #demo #name p:last-child{
-        font-size: 3vw;
+        font-size: 3.4vw;
         font-family: 'Dosis', sans-serif;
+        
         position: relative;
         top:-1vw
       }
-      
+      @media (max-width:800px){
+        #demo #name p:first-child{
+          font-size: 60px;
+        }
+        #demo #name p:last-child{
+          font-size: 27px;
+        }
+      }
+      @media (min-width:1100px){
+        #demo #name p:first-child{
+          font-size: 82px;
+        }
+        #demo #name p:last-child{
+          font-size: 37px;
+        }
+      }
     #demo #demoContainer{
       position: relative;;
       width: 100%;
@@ -70,15 +81,48 @@ div{
       flex-direction: column;
       justify-content: center;
     }
-      #demo #demoContainer iframe{
-        width: 70%;
+      #demo #demoContainer #demoVideo{
+        width: 67%;
         /* max-height: 70%; */
         margin: auto;
-        border: solid 0.6vw rgba(255,255,255,0.25);
-        border-radius: 10px;
+        border: solid 0.6vw rgba(255,255,255,0);
         box-sizing: content-box;
-        visibility: hidden;
+        position: relative;
+        --borderWidth: 0.5vw;
+        /* visibility: hidden; */
       }
+        #demo #demoContainer #demoVideo iframe{
+          width:100%;
+          height:100%;
+          border-radius: 5px;
+        }
+        #demo #demoContainer #demoVideo div{
+          position: absolute;
+          top:0;
+          left:0;
+          z-index: -1;
+          top: calc(-1 * var(--borderWidth));
+          left: calc(-1 * var(--borderWidth));
+          height: calc(100% + var(--borderWidth) * 2);
+          width: calc(100% + var(--borderWidth) * 2);
+          background: linear-gradient(60deg, #f71c69, #37a6f6, #faa847, #bf94a2, #a68312, #7eaee4, #83072d);
+          border-radius: 5px;
+          background-size: 300% 300%;
+          filter: contrast(1.5);
+          mix-blend-mode: hard-light;
+          animation: animatedgradient 3s ease alternate infinite;
+        }  
+        @keyframes animatedgradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        } 
       #demo #demoContainer img{
         position: absolute;
         top:0;
@@ -96,13 +140,12 @@ div{
       #menu #topMenu{ 
         list-style: none;
         font-family: 'Poiret One', cursive;
-        font-size: 2.3vw;
+        font-size: 23px;
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        padding: 1vw 0 1vw 0;
+        padding: 20px 4vw 20px 4vw;
         height:var(--topTileHeight);
-
       }
       #bottomMenu{
         display:flex;
@@ -116,7 +159,7 @@ div{
           width:50%;
           display: flex;
           cursor: pointer;
-          padding :0.5vw;
+          padding :0.8vw;
           list-style:none;
           height:50%;
         }
@@ -126,16 +169,30 @@ div{
           display:grid;
           text-align: center ;
           position: relative;
+          font-size:2vw;
           /* margin: auto; */
           /* justify-items: center; */
+        }
+        @media (max-width:800px){
+          #bottomMenu li div{
+            font-size: 18px;
+          }
+        }
+        @media (min-width:1100px){
+          #bottomMenu li div{
+            font-size: 22px;
+          }
         }
         #bottomMenu li > div:hover{
           border-radius: 10px;
           box-shadow:
-          0 0px 1.3px rgba(255, 255, 255, 0.5),
-          0 0px 10px rgba(255, 255, 255, 1),
-          inset 0 0px 1.3px rgba(255, 255, 255, 0.5),
-          inset 0 0px 10px rgba(255, 255, 255, 1)
+          0 0px 1px rgba(255, 255, 255, 0.404),
+          0 0px 3.4px rgba(255, 255, 255, 0.596),
+          0 0px 15px rgba(255, 255, 255, 1),
+          inset 0 0px 1px rgba(255, 255, 255, 0.404),
+          inset 0 0px 3.4px rgba(255, 255, 255, 0.596),
+          inset 0 0px 15px rgba(255, 255, 255, 1);
+        
         }
         
           #bottomMenu li div svg{

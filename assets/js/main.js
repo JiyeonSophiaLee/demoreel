@@ -154,10 +154,14 @@ menuUtilities.prototype.expandMenu = function(){
   if (menuExpanded && biggeredElem == null) {
     
     DEMO_SVG.classList.remove('blurSVG');
-
+    
     DEMO_VIDEO.classList.add('menutransition');
     DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
-  
+    
+    document.querySelector('#demoVideo div').style.filter = 'none'
+    document.querySelector('#demoVideo div').style.animation = 'none'
+    document.querySelector('#demoVideo div').style.opacity = '0.5'
+
   setTimeout(() => {
     DEMO_SVG.classList.add('blurSVG');
     DEMO_VIDEO.classList.remove('menutransition');
@@ -168,10 +172,15 @@ menuUtilities.prototype.expandMenu = function(){
   
   }else{
   
+
     DEMO_SVG.classList.remove('blurSVG');
 
     DEMO_VIDEO.classList.add('menutransition');
     DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
+
+    document.querySelector('#demoVideo div').style.filter = ''
+    document.querySelector('#demoVideo div').style.animation = ''
+    document.querySelector('#demoVideo div').style.opacity = ''
 
   setTimeout(() => {
     DEMO_SVG.classList.add('blurSVG');
