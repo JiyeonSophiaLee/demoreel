@@ -105,7 +105,7 @@ createBorderPath.prototype.expandMenu = function(allElems) {
     }
   })
 
-
+return new Promise((resolve,reject)=>{
   if (menuExpanded && biggeredElem == null) {
 
     this.getTopMenuSize()
@@ -264,9 +264,11 @@ createBorderPath.prototype.expandMenu = function(allElems) {
 
     })
 
+    resolve()
   }, transitionValue.duration * 1000);
 
-
+  
+})
 
 };
 

@@ -65,6 +65,7 @@ menuController.prototype.removeEventCB = function(){
 }
 
 menuController.prototype.expandMenu = function(){
+  
   if (menuExpanded == false){
     menuExpanded = true;
     biggerElem = this.elem;
@@ -81,13 +82,15 @@ menuController.prototype.expandMenu = function(){
     biggerElem = null;
     biggeredElem = null;
   }
-    this.allElems.forEach((elem,i)=>{
-      if(this.allElems[i]==this.elem){
-        eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border').expandMenu(this.allElems)
-        eval(elem.id + 'MenuUtilities').expandMenu()
-      }
-    })
+
+
+  const bordersExpandMenu = eval('run' + this.elem.id.charAt(0).toUpperCase() + this.elem.id.slice(1) + 'Border').expandMenu(this.allElems);
+  const utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities').expandMenu();
   
+
+  Promise.all([bordersExpandMenu,utilitiExpandMenu])
+    .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
+
 }
 
 menuController.prototype.getAllElems = function() {
@@ -132,8 +135,16 @@ menuController.prototype.restElemsEventListener = function(listener, handler) {
 
 
 
+
+
+
+
 //--- menu Utiliti controller------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 
@@ -150,7 +161,7 @@ function menuUtilities(id){
 
 
 menuUtilities.prototype.expandMenu = function(){
-  
+  return new Promise((resolve, reject)=>{
   if (menuExpanded && biggeredElem == null) {
     
     DEMO_SVG.classList.remove('blurSVG');
@@ -165,6 +176,9 @@ menuUtilities.prototype.expandMenu = function(){
   setTimeout(() => {
     DEMO_SVG.classList.add('blurSVG');
     DEMO_VIDEO.classList.remove('menutransition');
+
+    document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+
   }, transitionValue.duration * 1000);
 
   }else if(biggerElem == this.elem) {
@@ -182,14 +196,21 @@ menuUtilities.prototype.expandMenu = function(){
     document.querySelector('#demoVideo div').style.animation = ''
     document.querySelector('#demoVideo div').style.opacity = ''
 
+    document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
+
   setTimeout(() => {
     DEMO_SVG.classList.add('blurSVG');
     DEMO_VIDEO.classList.remove('menutransition');
+
   }, transitionValue.duration * 1000);
   }
-
+  resolve()  
+})
 }
-
+menuUtilities.prototype.deleteMenuText = function(){
+  // document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+  
+}
 
 //---- general Function ------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
