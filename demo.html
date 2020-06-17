@@ -14,30 +14,31 @@
    
 </head>
 <body id='body'>
-    <section id='demo'>
+    <section id='topMenu'>
         <div id='name'>
             <p>SOPHIA</p>
             <p>JIYEON LEE</p>
         </div>
-        <div id='demoContainer' >
+        <div id='menu'>
+            <li>work</li>
+            <li>paint</li>
+            <li>skill</li>
+            <li>info</li>
+        </div>
+    </section>
+    <section id='bottom'>
+        <div id='demo'>
             <div id='demoVideo'>
                 <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                 <div></div>
             </div>
             <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" class="blurSVG" alt="" srcset="">  
         </div>
-    </section>
 
-    <section id='menu'> 
-        <div id='topMenu'>
-            <li>work</li>
-            <li>paint</li>
-            <li>skill</li>
-            <li>info</li>
-        </div>
-        <div id='bottomMenu'>
+        <div id='bottomMenu'> 
             <li id='work'>
-                <div>          
+                <div class='borders'>    
+                    <div class='text'>WORK</div>      
                     <svg>
                         <defs>
 
@@ -49,17 +50,20 @@
                         </defs>
                         <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
                         <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
-                        <!-- <path id='workBorder'></path> -->
+                        
                         <rect id='workBorder'></rect>
-                        <!-- <rect  x="0" y="0" rx="20" ry="20" width="49" height="150" fill = 'red' stroke = 'yellow' stroke-width='5'></rect> -->
+                        
                         
                     </svg>
-                    <div class='text'>WORK</div>
+                    
                 </div>
                 
+                <div class='contents'>
+                </div>
             </li>
             <li id='skill'>
-                <div>
+                <div class='borders'>
+                    <div class='text'>SKILL</div>
                     <svg>
                         <defs>
 
@@ -71,15 +75,17 @@
                         </defs>
                         <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
                         <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
-                        <!-- <path id='skillBorder' ></path> -->
+                        
                         <rect id='skillBorder'></rect>
                     </svg>
-                    <div class='text'>SKILL</div>
+                    
                 </div>
-            
+                <div class='contents'>
+                </div>
             </li>
             <li id='paint'>
-                <div>
+                <div class='borders'>
+                    <div class='text'>PAINT</div>
                     <svg>
                         <defs>
 
@@ -91,14 +97,17 @@
                         </defs>
                         <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
                         <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
-                        <!-- <path id='paintBorder'></path> -->
+                        
                         <rect id='paintBorder'></rect>
                     </svg>
-                    <div class='text'>PAINT</div>
+                    
+                </div>
+                <div class='contents'>
                 </div>
             </li>
             <li id='info'>
-                <div>
+                <div class='borders'>
+                    <div class='text'>INFO</div>
                     <svg>
                         <defs>
                             
@@ -110,15 +119,17 @@
                         </defs>
                         <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
                         <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
-                        <!-- <path id='infoBorder' ></path> -->
+                        
                         <rect id='infoBorder' ></rect>
                     </svg>
-                    <div class='text'>INFO</div>
+            
+                </div>
+                <div class='contents'>
                 </div>
             </li>
+            
         </div>
     </section>
-
 </body>
 
 <script src="assets/js/main.js"></script>

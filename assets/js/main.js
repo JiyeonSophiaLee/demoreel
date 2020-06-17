@@ -1,13 +1,18 @@
+const TOP_MENU = document.getElementById('topMenu');
+const MENU__ = document.getElementById('menu');
+const NAME = document.getElementById('name');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
 const DEMO_SVG = document.getElementById('demoSVG');
-const MENU__ = document.getElementById('menu')
-const TOP_MENU = document.getElementById('topMenu')
-// const BOTTOM_MENU = document.getElementById('bottomMenu')
+const BOTTOM = document.getElementById('bottom')
+const BOTTOM_MENU = document.getElementById('bottomMenu')
 
 let menuExpanded = false;
 let biggerElem = null
 let biggeredElem = null
+
+
+ 
 
 function getTransitionValue() {
   this.min = 50;
@@ -15,25 +20,35 @@ function getTransitionValue() {
   this.duration = 1;
   this.menuMax = 65;
   this.menuMin = 50;
+  this.mediaQueryVideoHeightMin = 50;
+  this.mediaQueryVideoHeightMax = 80;
 };
 
 let transitionValue = new getTransitionValue();
 
 let resizeFinish;
+let demoVideoHeight;
+let botMenuPadding;
 
-DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
 
+getPadding()
+getMediaQeury800()
+DEMO_VIDEO.style.height = demoVideoHeight;
 
-window.addEventListener('resize',()=>{
-  DEMO_SVG.classList.remove('blurSVG')
-  DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
-  
-  clearTimeout(resizeFinish);
-  resizeFinish = setTimeout(() => {
-    DEMO_SVG.classList.add('blurSVG')
-  }, 200);
-  
-})
+function getPadding(){
+  botMenuPadding = parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
+}
+function getMediaQeury800(){
+  demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
+  if(innerWidth > 800){
+    DEMO__.style.height = '';
+    BOTTOM_MENU.style.height ='';
+  }else{
+    DEMO__.style.height = demoVideoHeight;
+    
+    BOTTOM_MENU.style.height = BOTTOM_MENU.parentElement.clientHeight - DEMO__.clientHeight - botMenuPadding+'px';
+  }
+}
 
 
 
@@ -139,8 +154,28 @@ menuController.prototype.restElemsEventListener = function(listener, handler) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 //--- menu Utiliti controller------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,63 +190,134 @@ menuController.prototype.restElemsEventListener = function(listener, handler) {
 function menuUtilities(id){
   
   this.elem = document.getElementById(id);
-  
+  this.padding;
+
+
+
+  this.updateSizeHandler = this.updateSize.bind(this);
+
+  window.addEventListener('resize', this.updateSizeHandler);
 
 }
 
 
 menuUtilities.prototype.expandMenu = function(){
   return new Promise((resolve, reject)=>{
+    
   if (menuExpanded && biggeredElem == null) {
     
-    DEMO_SVG.classList.remove('blurSVG');
-    
     DEMO_VIDEO.classList.add('menutransition');
-    DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
     
-    document.querySelector('#demoVideo div').style.filter = 'none'
-    document.querySelector('#demoVideo div').style.animation = 'none'
-    document.querySelector('#demoVideo div').style.opacity = '0.5'
+    if(innerWidth > 800){
+      DEMO_SVG.classList.remove('blurSVG');
 
-  setTimeout(() => {
-    DEMO_SVG.classList.add('blurSVG');
-    DEMO_VIDEO.classList.remove('menutransition');
+      DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
 
-    document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+    }else{
+      
+      let demoVideoHeight = DEMO__.clientWidth * (transitionValue['mediaQueryVideoHeightMin'] / 100) * (9/16);
+      
+      DEMO__.classList.add('menutransition');
+      BOTTOM_MENU.classList.add('menutransition');
 
-  }, transitionValue.duration * 1000);
+      DEMO__.style.height = demoVideoHeight +'px' ;
+      DEMO_VIDEO.style.width = transitionValue['mediaQueryVideoHeightMin']+ '%';
+
+      this.getPadding()
+      BOTTOM_MENU.style.height = BOTTOM.clientHeight-demoVideoHeight - botMenuPadding+'px';
+    }
+
+    // document.querySelector('#demoVideo div').style.filter = 'none'
+    // document.querySelector('#demoVideo div').style.animation = 'none'
+    // document.querySelector('#demoVideo div').style.opacity = '0.5'
+
+  
+    setTimeout(() => {
+      if (menuExpanded && biggeredElem == null) {
+        DEMO_SVG.classList.add('blurSVG');
+      }else{
+        DEMO__.classList.remove('menutransition')
+        BOTTOM_MENU.classList.remove('menutransition')
+      };
+      DEMO_VIDEO.classList.remove('menutransition')
+
+      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+    }, transitionValue.duration * 1000);
+
+
 
   }else if(biggerElem == this.elem) {
     
+    document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
   
+
+    setTimeout(() => {
+      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+    }, transitionValue.duration * 1000);
+
+
+
   }else{
-  
-
-    DEMO_SVG.classList.remove('blurSVG');
-
     DEMO_VIDEO.classList.add('menutransition');
-    DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
+  
+    if(innerWidth > 800){
+      DEMO_SVG.classList.remove('blurSVG');
+      DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((transitionValue.min) / 100) * 0.7) * (9/16) +'px';
+    }else{
+      
+      let demoVideoHeight = DEMO__.clientWidth * (transitionValue['mediaQueryVideoHeightMax'] / 100) * (9/16);
+      
+      DEMO__.classList.add('menutransition');
+      BOTTOM_MENU.classList.add('menutransition');
 
-    document.querySelector('#demoVideo div').style.filter = ''
-    document.querySelector('#demoVideo div').style.animation = ''
-    document.querySelector('#demoVideo div').style.opacity = ''
+      DEMO__.style.height = demoVideoHeight +'px' ;
+      DEMO_VIDEO.style.width = '';
+
+      this.getPadding()
+      BOTTOM_MENU.style.height = BOTTOM.clientHeight-demoVideoHeight - botMenuPadding+'px';
+    }
+
+    // document.querySelector('#demoVideo div').style.filter = ''
+    // document.querySelector('#demoVideo div').style.animation = ''
+    // document.querySelector('#demoVideo div').style.opacity = ''
 
     document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
-
+    
   setTimeout(() => {
-    DEMO_SVG.classList.add('blurSVG');
     DEMO_VIDEO.classList.remove('menutransition');
-
+    if(innerWidth > 800){
+      DEMO_SVG.classList.add('blurSVG');
+    }else{
+      DEMO__.classList.remove('menutransition');
+      BOTTOM_MENU.classList.remove('menutransition');
+    }
   }, transitionValue.duration * 1000);
   }
   resolve()  
 })
 }
+
+menuUtilities.prototype.getPadding = function(){
+  this.padding =  parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);  
+}
+
 menuUtilities.prototype.deleteMenuText = function(){
   // document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
   
 }
 
+menuUtilities.prototype.updateSize = function(){
+  DEMO_SVG.classList.remove('blurSVG')
+  DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
+  
+  clearTimeout(resizeFinish);
+  resizeFinish = setTimeout(() => {
+    DEMO_SVG.classList.add('blurSVG')
+  }, 200);
+
+  getMediaQeury800()
+
+}
 //---- general Function ------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 

@@ -53,7 +53,7 @@ function createBorderPath(borders) {
   this.points = [];
   this.pointsTween = [];
 
-  this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2;
+  this.padding;
   this.expanding = false;
   this.stop = false;
 
@@ -95,6 +95,8 @@ createBorderPath.prototype.expandMenu = function(allElems) {
   let heightBigger = upDown.heightBigger;
   let heightSmaller = upDown.heightSmaller;
 
+  this.subMenuChangingWidth;
+  this.subMenuChangingHeight;
   
 
 
@@ -106,18 +108,19 @@ createBorderPath.prototype.expandMenu = function(allElems) {
   })
 
 return new Promise((resolve,reject)=>{
+
   if (menuExpanded && biggeredElem == null) {
 
-    this.getTopMenuSize()
-    TOP_MENU.classList.add('menutransition');
-    TOP_MENU.style.height = this.topMenuSize + 'px';
-    
+    if(innerWidth > 800){
+      MENU__.style.width = transitionValue.max + '%';
+      MENU__.classList.add('menutransition');
+      NAME.style.width = (100 - transitionValue.max) + '%';
+      NAME.classList.add('menutransition');
+      
 
-    MENU__.classList.add('menutransition')
-    DEMO__.classList.add('menutransition')
-    MENU__.style.width = transitionValue['max'] + '%';
-    DEMO__.style.width = ( 100 - transitionValue['max']) + '%';
-    
+      DEMO__.classList.add('menutransition');
+      DEMO__.style.width = ( 100 - transitionValue['max']) + '%';
+    }
 
     widthBigger.forEach((widthBigger) => widthBigger.style.width = transitionValue['menuMax'] + '%')
     widthSmaller.forEach((widthSmaller) => widthSmaller.style.width = (100 - transitionValue['menuMax']) + '%')
@@ -145,6 +148,7 @@ return new Promise((resolve,reject)=>{
 
       MENU__.classList.remove('menutransition')
       DEMO__.classList.remove('menutransition')
+      NAME.classList.remove('menutransition')
       this.borders.elem.firstElementChild.style.width = '100%'
       this.borders.elem.firstElementChild.style.height = '100%'
 
@@ -214,22 +218,19 @@ return new Promise((resolve,reject)=>{
 
   } else {
 
-
-    this.borders.elem.parentElement.classList.add('menutransition')
+    // BOTTOM_MENU.classList.add('menutransition')
     allElems.forEach((allElems) => {
       allElems.classList.add("menutransition")
       allElems.style.width = '';
       allElems.style.height = '';
     })
-
-    TOP_MENU.classList.add('menutransition');
-    TOP_MENU.style.height = '';
-
-    MENU__.classList.add('menutransition')
-    DEMO__.classList.add('menutransition')
-    MENU__.style.width = transitionValue['min'] + '%';
-    DEMO__.style.width = ( 100 - transitionValue['min']) + '%';
-
+    
+    if(innerWidth > 800){
+      MENU__.classList.add('menutransition')
+      DEMO__.classList.add('menutransition')
+      MENU__.style.width = transitionValue['min'] + '%';
+      DEMO__.style.width = ( 100 - transitionValue['min']) + '%';
+    }
 
 
     this.borders.elem.firstElementChild.style.width = '';
@@ -263,7 +264,6 @@ return new Promise((resolve,reject)=>{
       }
 
     })
-
     resolve()
   }, transitionValue.duration * 1000);
 
@@ -271,6 +271,10 @@ return new Promise((resolve,reject)=>{
 })
 
 };
+
+createBorderPath.prototype.getPadding = function(){
+  this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2 +  parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
+}
 
 createBorderPath.prototype.getLeftRight = function() {
 
@@ -360,17 +364,26 @@ createBorderPath.prototype.getFirstNum = function() {
   }
 }
 
-createBorderPath.prototype.getTopMenuSize = function(){
-  let topMenuFontSize = parseFloat(getComputedStyle(this.elemParent.parentElement.firstElementChild).fontSize);
-  let topMenuPadding = parseFloat(getComputedStyle(this.elemParent.parentElement.firstElementChild).paddingTop);
-
-  this.topMenuSize = topMenuFontSize + topMenuPadding*2;
-}
+// createBorderPath.prototype.getTopMenuSize = function(){
+//   let topMenuFontSize = parseFloat(getComputedStyle(MENU__).fontSize);
+//   let topMenuPadding = parseFloat(getComputedStyle(MENU__).paddingTop);
+  
+//   this.topMenuSize = topMenuFontSize + topMenuPadding*2;
+//   console.log(this.topMenuSize)
+// }
 
 createBorderPath.prototype.subMenuChanging = function() {
-  this.subMenuChangingWidth = MENU__.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['menuMax'] / 100)) - this.padding;
-  this.getTopMenuSize()
-  this.subMenuChangingHeight = (MENU__.parentElement.clientHeight - this.topMenuSize) * (transitionValue['menuMax'] / 100) - this.padding;
+  this.getPadding();
+
+  if(innerWidth > 800){
+    this.subMenuChangingWidth = BOTTOM_MENU.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['menuMax'] / 100)) - this.padding;
+    this.subMenuChangingHeight = BOTTOM_MENU.parentElement.clientHeight * (transitionValue['menuMax'] / 100) - this.padding;
+  }else{
+    let demoVideoHeight = DEMO__.clientWidth * (9/16) * (transitionValue['mediaQueryVideoHeightMin'] / 100);
+
+    this.subMenuChangingWidth = BOTTOM_MENU.clientWidth * (transitionValue['menuMax'] / 100) - this.padding;
+    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight -this.padding) * (transitionValue['menuMax'] / 100) - this.padding;
+  }
 }
 
 
@@ -393,7 +406,7 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttributeNS(null, 'height', this.h)
   this.borders.path.setAttributeNS(null, 'fill', this.borders.color);
   this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
-  this.borders.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
+  // this.borders.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
 
 }
 
