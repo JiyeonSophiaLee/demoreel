@@ -27,28 +27,27 @@ function getTransitionValue() {
 let transitionValue = new getTransitionValue();
 
 let resizeFinish;
-let demoVideoHeight;
 let botMenuPadding;
+let demoMargin;
 
 
-getPadding()
-getMediaQeury800()
-DEMO_VIDEO.style.height = demoVideoHeight;
+// getPadding();
+// getDemoMargin();
+
+let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
+DEMO_VIDEO.style.height = demoVideoHeight +'px';
+if(innerWidth <= 800){
+  DEMO__.style.height = demoVideoHeight +'px';
+  BOTTOM_MENU.style.height = BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight - demoMargin *2 + 'px';
+}
 
 function getPadding(){
   botMenuPadding = parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
 }
-function getMediaQeury800(){
-  demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
-  if(innerWidth > 800){
-    DEMO__.style.height = '';
-    BOTTOM_MENU.style.height ='';
-  }else{
-    DEMO__.style.height = demoVideoHeight;
-    
-    BOTTOM_MENU.style.height = BOTTOM_MENU.parentElement.clientHeight - DEMO__.clientHeight - botMenuPadding+'px';
-  }
+function getDemoMargin(){
+  demoMargin = parseFloat(getComputedStyle(DEMO__).marginTop);
 }
+
 
 
 
@@ -214,13 +213,14 @@ menuUtilities.prototype.expandMenu = function(){
       DEMO_VIDEO.style.height = (DEMO__.parentElement.clientWidth * ((100-transitionValue.max) / 100) * 0.7) * (9/16) +'px';
 
     }else{
-      
+
       let demoVideoHeight = DEMO__.clientWidth * (transitionValue['mediaQueryVideoHeightMin'] / 100) * (9/16);
       
       DEMO__.classList.add('menutransition');
       BOTTOM_MENU.classList.add('menutransition');
 
       DEMO__.style.height = demoVideoHeight +'px' ;
+      DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
       DEMO_VIDEO.style.width = transitionValue['mediaQueryVideoHeightMin']+ '%';
 
       this.getPadding()
@@ -271,6 +271,7 @@ menuUtilities.prototype.expandMenu = function(){
       BOTTOM_MENU.classList.add('menutransition');
 
       DEMO__.style.height = demoVideoHeight +'px' ;
+      DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
       DEMO_VIDEO.style.width = '';
 
       this.getPadding()
@@ -307,15 +308,35 @@ menuUtilities.prototype.deleteMenuText = function(){
 }
 
 menuUtilities.prototype.updateSize = function(){
+  demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
+
   DEMO_SVG.classList.remove('blurSVG')
-  DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';
+  DEMO_VIDEO.style.height = demoVideoHeight +'px';
   
+  if(innerWidth > 800){
+    // DEMO__.style.height = '100%'
+    BOTTOM_MENU.style.height = '100%'
+    DEMO__.style.height = '';
+    DEMO_VIDEO.style.width = '';
+
+    if (menuExpanded && biggeredElem == null) {
+      DEMO__.style.width = 100 - transitionValue['menuMax'] + '%';
+    }
+
+  }else{
+    DEMO__.style.height = demoVideoHeight +'px';
+    BOTTOM_MENU.style.height = BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight +'px';
+  
+    DEMO__.style.width = '';
+    DEMO_VIDEO.style.width = transitionValue['mediaQueryVideoHeightMin'] +'%';
+
+  }
   clearTimeout(resizeFinish);
   resizeFinish = setTimeout(() => {
     DEMO_SVG.classList.add('blurSVG')
   }, 200);
 
-  getMediaQeury800()
+  // getMediaQeury800()
 
 }
 //---- general Function ------------------------------------------------------------------------------------

@@ -5,18 +5,8 @@
   box-sizing: border-box;
 }
 :root{
-  --topTileHeight:65px;
+  --topTileHeight:13vw;
 }
-  /* @media (max-width:800px){
-    :root{
-      --topTileHeight:95px;
-    }
-  }
-  @media (min-width:1100px){
-    :root{
-      --topTileHeight:130px;
-    }
-  } */
 body,html{
   width: 100%;
   height: 100%;
@@ -26,6 +16,7 @@ body,html{
   background:rgba(11, 11, 11, 1);
   color:white;
   box-sizing: border-box;
+  /* padding:5px; */
 }
 
 /*   Fonts   */
@@ -38,8 +29,7 @@ div{
   }
   @media (max-width:800px){
     #topMenu{
-      /* margin:1vw 0 1vw 0; */
-      height:13vw;
+      height:var(--topTileHeight);
     }
   }
     #topMenu > div{
@@ -49,7 +39,6 @@ div{
       text-align: end;
       margin-left: auto;
       margin-right: auto;
-      height:var(--topTileHeight);
       flex-shrink: 1;
     }
     @media (max-width:800px){
@@ -103,58 +92,52 @@ div{
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
-      padding: 20px 4vw 20px 4vw;
-      height:var(--topTileHeight);
+      /* padding: 20px 4vw 20px 4vw; */
     }
     @media (max-width:800px){
       #topMenu #menu{
         display: none;
-        /* height:0; */
       }
     }
   #bottom{
-    /* margin:10px; */
     height: calc(100% - var(--topTileHeight));
     display:flex;
     flex-wrap: wrap;
     flex-direction: row;
   }
-    #bottom #demo, #bottom #bottomMenu{
+    #bottom #demo, #bottomMenu{
       width:50%;
+      /* height: 100%; */
     }
     @media (max-width:800px){
       #bottom #demo,#bottomMenu{
-      
-      width:100%;
+        width:100%;
       }
     }
     #bottom #demo{
       position: relative;
-      /* width: 50%; */
       text-align: center;
       display: flex;
       flex-direction: column;
     } 
     @media (max-width:800px){
       #bottom #demo{
-        margin:1vw 0 1vw 0;
+        /* margin: 1vw 0 1vw 0; */
+        width: 100%;
       }
     }
 
     #bottom #demo #demoVideo{
         width: 67%;
-        /* max-height: 70%; */
         margin: auto;
-        /* border: solid 0.6vw rgba(255,255,255,0); */
         box-sizing: content-box;
         position: relative;
         --borderWidth: 0.5vw;
-        /* visibility: hidden; */
       }
       @media (max-width:800px){
         #bottom #demo #demoVideo{
           width: 80%;
-          
+          --borderWidth: 0.7vw;
         }
       }
         #bottom #demo #demoVideo iframe{
@@ -179,6 +162,11 @@ div{
           mix-blend-mode: hard-light;
           animation: animatedgradient 3s ease alternate infinite;
         }  
+        @media (max-width:800px){
+          #bottom #demo #demoVideo div{
+            filter: none;
+          }
+        }
         @keyframes animatedgradient {
           0% {
             background-position: 0% 50%;
@@ -197,18 +185,13 @@ div{
         width: 100%;
         height: 100%;
         z-index: -1;
-        /* filter: blur(4.5px); */
+        filter: blur(4.5px);
       }
       @media (max-width:800px){
         #bottom #demo img{
           display: none;
         }
       }
-      /* #menu {
-        display:flex;
-        flex-direction: column;
-        width: 50%;
-      } */
       
       #bottom #bottomMenu{
         display:flex;
@@ -216,22 +199,20 @@ div{
         flex-direction: row;
         flex-grow: 1;
         flex-shrink: 0;
-        padding: 10px;
-        /* margin: 10px; */
-        /* width: 50%; */
+        /* padding: 10px; */
       }
         #bottom #bottomMenu li{
           width:50%;
           display: flex;
           cursor: pointer;
-          padding :0.8vw;
+          /* padding :0.8vw; */
           list-style:none;
           height:50%;
           position: relative;
         }
         @media (max-width:800px){
           #bottom #bottomMenu li{
-            padding :1.2vw;
+            /* padding :1.2vw; */
           }
         }
         #bottom #bottomMenu li .borders{
@@ -242,19 +223,17 @@ div{
           position: relative;
           font-size:2vw;
           align-items: center;
-          /* margin: auto; */
-          /* justify-items: center; */
         }
         @media (max-width:800px){
           #bottom #bottomMenu li .borders{
-            font-size: 18px;
-            width: 20vw;
-            height: 20vw;
+            font-size: 3.5vw;
+            width: 18vw;
+            height: 18vw;
           }
         }
         @media (min-width:1100px){
           #bottom #bottomMenu li{
-            padding: 9px;
+            /* padding: 9px; */
           }
             #bottom #bottomMenu li .borders{
               font-size: 22px;
@@ -273,8 +252,6 @@ div{
         }
           #bottom #bottomMenu li .borders svg{
             position: absolute;
-            /* width: inherit;
-            height: inherit; */
           }
           
             #bottom #bottomMenu li .borders svg rect{
@@ -291,9 +268,6 @@ div{
               }
             }
           #bottom #bottomMenu li .borders .text{
-            
-            /* width: inherit;
-            height: inherit; */
             position: relative;;
           }
           

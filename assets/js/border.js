@@ -27,7 +27,6 @@ function border(id) {
 
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
-// let transitionValue = new transitionValue;
 
 let requestAni = null;
 let f = 0;
@@ -272,10 +271,6 @@ return new Promise((resolve,reject)=>{
 
 };
 
-createBorderPath.prototype.getPadding = function(){
-  this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2 +  parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
-}
-
 createBorderPath.prototype.getLeftRight = function() {
 
   let firstNum = this.getFirstNum(this);
@@ -372,6 +367,11 @@ createBorderPath.prototype.getFirstNum = function() {
 //   console.log(this.topMenuSize)
 // }
 
+
+createBorderPath.prototype.getPadding = function(){
+  this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2 + parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
+}
+
 createBorderPath.prototype.subMenuChanging = function() {
   this.getPadding();
 
@@ -382,7 +382,7 @@ createBorderPath.prototype.subMenuChanging = function() {
     let demoVideoHeight = DEMO__.clientWidth * (9/16) * (transitionValue['mediaQueryVideoHeightMin'] / 100);
 
     this.subMenuChangingWidth = BOTTOM_MENU.clientWidth * (transitionValue['menuMax'] / 100) - this.padding;
-    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight -this.padding) * (transitionValue['menuMax'] / 100) - this.padding;
+    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight -this.padding) * (transitionValue['menuMax'] / 100) - this.padding +  parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
   }
 }
 
