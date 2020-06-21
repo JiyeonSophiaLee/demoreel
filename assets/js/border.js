@@ -52,7 +52,7 @@ function createBorderPath(borders) {
   this.points = [];
   this.pointsTween = [];
 
-  this.padding;
+  // this.padding;
   this.expanding = false;
   this.stop = false;
 
@@ -359,16 +359,9 @@ createBorderPath.prototype.getFirstNum = function() {
   }
 }
 
-// createBorderPath.prototype.getTopMenuSize = function(){
-//   let topMenuFontSize = parseFloat(getComputedStyle(MENU__).fontSize);
-//   let topMenuPadding = parseFloat(getComputedStyle(MENU__).paddingTop);
-  
-//   this.topMenuSize = topMenuFontSize + topMenuPadding*2;
-//   console.log(this.topMenuSize)
-// }
-
 
 createBorderPath.prototype.getPadding = function(){
+  // this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2 + parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
   this.padding = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop) * 2 + parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
 }
 
@@ -376,13 +369,13 @@ createBorderPath.prototype.subMenuChanging = function() {
   this.getPadding();
 
   if(innerWidth > 800){
-    this.subMenuChangingWidth = BOTTOM_MENU.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['menuMax'] / 100)) - this.padding;
+    this.subMenuChangingWidth = BOTTOM_MENU.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['menuMax'] / 100)) - this.padding ;
     this.subMenuChangingHeight = BOTTOM_MENU.parentElement.clientHeight * (transitionValue['menuMax'] / 100) - this.padding;
   }else{
     let demoVideoHeight = DEMO__.clientWidth * (9/16) * (transitionValue['mediaQueryVideoHeightMin'] / 100);
 
-    this.subMenuChangingWidth = BOTTOM_MENU.clientWidth * (transitionValue['menuMax'] / 100) - this.padding;
-    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight -this.padding) * (transitionValue['menuMax'] / 100) - this.padding +  parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
+    this.subMenuChangingWidth = BOTTOM_MENU.clientWidth * (transitionValue['menuMax'] / 100) - this.padding ;
+    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight ) * (transitionValue['menuMax'] / 100) - this.padding;
   }
 }
 

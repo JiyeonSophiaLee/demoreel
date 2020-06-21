@@ -5,8 +5,18 @@
   box-sizing: border-box;
 }
 :root{
-  --topTileHeight:13vw;
+  --topTileHeight:7vw;
 }
+  @media (max-width:800px){
+    :root{
+      --topTileHeight:13vw;
+    }
+  }
+  @media (min-width:1100px){
+    :root{
+      --topTileHeight:77px;
+    }
+  }
 body,html{
   width: 100%;
   height: 100%;
@@ -26,11 +36,7 @@ div{
   #topMenu{
     display: flex;
     width:100%;
-  }
-  @media (max-width:800px){
-    #topMenu{
-      height:var(--topTileHeight);
-    }
+    height:var(--topTileHeight);
   }
     #topMenu > div{
       width: 50%;
@@ -92,7 +98,7 @@ div{
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
-      /* padding: 20px 4vw 20px 4vw; */
+      padding: 20px 4vw 20px 4vw;
     }
     @media (max-width:800px){
       #topMenu #menu{
@@ -185,7 +191,6 @@ div{
         width: 100%;
         height: 100%;
         z-index: -1;
-        filter: blur(4.5px);
       }
       @media (max-width:800px){
         #bottom #demo img{
@@ -199,20 +204,30 @@ div{
         flex-direction: row;
         flex-grow: 1;
         flex-shrink: 0;
-        /* padding: 10px; */
+        /* padding: 2vw; */
+      }
+      @media (max-width:800px){
+        #bottom #bottomMenu{
+          padding: 2vw;
+        }
       }
         #bottom #bottomMenu li{
           width:50%;
           display: flex;
           cursor: pointer;
-          /* padding :0.8vw; */
+          padding :0.8vw;
           list-style:none;
           height:50%;
           position: relative;
         }
         @media (max-width:800px){
           #bottom #bottomMenu li{
-            /* padding :1.2vw; */
+            padding :1.2vw;
+          }
+        }
+        @media (min-width:1100px){
+          #bottom #bottomMenu li{
+            padding :9.3px;
           }
         }
         #bottom #bottomMenu li .borders{
@@ -232,12 +247,9 @@ div{
           }
         }
         @media (min-width:1100px){
-          #bottom #bottomMenu li{
-            /* padding: 9px; */
+          #bottom #bottomMenu li .borders{
+            font-size: 22px;
           }
-            #bottom #bottomMenu li .borders{
-              font-size: 22px;
-            }
         }
         #bottom #bottomMenu li .borders:hover{
           border-radius: 10px;
