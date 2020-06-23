@@ -371,6 +371,7 @@ createBorderPath.prototype.subMenuChanging = function() {
   if(innerWidth > 800){
     this.subMenuChangingWidth = BOTTOM_MENU.parentElement.clientWidth * ((transitionValue['max'] / 100) * (transitionValue['menuMax'] / 100)) - this.padding ;
     this.subMenuChangingHeight = BOTTOM_MENU.parentElement.clientHeight * (transitionValue['menuMax'] / 100) - this.padding;
+    console.log(this.subMenuChangingHeight)
   }else{
     let demoVideoHeight = DEMO__.clientWidth * (9/16) * (transitionValue['mediaQueryVideoHeightMin'] / 100);
 
@@ -437,8 +438,10 @@ createBorderPath.prototype.animRectBorder = function() {
 
     if (biggeredElem != null) {
       
-      this.biggeredElemPath.parentElement.style.width = '';
-      this.biggeredElemPath.parentElement.style.height = '';
+      this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.borders.radius * 2 + 'px';
+      this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + +this.borders.radius * 2 + 'px';
+      // this.biggeredElemPath.parentElement.style.width = '';
+      // this.biggeredElemPath.parentElement.style.height = '';
       this.biggeredElemPath.setAttribute('width', this.smallMenuSize - this.borders.strokeWidth);
       this.biggeredElemPath.setAttribute('height', this.smallMenuSize - this.borders.strokeWidth);
     }
