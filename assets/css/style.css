@@ -4,8 +4,12 @@
 
   box-sizing: border-box;
 }
+canvas{
+  display: block;
+}
 :root{
   --topTileHeight:7vw;
+  --backgroundColor:rgba(20, 20, 20, 1);
 }
   @media (max-width:800px){
     :root{
@@ -23,7 +27,7 @@ body,html{
 }
 
 #body{
-  background:rgba(31, 31, 31, 1);
+  background:var(--backgroundColor);
   color:white;
   box-sizing: border-box;
   /* padding:5px; */
@@ -33,6 +37,95 @@ body,html{
 div{
   font-family: 'Text Me One', sans-serif;
 }
+
+/* loader */
+
+#loaderContainer{
+  position: absolute;
+  top: 0;
+  left: 0;  
+  width: 100%;
+  height: 100%;
+  background:rgba(30,30,30,0.9);
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+}
+  .loaderFadeOut{
+    animation: fadeOut 1s linear forwards;
+    animation-iteration-count: 1 ;
+  }
+  @keyframes fadeOut{
+    0%{
+      opacity :1;
+      transform:scale(1);
+    }
+    100%{
+      opacity :0;
+      transform:scale(2);
+    }
+  }
+
+  #loader {
+    align-self: center;
+    color: #FFF;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    letter-spacing: 4px;
+  }
+  #loader::before {
+    content: '';
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    height: 28px;
+    width: 5.15px;
+    background: currentColor;
+  }
+  #loader::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 125px;
+    top: 2px;
+    border-radius: 50%;
+    background: red;
+    animation: loaderAnim 1s ease-in infinite;
+  }
+  @keyframes loaderAnim {
+    0% {
+      transform: translateY(8px) scaleY(1) scaleX(1.25);
+    }
+    25%, 75% {
+      transform: translateY(-5px) scaleY(1.2) scaleX(1);
+    }
+    50% {
+      transform: translateY(-10px) scaleY(1) scaleX(1);
+    }
+    100% {
+      transform: translateY(8px) scaleY(0.8) scaleX(0.8);
+    }
+  }
+/* ------------------- */
+  
+
+  #threejsBlocker{
+    background:var(--backgroundColor);
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+  #threeJS{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -3;
+  }
   #topMenu{
     display: flex;
     width:100%;
@@ -204,7 +297,7 @@ div{
         flex-direction: row;
         flex-grow: 1;
         flex-shrink: 0;
-        /* padding: 2vw; */
+        padding: 2vw;
       }
       @media (max-width:800px){
         #bottom #bottomMenu{
@@ -295,6 +388,9 @@ div{
           position: absolute;
           top: 0;
           left: 0;
+          width: 100%;
+          height: 100%;
+          padding: 2vw;
         }
 
 

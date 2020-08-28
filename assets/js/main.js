@@ -4,12 +4,18 @@ const NAME = document.getElementById('name');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
 const DEMO_SVG = document.getElementById('demoSVG');
-const BOTTOM = document.getElementById('bottom')
-const BOTTOM_MENU = document.getElementById('bottomMenu')
+const BOTTOM = document.getElementById('bottom');
+const BOTTOM_MENU = document.getElementById('bottomMenu');
+const WORK = document.getElementById('work');
+const SKILL = document.getElementById('skill');
+const PAINT = document.getElementById('paint');
+const INFO = document.getElementById('info');
 
 let menuExpanded = false;
 let biggerElem = null
 let biggeredElem = null
+
+
 
 
  
@@ -102,7 +108,7 @@ menuController.prototype.expandMenu = function(){
   const utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities').expandMenu();
   
 
-  Promise.all([bordersExpandMenu,utilitiExpandMenu])
+  Promise.all([bordersExpandMenu, utilitiExpandMenu, callThumbnail(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 }
@@ -206,6 +212,7 @@ menuUtilities.prototype.expandMenu = function(){
   if (menuExpanded && biggeredElem == null) {
     
     DEMO_VIDEO.classList.add('menutransition');
+    this.elem.classList.add('callThreeJS');
     
     if(innerWidth > 800){
       console.log('working')
@@ -248,7 +255,9 @@ menuUtilities.prototype.expandMenu = function(){
 
 
   }else if(biggerElem == this.elem) {
-    
+    biggeredElem.classList.remove('callThreeJS');
+    this.elem.classList.add('callThreeJS');
+
     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
   
 
@@ -259,6 +268,8 @@ menuUtilities.prototype.expandMenu = function(){
 
 
   }else{
+    this.elem.classList.remove('callThreeJS');
+
     DEMO_VIDEO.classList.add('menutransition');
   
     if(innerWidth > 800){
