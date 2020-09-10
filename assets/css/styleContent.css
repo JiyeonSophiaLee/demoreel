@@ -1,21 +1,25 @@
-/* .contents{
-    display: grid;
+.contents{
+    display:none;
+    /* display: grid;
     position: absolute;
     width: 100%;
     height: 100%;
-    padding: 2vw;
-} */
+    padding: 2vw; */
+}
 .projects{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
     background: rgb(10, 10, 10, 0.5);
     /* grid-auto-flow:column; */
 }
-.mainContent{
-    max-width:100%;
-    grid-row: 1/3;
-    grid-column: 1/3;
-}
-.subContent{
-    max-width:100%;
-}
+    /* .projects > img{
+        display: none;
+    } */
+    .mainContent{
+        max-width:100%;
+        grid-row: 1/3;
+        grid-column: 1/3;
+    }
+    .subContent{
+        max-width:100%;
+    }

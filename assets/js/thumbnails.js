@@ -18,7 +18,7 @@ function projectThumbnail(path, projectName, extension ,main, sub){
 }
 projectThumbnail.prototype.createImage = function(){
     let div = document.createElement('div');
-    div.style.visibility = 'hidden';
+    // div.style.display = 'none';
 
 
     let img = document.createElement('img');
@@ -82,14 +82,36 @@ workThumbnails.forEach((projects)=>{
 
 
 
-function callThumbnail (elem){
+function callThumbnailIf (elem){
+
     
-    if(elem.id == 'work'){
-        setTimeout(() => {
-            document.querySelector(`#${elem.id} .contents .projects`).style.visibility = 'visible';
-        }, transitionValue.duration * 1000);
+        // setTimeout(() => {
+        //     document.querySelector(`#${elem.id} .contents .projects`).style.display = 'initial';
+        // }, transitionValue.duration * 1000);
         
-    }
+    
+}
+function callThumbnailElseIf (elem){
+
+    // document.querySelector(`#${biggeredElem.id} .contents .projects`).style.display = 'none';
+  
+        // setTimeout(() => {
+        //     document.querySelector(`#${elem.id} .contents .projects`).style.display = 'initial';
+        // }, transitionValue.duration * 1000);
+        
+    
+}
+
+
+function callThumbnailElse (elem){
+
+    document.querySelector(`#${elem.id} .contents .projects`).style.display = 'none';
+  
+        // setTimeout(() => {
+        //     document.querySelector(`#${biggerElem.id} .contents .projects`).style.display = 'initial';
+        // }, transitionValue.duration * 1000);
+        
+    
 }
 
 
