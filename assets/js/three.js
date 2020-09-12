@@ -38,8 +38,8 @@ function init() {
     container = document.getElementById( 'threeJS' );
     document.body.appendChild( container );
     
-    stats = new Stats();
-    container.appendChild(stats.domElement);
+    // stats = new Stats();
+    // container.appendChild(stats.domElement);
 
     mouseX = 0;
     mouseY = 0;
@@ -59,11 +59,11 @@ function init() {
 
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.25, 100 );
-    // cameracameraPositionX = 1;
-    // cameracameraPositionY = 2;
-    // cameraPositionZ = 3;
-    // camera.position.set(cameracameraPositionX,cameracameraPositionY,cameraPositionZ);
-    // camera.lookAt(new THREE.Vector3(0, 1, 0));
+    cameracameraPositionX = 1;
+    cameracameraPositionY = 2;
+    cameraPositionZ = 3;
+    camera.position.set(cameracameraPositionX,cameracameraPositionY,cameraPositionZ);
+    camera.lookAt(new THREE.Vector3(0, 1, 0));
 
     
     scene = new THREE.Scene();
@@ -262,34 +262,34 @@ function init() {
 
 
 
-    const gui = new dat.GUI();
+    // const gui = new dat.GUI();
     
-    gui.addColor(new ColorGUIHelper(dirLight,'color'),'value').name('color');
-    gui.add(dirLight,'intensity', 0, 2, 0.01);
-    makeXYZGUI(gui,dirLight.position,'position',()=>{updateLight(dirLight,dirLightHelper)});
-    makeXYZGUI(gui,dirLight.target.position,'target',()=>{updateLight(dirLight,dirLightHelper)});
+    // gui.addColor(new ColorGUIHelper(dirLight,'color'),'value').name('color');
+    // gui.add(dirLight,'intensity', 0, 2, 0.01);
+    // makeXYZGUI(gui,dirLight.position,'position',()=>{updateLight(dirLight,dirLightHelper)});
+    // makeXYZGUI(gui,dirLight.target.position,'target',()=>{updateLight(dirLight,dirLightHelper)});
 
 
-    const pointLightFolder = gui.addFolder('pointLight');
+    // const pointLightFolder = gui.addFolder('pointLight');
 
-    pointLightFolder.addColor(new ColorGUIHelper(pointLight,'color'),'value').name('color');
-    pointLightFolder.add(pointLight,'intensity', 0, 2, 0.01);
-    pointLightFolder.add(pointLight,'distance', 0, 40).onChange(()=>{updateLight(pointLightHelper,pointLightHelper)});
-    pointLightFolder.open();
-    makeXYZGUI(gui, pointLight.position, 'pointPosition', ()=>{updateLight(pointLight,pointLightHelper)});
+    // pointLightFolder.addColor(new ColorGUIHelper(pointLight,'color'),'value').name('color');
+    // pointLightFolder.add(pointLight,'intensity', 0, 2, 0.01);
+    // pointLightFolder.add(pointLight,'distance', 0, 40).onChange(()=>{updateLight(pointLightHelper,pointLightHelper)});
+    // pointLightFolder.open();
+    // makeXYZGUI(gui, pointLight.position, 'pointPosition', ()=>{updateLight(pointLight,pointLightHelper)});
     
 
-    const cameraFolder = gui.addFolder('camera');
+    // const cameraFolder = gui.addFolder('camera');
 
-    cameraFolder.add(camera,'fov', 1,180).onChange(updateCamera);
-    const minMaxGUIHelper = new MinMaxGUIHelper(camera,'near','far',0.1);
-    cameraFolder.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
-    cameraFolder.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
-    makeXYZGUI(gui,camera.position,'cameraPosition',updateCamera);
-    makeXYZGUI(gui,camera.rotation,'cameraRotation',updateCamera);
-    cameraFolder.open();
+    // cameraFolder.add(camera,'fov', 1,180).onChange(updateCamera);
+    // const minMaxGUIHelper = new MinMaxGUIHelper(camera,'near','far',0.1);
+    // cameraFolder.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
+    // cameraFolder.add(minMaxGUIHelper, 'max', 0.1, 50, 0.1).name('far').onChange(updateCamera);
+    // makeXYZGUI(gui,camera.position,'cameraPosition',updateCamera);
+    // makeXYZGUI(gui,camera.rotation,'cameraRotation',updateCamera);
+    // cameraFolder.open();
 
-    gui.close()
+    // gui.close()
    
 
 
@@ -331,7 +331,7 @@ function animate(){
     mixer.update( delta );
     
     // controls.update();
-    stats.update();
+    // stats.update();
     updateCameraMouse();
     
     renderer.render( scene, camera);
@@ -470,7 +470,7 @@ function setWeight( action, weight ) {
 function callThreeJS(elem){
     pointLight.intensity = 1.5;
     dirLight.intensity = 1;
-    document.getElementById('threejsBlocker').style.background = 'none'
+    document.getElementById('threejsBlocker').style.visibility = 'hidden'
 
     
     sky0.material.side = 0;
@@ -571,7 +571,6 @@ function callThreeJS(elem){
         cameraRotationZ = 01;
 
     }else{
-        console.log('info in three js is working')
         
         sky3.material.side = 1;
 
@@ -639,6 +638,23 @@ function callThreeJS(elem){
 
 // }, 3000);
 }
+
+function deleteThreeJs(){
+console.log('deleteThreejs is working')
+    document.getElementById('threejsBlocker').style.visibility = 'visible'
+
+    sky0.material.side = 0;
+    sky1.material.side = 0;
+    sky2.material.side = 0;
+    sky3.material.side = 0;
+
+    dirLight.intensity = 0;
+    pointLight.intensity = 0;
+
+    stopAllActions();
+
+}
+
 
 
 function cameraChange(){
