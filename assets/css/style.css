@@ -8,19 +8,11 @@ canvas{
   display: block;
 }
 :root{
-  --topTileHeight:7vw;
   --backgroundColor:rgba(20, 20, 20, 1);
+  --videoDemoWidth:67%;
+  --videoDemoWidthMediaQuery:80%
 }
-  @media (max-width:800px){
-    :root{
-      --topTileHeight:13vw;
-    }
-  }
-  @media (min-width:1100px){
-    :root{
-      --topTileHeight:77px;
-    }
-  }
+
 body,html{
   width: 100%;
   height: 100%;
@@ -31,6 +23,8 @@ body,html{
   color:white;
   box-sizing: border-box;
   /* padding:5px; */
+  display: flex;
+  flex-direction :column;
 }
 
 /*   Fonts   */
@@ -126,11 +120,30 @@ div{
     left: 0;
     z-index: -3;
   }
+  #threeJS::after{
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 10%;
+    background:linear-gradient(black, transparent);
+  }
   #topMenu{
     display: flex;
     width:100%;
-    height:var(--topTileHeight);
+    height:6.3vw;
   }
+    @media (max-width:800px){
+      #topMenu{
+        height:13vw;
+      }
+    }
+    @media (min-width:1100px){
+      #topMenu{
+        height:80px;
+      }
+    }
     #topMenu > div{
       width: 50%;
     }
@@ -139,30 +152,38 @@ div{
       margin-left: auto;
       margin-right: auto;
       flex-shrink: 1;
+      height:12vw;
+      cursor: pointer;
+      z-index: 2;
     }
     @media (max-width:800px){
       #topMenu #name{
         width: 100%;
         text-align: center;
-        height:calc(60px +4vw);
+        height:12vw;
       }
     }
+    @media (min-width:1100px){
+      #topMenu #name{
+        height:120px;
+      }
+    }
+
     #topMenu #name p{
-      width: 70%;
+      width: var( --videoDemoWidth);
       margin-left: auto;
       margin-right: auto;
     }
     #topMenu #name p:first-child{
-      font-size: 7.5vw;
+      font-size: 6.5vw;
       font-family: 'Poiret One', cursive;
     }
 
     #topMenu #name p:last-child{
       font-size: 3.4vw;
       font-family: 'Dosis', sans-serif;
-      
       position: relative;
-      top:-1vw
+      top:-1vw;
     }
       @media (max-width:800px){
         #topMenu #name p{
@@ -176,7 +197,7 @@ div{
           top:0px;
         }
       }
-      @media (min-width:1100px){
+      @media (min-width:1300px){
         #topMenu #name p:first-child{
           font-size: 82px;
         }
@@ -199,25 +220,34 @@ div{
       }
     }
   #bottom{
-    height: calc(100% - var(--topTileHeight));
+    /* height: calc(100% - var(--topTileHeight)); */
+    height: 100%;
     display:flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    min-height: 30vw;
   }
-    #bottom #demo, #bottomMenu{
-      width:50%;
-      /* height: 100%; */
-    }
     @media (max-width:800px){
-      #bottom #demo,#bottomMenu{
-        width:100%;
+      #bottom{
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+      #bottom #bottomMenu{
+        min-height:45vw;
       }
     }
+
+    #bottom #demo, #bottomMenu{
+      width:50%;
+    }
+      @media (max-width:800px){
+        #bottom #demo,#bottomMenu{
+          width:100%;
+        }
+      }
     #bottom #demo{
       position: relative;
       text-align: center;
       display: flex;
-      flex-direction: column;
+      /* flex-direction: column; */
     } 
     @media (max-width:800px){
       #bottom #demo{
@@ -227,7 +257,8 @@ div{
     }
 
     #bottom #demo #demoVideo{
-        width: 67%;
+        width: var(--videoDemoWidth);
+        height: 100%;
         margin: auto;
         box-sizing: content-box;
         position: relative;
@@ -235,8 +266,14 @@ div{
       }
       @media (max-width:800px){
         #bottom #demo #demoVideo{
-          width: 80%;
+          width: var(--videoDemoWidthMediaQuery);
+          /* width: 100%; */
           --borderWidth: 0.7vw;
+        }
+      }
+      @media (min-width:1100px){
+        #bottom #demo #demoVideo{
+          --borderWidth: 5.5px;
         }
       }
         #bottom #demo #demoVideo iframe{
@@ -245,7 +282,8 @@ div{
           border-radius: 5px;
         }
 
-        #bottom #demo #demoVideo div{
+        #bottom #demo #demoVideo #demoVideoRainbow{
+          height: inherit;
           position: absolute;
           top:0;
           left:0;
@@ -262,10 +300,11 @@ div{
           animation: animatedgradient 3s ease alternate infinite;
         }  
         @media (max-width:800px){
-          #bottom #demo #demoVideo div{
+          #bottom #demo #demoVideo #demoVideoRainbow{
             filter: none;
           }
         }
+
         @keyframes animatedgradient {
           0% {
             background-position: 0% 50%;
@@ -297,7 +336,7 @@ div{
         flex-direction: row;
         flex-grow: 1;
         flex-shrink: 0;
-        padding: 2vw;
+        padding: 2vw 2vw 2vw 0;
       }
       @media (max-width:800px){
         #bottom #bottomMenu{
@@ -312,6 +351,7 @@ div{
           list-style:none;
           height:50%;
           position: relative;
+          min-height: 10vw;
         }
         @media (max-width:800px){
           #bottom #bottomMenu li{
@@ -331,6 +371,7 @@ div{
           position: relative;
           font-size:2vw;
           align-items: center;
+          z-index: 3;
         }
         @media (max-width:800px){
           #bottom #bottomMenu li .borders{
@@ -357,6 +398,7 @@ div{
         }
           #bottom #bottomMenu li .borders svg{
             position: absolute;
+            /* min-height: 600px; */
           }
           
             #bottom #bottomMenu li .borders svg rect{
@@ -373,7 +415,7 @@ div{
               }
             }
           #bottom #bottomMenu li .borders .text{
-            position: relative;;
+            position: relative;
           }
           
           #bottom #bottomMenu #work{
@@ -390,7 +432,7 @@ div{
           left: 0;
           width: 100%;
           height: 100%;
-          padding: 2vw;
+          padding: 1vw;
         }
 
 
@@ -421,6 +463,9 @@ div{
             align-self: flex-start;
             border:none;
           }
+#stats{
+  position: absolute;
+}
 
 
 
@@ -431,4 +476,4 @@ div{
 .blurSVG{
   filter:blur(3px);
 }
-      
+

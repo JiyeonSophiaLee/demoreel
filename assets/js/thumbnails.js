@@ -1,4 +1,4 @@
-const workContent = document.querySelector('#work .contents');
+// let content;
 
 const tablePath = '/assets/images/projects/table_scene_thumbnails/';
 const tableName =  'table_scene_thumbnail_'
@@ -18,7 +18,7 @@ function projectThumbnail(path, projectName, extension ,main, sub){
 }
 projectThumbnail.prototype.createImage = function(){
     let div = document.createElement('div');
-    div.style.visibility = 'hidden';
+    // div.style.display = 'none';
 
 
     let img = document.createElement('img');
@@ -28,7 +28,7 @@ projectThumbnail.prototype.createImage = function(){
     div.classList.add('projects');
     img.classList.add('mainContent');
 
-    workContent.appendChild(div);
+    // content.appendChild(div);
     div.appendChild(img);
 
 
@@ -42,6 +42,7 @@ projectThumbnail.prototype.createImage = function(){
     });
 
 
+    return div;
 }
 
 
@@ -52,10 +53,26 @@ const workThumbnails = [tableScene];
 
 
 
-// function createProject(name,thumbnailArray){
-//     let div = document.createElement('div');
-//     div.classList.add('projects');
-//     div.style.visibility = 'hidden'
+function createProject(name){
+    let content = document.querySelector(`#${name} .contents`);
+    let thumbnails = eval(name + 'Thumbnails');
+
+    content.style.display = 'none';
+
+    thumbnails.forEach((project)=>{
+
+        // let div = document.createElement('div');
+        // div.classList.add('projects');
+
+
+        // content.appendChild(div);
+        // console.log('creatProject is working',content)
+        let div = project.createImage();
+        content.appendChild(div);
+
+        
+    // });
+    // div.style.visibility = 'hidden'
 
 //     eval(name +'Content').appendChild(div);
 //     // workContent.appendChild(div);
@@ -67,29 +84,52 @@ const workThumbnails = [tableScene];
 //         imgs.forEach((img)=>{
 //             div.appendChild(img);
 //         })
-//     })
-// }
+    })
+}
 
 
-// createProject('work',workThumbnails);
-
-
-
-workThumbnails.forEach((projects)=>{
-    projects.createImage()
-});
+createProject('work');
 
 
 
 
-function callThumbnail (elem){
+
+
+
+
+function callThumbnailIf (elem){
+
     
-    if(elem.id == 'work'){
-        setTimeout(() => {
-            document.querySelector(`#${elem.id} .contents .projects`).style.visibility = 'visible';
-        }, transitionValue.duration * 1000);
+
+    setTimeout(() => {
+        document.querySelector(`#${elem.id} .contents`).style.display = 'initial';
+    }, transitionValue.duration * 1000);
         
-    }
+    
+}
+function callThumbnailElseIf (elem){
+
+    document.querySelector(`#${biggeredElem.id} .contents`).style.display = 'none';
+  
+
+    
+    setTimeout(() => {
+        document.querySelector(`#${elem.id} .contents`).style.display = 'initial';
+    }, transitionValue.duration * 1000);
+        
+    
+}
+
+
+function callThumbnailElse (elem){
+
+    document.querySelector(`#${elem.id} .contents`).style.display = 'none';
+  
+        // setTimeout(() => {
+        //     document.querySelector(`#${biggerElem.id} .contents .projects`).style.display = 'initial';
+        // }, transitionValue.duration * 1000);
+        
+    
 }
 
 
