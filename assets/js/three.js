@@ -74,10 +74,10 @@ function init() {
     // const sky0Geo = new THREE.SphereGeometry(7, 25,25);
     // const sky0Mesh = new THREE.MeshBasicMaterial( {map:new THREE.TextureLoader().load('/assets/images/hdr/shutterstock_1168717975.jpg'), side:THREE.DoubleSide} );
 
-    sky0 = getSky(16,'/assets/images/hdr/space_00.jpg');
-    sky1 = getSky(16,'/assets/images/hdr/space_01.jpg');
-    sky2 = getSky(16,'/assets/images/hdr/space_02.jpg');
-    sky3 = getSky(16,'/assets/images/hdr/space_03.jpg');
+    sky0 = getSky(16,'assets/images/hdr/space_00.jpg');
+    sky1 = getSky(16,'assets/images/hdr/space_01.jpg');
+    sky2 = getSky(16,'assets/images/hdr/space_02.jpg');
+    sky3 = getSky(16,'assets/images/hdr/space_03.jpg');
     
 
     scene.add(sky0);
