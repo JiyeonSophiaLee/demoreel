@@ -1,6 +1,6 @@
 // let content;
 
-const tablePath = '/assets/images/projects/table_scene_thumbnails/';
+const tablePath = 'assets/images/projects/table_scene_thumbnails/';
 const tableName =  'table_scene_thumbnail_'
 const tableExtension = '.jpg'
 const tableSceneMain = '01';

@@ -2,6 +2,7 @@ let loaderRequestAni;
 let loaderF = 0;
 const loaderN = 60;
 const loaderContainer = document.getElementById('loaderContainer');
+const loader = document.getElementById('loader');
 
 // let loaderOpacity = 1;
 // let loaderOpacityDivide = loaderOpacity / loaderN;
@@ -13,7 +14,7 @@ window.onload = function(){
 function loaderAnim(){
     loaderF += 1;
     if(loaderF==loaderN-1){
-        loaderContainer.classList.add('loaderFadeOut');
+        loader.classList.add('loaderFadeOutTrans');
         // loaderContainer.firstElementChild.classList.remove('loaderAnimEnd');
 
 
