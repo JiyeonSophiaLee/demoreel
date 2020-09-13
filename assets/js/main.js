@@ -13,11 +13,11 @@ const INFO = document.getElementById('info');
 const TITLE = document.querySelector('#name');
 const DEMO_VIDEO_RAINBOW = document.querySelector('#demoVideoRainbow');
 const TITLE_NAME = document.querySelectorAll('#name p');
+const THREEJS_BlOCKER = document.getElementById('threejsBlocker')
 
 let menuExpanded = false;
 let biggerElem = null
 let biggeredElem = null
-
 
 
 
@@ -33,7 +33,8 @@ function getTransitionValue() {
   this.videoMinWidth = 90;
   this.videoMaxWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidthMediaQuery'));
   this.videoMinWidthMediaQuery = 50;
-
+  this.borderMinMediaQuery = 13;
+  this.borderMinMediaQueryUnit = 'vw';
 };
 
 let transitionValue = new getTransitionValue();
@@ -51,6 +52,7 @@ let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
 if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
+  THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
 }
 
 
@@ -269,9 +271,9 @@ function menuUtilities(id){
 }
 
 
-menuUtilities.prototype.expandMenuIf = function(){
+menuUtilities.prototype.expandMenuIf = function(restElems){
   return new Promise((resolve, reject)=>{
-  
+    
     DEMO__.classList.add('menutransition');
     DEMO_VIDEO.classList.add('menutransition');
     DEMO_VIDEO_RAINBOW.style.opacity = '50%';
@@ -308,6 +310,7 @@ menuUtilities.prototype.expandMenuIf = function(){
 
       DEMO__.style.height = demoVideoHeight +'px' ;
       DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
+
 
     }
 
@@ -385,7 +388,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       });
 
     }else{
-      let demoVideoHeight = DEMO__.clientWidth * (transitionValue['videoMaxWidthMediaQuery'] / 100) * (9/16);
+      let demoVideoHeight = innerWidth * transitionValue['videoMaxWidthMediaQuery'] / 100  * (9/16);
       
       
       DEMO__.classList.add('menutransition');
@@ -466,6 +469,8 @@ menuUtilities.prototype.updateSize = function(){
     
     if (menuExpanded ) {
       DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+    }else{
+      THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
     }
   }
   // clearTimeout(resizeFinish);

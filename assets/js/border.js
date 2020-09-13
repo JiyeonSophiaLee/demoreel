@@ -456,7 +456,7 @@ createBorderPath.prototype.subMenuChanging = function() {
     this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100) - this.liPaddingHeight;
 
   }else{
-    this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
+    this.subMenuChangingWidth =(BOTTOM_MENU.parentElement.clientWidth - this.botMenuPaddingWidth ) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
     this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100) - this.liPaddingHeight ;
   }
 
@@ -474,6 +474,7 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.parentElement.style.height = this.borders.h + this.extraSVGspace +'px';
   // this.borders.path.parentElement.style.top = `-${this.borders.radius}px`;
   this.borders.path.parentElement.style.left = `-${this.extraSVGspace/2}px`;
+  this.borders.path.parentElement.style.top = `-${this.extraSVGspace/2}px`;
   // this.borders.path.setAttribute('transform', `translate(-${this.borders.radius},0)`);
 
 

@@ -47,7 +47,7 @@ function init() {
     
     renderer = new THREE.WebGLRenderer( { antialias: false} );
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight);
+    renderer.setSize( window.innerWidth, body.scrollHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -58,7 +58,7 @@ function init() {
     container.appendChild( renderer.domElement );
 
 
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.25, 100 );
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / body.scrollHeight, 0.25, 100 );
     cameracameraPositionX = 1;
     cameracameraPositionY = 2;
     cameraPositionZ = 3;
@@ -300,10 +300,10 @@ function init() {
 
 function onWindowResize() {
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = window.innerWidth / body.scrollHeight;
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( window.innerWidth, body.scrollHeight );
 
     
     // animate();
@@ -470,7 +470,7 @@ function setWeight( action, weight ) {
 function callThreeJS(elem){
     pointLight.intensity = 1.5;
     dirLight.intensity = 1;
-    document.getElementById('threejsBlocker').style.visibility = 'hidden'
+    THREEJS_BlOCKER.style.visibility = 'hidden'
 
     
     sky0.material.side = 0;
@@ -640,8 +640,8 @@ function callThreeJS(elem){
 }
 
 function deleteThreeJs(){
-console.log('deleteThreejs is working')
-    document.getElementById('threejsBlocker').style.visibility = 'visible'
+
+    THREEJS_BlOCKER.style.visibility = 'visible'
 
     sky0.material.side = 0;
     sky1.material.side = 0;
