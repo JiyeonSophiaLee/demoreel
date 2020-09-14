@@ -473,8 +473,9 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.parentElement.style.width = this.borders.w + this.extraSVGspace + 'px';
   this.borders.path.parentElement.style.height = this.borders.h + this.extraSVGspace +'px';
   // this.borders.path.parentElement.style.top = `-${this.borders.radius}px`;
-  this.borders.path.parentElement.style.left = `-${this.extraSVGspace/2}px`;
-  this.borders.path.parentElement.style.top = `-${this.extraSVGspace/2}px`;
+  this.borders.path.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
+  // this.borders.path.parentElement.style.left = `-${this.extraSVGspace/2}px`;
+  // this.borders.path.parentElement.style.top = `-${this.extraSVGspace/2}px`;
   // this.borders.path.setAttribute('transform', `translate(-${this.borders.radius},0)`);
 
 
@@ -698,7 +699,9 @@ createBorderPath.prototype.getDataPoints = function() {
 
 createBorderPath.prototype.updateSize = function() {
 
-
+    // if(this.borders.elem == WORK){
+    //   console.log(this.borders.elem.firstElementChild,this.borders.elem.firstElementChild.clientHeight, this.extraSVGspace)
+    // }
   this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px'
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
   this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);

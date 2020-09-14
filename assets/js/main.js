@@ -35,6 +35,9 @@ function getTransitionValue() {
   this.videoMinWidthMediaQuery = 50;
   this.borderMinMediaQuery = 13;
   this.borderMinMediaQueryUnit = 'vw';
+  this.botMinHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--botMinHeight'));
+  this.topHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topHeight'));
+  this.topHeight1100 = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topHeight1100'));
 };
 
 let transitionValue = new getTransitionValue();
@@ -104,7 +107,7 @@ function menuController(id){
   this.allElems = this.getAllElems(this)
   this.restElems = this.getRestElems(this);
 
-  // this.expandMenuHandler = this.expandMenu.bind(this);
+
 
   this.callClickEvent = () =>{
       
@@ -328,6 +331,8 @@ menuUtilities.prototype.expandMenuIf = function(restElems){
         TITLE_NAME.forEach((name)=>{
           name.classList.remove('menutransition');
         });
+      }else{
+        BOTTOM_MENU.classList.remove('menutransition');
       }
 
       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
@@ -457,6 +462,11 @@ menuUtilities.prototype.updateSize = function(){
       DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
       NAME.style.width = 100 - transitionValue['max'] + '%';
       MENU__.style.width = transitionValue['max'] + '%';
+
+
+      declarBotHeight();
+
+
     }else{
       DEMO_VIDEO.style.width = '';
     }
@@ -481,10 +491,42 @@ menuUtilities.prototype.updateSize = function(){
   // getMediaQeury800()
 
 }
+
+
+
+
+
 //---- general Function ------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 
 
+
+
+function declarBotHeight(){
+  if(innerWidth > 800){
+    if(innerWidth <= 1100){
+      console.log('declar bot height is working')
+    
+      if(innerHeight < (innerWidth * transitionValue['topHeight']/100) + (innerWidth * transitionValue['botMinHeight'] / 100)){
+
+        body.style.height = 'auto';
+
+      }else{
+
+        body.style.height = '100%';
+
+      }
+    }else{
+      if(innerHeight < transitionValue['topHeight1100'] + (innerWidth * transitionValue['botMinHeight'] / 100)){
+    //     // body.style.background = 'red';
+        body.style.height = 'auto';
+
+      }else{
+        body.style.height = '100%';
+      }
+    }
+  }
+}
 
 // DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
 
