@@ -24,6 +24,7 @@ html,body{
 
 #body{
   /* width: 100%; */
+  min-width: 300px;
   color:white;
   box-sizing: border-box;
   display:grid;
@@ -31,11 +32,7 @@ html,body{
   /* overflow-x: hidden; */
   background: var(--backgroundColor)
 }
-/* @media (min-width:calc(80px+4vw){
-  #body{
-    background:red;
-  }
-} */
+
 /*   Fonts   */
 div{
   font-family: 'Text Me One', sans-serif;

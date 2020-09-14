@@ -55,6 +55,7 @@ let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
 if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
+}else{
   THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
 }
 
@@ -274,7 +275,7 @@ function menuUtilities(id){
 }
 
 
-menuUtilities.prototype.expandMenuIf = function(restElems){
+menuUtilities.prototype.expandMenuIf = function(){
   return new Promise((resolve, reject)=>{
     
     DEMO__.classList.add('menutransition');
