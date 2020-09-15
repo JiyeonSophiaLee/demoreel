@@ -50,10 +50,8 @@ function init() {
     container.appendChild( renderer.domElement );
     renderer.setPixelRatio( window.devicePixelRatio );
     if(innerHeight < body.scrollHeight){
-        console.log('if is working')
         renderer.setSize( body.clientWidth, body.scrollHeight );
     }else{
-        console.log('else is working')
         renderer.setSize( body.clientWidth, window.innerHeight);
     }
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -486,6 +484,21 @@ function setWeight( action, weight ) {
 
 
 function callThreeJS(elem){
+
+    // if(innerHeight < body.scrollHeight){
+    //     camera.aspect = body.clientWidth / body.scrollHeight;
+    // }else{
+    //     camera.aspect = body.clientWidth / window.innerHeight;
+    // }
+    // camera.updateProjectionMatrix();
+
+    // if(innerHeight < body.scrollHeight){
+    //     renderer.setSize( body.clientWidth, body.scrollHeight );
+    // }else{
+    //     renderer.setSize( body.clientWidth, window.innerHeight );
+    // }
+
+
     pointLight.intensity = 1.5;
     dirLight.intensity = 1;
     THREEJS_BlOCKER.style.visibility = 'hidden'

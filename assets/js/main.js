@@ -58,7 +58,7 @@ if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  // threeJsBlocker();
+  threeJsBlocker();
 
 }
 
@@ -373,7 +373,7 @@ menuUtilities.prototype.expandMenuElse = function(){
     DEMO_VIDEO_RAINBOW.style.opacity = '100%';
 
 
-    // threeJsBlocker();
+    threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -471,7 +471,7 @@ menuUtilities.prototype.updateSize = function(){
 
     }else{
       DEMO_VIDEO.style.width = '';
-      // threeJsBlocker();
+      threeJsBlocker();
     }
 
   }else{

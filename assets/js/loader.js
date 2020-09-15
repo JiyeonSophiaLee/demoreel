@@ -7,7 +7,13 @@ const LOADER__ = document.getElementById('loader');
 // let loaderOpacity = 1;
 // let loaderOpacityDivide = loaderOpacity / loaderN;
 
-LOADER_CONTAINDER.style.height = body.scrollHeight +'px';
+if(innerHeight < body.scrollHeight){
+    console.log('if is working')
+    LOADER_CONTAINDER.style.height = body.scrollHeight +'px';
+}else{
+    console.log('else is working')
+    LOADER_CONTAINDER.style.height = '';
+}
 
 
 
