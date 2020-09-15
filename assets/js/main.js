@@ -50,18 +50,20 @@ let resizeFinish;
 
 // getPadding();
 // getDemoMargin();
+declarBotHeight();
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
 if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
-  THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
+}else{
+  
+  threeJsBlocker();
+
 }
 
 
 TITLE.addEventListener('click',()=>{
-  
-
   if(biggerElem != null){
 
     let elem = biggerElem;
@@ -274,7 +276,7 @@ function menuUtilities(id){
 }
 
 
-menuUtilities.prototype.expandMenuIf = function(restElems){
+menuUtilities.prototype.expandMenuIf = function(){
   return new Promise((resolve, reject)=>{
     
     DEMO__.classList.add('menutransition');
@@ -324,7 +326,6 @@ menuUtilities.prototype.expandMenuIf = function(restElems){
       DEMO__.classList.remove('menutransition');
 
       if(innerWidth > 800){
-        DEMO_SVG.classList.add('blurSVG');
 
         NAME.classList.remove('menutransition');
         MENU__.classList.remove('menutransition');
@@ -370,8 +371,11 @@ menuUtilities.prototype.expandMenuElse = function(){
     DEMO_VIDEO.classList.add('menutransition');
     DEMO_VIDEO.style.width = transitionValue['videoMaxWidth'] + '%';
     DEMO_VIDEO_RAINBOW.style.opacity = '100%';
+
+
+    threeJsBlocker();
   
-  
+
     if(innerWidth > 800){
       DEMO_SVG.style.display= 'initial';
       DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
@@ -415,7 +419,6 @@ menuUtilities.prototype.expandMenuElse = function(){
     DEMO_VIDEO.classList.remove('menutransition')
 
     if(innerWidth > 800){
-      DEMO_SVG.classList.add('blurSVG');
 
       NAME.classList.remove('menutransition');
       MENU__.classList.remove('menutransition');
@@ -456,6 +459,8 @@ menuUtilities.prototype.updateSize = function(){
     BOTTOM_MENU.style.height = '100%'
     DEMO__.style.height = '';
     
+    declarBotHeight();
+    
 
     if (menuExpanded ) {
       DEMO__.style.width = 100 - transitionValue['max'] + '%';
@@ -464,11 +469,9 @@ menuUtilities.prototype.updateSize = function(){
       MENU__.style.width = transitionValue['max'] + '%';
 
 
-      declarBotHeight();
-
-
     }else{
       DEMO_VIDEO.style.width = '';
+      threeJsBlocker();
     }
 
   }else{
@@ -479,8 +482,6 @@ menuUtilities.prototype.updateSize = function(){
     
     if (menuExpanded ) {
       DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
-    }else{
-      THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
     }
   }
   // clearTimeout(resizeFinish);
@@ -505,8 +506,7 @@ menuUtilities.prototype.updateSize = function(){
 function declarBotHeight(){
   if(innerWidth > 800){
     if(innerWidth <= 1100){
-      console.log('declar bot height is working')
-    
+
       if(innerHeight < (innerWidth * transitionValue['topHeight']/100) + (innerWidth * transitionValue['botMinHeight'] / 100)){
 
         body.style.height = 'auto';
@@ -518,15 +518,23 @@ function declarBotHeight(){
       }
     }else{
       if(innerHeight < transitionValue['topHeight1100'] + (innerWidth * transitionValue['botMinHeight'] / 100)){
-    //     // body.style.background = 'red';
         body.style.height = 'auto';
-
       }else{
         body.style.height = '100%';
       }
     }
   }
 }
+
+function threeJsBlocker(){
+  if(innerHeight < body.scrollHeight){
+    THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
+  }else{
+    THREEJS_BlOCKER.style.height = '';
+  }
+}
+
+
 
 // DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
 

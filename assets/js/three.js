@@ -27,6 +27,7 @@ let positionXdiff, positionYdiff, positionZdiff, rotationXdiff, rotationYdiff, r
 var clock = new THREE.Clock();
 
         
+
 init();
 animate();
 
@@ -46,8 +47,13 @@ function init() {
     
     
     renderer = new THREE.WebGLRenderer( { antialias: false} );
+    container.appendChild( renderer.domElement );
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, body.scrollHeight);
+    if(innerHeight < body.scrollHeight){
+        renderer.setSize( body.clientWidth, body.scrollHeight );
+    }else{
+        renderer.setSize( body.clientWidth, window.innerHeight);
+    }
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -55,10 +61,13 @@ function init() {
     // renderer.domElement.style.height = renderer.domElement.height*0.8 +'px';
     renderer.shadowMap.enabled = true;
 
-    container.appendChild( renderer.domElement );
+    
 
-
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / body.scrollHeight, 0.25, 100 );
+    if(innerHeight < body.scrollHeight){
+        camera = new THREE.PerspectiveCamera( 75, body.clientWidth / body.scrollHeight, 0.25, 100 );
+    }else{
+        camera = new THREE.PerspectiveCamera( 75, body.clientWidth / window.innerHeight, 0.25, 100 );
+    }
     cameracameraPositionX = 1;
     cameracameraPositionY = 2;
     cameraPositionZ = 3;
@@ -299,11 +308,18 @@ function init() {
 
 
 function onWindowResize() {
-
-    camera.aspect = window.innerWidth / body.scrollHeight;
+    if(innerHeight < body.scrollHeight){
+        camera.aspect = body.clientWidth / body.scrollHeight;
+    }else{
+        camera.aspect = body.clientWidth / window.innerHeight;
+    }
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, body.scrollHeight );
+    if(innerHeight < body.scrollHeight){
+        renderer.setSize( body.clientWidth, body.scrollHeight );
+    }else{
+        renderer.setSize( body.clientWidth, window.innerHeight );
+    }
 
     
     // animate();
@@ -468,6 +484,21 @@ function setWeight( action, weight ) {
 
 
 function callThreeJS(elem){
+
+    // if(innerHeight < body.scrollHeight){
+    //     camera.aspect = body.clientWidth / body.scrollHeight;
+    // }else{
+    //     camera.aspect = body.clientWidth / window.innerHeight;
+    // }
+    // camera.updateProjectionMatrix();
+
+    // if(innerHeight < body.scrollHeight){
+    //     renderer.setSize( body.clientWidth, body.scrollHeight );
+    // }else{
+    //     renderer.setSize( body.clientWidth, window.innerHeight );
+    // }
+
+
     pointLight.intensity = 1.5;
     dirLight.intensity = 1;
     THREEJS_BlOCKER.style.visibility = 'hidden'

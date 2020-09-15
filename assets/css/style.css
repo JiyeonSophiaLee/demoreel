@@ -24,6 +24,7 @@ html,body{
 
 #body{
   /* width: 100%; */
+  min-width: 300px;
   color:white;
   box-sizing: border-box;
   display:grid;
@@ -31,11 +32,7 @@ html,body{
   /* overflow-x: hidden; */
   background: var(--backgroundColor)
 }
-/* @media (min-width:calc(80px+4vw){
-  #body{
-    background:red;
-  }
-} */
+
 /*   Fonts   */
 div{
   font-family: 'Text Me One', sans-serif;
@@ -124,6 +121,9 @@ div{
     height: 10%;
     background:linear-gradient(black, transparent);
   }
+  #threeJS canvas{
+    height:100%;
+  }
   #topMenu{
     display: flex;
     width:100%;
@@ -198,6 +198,7 @@ div{
         }
         #topMenu #name p:last-child{
           font-size: 37px;
+          top: -15px;
         }
       }
     #topMenu #menu{ 
@@ -432,11 +433,13 @@ div{
             }
             #bottom #bottomMenu li .contents::-webkit-scrollbar {
               width: 8px;
+              border: black 2px solid;
             }
             
             #bottom #bottomMenu li .contents::-webkit-scrollbar-thumb {
               border-radius: 4px;
-              background: white; 
+              background: rgba(255,255,255, 0.5);
+              border: white solid 2px;
             }
             #bottom #bottomMenu li .contents::-webkit-scrollbar-track {
               background: linear-gradient(#d4742b,#dc3323);
