@@ -8,15 +8,20 @@
 } */
 .projects{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
     background: rgb(10, 10, 10, 0.8);
     padding:0.5vw;
 }
-/* @media (max-width:1100px){
+@media (max-width:800px){
     .projects{
         grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
     }
-} */
+}
+@media (min-width:1300px){
+    .projects{
+        grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    }
+}
 
     .mainContent{
         max-width:100%;

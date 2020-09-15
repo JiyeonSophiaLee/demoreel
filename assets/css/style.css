@@ -121,6 +121,9 @@ div{
     height: 10%;
     background:linear-gradient(black, transparent);
   }
+  #threeJS canvas{
+    height:100%;
+  }
   #topMenu{
     display: flex;
     width:100%;

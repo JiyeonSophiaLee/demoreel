@@ -24,7 +24,6 @@ function loaderAnim(){
 
         setTimeout(() => {
             LOADER_CONTAINDER.style.display = 'none';
-            window.removeEventListener('resize', LOADER_CONTAINDER_update);
         }, 1000);
 
 
