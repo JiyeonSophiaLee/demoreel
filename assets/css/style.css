@@ -1,3 +1,8 @@
+@font-face{
+  font-family: 'blacker';
+  src: url(../fonts/BlackerSansDisplayTrial-Black.ttf);
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -172,8 +177,9 @@ div{
     }
     #topMenu #name #nameGroup p:first-child{
       font-size: 6.5vw;
-      font-family: 'Poiret One', cursive;
-      font-weight: bold;
+      /* font-family: 'Poiret One', cursive;
+      font-weight: bold; */
+      font-family: blacker;
     }
 
     #topMenu #name #nameGroup p:last-child{
@@ -217,6 +223,14 @@ div{
         display: none;
       }
     }
+    #topMenu #menu li{
+      display: none;
+    }
+
+
+
+
+
   #bottom{
     display:flex;
     min-height: var(--botMinHeight);
