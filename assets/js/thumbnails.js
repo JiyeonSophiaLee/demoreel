@@ -1,5 +1,3 @@
-let workImgs=[];
-
 const tablePath = 'assets/images/projects/table_scene_thumbnails/';
 const tableName =  'table_scene_thumbnails'
 const tableExtension = '.jpg'
@@ -51,6 +49,58 @@ const giantScene = new projectThumbnail(giantPath,giantBoxName,giantExtension,gi
 const workThumbnails = [tableScene,chandelierScene,sunriseScene,womanScene,wishingBoxScene,giantScene];
 
 
+
+
+
+
+const painting01Path = 'assets/images/paintings/painting01/';
+const painting01Name =  'painting01'
+const painting01Extension = '.jpg'
+const painting01SceneMain = '_01';
+const painting01SceneSub = [];
+
+const painting02Path = 'assets/images/paintings/painting02/';
+const painting02Name =  'painting02'
+const painting02Extension = '.jpg'
+const painting02SceneMain = '_01';
+const painting02SceneSub = ['_02','_03','_04','_05'];
+
+const painting03Path = 'assets/images/paintings/painting03/';
+const painting03Name =  'painting03'
+const painting03Extension = '.jpg'
+const painting03SceneMain = '_01';
+const painting03SceneSub = ['_02','_03','_04','_05'];
+
+const painting04Path = 'assets/images/paintings/painting04/';
+const painting04Name =  'painting04'
+const painting04Extension = '.jpg'
+const painting04SceneMain = '_01';
+const painting04SceneSub = ['_02','_03','_04','_05'];
+
+const painting05Path = 'assets/images/paintings/painting05/';
+const painting05Name =  'painting05'
+const painting05Extension = '.jpg'
+const painting05SceneMain = '_01';
+const painting05SceneSub = ['_02'];
+
+const painting06Path = 'assets/images/paintings/painting06/';
+const painting06Name =  'painting06'
+const painting06Extension = '.jpg'
+const painting06SceneMain = '_01';
+const painting06SceneSub = ['_02','_03','_04','_05'];
+
+
+
+
+const painting01 = new projectThumbnail(painting01Path,painting01Name,painting01Extension,painting01SceneMain,painting01SceneSub);
+const painting02 = new projectThumbnail(painting02Path,painting02Name,painting02Extension,painting02SceneMain,painting02SceneSub);
+const painting03 = new projectThumbnail(painting03Path,painting03Name,painting03Extension,painting03SceneMain,painting03SceneSub);
+const painting04 = new projectThumbnail(painting04Path,painting04Name,painting04Extension,painting04SceneMain,painting04SceneSub);
+const painting05 = new projectThumbnail(painting05Path,painting05Name,painting05Extension,painting05SceneMain,painting05SceneSub);
+const painting06 = new projectThumbnail(painting06Path,painting06Name,painting06Extension,painting06SceneMain,painting06SceneSub);
+
+
+const paintThumbnails = [painting01,painting02,painting03,painting04,painting05,painting06];
 
 
 
@@ -108,8 +158,11 @@ projectThumbnail.prototype.createLineingImage = function(){
 
 
 createProjectGroup('work');
+createProjectGroup('paint');
+
 window.addEventListener('resize',()=>{
-    if(biggerElem.id=='work'){
+    console.log(biggerElem)
+    if(biggerElem === WORK || biggerElem === PAINT){
         workSwitchProjectLine();
     }
 })
@@ -167,63 +220,77 @@ function createProjectGroup(name){
 
 
 
+function workSwitchProjectLine(){
+    if(biggerElem === WORK || biggerElem === PAINT )
+        if(innerWidth < 1400){
+            document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'initial';
+            document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'none';
+        }else{
+            console.log('bigger Elem else is working')
+            document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'none';
+            document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'initial';
+        }
+}
 
 
 
 
 
 function callThumbnailIf (elem){
-
-    setTimeout(() => {
-        if(innerWidth < 1400){
-            document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
-        }else{
-            document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
-        }
-    }, transitionValue.duration * 1000);
+    if(elem === WORK || elem === PAINT){
+        setTimeout(() => {
+            if(innerWidth < 1400){
+                document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
+            }else{
+                document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
+            }
+        }, transitionValue.duration * 1000);
+    }
         
     
 }
 function callThumbnailElseIf (elem){
 
-    if(innerWidth < 1400){
-        document.querySelector(`#${biggeredElem.id} .contents .groupProjects`).style.display = 'none';
+    if(elem === WORK || elem === PAINT){
+
+        biggredElemWorkPaint()
+        
+        setTimeout(() => {
+            if(innerWidth < 1400){
+                document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
+            }else{
+                document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
+            }
+        }, transitionValue.duration * 1000);
+        
     }else{
-        document.querySelector(`#${biggeredElem.id} .contents .groupIneImags`).style.display = 'none';
+        biggredElemWorkPaint();
     }
+    
+
+
 
     
-    setTimeout(() => {
-        if(innerWidth < 1400){
-            document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
-        }else{
-            document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
+    function biggredElemWorkPaint(){
+        if(biggeredElem === WORK || biggeredElem === PAINT){
+            if(innerWidth < 1400){
+                document.querySelector(`#${biggeredElem.id} .contents .groupProjects`).style.display = 'none';
+            }else{
+                document.querySelector(`#${biggeredElem.id} .contents .groupIneImags`).style.display = 'none';
+            }
         }
-    }, transitionValue.duration * 1000);
-        
-    
+    }   
 }
 
 function callThumbnailElse (elem){
-
-    if(innerWidth<  1400){
-        document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'none';
-    }else{
-        document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'none';
+    if(elem === WORK || elem === PAINT){
+        if(innerWidth<  1400){
+            document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'none';
+        }else{
+            document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'none';
+        }
     }
 
-        
-    
-}
-
-function workSwitchProjectLine(){
-    if(innerWidth < 1400){
-        document.querySelector(`#work .contents .groupProjects`).style.display = 'initial';
-        document.querySelector(`#work .contents .groupIneImags`).style.display = 'none';
-    }else{
-        document.querySelector(`#work .contents .groupProjects`).style.display = 'none';
-        document.querySelector(`#work .contents .groupIneImags`).style.display = 'initial';
-    }
 }
 
 

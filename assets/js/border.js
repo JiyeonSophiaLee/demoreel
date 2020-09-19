@@ -3,7 +3,6 @@ let widthBigger, widthSmaller, heightBigger, heightSmaller;
 
 
 
-
 function border(id) {
   this.elemId = id;
   this.elem = document.getElementById(id);
@@ -67,6 +66,7 @@ function createBorderPath(borders) {
   this.subMenuChangingWidth, this.subMenuChangingHeight;
   this.topMenuSize;
 
+ 
 
 
   //----call path-----
@@ -489,6 +489,24 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
   this.borders.path.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
+  // console.log(document.querySelector(`#${this.borders.elem.id}`))
+  // console.log(document.querySelector(`#${this.borders.elem.id} .${this.borders.id}Cover`))
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.opacity = '0';
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'x', this.x);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'y', this.y);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'rx', this.borders.border);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'ry', this.borders.border);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.w);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.h);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'fill', this.borders.color);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'stroke', 'white');
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
+
+  // console.log( document.getElementById(`${this.borders.id}Cover`))
+// console.log(this.borders.id)
+
+
+
   document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
   document.getElementById(this.borders.elem.id + 'BorderWavy2').setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
@@ -706,6 +724,8 @@ createBorderPath.prototype.updateSize = function() {
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
   this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
   this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
 
 
 
@@ -871,15 +891,41 @@ createBorderPath.prototype.stopTl = function() {
 //-----------------------------------------------------------------------------------------------
 
 createBorderPath.prototype.hoveroverOn = function() {
-    this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
-}
+  if(this.borders.elem != biggerElem){
+    document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.add('borderCoverWhite');
+    document.querySelector(`#${this.borders.elem.id} .neon1`).classList.add(`${this.borders.elem.id}Neon1`);
+    document.querySelector(`#${this.borders.elem.id} .neon2`).classList.add(`${this.borders.elem.id}Neon2`);
+  }
+};
+
 createBorderPath.prototype.hoveroverOff = function() {
     if(this.borders.elem != biggerElem){
-    this.borders.path.setAttributeNS(null, 'stroke', 'url(#' + this.borders.path.id + 'Color)');
-  }
-}
+      document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.remove('borderCoverWhite');
+      document.querySelector(`#${this.borders.elem.id} .neon1`).classList.remove(`${this.borders.elem.id}Neon1`);
+      document.querySelector(`#${this.borders.elem.id} .neon2`).classList.remove(`${this.borders.elem.id}Neon2`);
+    }
+};
 
 
+
+
+
+//---- get rgb color -------- 
+// function getRGB(id){
+//   let getRgb1= document.getElementById(`${id}BorderColor`).firstElementChild.attributes[1].value;
+//   let getRgb2= document.getElementById(`${id}BorderColor`).lastElementChild.attributes[1].value;
+//   let rgb = [];
+//   let rgb1=[];
+//   let rgb2=[]
+
+//   getRgb1.replace(/(\d[\d\.]*)/g, function( x ) { var n = Number(x); if (x == n) { rgb1.push(x); }  })
+//   getRgb2.replace(/(\d[\d\.]*)/g, function( x ) { var n = Number(x); if (x == n) { rgb2.push(x); }  })
+
+//   rgb.push(rgb1);
+//   rgb.push(rgb2);
+  
+//   return rgb;
+// }
 
 
 
