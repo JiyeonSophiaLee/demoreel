@@ -14,6 +14,7 @@ canvas{
   --botMinHeight:40vw;
   --topHeight:6.3vw;
   --topHeight1100:80px;
+  --subMenuNeonDuration:1.5s;
 }
 
 
@@ -164,39 +165,40 @@ div{
       }
     }
 
-    #topMenu #name p{
+    #topMenu #name #nameGroup{
       width: var( --videoDemoWidth);
       margin-left: auto;
       margin-right: auto;
     }
-    #topMenu #name p:first-child{
+    #topMenu #name #nameGroup p:first-child{
       font-size: 6.5vw;
       font-family: 'Poiret One', cursive;
+      font-weight: bold;
     }
 
-    #topMenu #name p:last-child{
+    #topMenu #name #nameGroup p:last-child{
       font-size: 3.4vw;
       font-family: 'Dosis', sans-serif;
       position: relative;
       top:-1vw;
     }
       @media (max-width:800px){
-        #topMenu #name p{
+        #topMenu #name #nameGroup p{
           display: inline;
         }
-        #topMenu #name p:first-child{
+        #topMenu #name #nameGroup p:first-child{
           font-size: 11vw;
         }
-        #topMenu #name p:last-child{
+        #topMenu #name #nameGroup p:last-child{
           font-size: 4vw;
           top:0px;
         }
       }
       @media (min-width:1300px){
-        #topMenu #name p:first-child{
+        #topMenu #name #nameGroup p:first-child{
           font-size: 82px;
         }
-        #topMenu #name p:last-child{
+        #topMenu #name #nameGroup p:last-child{
           font-size: 37px;
           top: -15px;
         }
@@ -307,6 +309,9 @@ div{
             background-position: 0% 50%;
           }
         } 
+
+
+
       #bottom #demo img{
         position: absolute;
         top:0;
@@ -321,6 +326,8 @@ div{
         }
       }
       
+
+
       #bottom #bottomMenu{
         display:flex;
         flex-wrap: wrap;
@@ -334,7 +341,10 @@ div{
           padding: 2vw;
         }
       }
-        #bottom #bottomMenu li{
+
+
+
+        #bottom #bottomMenu > li{
           width:50%;
           display: flex;
           cursor: pointer;
@@ -345,16 +355,19 @@ div{
           min-height: 11.5vw;
         }
         @media (max-width:800px){
-          #bottom #bottomMenu li{
+          #bottom #bottomMenu > li{
             padding :1.2vw;
           }
         }
         @media (min-width:1100px){
-          #bottom #bottomMenu li{
+          #bottom #bottomMenu > li{
             padding :9px;
           }
         }
-        #bottom #bottomMenu li .borders{
+
+
+
+        #bottom #bottomMenu > li .borders{
           width:10vw;
           height:10vw;
           display:grid;
@@ -362,21 +375,29 @@ div{
           position: relative;
           font-size:2vw;
           align-items: center;
-          z-index: 3;
+          z-index: 2;
         }
         @media (max-width:800px){
-          #bottom #bottomMenu li .borders{
+          #bottom #bottomMenu > li .borders{
             font-size: 3.5vw;
             width: 18vw;
             height: 18vw;
           }
         }
         @media (min-width:1100px){
-          #bottom #bottomMenu li .borders{
+          #bottom #bottomMenu > li .borders{
             font-size: 22px;
           }
         }
-        #bottom #bottomMenu li .borders:hover{
+
+
+        #bottom #bottomMenu > li .borders .neon{
+          width: inherit;
+          height: inherit;
+          border-radius: inherit;
+          position: absolute;
+        }
+        /* #bottom #bottomMenu > li .borders:hover{
           border-radius: 10px;
           box-shadow:
           0 0px 1px rgba(255, 255, 255, 0.404),
@@ -386,35 +407,42 @@ div{
           inset 0 0px 3.4px rgba(255, 255, 255, 0.596),
           inset 0 0px 15px rgba(255, 255, 255, 1);
         
-        }
-          #bottom #bottomMenu li .borders svg{
+        } */
+          #bottom #bottomMenu > li .borders svg{
             position: absolute;
           }
           
-            #bottom #bottomMenu li .borders svg rect{
+            #bottom #bottomMenu > li .borders svg rect{
               stroke-width: 0.5vw;
             }
             @media (max-width:800px){
-              #bottom #bottomMenu li .borders svg rect{
+              #bottom #bottomMenu > li .borders svg rect{
                 stroke-width: 0.8vw;
               }
             }
             @media (min-width:1100px){
-              #bottom #bottomMenu li .borders svg rect{
+              #bottom #bottomMenu > li .borders svg rect{
                 stroke-width: 5.5px;
               }
             }
-          #bottom #bottomMenu li .borders .text{
+  
+
+          #bottom #bottomMenu > li .borders .text{
             position: relative;
           }
           
           #bottom #bottomMenu #work{
             justify-content: flex-end;
           }
+
           #bottom #bottomMenu #work .borders{
             align-self: flex-end;
-            border:none;
+            /* transition-duration: var(--subMenuNeonDuration);
+            transition: box-shadow ease-in-out; */
           }
+
+         
+
         
           #bottom #bottomMenu li .contents{
             position: absolute;
@@ -424,7 +452,7 @@ div{
             height: calc(100% - 40px);
             overflow-y: auto;
             overflow-x: hidden;
-            z-index: 3;
+            /* z-index: 3; */
           }
             @media (max-width:800px){
               #bottom #bottomMenu li .contents{
@@ -492,3 +520,229 @@ div{
   filter:blur(3px);
 }
 
+
+
+.borderCover{
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.borderCoverWhite{
+  opacity: 1;
+}
+
+
+
+
+
+/* -----------------------------------WORK NEON------------------------------------------ */
+.workNeon1{
+  animation: workNeon1Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --workColor1 : rgba(220, 51, 35, 0.4);
+}
+  @keyframes workNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        -3px -3px 20px var(--workColor1),
+        -6px -6px 35px var(--workColor1),
+        -10px -10px 40px var(--workColor1),
+        inset 3px 3px 10px var(--workColor1),
+        inset 3px 3px 17px var(--workColor1),
+        inset 3px 3px 20px var(--workColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        -3px -3px 10px var(--workColor1),
+        -6px -6px 17px var(--workColor1),
+        -10px -10px 20px var(--workColor1),
+        inset 3px 3px 5px var(--workColor1),
+        inset 3px 3px 8px var(--workColor1),
+        inset 3px 3px 10px var(--workColor1);
+    }
+  }
+.workNeon2{
+  animation: workNeon2Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --workColor2 : rgba(212, 116, 43, 0.4);
+}
+  @keyframes workNeon2Ani {
+    from {
+      box-shadow:
+        3px 3px 20px var(--workColor2),
+        6px 6px 35px var(--workColor2),
+        10px 10px 40px var(--workColor2),
+        inset -3px -3px 10px var(--workColor2),
+        inset -3px -3px 17px var(--workColor2),
+        inset -3px -3px 20px var(--workColor2);
+    }
+    to {
+      box-shadow:
+        3px 3px 10px var(--workColor2),
+        6px 6px 17px var(--workColor2),
+        10px 10px 20px var(--workColor2),
+        inset -3px -3px 5px var(--workColor2),
+        inset -3px -3px 8px var(--workColor2),
+        inset -3px -3px 10px var(--workColor2);
+    }
+  }
+/* -----------------------------------SKILL NEON------------------------------------------ */
+.skillNeon1{
+  animation: skillNeon1Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --skillColor1 :rgba(168, 63, 209, 0.4);
+}
+  @keyframes skillNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        3px -3px 20px var(--skillColor1),
+        6px -6px 35px var(--skillColor1),
+        10px -10px 40px var(--skillColor1),
+        inset -3px 3px 10px var(--skillColor1),
+        inset -3px 3px 17px var(--skillColor1),
+        inset -3px 3px 20px var(--skillColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        3px -3px 10px var(--skillColor1),
+        6px -6px 17px var(--skillColor1),
+        10px -10px 20px var(--skillColor1),
+        inset -3px 3px 5px var(--skillColor1),
+        inset -3px 3px 8px var(--skillColor1),
+        inset -3px 3px 10px var(--skillColor1);
+    }
+  }
+.skillNeon2{
+  animation: skillNeon2Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --skillColor2 :rgba(192, 49, 91, 0.4);
+}
+  @keyframes skillNeon2Ani {
+    from {
+      box-shadow:
+        -3px 3px 20px var(--skillColor2),
+        -6px 6px 35px var(--skillColor2),
+        -10px 10px 40px var(--skillColor2),
+        inset 3px -3px 10px var(--skillColor2),
+        inset 3px -3px 17px var(--skillColor2),
+        inset 3px -3px 20px var(--skillColor2);
+    }
+    to {
+      box-shadow:
+        -3px 3px 10px var(--skillColor2),
+        -6px 6px 17px var(--skillColor2),
+        -10px 10px 20px var(--skillColor2),
+        inset 3px -3px 5px var(--skillColor2),
+        inset 3px -3px 8px var(--skillColor2),
+        inset 3px -3px 10px var(--skillColor2);
+    }
+  }
+/* -----------------------------------PAINT NEON------------------------------------------ */
+.paintNeon1{
+  animation: paintNeon1Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --paintColor1 :rgba(225, 149, 46, 0.4);
+}
+  @keyframes paintNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        3px -3px 20px var(--paintColor1),
+        6px -6px 35px var(--paintColor1),
+        10px -10px 40px var(--paintColor1),
+        inset -3px 3px 10px var(--paintColor1),
+        inset -3px 3px 17px var(--paintColor1),
+        inset -3px 3px 20px var(--paintColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        3px -3px 10px var(--paintColor1),
+        6px -6px 17px var(--paintColor1),
+        10px -10px 20px var(--paintColor1),
+        inset -3px 3px 5px var(--paintColor1),
+        inset -3px 3px 8px var(--paintColor1),
+        inset -3px 3px 10px var(--paintColor1);
+    }
+  }
+.paintNeon2{
+  animation: paintNeon2Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --paintColor2 :rgba(48, 171, 152, 0.4);
+}
+  @keyframes paintNeon2Ani {
+    from {
+      box-shadow:
+        -3px 3px 20px var(--paintColor2),
+        -6px 6px 35px var(--paintColor2),
+        -10px 10px 40px var(--paintColor2),
+        inset 3px -3px 10px var(--paintColor2),
+        inset 3px -3px 17px var(--paintColor2),
+        inset 3px -3px 20px var(--paintColor2);
+    }
+    to {
+      box-shadow:
+        -3px 3px 10px var(--paintColor2),
+        -6px 6px 17px var(--paintColor2),
+        -10px 10px 20px var(--paintColor2),
+        inset 3px -3px 5px var(--paintColor2),
+        inset 3px -3px 8px var(--paintColor2),
+        inset 3px -3px 10px var(--paintColor2);
+    }
+  }
+/* -----------------------------------INFO NEON------------------------------------------ */
+.infoNeon1{
+  animation: infoNeon1Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --infoColor1 :rgba(200, 86, 177, 0.4);
+}
+  @keyframes infoNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        -3px -3px 20px var(--infoColor1),
+        -6px -6px 35px var(--infoColor1),
+        -10px -10px 40px var(--infoColor1),
+        inset 3px 3px 10px var(--infoColor1),
+        inset 3px 3px 17px var(--infoColor1),
+        inset 3px 3px 20px var(--infoColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        -3px -3px 10px var(--infoColor1),
+        -6px -6px 17px var(--infoColor1),
+        -10px -10px 20px var(--infoColor1),
+        inset 3px 3px 5px var(--infoColor1),
+        inset 3px 3px 8px var(--infoColor1),
+        inset 3px 3px 10px var(--infoColor1);
+    }
+  }
+.infoNeon2{
+  animation: infoNeon2Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
+  --infoColor2 : rgba(75, 173, 209, 0.4);
+}
+  @keyframes infoNeon2Ani {
+    from {
+      box-shadow:
+        3px 3px 20px var(--infoColor2),
+        6px 6px 35px var(--infoColor2),
+        10px 10px 40px var(--infoColor2),
+        inset -3px -3px 10px var(--infoColor2),
+        inset -3px -3px 17px var(--infoColor2),
+        inset -3px -3px 20px var(--infoColor2);
+    }
+    to {
+      box-shadow:
+        3px 3px 10px var(--infoColor2),
+        6px 6px 17px var(--infoColor2),
+        10px 10px 20px var(--infoColor2),
+        inset -3px -3px 5px var(--infoColor2),
+        inset -3px -3px 8px var(--infoColor2),
+        inset -3px -3px 10px var(--infoColor2);
+    }
+  }

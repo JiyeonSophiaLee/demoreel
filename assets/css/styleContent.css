@@ -1,11 +1,4 @@
-/* .contents{
-    display:none;
-    display: grid;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 2vw;
-} */
+
 .projects{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
@@ -36,9 +29,15 @@
 
 .lineImgs{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     background: rgba(10, 10, 10, 0.7);
 }
+@media (min-width:2500px){
+    .lineImgs{
+        grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    }
+}
+
 .lineImgs img{
     border-radius: 20px;
     padding: 0.3vw;
@@ -51,11 +50,9 @@
 
 
 
-
-
-.wishingBoxName{
+/* .wishingBoxName{
     background: rgba(10, 10, 10, 0.5);
 }
 .giant_thumbnails{
     background: rgba(10, 10, 10, 0.3);
-}
+} */

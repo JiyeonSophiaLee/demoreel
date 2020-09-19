@@ -12,7 +12,7 @@ const PAINT = document.getElementById('paint');
 const INFO = document.getElementById('info');
 const TITLE = document.querySelector('#name');
 const DEMO_VIDEO_RAINBOW = document.querySelector('#demoVideoRainbow');
-const TITLE_NAME = document.querySelectorAll('#name p');
+const TITLE_NAME_GROUP = document.querySelector('#nameGroup');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker')
 
 let menuExpanded = false;
@@ -58,7 +58,7 @@ if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  threeJsBlocker();
+  // threeJsBlocker();
 
 }
 
@@ -144,8 +144,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf()])
+    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -158,8 +158,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -172,8 +172,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse()])
+    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -283,6 +283,10 @@ menuUtilities.prototype.expandMenuIf = function(){
     DEMO_VIDEO.classList.add('menutransition');
     DEMO_VIDEO_RAINBOW.style.opacity = '50%';
     
+    document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
+    
+    
+    
     
     if(innerWidth > 800){
       
@@ -293,15 +297,13 @@ menuUtilities.prototype.expandMenuIf = function(){
 
       NAME.classList.add('menutransition');
       MENU__.classList.add('menutransition');
-      TITLE_NAME.forEach((name)=>{
-        name.classList.add('menutransition');
-      });
+      TITLE_NAME_GROUP.classList.add('menutransition');
+
 
       NAME.style.width = (100 - transitionValue.max) + '%';
       MENU__.style.width = transitionValue.max + '%';
-      TITLE_NAME.forEach((name)=>{
-        name.style.width = transitionValue.videoMinWidth + '%';
-      });
+      TITLE_NAME_GROUP.style.width = transitionValue.videoMinWidth + '%';
+    
 
 
       DEMO__.style.width = ( 100 - transitionValue['max']) + '%';
@@ -322,6 +324,9 @@ menuUtilities.prototype.expandMenuIf = function(){
 
   
     setTimeout(() => {
+      document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
+
+
       DEMO_VIDEO.classList.remove('menutransition');
       DEMO__.classList.remove('menutransition');
 
@@ -329,9 +334,8 @@ menuUtilities.prototype.expandMenuIf = function(){
 
         NAME.classList.remove('menutransition');
         MENU__.classList.remove('menutransition');
-        TITLE_NAME.forEach((name)=>{
-          name.classList.remove('menutransition');
-        });
+        TITLE_NAME_GROUP.classList.remove('menutransition');
+
       }else{
         BOTTOM_MENU.classList.remove('menutransition');
       }
@@ -347,18 +351,26 @@ menuUtilities.prototype.expandMenuIf = function(){
 menuUtilities.prototype.expandMenuElseIf = function(){
   return new Promise((resolve, reject)=>{
 
+    document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
 
     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
+    document.querySelector(`#${biggeredElem.id} .contents`).style.zIndex = '0';
+
 
 
     setTimeout(() => {
+     
+
       TOP_MENU.classList.remove('menutransition');
       NAME.classList.remove('menutransition');
   
       MENU__.classList.remove('menutransition');
       DEMO__.classList.remove('menutransition');
 
-      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
+      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden';
+      document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
+
+      document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
     }, transitionValue.duration * 1000);
 
     resolve()  
@@ -372,8 +384,8 @@ menuUtilities.prototype.expandMenuElse = function(){
     DEMO_VIDEO.style.width = transitionValue['videoMaxWidth'] + '%';
     DEMO_VIDEO_RAINBOW.style.opacity = '100%';
 
-
-    threeJsBlocker();
+    document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
+    // threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -385,16 +397,14 @@ menuUtilities.prototype.expandMenuElse = function(){
       NAME.classList.add('menutransition');
       MENU__.classList.add('menutransition');
       DEMO__.classList.add('menutransition');
-      TITLE_NAME.forEach((name)=>{
-        name.classList.add('menutransition');
-      });
+      TITLE_NAME_GROUP.classList.add('menutransition');
+
 
 
       MENU__.style.width = transitionValue['min'] + '%';
       DEMO__.style.width = ( 100 - transitionValue['min']) + '%';
-      TITLE_NAME.forEach((name)=>{
-        name.style.width =  transitionValue['videoMaxWidth'] + '%';
-      });
+      TITLE_NAME_GROUP.style.width =  transitionValue['videoMaxWidth'] + '%';
+      
 
     }else{
       let demoVideoHeight = innerWidth * transitionValue['videoMaxWidthMediaQuery'] / 100  * (9/16);
@@ -416,16 +426,16 @@ menuUtilities.prototype.expandMenuElse = function(){
     document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
     
   setTimeout(() => {
-    DEMO_VIDEO.classList.remove('menutransition')
+    DEMO_VIDEO.classList.remove('menutransition');
+    document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'initial';
 
     if(innerWidth > 800){
 
       NAME.classList.remove('menutransition');
       MENU__.classList.remove('menutransition');
       DEMO__.classList.remove('menutransition');
-      TITLE_NAME.forEach((name)=>{
-        name.classList.remove('menutransition');
-      });
+      TITLE_NAME_GROUP.classList.remove('menutransition');
+      
 
       
     }else{
@@ -471,7 +481,7 @@ menuUtilities.prototype.updateSize = function(){
 
     }else{
       DEMO_VIDEO.style.width = '';
-      threeJsBlocker();
+      // threeJsBlocker();
     }
 
   }else{
