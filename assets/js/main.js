@@ -58,7 +58,7 @@ if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  threeJsBlocker();
+  // threeJsBlocker();
 
 }
 
@@ -144,8 +144,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf()])
+    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -158,8 +158,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -172,8 +172,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse()])
+    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -355,8 +355,6 @@ menuUtilities.prototype.expandMenuElseIf = function(){
 
     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
     document.querySelector(`#${biggeredElem.id} .contents`).style.zIndex = '0';
-    document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'none';
-    document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'none';
 
 
 
@@ -373,8 +371,6 @@ menuUtilities.prototype.expandMenuElseIf = function(){
       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
 
       document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
-      document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'initial';
-      document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'initial';
     }, transitionValue.duration * 1000);
 
     resolve()  
@@ -389,7 +385,7 @@ menuUtilities.prototype.expandMenuElse = function(){
     DEMO_VIDEO_RAINBOW.style.opacity = '100%';
 
     document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
-    threeJsBlocker();
+    // threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -485,7 +481,7 @@ menuUtilities.prototype.updateSize = function(){
 
     }else{
       DEMO_VIDEO.style.width = '';
-      threeJsBlocker();
+      // threeJsBlocker();
     }
 
   }else{
