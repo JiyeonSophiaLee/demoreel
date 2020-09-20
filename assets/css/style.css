@@ -2,6 +2,10 @@
   font-family: 'blacker';
   src: url(../fonts/BlackerSansDisplayTrial-Black.ttf);
 }
+@font-face{
+  font-family: 'GathaSans';
+  src: url(../fonts/GathaSans.ttf);
+}
 
 *{
   margin: 0;
@@ -156,6 +160,7 @@ div{
       height:12vw;
       cursor: pointer;
       z-index: 2;
+      /* margin-top: 15vw; */
     }
     @media (max-width:800px){
       #topMenu #name{
@@ -176,15 +181,16 @@ div{
       margin-right: auto;
     }
     #topMenu #name #nameGroup p:first-child{
-      font-size: 6.5vw;
-      /* font-family: 'Poiret One', cursive;
-      font-weight: bold; */
-      font-family: blacker;
+      font-size: 6.3vw;
+      font-family: 'Poiret One', cursive;
+      font-weight: bold;
+      /* font-family: blacker; */
     }
 
     #topMenu #name #nameGroup p:last-child{
       font-size: 3.4vw;
       font-family: 'Dosis', sans-serif;
+      /* font-family: GathaSans; */
       position: relative;
       top:-1vw;
     }
@@ -224,7 +230,7 @@ div{
       }
     }
     #topMenu #menu li{
-      display: none;
+      /* display: none; */
     }
 
 
