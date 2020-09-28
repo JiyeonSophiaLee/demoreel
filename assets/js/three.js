@@ -26,7 +26,7 @@ let positionXdiff, positionYdiff, positionZdiff, rotationXdiff, rotationYdiff, r
 
 var clock = new THREE.Clock();
 
-        
+
 
 init();
 animate();
@@ -49,10 +49,10 @@ function init() {
     renderer = new THREE.WebGLRenderer( { antialias: false} );
     container.appendChild( renderer.domElement );
     renderer.setPixelRatio( window.devicePixelRatio );
-    if(innerHeight < body.scrollHeight){
-        renderer.setSize( body.clientWidth, body.scrollHeight );
+    if(innerHeight < document.body.scrollHeight){
+        renderer.setSize( document.body.clientWidth, document.body.scrollHeight );
     }else{
-        renderer.setSize( body.clientWidth, window.innerHeight);
+        renderer.setSize( document.body.clientWidth, window.innerHeight);
     }
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
@@ -63,10 +63,10 @@ function init() {
 
     
 
-    if(innerHeight < body.scrollHeight){
-        camera = new THREE.PerspectiveCamera( 75, body.clientWidth / body.scrollHeight, 0.25, 100 );
+    if(innerHeight < document.body.scrollHeight){
+        camera = new THREE.PerspectiveCamera( 75, document.body.clientWidth / document.body.scrollHeight, 0.25, 100 );
     }else{
-        camera = new THREE.PerspectiveCamera( 75, body.clientWidth / window.innerHeight, 0.25, 100 );
+        camera = new THREE.PerspectiveCamera( 75, document.body.clientWidth / window.innerHeight, 0.25, 100 );
     }
     cameracameraPositionX = 1;
     cameracameraPositionY = 2;
@@ -303,7 +303,6 @@ function init() {
 
 
     
-    
 }
 
 
@@ -348,7 +347,7 @@ function animate(){
     
     // controls.update();
     // stats.update();
-    updateCameraMouse();
+    // updateCameraMouse();
     
     renderer.render( scene, camera);
 

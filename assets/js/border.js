@@ -91,7 +91,7 @@ function createBorderPath(borders) {
 
 //---- expand Menu -------------------------------------------------------------------------
 
-createBorderPath.prototype.expandMenuIf = function(allElems) {
+createBorderPath.prototype.expandMenuIf = function(allElems,restElems) {
   return new Promise((resolve,reject)=>{
 
 
@@ -133,7 +133,9 @@ createBorderPath.prototype.expandMenuIf = function(allElems) {
     // document.querySelector(`#${this.borders.elem.id} .text`).classList.add = 'menutransition'
     // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
     // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
-
+    if(innerWidth <= 800){
+      smallerResElemBorders(restElems,this.extraSVGspace);
+    }
 
     
     this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
@@ -271,7 +273,7 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 };
   
   
-createBorderPath.prototype.expandMenuElse = function(allElems) {
+createBorderPath.prototype.expandMenuElse = function(allElems,restElems) {
   return new Promise((resolve,reject)=>{
 
 
@@ -299,12 +301,16 @@ createBorderPath.prototype.expandMenuElse = function(allElems) {
 
 
 
-    
-   
-
 
     this.borders.elem.firstElementChild.style.width = '';
     this.borders.elem.firstElementChild.style.height = '';
+
+
+
+
+    if(innerWidth <= 800){
+      smallerResElemBorders(restElems,this.extraSVGspace);
+    }
 
 
 
@@ -452,7 +458,7 @@ createBorderPath.prototype.subMenuChanging = function() {
   let innerWidthTest;
 
   if(innerWidth > 800){
-    this.subMenuChangingWidth = (BOTTOM_MENU.parentElement.clientWidth * (transitionValue['max'] / 100) - this.botMenuPaddingWidth) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
+    this.subMenuChangingWidth = (innerWidth * (transitionValue['max'] / 100) - this.botMenuPaddingWidth) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
     this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100) - this.liPaddingHeight;
 
   }else{
@@ -489,21 +495,21 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
   this.borders.path.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
-  // console.log(document.querySelector(`#${this.borders.elem.id}`))
-  // console.log(document.querySelector(`#${this.borders.elem.id} .${this.borders.id}Cover`))
+  
   // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.opacity = '0';
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'x', this.x);
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'y', this.y);
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'rx', this.borders.border);
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'ry', this.borders.border);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.w);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.h);
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).style.width = 'var(--bordersSize)';
+  document.querySelector(`#${this.borders.elem.id} .borderCover`).style.height = 'var(--bordersSize)';
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', 'var(--bordersWidth)');
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', 'var(--bordersHeight)');
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'fill', this.borders.color);
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'stroke', 'white');
   document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
-  // console.log( document.getElementById(`${this.borders.id}Cover`))
-// console.log(this.borders.id)
+
 
 
 
@@ -717,15 +723,14 @@ createBorderPath.prototype.getDataPoints = function() {
 
 createBorderPath.prototype.updateSize = function() {
 
-    // if(this.borders.elem == WORK){
-    //   console.log(this.borders.elem.firstElementChild,this.borders.elem.firstElementChild.clientHeight, this.extraSVGspace)
-    // }
+    
   this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px'
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
   this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
   this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
+  // console.log(this.borders.elem.firstElementChild,  this.borders.elem.firstElementChild.clientWidth)
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
 
 
 
@@ -906,6 +911,65 @@ createBorderPath.prototype.hoveroverOff = function() {
     }
 };
 
+
+
+//------------------extra function-----------------------
+
+
+function smallerResElemBorders(restElems,extraSVGspace){
+
+  restElems.forEach((elem)=>{
+    document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.add('menutransition');
+    document.getElementById(`${elem.id}Border`).parentElement.classList.add('menutransition');
+    document.getElementById(`${elem.id}Border`).classList.add('menutransition');
+    document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'none';
+  })
+
+
+
+  if(menuExpanded){
+    restElems.forEach((elem)=>{
+      
+      document.querySelector(`#${elem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
+      document.querySelector(`#${elem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
+
+      document.querySelector(`#${elem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
+      
+
+      document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
+        rect.style.width = transitionValue['bordersSmallSize'];
+        rect.style.height = transitionValue['bordersSmallSize'];
+      })
+    })
+  }else{
+    restElems.forEach((elem)=>{
+      
+      document.querySelector(`#${elem.id} .borders`).style.width = transitionValue['bordersSize'];
+      document.querySelector(`#${elem.id} .borders`).style.height = transitionValue['bordersSize'];
+
+      document.querySelector(`#${elem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+      
+
+      document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
+
+        rect.style.width = transitionValue['bordersSize'];
+        rect.style.height = transitionValue['bordersSize'];
+      })
+    })
+  }
+  
+ 
+  setTimeout(() => {
+    restElems.forEach((elem)=>{
+      document.getElementById(`${elem.id}Border`).classList.remove('menutransition');
+      document.getElementById(`${elem.id}Border`).parentElement.classList.remove('menutransition');
+      document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.remove('menutransition');
+      document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'initial';
+    });
+  }, transitionValue['duration'] * 1000);
+}
 
 
 
