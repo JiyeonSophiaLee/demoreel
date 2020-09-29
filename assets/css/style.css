@@ -557,7 +557,7 @@ div{
   transition: opacity 0.3s ease-in-out;
 }
 .borderCoverWhite{
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 

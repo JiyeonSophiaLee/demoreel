@@ -134,7 +134,7 @@ createBorderPath.prototype.expandMenuIf = function(allElems,restElems) {
     // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
     // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
     if(innerWidth <= 800){
-      smallerResElemBorders(restElems,this.extraSVGspace);
+      smallerResElemBorders(this.borders.elem,restElems,this.extraSVGspace);
     }
 
     
@@ -173,7 +173,6 @@ createBorderPath.prototype.expandMenuIf = function(allElems,restElems) {
 
 createBorderPath.prototype.expandMenuElseIf = function(allElems) {
     return new Promise((resolve,reject)=>{
-
 
     leftRight = this.getLeftRight(this);
     upDown = this.getUpDown(this);
@@ -231,7 +230,14 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 
 
 
-    // document.querySelector(`#${biggeredElem.id} .text`).style.alignItems = 'center'
+
+
+    if(innerWidth <= 800){
+      smallerResElemBordersElseIF(this.extraSVGspace);
+    }
+    
+
+
 
 
     this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
@@ -309,7 +315,7 @@ createBorderPath.prototype.expandMenuElse = function(allElems,restElems) {
 
 
     if(innerWidth <= 800){
-      smallerResElemBorders(restElems,this.extraSVGspace);
+      smallerResElemBorders(this.borders.elem,restElems,this.extraSVGspace);
     }
 
 
@@ -489,8 +495,10 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttributeNS(null, 'y', this.y);
   this.borders.path.setAttributeNS(null, 'rx', this.borders.border);
   this.borders.path.setAttributeNS(null, 'ry', this.borders.border);
-  this.borders.path.setAttributeNS(null, 'width', this.w);
-  this.borders.path.setAttributeNS(null, 'height', this.h);
+  this.borders.path.style.width = transitionValue['bordersSize'];
+  this.borders.path.style.height = transitionValue['bordersSize'];
+  // this.borders.path.setAttributeNS(null, 'width', this.w);
+  // this.borders.path.setAttributeNS(null, 'height', this.h);
   this.borders.path.setAttributeNS(null, 'fill', this.borders.color);
   this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
   this.borders.path.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
@@ -526,20 +534,23 @@ createBorderPath.prototype.createRectBorder = function() {
 createBorderPath.prototype.animRectBorder = function() {
   
   f += dir;
-
   this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
-  this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
-  this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
+  this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth;
+  this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight;
+  // this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
+  // this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
 
 
-
-  if (biggeredElem != null) {
-    this.biggeredElemPath.parentElement.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth + this.extraSVGspace + 'px';
-    this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.extraSVGspace + 'px';
-    this.biggeredElemPath.setAttributeNS(null, 'width', this.biggeredElemPath.parentElement.parentElement.clientWidth);
-    this.biggeredElemPath.setAttributeNS(null, 'height', this.biggeredElemPath.parentElement.parentElement.clientHeight);
-  }
+  // if(innerWidth>800){
+    if (biggeredElem != null) {
+      this.biggeredElemPath.parentElement.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth + this.extraSVGspace + 'px';
+      this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.extraSVGspace + 'px';
+      this.biggeredElemPath.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth;
+      this.biggeredElemPath.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight;
+    }
+  // }
+  
 
   if (!(f % NF)) {
 
@@ -557,13 +568,15 @@ createBorderPath.prototype.animRectBorder = function() {
       this.borders.path.setAttributeNS(null, 'width', this.w);
       this.borders.path.setAttributeNS(null, 'height', this.h);
     }
-
+    
     if (biggeredElem != null) {
-      
       this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.extraSVGspace + 'px';
       this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + this.extraSVGspace + 'px';
       this.biggeredElemPath.setAttribute('width', this.smallMenuSize);
       this.biggeredElemPath.setAttribute('height', this.smallMenuSize);
+      
+      document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.width = this.smallMenuSize + 'px';
+      document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.height = this.smallMenuSize + 'px';
     }
     f = 0;
 
@@ -722,15 +735,29 @@ createBorderPath.prototype.getDataPoints = function() {
 
 
 createBorderPath.prototype.updateSize = function() {
-
     
+  // if(menuExpanded){
+  //   if(innerWidth > 800){
+  //     if(this.borders.elem != biggerElem){
+  //       this.borders.elem.firstElementChild.style.width = 'var(--bordersSize)';
+  //       this.borders.elem.firstElementChild.style.height = 'var(--bordersSize)';
+  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
+  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
+  //     }
+  //   }else{
+  //     if(this.borders.elem != biggerElem){
+  //       this.borders.elem.firstElementChild.style.width = 'var(--bordersSmallSize)';
+  //       this.borders.elem.firstElementChild.style.height = 'var(--bordersSmallSize)';
+  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSmallSize)';
+  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSmallSize)';
+  //     }
+  //   }
+  // }
+
   this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px'
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
-  this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
-  this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
-  // console.log(this.borders.elem.firstElementChild,  this.borders.elem.firstElementChild.clientWidth)
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
+  this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth;
+  this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight;
 
 
 
@@ -747,7 +774,6 @@ createBorderPath.prototype.updateSize = function() {
 
     }
   }
-
 
 };
 
@@ -916,44 +942,46 @@ createBorderPath.prototype.hoveroverOff = function() {
 //------------------extra function-----------------------
 
 
-function smallerResElemBorders(restElems,extraSVGspace){
+function smallerResElemBorders(elem,restElems,extraSVGspace){
 
-  restElems.forEach((elem)=>{
-    document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.add('menutransition');
-    document.getElementById(`${elem.id}Border`).parentElement.classList.add('menutransition');
-    document.getElementById(`${elem.id}Border`).classList.add('menutransition');
-    document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'none';
+  document.querySelector(`#${elem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
+
+  restElems.forEach((restElem)=>{
+    document.getElementById(`${restElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
+    document.getElementById(`${restElem.id}Border`).parentElement.classList.add('menutransition');
+    document.getElementById(`${restElem.id}Border`).classList.add('menutransition');
+    document.querySelector(`#${restElem.id} .borders .borderCover`).style.display = 'none';
   })
 
-
-
   if(menuExpanded){
-    restElems.forEach((elem)=>{
+    restElems.forEach((restElem)=>{
       
-      document.querySelector(`#${elem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
-      document.querySelector(`#${elem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
+      document.querySelector(`#${restElem.id} .borders`).style.width = 'var(--bordersSmallSize)';
+      document.querySelector(`#${restElem.id} .borders`).style.height = 'var(--bordersSmallSize)';
+      // document.querySelector(`#${restElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
+      // document.querySelector(`#${restElem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
 
-      document.querySelector(`#${elem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
-      document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${restElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${restElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSmallSize']} + ${extraSVGspace}px`;
       
 
-      document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
-        rect.style.width = transitionValue['bordersSmallSize'];
-        rect.style.height = transitionValue['bordersSmallSize'];
+      document.querySelectorAll(`#${restElem.id} .borders svg rect`).forEach((rect)=>{
+        rect.style.width = 'var(--bordersSmallSize)';
+        rect.style.height = 'var(--bordersSmallSize)';
       })
     })
   }else{
-    restElems.forEach((elem)=>{
+    restElems.forEach((restElem)=>{
       
-      document.querySelector(`#${elem.id} .borders`).style.width = transitionValue['bordersSize'];
-      document.querySelector(`#${elem.id} .borders`).style.height = transitionValue['bordersSize'];
+      document.querySelector(`#${restElem.id} .borders`).style.width = 'var(--bordersSize)';
+      document.querySelector(`#${restElem.id} .borders`).style.height = 'var(--bordersSize)';
 
-      document.querySelector(`#${elem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
-      document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${restElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+      document.querySelector(`#${restElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
       
-
-      document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
-
+      document.querySelector(`#${elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
+      document.querySelector(`#${elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
+      document.querySelectorAll(`#${restElem.id} .borders svg rect`).forEach((rect)=>{
         rect.style.width = transitionValue['bordersSize'];
         rect.style.height = transitionValue['bordersSize'];
       })
@@ -962,6 +990,7 @@ function smallerResElemBorders(restElems,extraSVGspace){
   
  
   setTimeout(() => {
+
     restElems.forEach((elem)=>{
       document.getElementById(`${elem.id}Border`).classList.remove('menutransition');
       document.getElementById(`${elem.id}Border`).parentElement.classList.remove('menutransition');
@@ -969,6 +998,61 @@ function smallerResElemBorders(restElems,extraSVGspace){
       document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'initial';
     });
   }, transitionValue['duration'] * 1000);
+}
+
+
+
+function smallerResElemBordersElseIF(extraSVGspace){
+  document.querySelector(`#${biggerElem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
+
+    // eval('run' + biggeredElem.id.charAt(0).toUpperCase() + biggeredElem.id.slice(1) + 'Border').hoveroverOff();
+
+    // document.getElementById(`${biggeredElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
+    // document.getElementById(`${biggeredElem.id}Border`).parentElement.classList.add('menutransition');
+    // document.getElementById(`${biggeredElem.id}Border`).classList.add('menutransition');
+    // document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.display = 'none';
+
+    document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
+    document.querySelector(`#${biggeredElem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
+
+
+    // // document.querySelector(`#${biggeredElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+    // // document.querySelector(`#${biggeredElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+    
+
+    // document.querySelectorAll(`#${biggeredElem.id} .borders svg rect`).forEach((rect)=>{
+
+    //   rect.style.width = transitionValue['bordersSize'];
+    //   rect.style.height = transitionValue['bordersSize'];
+    // })
+
+
+
+    // // // document.getElementById(`${biggerElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
+    // // // document.getElementById(`${biggerElem.id}Border`).parentElement.classList.add('menutransition');
+    // // // document.getElementById(`${biggerElem.id}Border`).classList.add('menutransition');
+
+    // // // document.querySelector(`#${biggerElem.id} .borders`).style.width = transitionValue['bordersSize'];
+    // // // document.querySelector(`#${biggerElem.id} .borders`).style.height = transitionValue['bordersSize'];
+
+    // // // document.querySelector(`#${biggerElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+    // // // document.querySelector(`#${biggerElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
+    
+
+    // // // document.querySelectorAll(`#${biggerElem.id} .borders svg rect`).forEach((rect)=>{
+
+    // // //   rect.style.width = transitionValue['bordersSize'];
+    // // //   rect.style.height = transitionValue['bordersSize'];
+    // // // })
+
+    setTimeout(() => {
+      // restElems.forEach((elem)=>{
+        // document.getElementById(`${biggeredElem}Border`).parentElement.parentElement.classList.remove('menutransition');
+        // document.getElementById(`${biggeredElem}Border`).parentElement.classList.remove('menutransition');
+        // document.getElementById(`${biggeredElem}Border`).classList.remove('menutransition');
+      // });
+    }, transitionValue['duration'] * 1000);
+
 }
 
 
