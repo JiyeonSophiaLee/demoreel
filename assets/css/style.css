@@ -23,10 +23,13 @@ canvas{
   --topHeight1100:80px;
   --subMenuNeonDuration:1.5s;
   --maxWidth : 1400px;
+
   --bordersSize:10vw;
   --bordersSmallSize:4rem;
+  --borderSize800: 7rem;
+  --borderSize1400: 8.7rem;
 }
-@media (max-width:800px){
+/* @media (max-width:800px){
   :root{
     --bordersSize: 7rem;
   }
@@ -35,7 +38,7 @@ canvas{
   :root{
     --bordersSize: 8.7rem;
   }
-}
+} */
 
 
 
@@ -360,11 +363,16 @@ div{
         flex-direction: row;
         flex-grow: 1;
         flex-shrink: 0;
-        padding: 2vw 2vw 2vw 2vw;
+        padding: 1.5vw;
       }
       @media (max-width:800px){
         #bottom #bottomMenu{
-          padding: 2vw;
+          padding: 10px;
+        }
+      }
+      @media (max-width:1400px){
+        #bottom #bottomMenu{
+          padding: 30px;
         }
       }
 
@@ -394,8 +402,8 @@ div{
 
 
         #bottom #bottomMenu > li .borders{
-          width: var(--bordersSize);
-          height: var(--bordersSize);
+          /* width: var(--bordersSize);
+          height: var(--bordersSize); */
           display:grid;
           text-align: center ;
           position: relative;

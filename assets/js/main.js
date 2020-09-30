@@ -17,9 +17,13 @@ const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
 // const nameP = document.querySelectorAll('#name p');
 
+const allElems = [WORK,PAINT,SKILL,INFO];
+
 let menuExpanded = false;
-let biggerElem = null
-let biggeredElem = null
+let biggerElem = null;
+let biggeredElem = null;
+
+
 
 
 
@@ -41,6 +45,8 @@ function getTransitionValue() {
   this.borderMinMediaQueryUnit = 'vw';
   this.bordersSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSize');
   this.bordersSmallSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSmallSize');
+  this.borderSize800 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize800');
+  this.borderSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize1400');
 };
 
 let transitionValue = new getTransitionValue();
@@ -53,6 +59,8 @@ let resizeFinish;
 
 
 // nameSplit();
+
+
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
@@ -70,7 +78,6 @@ TITLE.addEventListener('click',()=>{
   if(biggerElem != null){
 
     let elem = biggerElem;
-    let allElems = [WORK,PAINT,SKILL,INFO];
     const callBiggerElemBorder = eval('run' + biggerElem.id.charAt(0).toUpperCase() + biggerElem.id.slice(1) + 'Border');
     const callBiggerElemUtilityMenu = eval(biggerElem.id + 'MenuUtilities');
 
@@ -113,7 +120,6 @@ function menuController(id){
   this.restElems = this.getRestElems(this);
 
 
-
   this.callClickEvent = () =>{
       
         this.elem.removeEventListener('click', this.callClickEvent);
@@ -137,8 +143,10 @@ menuController.prototype.expandMenu = function(){
   const bordersExpandMenu = eval('run' + this.elem.id.charAt(0).toUpperCase() + this.elem.id.slice(1) + 'Border');
   const utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities');
  
-
+  document.querySelector(`#${this.elem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
   
+
+
   if (menuExpanded == false ){
     menuExpanded = true;
     biggerElem = this.elem;
@@ -423,6 +431,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       MASTER.classList.add('menutransition');
       TITLE_NAME_CONTAINER.classList.add('menutransition');
       DEMO__.classList.add('menutransition');
+      TITLE_NAME.classList.add('menutransition');
       
       
 
@@ -470,6 +479,7 @@ menuUtilities.prototype.expandMenuElse = function(){
 
       DEMO__.classList.remove('menutransition');
       TITLE_NAME_CONTAINER.classList.remove('menutransition');
+      TITLE_NAME.classList.remove('menutransition');
       
 
       
@@ -498,46 +508,46 @@ menuUtilities.prototype.updateSize = function(){
   demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 
   DEMO_VIDEO.style.height = demoVideoHeight +'px';
-  
-  if(innerWidth > 800){
-    
-    BOTTOM_MENU.style.height = '100%'
-    DEMO__.style.height = '';
-    
-    // declarBotHeight();
-    
 
-    if (menuExpanded ) {
-      MASTER.style.maxWidth = '100%';
-      TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
-      TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
+    if(innerWidth > 800){
+      
+      BOTTOM_MENU.style.height = '100%'
+      DEMO__.style.height = '';
+      
+      
 
-      DEMO__.style.width = 100 - transitionValue['max'] + '%';
-      DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
-      // NAME.style.width = 100 - transitionValue['max'] + '%';
+      if (menuExpanded ) {
+        MASTER.style.maxWidth = '100%';
+        TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
+        TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
 
+        DEMO__.style.width = 100 - transitionValue['max'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
+        // NAME.style.width = 100 - transitionValue['max'] + '%';
+
+
+      }else{
+        TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
+        DEMO_VIDEO.style.width = '';
+        // threeJsBlocker();
+      }
 
     }else{
-      TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
-      DEMO_VIDEO.style.width = '';
-      // threeJsBlocker();
-    }
+      TITLE_NAME_CONTAINER.style.width = '100%';
+      // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
 
-  }else{
-    TITLE_NAME_CONTAINER.style.width = '100%';
-    // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
-
-    DEMO__.style.height = demoVideoHeight +'px';
-  
-    DEMO__.style.width = '';
-
+      DEMO__.style.height = demoVideoHeight +'px';
     
-    if (menuExpanded ) {
+      DEMO__.style.width = '';
 
-      TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
-      DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+      
+      if (menuExpanded ) {
+
+        TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+      }
     }
-  }
+  // }
   // clearTimeout(resizeFinish);
   // resizeFinish = setTimeout(() => {
   //   DEMO_SVG.classList.add('blurSVG')
@@ -579,13 +589,15 @@ function threeJsBlocker(){
 
 // DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
 
+let workMenuController = new menuController('work');
+let skillMenuController = new menuController('skill');
+let paintMenuController = new menuController('paint');
+let infoMenuController = new menuController('info');
+
+
+
 let workMenuUtilities = new menuUtilities('work');
 let skillMenuUtilities = new menuUtilities('skill');
 let paintMenuUtilities = new menuUtilities('paint');
 let infoMenuUtilities = new menuUtilities('info');
 
-
-let workMenuController = new menuController('work');
-let skillMenuController = new menuController('skill');
-let paintMenuController = new menuController('paint');
-let infoMenuController = new menuController('info');
