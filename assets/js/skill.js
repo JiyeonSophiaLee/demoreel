@@ -35,7 +35,6 @@ function createSkillBar(){
 
 
     for(skill in skills){
-        console.log('hello');
         let group = document.createElement('div');
         let LI = document.createElement('LI');
         let p = document.createElement('p');

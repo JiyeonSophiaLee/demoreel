@@ -161,7 +161,6 @@ createProjectGroup('work');
 createProjectGroup('paint');
 
 window.addEventListener('resize',()=>{
-    console.log(biggerElem)
     if(biggerElem === WORK || biggerElem === PAINT){
         workSwitchProjectLine();
     }
@@ -226,7 +225,6 @@ function workSwitchProjectLine(){
             document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'initial';
             document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'none';
         }else{
-            console.log('bigger Elem else is working')
             document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'none';
             document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'initial';
         }

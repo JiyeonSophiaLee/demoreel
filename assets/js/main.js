@@ -1,6 +1,6 @@
+const MASTER = document.getElementById('master');
 const TOP_MENU = document.getElementById('topMenu');
 const MENU__ = document.getElementById('menu');
-const NAME = document.getElementById('name');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
 const DEMO_SVG = document.getElementById('demoSVG');
@@ -12,12 +12,18 @@ const PAINT = document.getElementById('paint');
 const INFO = document.getElementById('info');
 const TITLE = document.querySelector('#name');
 const DEMO_VIDEO_RAINBOW = document.querySelector('#demoVideoRainbow');
-const TITLE_NAME_GROUP = document.querySelector('#nameGroup');
-const THREEJS_BlOCKER = document.getElementById('threejsBlocker')
+const TITLE_NAME_CONTAINER = document.querySelector('#nameContainer');
+const TITLE_NAME = document.querySelector('#name');
+const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
+// const nameP = document.querySelectorAll('#name p');
+
+const allElems = [WORK,PAINT,SKILL,INFO];
 
 let menuExpanded = false;
-let biggerElem = null
-let biggeredElem = null
+let biggerElem = null;
+let biggeredElem = null;
+
+
 
 
 
@@ -29,15 +35,18 @@ function getTransitionValue() {
   this.duration = 1;
   this.menuMax = 75;
   this.menuMin = 50;
+  this.maxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--maxWidth'));
+  this.nameMaxMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nameMaxMediaQuery'));
   this.videoMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidth'));
   this.videoMinWidth = 90;
   this.videoMaxWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidthMediaQuery'));
   this.videoMinWidthMediaQuery = 50;
   this.borderMinMediaQuery = 13;
   this.borderMinMediaQueryUnit = 'vw';
-  this.botMinHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--botMinHeight'));
-  this.topHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topHeight'));
-  this.topHeight1100 = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topHeight1100'));
+  this.bordersSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSize');
+  this.bordersSmallSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSmallSize');
+  this.borderSize800 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize800');
+  this.borderSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize1400');
 };
 
 let transitionValue = new getTransitionValue();
@@ -48,17 +57,19 @@ let resizeFinish;
 // let demoMargin;
 
 
-// getPadding();
-// getDemoMargin();
-declarBotHeight();
+
+// nameSplit();
+
+
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
+
 if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  threeJsBlocker();
+  // threeJsBlocker();
 
 }
 
@@ -67,7 +78,6 @@ TITLE.addEventListener('click',()=>{
   if(biggerElem != null){
 
     let elem = biggerElem;
-    let allElems = [WORK,PAINT,SKILL,INFO];
     const callBiggerElemBorder = eval('run' + biggerElem.id.charAt(0).toUpperCase() + biggerElem.id.slice(1) + 'Border');
     const callBiggerElemUtilityMenu = eval(biggerElem.id + 'MenuUtilities');
 
@@ -110,7 +120,6 @@ function menuController(id){
   this.restElems = this.getRestElems(this);
 
 
-
   this.callClickEvent = () =>{
       
         this.elem.removeEventListener('click', this.callClickEvent);
@@ -134,8 +143,10 @@ menuController.prototype.expandMenu = function(){
   const bordersExpandMenu = eval('run' + this.elem.id.charAt(0).toUpperCase() + this.elem.id.slice(1) + 'Border');
   const utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities');
  
-
+  document.querySelector(`#${this.elem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
   
+
+
   if (menuExpanded == false ){
     menuExpanded = true;
     biggerElem = this.elem;
@@ -144,8 +155,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems), utilitiExpandMenu.expandMenuIf()])
+    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems,this.restElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems,this.restElems), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -158,8 +169,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -172,8 +183,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems), utilitiExpandMenu.expandMenuElse()])
+    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -284,40 +295,42 @@ menuUtilities.prototype.expandMenuIf = function(){
     DEMO_VIDEO_RAINBOW.style.opacity = '50%';
     
     document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
-    
-    
+    // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
+    // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
+    // document.querySelector(`#${this.elem.id} .neon1`).classList.remove(`${this.elem.id}Neon1`);
+    // document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
     
     
     if(innerWidth > 800){
       
       DEMO_SVG.style.display= 'none';
       
+      MASTER.classList.add('menutransition');
+      TOP_MENU.classList.add('menutransition');
+      TITLE_NAME_CONTAINER.classList.add('menutransition');
+      TITLE_NAME.classList.add('menutransition');
+
+
+      // NAME.classList.add('menutransition');
+
+      MASTER.style.maxWidth = '100%';
+      TITLE_NAME_CONTAINER.style.width = innerWidth * ( 100 - transitionValue['max']) / 100 + 'px';
+      TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
+
+
       DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
-      DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (100-transitionValue.max) / 100) * transitionValue['videoMinWidth']/100)  * (9/16) +'px';
-
-      NAME.classList.add('menutransition');
-      MENU__.classList.add('menutransition');
-      TITLE_NAME_GROUP.classList.add('menutransition');
-
-
-      NAME.style.width = (100 - transitionValue.max) + '%';
-      MENU__.style.width = transitionValue.max + '%';
-      TITLE_NAME_GROUP.style.width = transitionValue.videoMinWidth + '%';
-    
-
+      DEMO_VIDEO.style.height = ((innerWidth * (100-transitionValue.max) / 100) * transitionValue['videoMinWidth']/100)  * (9/16) +'px';
 
       DEMO__.style.width = ( 100 - transitionValue['max']) + '%';
       
-
     }else{
-      
+
       BOTTOM_MENU.classList.add('menutransition');
 
       DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] + '%';
 
       DEMO__.style.height = demoVideoHeight +'px' ;
       DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
-
 
     }
 
@@ -331,10 +344,15 @@ menuUtilities.prototype.expandMenuIf = function(){
       DEMO__.classList.remove('menutransition');
 
       if(innerWidth > 800){
+        // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
+        // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
 
-        NAME.classList.remove('menutransition');
-        MENU__.classList.remove('menutransition');
-        TITLE_NAME_GROUP.classList.remove('menutransition');
+        MASTER.classList.remove('menutransition');
+        TOP_MENU.classList.remove('menutransition');
+        TITLE_NAME_CONTAINER.classList.remove('menutransition');
+        TITLE_NAME.classList.remove('menutransition');
+
+        TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
 
       }else{
         BOTTOM_MENU.classList.remove('menutransition');
@@ -355,8 +373,15 @@ menuUtilities.prototype.expandMenuElseIf = function(){
 
     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
     document.querySelector(`#${biggeredElem.id} .contents`).style.zIndex = '0';
+    
+    // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
+    // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
     document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'none';
     document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'none';
+
+    document.querySelector(`#${biggeredElem.id} .neon1`).classList.remove(`${biggeredElem.id}Neon1`);
+    document.querySelector(`#${biggeredElem.id} .neon2`).classList.remove(`${biggeredElem.id}Neon2`);
+    
 
 
 
@@ -364,15 +389,16 @@ menuUtilities.prototype.expandMenuElseIf = function(){
      
 
       TOP_MENU.classList.remove('menutransition');
-      NAME.classList.remove('menutransition');
   
-      MENU__.classList.remove('menutransition');
       DEMO__.classList.remove('menutransition');
 
       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden';
       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
 
+      document.querySelector(`#${biggeredElem.id} .borderCover`).style.opacity = '0';
       document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
+      // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
+      // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
       document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'initial';
       document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'initial';
     }, transitionValue.duration * 1000);
@@ -391,25 +417,35 @@ menuUtilities.prototype.expandMenuElse = function(){
     document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
-    threeJsBlocker();
+    document.querySelector(`#${this.elem.id} .neon1`).classList.remove(`${this.elem.id}Neon1`);
+    document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
+
+    
+    // threeJsBlocker();
   
 
     if(innerWidth > 800){
       DEMO_SVG.style.display= 'initial';
-      DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
-
-
-      NAME.style.width = (100 - transitionValue.min) + '%';
-      NAME.classList.add('menutransition');
-      MENU__.classList.add('menutransition');
+      
+      
+      MASTER.classList.add('menutransition');
+      TITLE_NAME_CONTAINER.classList.add('menutransition');
       DEMO__.classList.add('menutransition');
-      TITLE_NAME_GROUP.classList.add('menutransition');
+      TITLE_NAME.classList.add('menutransition');
+      
+      
 
 
+      MASTER.style.maxWidth = transitionValue['maxWidth'] + 'px';
 
-      MENU__.style.width = transitionValue['min'] + '%';
-      DEMO__.style.width = ( 100 - transitionValue['min']) + '%';
-      TITLE_NAME_GROUP.style.width =  transitionValue['videoMaxWidth'] + '%';
+      DEMO__.style.width = transitionValue['min'] + '%';
+      if(innerWidth > 1400){
+        DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
+      }else{  
+        DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
+      }
+        TITLE_NAME_CONTAINER.style.width =  transitionValue['min'] + '%';
+      TITLE_NAME.style.width = transitionValue['videoMaxWidth'] + '%';
       
 
     }else{
@@ -439,11 +475,11 @@ menuUtilities.prototype.expandMenuElse = function(){
 
 
     if(innerWidth > 800){
+      MASTER.classList.remove('menutransition');
 
-      NAME.classList.remove('menutransition');
-      MENU__.classList.remove('menutransition');
       DEMO__.classList.remove('menutransition');
-      TITLE_NAME_GROUP.classList.remove('menutransition');
+      TITLE_NAME_CONTAINER.classList.remove('menutransition');
+      TITLE_NAME.classList.remove('menutransition');
       
 
       
@@ -472,37 +508,46 @@ menuUtilities.prototype.updateSize = function(){
   demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 
   DEMO_VIDEO.style.height = demoVideoHeight +'px';
-  
-  if(innerWidth > 800){
-    // DEMO__.style.height = '100%'
-    BOTTOM_MENU.style.height = '100%'
-    DEMO__.style.height = '';
-    
-    declarBotHeight();
-    
 
-    if (menuExpanded ) {
-      DEMO__.style.width = 100 - transitionValue['max'] + '%';
-      DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
-      NAME.style.width = 100 - transitionValue['max'] + '%';
-      MENU__.style.width = transitionValue['max'] + '%';
+    if(innerWidth > 800){
+      
+      BOTTOM_MENU.style.height = '100%'
+      DEMO__.style.height = '';
+      
+      
 
+      if (menuExpanded ) {
+        MASTER.style.maxWidth = '100%';
+        TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
+        TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
+
+        DEMO__.style.width = 100 - transitionValue['max'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
+        // NAME.style.width = 100 - transitionValue['max'] + '%';
+
+
+      }else{
+        TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
+        DEMO_VIDEO.style.width = '';
+        // threeJsBlocker();
+      }
 
     }else{
-      DEMO_VIDEO.style.width = '';
-      threeJsBlocker();
-    }
+      TITLE_NAME_CONTAINER.style.width = '100%';
+      // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
 
-  }else{
-    DEMO__.style.height = demoVideoHeight +'px';
-  
-    DEMO__.style.width = '';
-    NAME.style.width ='';
+      DEMO__.style.height = demoVideoHeight +'px';
     
-    if (menuExpanded ) {
-      DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+      DEMO__.style.width = '';
+
+      
+      if (menuExpanded ) {
+
+        TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+      }
     }
-  }
+  // }
   // clearTimeout(resizeFinish);
   // resizeFinish = setTimeout(() => {
   //   DEMO_SVG.classList.add('blurSVG')
@@ -522,28 +567,6 @@ menuUtilities.prototype.updateSize = function(){
 
 
 
-function declarBotHeight(){
-  if(innerWidth > 800){
-    if(innerWidth <= 1100){
-
-      if(innerHeight < (innerWidth * transitionValue['topHeight']/100) + (innerWidth * transitionValue['botMinHeight'] / 100)){
-
-        body.style.height = 'auto';
-
-      }else{
-
-        body.style.height = '100%';
-
-      }
-    }else{
-      if(innerHeight < transitionValue['topHeight1100'] + (innerWidth * transitionValue['botMinHeight'] / 100)){
-        body.style.height = 'auto';
-      }else{
-        body.style.height = '100%';
-      }
-    }
-  }
-}
 
 function threeJsBlocker(){
   if(innerHeight < body.scrollHeight){
@@ -553,17 +576,28 @@ function threeJsBlocker(){
   }
 }
 
+// function nameSplit(){
+//   nameP.forEach((pIndex)=>{
+//     pIndex.innerHTML='<span>' +
+//     pIndex.innerHTML.split('').join('</span><span>') +'</span>';
+//   })
+// }
+
+
+
 
 
 // DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
+
+let workMenuController = new menuController('work');
+let skillMenuController = new menuController('skill');
+let paintMenuController = new menuController('paint');
+let infoMenuController = new menuController('info');
+
+
 
 let workMenuUtilities = new menuUtilities('work');
 let skillMenuUtilities = new menuUtilities('skill');
 let paintMenuUtilities = new menuUtilities('paint');
 let infoMenuUtilities = new menuUtilities('info');
 
-
-let workMenuController = new menuController('work');
-let skillMenuController = new menuController('skill');
-let paintMenuController = new menuController('paint');
-let infoMenuController = new menuController('info');

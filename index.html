@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/styleContent.css">
-    <link rel="stylesheet" href="assets/css/styleSkills.css">
+    <link rel="stylesheet" href="assets/css/styleSkills_v2.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Dosis&display=swap" rel="stylesheet"> -->
@@ -15,7 +15,7 @@
 
 
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
 
 
 
@@ -34,150 +34,145 @@
 
 
 <body id='body'>
-    <section id='topMenu'>
-        <div id='name'>
-            <div id='nameGroup'>
-                <p>SOPHIA</p>
-                <p>JIYEON LEE</p>
+    <div id='master'>
+        <section id='topMenu'>
+            <div id='nameContainer'>
+                <div id='name'>
+                    <img src="assets/images/svg/jiyeeonLee1.svg" alt="">
+                    <img src="assets/images/svg/sophia3.svg" alt="">
+                    <!-- <p>JIYEON LEE</p>
+                    <p>SOPHIA</p> -->
+                </div>
             </div>
-        </div>
-        <div id='menu'>
-            <li>work</li>
-            <li>paint</li>
-            <li>skill</li>
-            <li>info</li>
-        </div>
-    </section>
-    <section id='bottom'>
-        <div id='demo'>
-            <div id='demoVideo'>
-                <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                <div id='demoVideoRainbow'></div>
+        </section>
+        <section id='bottom'>
+            <div id='demo'>
+                <div id='demoVideo'>
+                    <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <div id='demoVideoRainbow'></div>
+                </div>
+                <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" class="blurSVG" alt="" srcset="">  
             </div>
-            <img src="assets/images/svg/demoSVG_v08.svg" id="demoSVG" class="blurSVG" alt="" srcset="">  
-        </div>
 
-        <div id='bottomMenu'> 
-            <li id='work'>
-                <div class='borders' class='subMenuGrow'>    
-                    <div class='text'>WORK</div>      
-                    <div class='neon neon1'></div>
-                    <div class='neon neon2'></div>
-                    <svg>
-                        <defs>
+            <div id='bottomMenu'> 
+                <li id='work'>
+                    <div class='borders'>    
+                        <div class='text'>WORK</div>      
+                        <div class='neon neon1'></div>
+                        <div class='neon neon2'></div>
+                        <svg>
+                            <defs>
 
-                            <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="10%"  stop-color="rgb(220, 51, 35)"/>
-                                <stop offset="90%"  stop-color="rgb(212, 116, 43)"/>
-                            </linearGradient>
+                                <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="10%"  stop-color="rgb(220, 51, 35)"/>
+                                    <stop offset="90%"  stop-color="rgb(212, 116, 43)"/>
+                                </linearGradient>
 
-                        </defs>
-                        <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
-                        <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
-                        
-                        <rect id='workBorder'></rect>
-                        <rect class='borderCover'></rect>
-                        
-                        
-                    </svg>
-                   
-                    
-                </div>
-                
-                <div class='contents'>
-                </div>
-            </li>
-            <li id='skill'>
-                <div class='borders'>
-                    <div class='text'>SKILL</div>
-                    <div class='neon neon1'></div>
-                    <div class='neon neon2'></div>
-                    <svg>
-                        <defs>
-
-                            <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="10%"  stop-color="rgb(168, 63, 209)"/>
-                                <stop offset="90%"  stop-color="rgb(192, 49, 91)"/>
-                            </linearGradient>
-
-                        </defs>
-                        <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
-                        <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
-                        
-                        <rect id='skillBorder'></rect>
-                        <rect class='borderCover'></rect>
-                    </svg>
-                    
-                </div>
-                <div class='contents'>
-                </div>
-            </li>
-            <li id='paint'>
-                <div class='borders'>
-                    <div class='text'>PAINT</div>
-                    <div class='neon neon1'></div>
-                    <div class='neon neon2'></div>
-                    <svg>
-                        <defs>
-
-                            <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="10%"  stop-color="rgb(225, 149, 46)"/>
-                                <stop offset="90%"  stop-color="rgb(48, 171, 152)"/>
-                            </linearGradient>
-
-                        </defs>
-                        <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
-                        <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
-                        
-                        <rect id='paintBorder'></rect>
-                        <rect class='borderCover'></rect>
-                    </svg>
-                    
-                </div>
-                <div class='contents'>
-                </div>
-            </li>
-            <li id='info'>
-                <div class='borders'>
-                    <div class='text'>INFO</div>
-                    <div class='neon neon1'></div>
-                    <div class='neon neon2'></div>
-                    <svg>
-                        <defs>
+                            </defs>
+                            <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
+                            <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
                             
-                            <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="10%"  stop-color="rgb(200, 86, 177)"/>
-                                <stop offset="90%"  stop-color="rgb(75, 173, 209)"/>
-                            </linearGradient>
-
-                        </defs>
-                        <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
-                        <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
+                            <rect id='workBorder'></rect>
+                            <rect class='borderCover'></rect>
+                        </svg>
+                    
                         
-                        <rect id='infoBorder' ></rect>
-                        <rect class='borderCover'></rect>
-                    </svg>
-            
-                </div>
-                <div class='contents'>
-                </div>
-            </li>
-            
-        </div>
-    </section>
-    <div id='threejsBlocker'></div>
-    <div id='threeJS'></div>
-    <div id='loaderContainer'>
-        <div id='loader'>Load&nbsp;ng</div>
-    </div>
+                    </div>
+                    
+                    <div class='contents'>
+                    </div>
+                </li>
+                <li id='skill'>
+                    <div class='borders'>
+                        <div class='text'>SKILL</div>
+                        <div class='neon neon1'></div>
+                        <div class='neon neon2'></div>
+                        <svg>
+                            <defs>
 
+                                <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="10%"  stop-color="rgb(168, 63, 209)"/>
+                                    <stop offset="90%"  stop-color="rgb(192, 49, 91)"/>
+                                </linearGradient>
 
+                            </defs>
+                            <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
+                            <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
+                            
+                            <rect id='skillBorder'></rect>
+                            <rect class='borderCover'></rect>
+                        </svg>
+                        
+                    </div>
+                    <div class='contents'>
+                    </div>
+                </li>
+                <li id='paint'>
+                    <div class='borders'>
+                        <div class='text'>PAINT</div>
+                        <div class='neon neon1'></div>
+                        <div class='neon neon2'></div>
+                        <svg>
+                            <defs>
+
+                                <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="10%"  stop-color="rgb(225, 149, 46)"/>
+                                    <stop offset="90%"  stop-color="rgb(48, 171, 152)"/>
+                                </linearGradient>
+
+                            </defs>
+                            <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
+                            <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
+                            
+                            <rect id='paintBorder'></rect>
+                            <rect class='borderCover'></rect>
+                        </svg>
+                        
+                    </div>
+                    <div class='contents'>
+                    </div>
+                </li>
+                <li id='info'>
+                    <div class='borders'>
+                        <div class='text'>INFO</div>
+                        <div class='neon neon1'></div>
+                        <div class='neon neon2'></div>
+                        <svg>
+                            <defs>
+                                
+                                <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="10%"  stop-color="rgb(200, 86, 177)"/>
+                                    <stop offset="90%"  stop-color="rgb(75, 173, 209)"/>
+                                </linearGradient>
+
+                            </defs>
+                            <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
+                            <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
+                            
+                            <rect id='infoBorder' ></rect>
+                            <rect class='borderCover'></rect>
+                        </svg>
+                
+                    </div>
+                    <div class='contents'>
+                    </div>
+                </li>
+                
+            </div>
+        </section>
+        <!-- <div id='threejsBlocker'></div>
+        <div id='threeJS'></div>
+        <div id='loaderContainer'>
+            <div id='loader'>Load&nbsp;ng</div>
+        </div> -->
+
+</div>
 </body>
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/border.js"></script>
-<script src="assets/js/thumbnails.js"></script>
-<script src="assets/js/skill.js"></script>
+<!-- <script src="assets/js/thumbnails.js"></script>
+<script src="assets/js/skill_v2.js"></script>
 <script src="assets/js/loader.js"></script>
-<script src="assets/js/three.js" defer></script>
+<script src="assets/js/three.js"></script> -->
 </html>
