@@ -1,45 +1,60 @@
-#skill .skillGroup .skillGraph{
-    display: grid;
-    grid-template-columns: 0.3fr 0.7fr;
-    background: rgba(10,10,10, 0.7);
-    margin: 1vw;
-    padding: 1vw;
-    border-radius: 10px;
-    text-align: end;
-    box-shadow: 3px 3px 10px black;
-    grid-gap: 2vw;
+:root{
+    --halfCircleSize :2rem;
+    --halfBarHeight :0.5rem;
 }
 
-#skill .skillGroup .skillGraph .skillName{
-    list-style: none;
-    font-size: 2vw;
-    position: relative;
-}
-#skill .skillGroup .skillGraph .skillBarContainder{
-    background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.2));
-    align-self: center;
-    border-radius: 20px;
-    box-shadow: 0 1px 0px rgba(225,225,225,0.1) inset, 0 1px 0 rgba(225,225,225,0.3);
-    height: 8px;
-}
-#skill .skillGroup .skillGraph .skillBarContainder .barBlender{
-    height: inherit;
-    border-radius: inherit;
+#skill .skillGroup .skillGraph {
     width: 100%;
-    background-image: linear-gradient(to right, #a83fd1, #c0315b);
+    height: 5rem;
+    background: rgba(30,30,30, 0.8);
+    padding: 0.3rem;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items:center;
 }
-#skill .skillGroup .skillGraph .skillBarContainder .barBlender .barGroup{
-    height: inherit;
-    width: inherit;
-    border-radius: inherit;
-    background-color: #000;
-    mix-blend-mode: multiply;
+#skill .skillGroup .skillGraph .skillName{
+    height: calc(var(--halfCircleSize)*2);
+    width: calc(var(--halfCircleSize)*2);
+    text-align: center;
+    margin: auto;
+    /* background: rgb(30,30,30); */
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+#skill .skillGroup .skillGraph .skillName p{
+    display: none;
+}
+#skill .skillGroup .skillGraph .skillName img{
+    height: 70%;
+    width: 70%;
+}
+#skill .skillGroup .skillGraph .skillbarContainer{
+    /* border-radius: 0.4rem 2rem; */
+    /* border-radius: 2rem; */
+    display: flex;
+    align-items: center;
+    /* height: 1.6rem; */
+    height: 100%;
+    width: 96%;
+}
+#skill .skillGroup .skillGraph::before{
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+    width: 100%;
+    height: calc(var(--halfBarHeight)* + 0.3rem);
+}
+#skill .skillGroup .skillGraph .skillbarContainer .skillBar{
+    width: 100%;
+    height: 100%;
+}
+#skill .skillGroup .skillGraph .skillbarContainer .skillBar rect{
+    /* border-radius: inherit; */
+    height: calc(var(--halfBarHeight) * 2);
+}
+#skill .skillGroup .skillGraph .skillbarContainer .skillBar circle{
+    width:3rem;
 }
 
-#skill .skillGroup .skillGraph .skillBarContainder .barBlender .barGroup .skillBar{
-    height: inherit;
-    border-radius: inherit;
-    background-color: #fff;
-    /* mix-blend-mode: multiply; */
-    /* background-image: linear-gradient(to right, #a83fd1, #c0315b); */
-}

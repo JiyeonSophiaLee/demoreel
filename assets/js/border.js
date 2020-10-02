@@ -10,10 +10,8 @@ function setBordersSize(elems){
   let arrayElems = [];
   if(Array.isArray(elems)){
     arrayElems = elems;
-    console.log(arrayElems);
   }else{
     arrayElems.push(elems);
-    console.log(arrayElems);
   }
   if(innerWidth > 1400){
     arrayElems.forEach(elem=>{
@@ -130,11 +128,10 @@ function createBorderPath(borders) {
 
 //---- expand Menu -------------------------------------------------------------------------
 
-createBorderPath.prototype.expandMenuIf = function(allElems,restElems) {
+createBorderPath.prototype.expandMenuIf = function() {
   return new Promise((resolve,reject)=>{
 
-    this.allElems = allElems;
-    this.restElems = restElems;
+    this.restElems = getRestElems(this.borders.elem);
 
 
     leftRight = this.getLeftRight(this);
@@ -214,10 +211,8 @@ createBorderPath.prototype.expandMenuIf = function(allElems,restElems) {
 };
 
 
-createBorderPath.prototype.expandMenuElseIf = function(allElems) {
+createBorderPath.prototype.expandMenuElseIf = function() {
   return new Promise((resolve,reject)=>{
-    
-    this.allElems = allElems;
 
     leftRight = this.getLeftRight(this);
     upDown = this.getUpDown(this);
@@ -231,7 +226,7 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
     this.subMenuChangingHeight;
     
   
-    this.allElems.forEach((allElem) => {
+    allElems.forEach((allElem) => {
       allElem.classList.add("menutransition")
       if (allElem == this.borders.elem) {
         allElem.firstElementChild.classList.add("menutransition")
@@ -247,7 +242,7 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 
 
 
-    this.allElems.forEach((allElem) => {
+    allElems.forEach((allElem) => {
       allElem.classList.add("menutransition")
       if (allElem == this.borders.elem) {
         allElem.firstElementChild.classList.add("menutransition");
@@ -305,7 +300,7 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 
 
   
-      this.allElems.forEach((allElems) => {
+      allElems.forEach((allElems) => {
         allElems.classList.remove("menutransition");
         if (allElems == this.borders.elem) {
           allElems.firstElementChild.classList.remove("menutransition");
@@ -321,11 +316,10 @@ createBorderPath.prototype.expandMenuElseIf = function(allElems) {
 };
   
   
-createBorderPath.prototype.expandMenuElse = function(allElems,restElems) {
+createBorderPath.prototype.expandMenuElse = function() {
   return new Promise((resolve,reject)=>{
 
-    this.allElems = allElems;
-    this.restElems = restElems;
+    this.restElems = getRestElems(this.borders.elem);
 
 
     leftRight = this.getLeftRight(this);
@@ -341,12 +335,12 @@ createBorderPath.prototype.expandMenuElse = function(allElems,restElems) {
     
 
 
-    allElems.forEach((allElems) => {
-      allElems.classList.add("menutransition");
-      allElems.style.width = '';
-      allElems.style.height = '';
-      if (allElems == this.borders.elem) {
-        allElems.firstElementChild.classList.add("menutransition");
+    allElems.forEach((allElem) => {
+      allElem.classList.add("menutransition");
+      allElem.style.width = '';
+      allElem.style.height = '';
+      if (allElem == this.borders.elem) {
+        allElem.firstElementChild.classList.add("menutransition");
       }
     })
 
@@ -580,17 +574,15 @@ createBorderPath.prototype.animRectBorder = function() {
 
   this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
-  this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth;
-  this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight;
-  // this.borders.path.setAttributeNS(null, 'width', this.borders.elem.firstElementChild.clientWidth);
-  // this.borders.path.setAttributeNS(null, 'height', this.borders.elem.firstElementChild.clientHeight);
+  this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
+  this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
 
 
   if (biggeredElem != null) {
     this.biggeredElemPath.parentElement.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth + this.extraSVGspace + 'px';
     this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.extraSVGspace + 'px';
-    this.biggeredElemPath.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth;
-    this.biggeredElemPath.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight;
+    this.biggeredElemPath.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth +'px';
+    this.biggeredElemPath.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight +'px';
   }
   
   
@@ -687,7 +679,6 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
 }
 
 createBorderPath.prototype.setBordersSizeFamily = function(elem, borderSize){
-  console.log('set bordier size is called');
   document.querySelector(`#${elem.id} .borders`).style.width = `var(--${borderSize})`;
   document.querySelector(`#${elem.id} .borders`).style.height = `var(--${borderSize})`;
 
@@ -696,7 +687,6 @@ createBorderPath.prototype.setBordersSizeFamily = function(elem, borderSize){
   
 
   document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
-    console.log('rect',rect.id,borderSize)
     rect.style.width = `var(--${borderSize})`;
     rect.style.height = `var(--${borderSize})`;
   })
