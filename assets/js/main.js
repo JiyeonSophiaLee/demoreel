@@ -69,17 +69,19 @@ if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  // threeJsBlocker();
+  threeJsBlocker();
 
 }
 
 
-TITLE.addEventListener('click',()=>{
+
+const TITLEcallClickEvent = function(){
   if(biggerElem != null){
 
     let elem = biggerElem;
-    const callBiggerElemBorder = eval('run' + biggerElem.id.charAt(0).toUpperCase() + biggerElem.id.slice(1) + 'Border');
-    const callBiggerElemUtilityMenu = eval(biggerElem.id + 'MenuUtilities');
+    
+    let bordersExpandMenu = eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border');
+    let utilitiExpandMenu = eval(elem.id + 'MenuUtilities');
 
 
     menuExpanded =false;
@@ -95,11 +97,13 @@ TITLE.addEventListener('click',()=>{
 
     
 
-    Promise.all([callBiggerElemBorder.expandMenuElse(allElems), callBiggerElemUtilityMenu.expandMenuElse(), callThumbnailElse(elem),deleteThreeJs(elem)])
-    .then(text=>callBiggerElemUtilityMenu.deleteMenuText())
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),callSkillsElse(elem),deleteThreeJs(elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
+    .then(text=>utilitiExpandMenu.deleteMenuText())
     } 
-})
+}
 
+TITLE.addEventListener('click',TITLEcallClickEvent);
 
 
 
@@ -116,12 +120,12 @@ TITLE.addEventListener('click',()=>{
 
 function menuController(id){
   this.elem = document.getElementById(id);
-  this.allElems = this.getAllElems(this)
-  this.restElems = this.getRestElems(this);
-
+  // this.allElems = this.getAllElems(this)
+  this.restElems = getRestElems(this.elem);
 
   this.callClickEvent = () =>{
       
+        TITLE.removeEventListener('click',TITLEcallClickEvent);
         this.elem.removeEventListener('click', this.callClickEvent);
         this.restElemsEventListener('remove', 'callClickEvent');
 
@@ -134,14 +138,15 @@ function menuController(id){
 
 menuController.prototype.removeEventCB = function(){
   console.log('add')
-  this.elem.addEventListener('click', this.callClickEvent)
-  this.restElemsEventListener('add', 'callClickEvent')
+  TITLE.addEventListener('click',TITLEcallClickEvent);
+  this.elem.addEventListener('click', this.callClickEvent);
+  this.restElemsEventListener('add', 'callClickEvent');
 }
 
 menuController.prototype.expandMenu = function(){
   
-  const bordersExpandMenu = eval('run' + this.elem.id.charAt(0).toUpperCase() + this.elem.id.slice(1) + 'Border');
-  const utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities');
+  let bordersExpandMenu = eval('run' + this.elem.id.charAt(0).toUpperCase() + this.elem.id.slice(1) + 'Border');
+  let utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities');
  
   document.querySelector(`#${this.elem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
   
@@ -155,8 +160,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    // Promise.all([bordersExpandMenu.expandMenuIf(this.allElems,this.restElems), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuIf(this.allElems,this.restElems), utilitiExpandMenu.expandMenuIf()])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -169,8 +174,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElseIf(this.allElems), utilitiExpandMenu.expandMenuElseIf()])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -183,8 +188,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    // Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse()])
+    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -192,30 +197,6 @@ menuController.prototype.expandMenu = function(){
 
 
   
-}
-
-menuController.prototype.getAllElems = function() {
-  let allElems = [];
-  
-  for (let i = 0; i < this.elem.parentElement.childNodes.length; i++) {
-    if (this.elem.parentElement.childNodes[i].nodeType == 1) {
-      allElems.push(this.elem.parentElement.childNodes[i]);
-    }
-  }
-  
-  return allElems;
-}
-
-menuController.prototype.getRestElems =function() {
-  let restElems = [];
-  
-  for (let i = 0; i < this.elem.parentElement.childNodes.length; i++) {
-    if (this.elem.parentElement.childNodes[i].nodeType == 1 && this.elem.parentElement.childNodes[i] != this.elem) {
-      restElems.push(this.elem.parentElement.childNodes[i]);
-    }
-  }
-  
-  return restElems;
 }
 
 menuController.prototype.restElemsEventListener = function(listener, handler) {
@@ -421,7 +402,7 @@ menuUtilities.prototype.expandMenuElse = function(){
     document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
 
     
-    // threeJsBlocker();
+    threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -529,7 +510,7 @@ menuUtilities.prototype.updateSize = function(){
       }else{
         TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
         DEMO_VIDEO.style.width = '';
-        // threeJsBlocker();
+        threeJsBlocker();
       }
 
     }else{
@@ -565,7 +546,29 @@ menuUtilities.prototype.updateSize = function(){
 //----------------------------------------------------------------------------------------------------------
 
 
+// function getAllElems(elem) {
+//   let allElems = [];
+  
+//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+//     if (elem.parentElement.childNodes[i].nodeType == 1) {
+//       allElems.push(elem.parentElement.childNodes[i]);
+//     }
+//   }
+  
+//   return allElems;
+// }
 
+function getRestElems(elem) {
+  let restElems = [];
+  
+  for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+    if (elem.parentElement.childNodes[i].nodeType == 1 && elem.parentElement.childNodes[i] != elem) {
+      restElems.push(elem.parentElement.childNodes[i]);
+    }
+  }
+  
+  return restElems;
+}
 
 
 function threeJsBlocker(){
