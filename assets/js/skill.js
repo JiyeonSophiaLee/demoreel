@@ -1,5 +1,6 @@
 const SKILL_CONTENTS = document.querySelector(`#skill .contents`);
 let halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
+let halfCircleEndSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleEndSize');
 // let circleUnit = halfCircleSize.replace(/[0-9]/g, '');
 // let circleNumb = parseFloat(halfCircleSize);
 let halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
@@ -9,7 +10,7 @@ let select = s => document.querySelector(s);
 
 const skills = {
     'Maya':{ 'name':'Maya', 'width':80, 'color': ['#92c6cc', '#106768']},
-    'Vray':{ 'name':'Vray',' width':82, 'color':['#fba547', '#8fb6e2']},
+    'Vray':{ 'name':'Vray', 'width':82, 'color':['#fba547', '#8fb6e2']},
     'Arnold':{ 'name':'Arnold', 'width':85, 'color':['#8dc9d2', '#1f6571']},
     'Zbrush':{ 'name':'Zbrush', 'width':60, 'color': ['#464646', '#242424']},
     'Houdini':{ 'name':'Houdini', 'width':15, 'color': ['#fece5f', '#f05023']},
@@ -35,6 +36,7 @@ const colorOffset = ['10%','90%']
 
 createSkillBar();
 
+// window.addEventListener('resize', skillUpdateSize);
 
 // console.log(skills[skill]['name'])
 
@@ -53,8 +55,10 @@ function createSkillBar(){
     for(skill in skills){
         let group = document.createElement('div');
         let LI = document.createElement('LI');
+        let nameContainer = document.createElement('div')
         let p = document.createElement('p');
         let img = document.createElement('img');
+        let nameSize = document.createElement('div');
         let text = document.createTextNode(skills[skill]['name']);
         let barContainer = document.createElement('div');
         let canvas = document.createElementNS(SVG_NAMESPACE_URI,'svg');
@@ -65,14 +69,20 @@ function createSkillBar(){
         let feColorMatrix = document.createElementNS(SVG_NAMESPACE_URI,'feColorMatrix');
         let g = document.createElementNS(SVG_NAMESPACE_URI,'g');
         let rect = document.createElementNS(SVG_NAMESPACE_URI,'rect');
+        let barBG = document.createElementNS(SVG_NAMESPACE_URI,'rect');
         let circle = document.createElementNS(SVG_NAMESPACE_URI,'circle');
+        let barEnd = document.createElementNS(SVG_NAMESPACE_URI,'circle');
         
 
         group.classList.add('skillGraph')
         group.id = (skills[skill]['name'].replace(/\s/g, ''));
         LI.classList.add('skillName');
+        nameContainer.classList.add('nameContainer');
+        nameSize.classList.add('nameSize');
         barContainer.classList.add('skillbarContainer');
         canvas.classList.add('skillBar');
+        rect.classList.add('bar');
+        barBG.classList.add('barBG');
 
 
 
@@ -108,16 +118,31 @@ function createSkillBar(){
         rect.setAttributeNS(null,'x',0);
         // rect.setAttributeNS(null,'y',0);
         rect.setAttributeNS(null,'y',`calc( -${halfBarHeight} + ${halfCircleSize})`);
-        rect.setAttributeNS(null,'rx',halfBarHeight);
-        rect.setAttributeNS(null,'ry',halfBarHeight);
+        // rect.setAttributeNS(null,'rx',halfBarHeight);
+        // rect.setAttributeNS(null,'ry',halfBarHeight);
         rect.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
         // rect.setAttribute('transform', `translate( 0, ${halfCircleSize})`);
+
+        barBG.style.width = '100%';
+        // barBG.style.height = '5rem';
+        barBG.setAttributeNS(null,'x',0);
+        // barBG.setAttributeNS(null,'y',0);
+        barBG.setAttributeNS(null,'y',`calc( -${halfBarHeight} * 1.5 + ${halfCircleSize})`);
+        barBG.setAttributeNS(null,'rx',halfBarHeight);
+        barBG.setAttributeNS(null,'ry',halfBarHeight);
+        // barBG.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
+        // barBG.setAttribute('transform', `translate( 0, ${halfCircleSize})`);
 
    
         circle.setAttributeNS(null,'cx',halfCircleSize);
         circle.setAttributeNS(null,'cy',halfCircleSize);
         circle.setAttributeNS(null,'r', halfCircleSize);
         circle.setAttributeNS(null,'fill', skills[skill]['color'][0]);
+
+        barEnd.setAttributeNS(null,'cx',skills[skill]['width']+'%');
+        barEnd.setAttributeNS(null,'cy',halfCircleSize);
+        barEnd.setAttributeNS(null,'r', halfCircleEndSize);
+        barEnd.setAttributeNS(null,'fill', skills[skill]['color'][1]);
 
         g.setAttribute('filter','url(#filter)');
         //--------------------------------
@@ -130,16 +155,20 @@ function createSkillBar(){
 
 
         p.appendChild(text);
-        LI.appendChild(p);
-        LI.appendChild(img);
+        nameContainer.appendChild(p);
+        nameContainer.appendChild(img);
+        nameSize.appendChild(nameContainer);
+        LI.appendChild(nameSize);
         
         filter.appendChild(feGaussianBlur);
         filter.appendChild(feColorMatrix);
         defs.appendChild(filter);
         defs.appendChild(gradient);
         canvas.appendChild(defs);
+        canvas.appendChild(barBG);
         g.appendChild(rect);
         g.appendChild(circle);
+        g.appendChild(barEnd);
         canvas.appendChild(g);
         barContainer.appendChild(canvas);
         group.appendChild(LI);
@@ -174,5 +203,11 @@ function callSkillsElseIf(elem){
 function callSkillsElse(elem){
     if(elem ===SKILL){
         SKILL_CONTENTS.style.display = 'none';
+    }
+}
+
+function skillUpdateSize(){
+    if(biggerElem == SKILL){
+        console.log('skill is working')
     }
 }
