@@ -65,7 +65,7 @@ function createSkillBar(){
 
     for(skill in skills){
         let group = document.createElement('div');
-        let LI = document.createElement('LI');
+        let skillName = document.createElement('div');
         let nameContainer = document.createElement('div')
         let p = document.createElement('p');
         let img = document.createElement('img');
@@ -89,7 +89,7 @@ function createSkillBar(){
 
         group.classList.add('skillGraph')
         group.id = skill;
-        LI.classList.add('skillName');
+        skillName.classList.add('skillName');
         nameContainer.classList.add('nameContainer');
         nameSize.classList.add('nameSize');
         barContainer.classList.add('skillbarContainer');
@@ -131,15 +131,11 @@ function createSkillBar(){
 
         
 
-        // rect.style.width = skills[skill]['width']+'%';
-        // let rectWidthX = HALF_CIRCLE_SIZE_NUMB  * 2 + HALF_BAR_HEIGHT_NUMB + UNIT;
-        // let rectWidthX = rect.parentElement.clientWidth - (remToPx(HALF_CIRCLE_SIZE_NUMB)  * 2);
-        rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
+        // rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
         rect.setAttributeNS(null,'x',HALF_CIRCLE_SIZE);
         rect.setAttributeNS(null,'y',`calc( -${HALF_BAR_HEIGHT} + ${HALF_CIRCLE_SIZE})`);
-        // rect.setAttributeNS(null,'rx',HALF_BAR_HEIGHT);
-        // rect.setAttributeNS(null,'ry',HALF_BAR_HEIGHT);
         rect.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
+
 
         barBG.style.width = '100%';
         barBG.setAttributeNS(null,'x',0);
@@ -153,13 +149,13 @@ function createSkillBar(){
         circle.setAttributeNS(null,'r', HALF_CIRCLE_SIZE);
         circle.setAttributeNS(null,'fill', skills[skill]['color'][0]);
 
-        barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
+        // barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
         barEnd.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
         barEnd.setAttributeNS(null,'r', HALF_CIRCLE_SIZE_END);
         barEnd.setAttributeNS(null,'fill', skills[skill]['color'][1]);
 
-        percent.setAttribute('x',HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT);
-        percent.setAttribute('y',HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB + UNIT);
+        // percent.setAttribute('x',HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT);
+        // percent.setAttribute('y',HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB + UNIT);
         percent.setAttribute('text-anchor','middle');
 
         
@@ -177,7 +173,7 @@ function createSkillBar(){
         nameContainer.appendChild(p);
         nameContainer.appendChild(img);
         nameSize.appendChild(nameContainer);
-        LI.appendChild(nameSize);
+        skillName.appendChild(nameSize);
         
         filter.appendChild(feGaussianBlur);
         filter.appendChild(feColorMatrix);
@@ -192,7 +188,7 @@ function createSkillBar(){
         canvas.appendChild(g);
         canvas.appendChild(percent);
         barContainer.appendChild(canvas);
-        group.appendChild(LI);
+        group.appendChild(skillName);
         group.appendChild(barContainer);
         skillGroup.appendChild(group);
       
@@ -207,22 +203,45 @@ function callSkills(elem){
             for(skill in skills){
 
                 setBarWidth();
+                
 
-                gsap.to(`#${skill} .bar`,{
-                    width: barWidth,
-                    duration: 1,
-                    ease:'power2.out'
-                })
-                gsap.to(`#${skill} .barEnd`,{
-                    cx: barCircleEnd,
-                    duration: 1,
-                    ease:'power2.out'
-                })
-                gsap.to(`#${skill} .percent`,{
-                    x: barCircleEnd - remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB),
-                    duration: 1,
-                    ease:'power2.out'
-                })
+                gsap.fromTo(
+                    `#${skill} .bar`,
+                    {
+                        width:`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`
+                    },
+                    {
+                        width: barWidth,
+                        duration: 2,
+                        ease:'power2.out'
+                    }
+                )
+                gsap.fromTo(
+                    `#${skill} .barEnd`,
+                    {
+                        cx:`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`
+                    },
+                    {
+                        cx: barCircleEnd,
+                        duration: 2,
+                        ease:'power2.out'
+                    }
+                )
+                gsap.fromTo(
+                    `#${skill} .percent`,
+                    {
+                        // attr:{transform:"matrix(1, 0, 0, 1, 100, 100)"}
+                        attr:{transform:`matrix(1,0,0,1,${remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB)},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`}
+                        // x:HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT
+                    },
+                    {
+                        // attr:{transform:"matrix(1, 0, 0, 1, 100, 100)"},
+                        attr:{transform:`matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`},
+                        // x: barCircleEnd,
+                        duration: 2,
+                        ease:'power2.out'
+                    }
+                ) 
             }
             
         }, 0);
@@ -249,8 +268,8 @@ function skillUpdateSize(){
             
             select(`#${skill} .bar`).style.width = barWidth;
             select(`#${skill} .barEnd`).style.cx = barCircleEnd;
-            select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
-            select(`#${skill} .percent`).setAttributeNS(null,'transform', 'matrix(1,0,0,1,0,0)');
+            // select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
+            select(`#${skill} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
         }
     }
 }
