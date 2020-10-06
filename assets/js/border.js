@@ -266,6 +266,8 @@ createBorderPath.prototype.expandMenuElseIf = function() {
     // biggeredElem.firstElementChild.style.width = '';
     // biggeredElem.firstElementChild.style.height = '';
     setBordersSize(biggeredElem);
+    document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.width = this.smallMenuSize + 'px';
+    document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.height = this.smallMenuSize + 'px';
 
 
 
@@ -346,13 +348,20 @@ createBorderPath.prototype.expandMenuElse = function() {
 
 
 
-
-      // this.borders.elem.firstElementChild.style.width = '';
-      // this.borders.elem.firstElementChild.style.height = '';
+    console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
       setBordersSize(this.borders.elem);
+      if(innerWidth > 1400){
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize1400)';
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize1400)';
+      }else if(innerWidth > 800){
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
+      }else{
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
+          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
+      }
 
-
-
+      console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
 
 
 
@@ -576,6 +585,10 @@ createBorderPath.prototype.animRectBorder = function() {
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
   this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
   this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
+  document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
+    neon.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
+    neon.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
+  })
 
 
   if (biggeredElem != null) {
@@ -602,16 +615,20 @@ createBorderPath.prototype.animRectBorder = function() {
   
       this.borders.path.setAttributeNS(null, 'width', this.w);
       this.borders.path.setAttributeNS(null, 'height', this.h);
+
+ 
     }
-    
+    document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
+      neon.style.width = 'inherit';
+      neon.style.height = 'inherit';
+    })
     if (biggeredElem != null) {
       this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.extraSVGspace + 'px';
       this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + this.extraSVGspace + 'px';
       this.biggeredElemPath.setAttribute('width', this.smallMenuSize);
       this.biggeredElemPath.setAttribute('height', this.smallMenuSize);
       
-      document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.width = this.smallMenuSize + 'px';
-      document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.height = this.smallMenuSize + 'px';
+
     }
     f = 0;
 
@@ -621,6 +638,7 @@ createBorderPath.prototype.animRectBorder = function() {
 
       this.createWavyAnimation(() => {
         eval(this.borders.elem.id + 'MenuController').removeEventCB();
+        eval(this.borders.elem.id + 'MenuController').callAfterAnim(this.borders.elem);
       });
 
     } else {
@@ -695,52 +713,12 @@ createBorderPath.prototype.setBordersSizeFamily = function(elem, borderSize){
 createBorderPath.prototype.smallerRestElemBordersElseIf = function(){
   document.querySelector(`#${biggerElem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
 
-    // eval('run' + biggeredElem.id.charAt(0).toUpperCase() + biggeredElem.id.slice(1) + 'Border').hoveroverOff();
-
-    // document.getElementById(`${biggeredElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
-    // document.getElementById(`${biggeredElem.id}Border`).parentElement.classList.add('menutransition');
-    // document.getElementById(`${biggeredElem.id}Border`).classList.add('menutransition');
-    // document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.display = 'none';
 
     document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
     document.querySelector(`#${biggeredElem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
 
 
-    // // document.querySelector(`#${biggeredElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
-    // // document.querySelector(`#${biggeredElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
-    
-
-    // document.querySelectorAll(`#${biggeredElem.id} .borders svg rect`).forEach((rect)=>{
-
-    //   rect.style.width = transitionValue['bordersSize'];
-    //   rect.style.height = transitionValue['bordersSize'];
-    // })
-
-
-
-    // // // document.getElementById(`${biggerElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
-    // // // document.getElementById(`${biggerElem.id}Border`).parentElement.classList.add('menutransition');
-    // // // document.getElementById(`${biggerElem.id}Border`).classList.add('menutransition');
-
-    // // // document.querySelector(`#${biggerElem.id} .borders`).style.width = transitionValue['bordersSize'];
-    // // // document.querySelector(`#${biggerElem.id} .borders`).style.height = transitionValue['bordersSize'];
-
-    // // // document.querySelector(`#${biggerElem.id} .borders svg`).style.width = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
-    // // // document.querySelector(`#${biggerElem.id} .borders svg`).style.height = `calc(${transitionValue['bordersSize']} + ${extraSVGspace}px`;
-    
-
-    // // // document.querySelectorAll(`#${biggerElem.id} .borders svg rect`).forEach((rect)=>{
-
-    // // //   rect.style.width = transitionValue['bordersSize'];
-    // // //   rect.style.height = transitionValue['bordersSize'];
-    // // // })
-
     setTimeout(() => {
-      // restElems.forEach((elem)=>{
-        // document.getElementById(`${biggeredElem}Border`).parentElement.parentElement.classList.remove('menutransition');
-        // document.getElementById(`${biggeredElem}Border`).parentElement.classList.remove('menutransition');
-        // document.getElementById(`${biggeredElem}Border`).classList.remove('menutransition');
-      // });
     }, transitionValue['duration'] * 1000);
 
 }
@@ -869,30 +847,6 @@ createBorderPath.prototype.getDataPoints = function() {
 
 
 createBorderPath.prototype.updateSize = function() {
-    
-  // if(menuExpanded){
-  //   if(innerWidth > 800){
-  //     if(this.borders.elem != biggerElem){
-  //       this.borders.elem.firstElementChild.style.width = 'var(--bordersSize)';
-  //       this.borders.elem.firstElementChild.style.height = 'var(--bordersSize)';
-  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
-  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
-  //     }
-  //   }else{
-  //     if(this.borders.elem != biggerElem){
-  //       this.borders.elem.firstElementChild.style.width = 'var(--bordersSmallSize)';
-  //       this.borders.elem.firstElementChild.style.height = 'var(--bordersSmallSize)';
-  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSmallSize)';
-  //       document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSmallSize)';
-  //     }
-  //   }
-  // }
-
-  // this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px'
-  // this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
-  // this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth;
-  // this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight;
-
 
 
   this.borders.radius = innerWidth > 800 ? 7 : 4;

@@ -1,12 +1,24 @@
 const SKILL_CONTENTS = document.querySelector(`#skill .contents`);
-let halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
-let halfCircleEndSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleEndSize');
-// let circleUnit = halfCircleSize.replace(/[0-9]/g, '');
-// let circleNumb = parseFloat(halfCircleSize);
-let halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
+const HALF_CIRCLE_SIZE = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
+const HALF_CIRCLE_SIZE_END = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
+const HALF_BAR_HEIGHT = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
+
+const UNIT = HALF_CIRCLE_SIZE.replace(/[0-9]/g, '');
+
+const HALF_CIRCLE_SIZE_NUMB = parseFloat(HALF_CIRCLE_SIZE);
+const HALF_CIRCLE_SIZE_END_NUMB = parseFloat(HALF_CIRCLE_SIZE_END);
+const HALF_BAR_HEIGHT_NUMB = parseFloat(HALF_BAR_HEIGHT);
 
 
 let select = s => document.querySelector(s);
+let selectAll = s => document.querySelectorAll(s);
+let rootFontSize = 16;
+let pxToRem = (px)=> px/rootFontSize; 
+let remToPx = (rem)=> rem * rootFontSize; 
+
+
+let barClientWidth, barWidth, barCircleEnd;
+
 
 const skills = {
     'Maya':{ 'name':'Maya', 'width':80, 'color': ['#92c6cc', '#106768']},
@@ -20,7 +32,7 @@ const skills = {
     'Mari':{ 'name': 'Mari','width':70, 'color': ['#fcc021', '#000000']},
     'Mudbox':{ 'name':'Mudbox', 'width':90, 'color': ['#ea6741', '#791217']},
     'Photoshop':{ 'name':'Photoshop', 'width':85, 'color': ['#85bff9', '#2c286f']},
-    '3DCoat':{ 'name':`3D Coat`, 'width':75, 'color': ['#41919e', '#41919e']},
+    'threeDCoat':{ 'name':`3D Coat`, 'width':75, 'color': ['#41919e', '#41919e']},
     'RezomUV':{ 'name':`Rezom UV`, 'width':60, 'color': ['#ef4000', '#b83808']},
     'AfterEffects':{ 'name':`After Effects`, 'width':60, 'color': ['#c88fff', '#312963']},
     'Nuke':{ 'name':'Nuke', 'width':70, 'color': ['#f9b41a', '#000000']},
@@ -35,8 +47,7 @@ const colorOffset = ['10%','90%']
 
 
 createSkillBar();
-
-// window.addEventListener('resize', skillUpdateSize);
+window.addEventListener('resize', skillUpdateSize);
 
 // console.log(skills[skill]['name'])
 
@@ -72,23 +83,28 @@ function createSkillBar(){
         let barBG = document.createElementNS(SVG_NAMESPACE_URI,'rect');
         let circle = document.createElementNS(SVG_NAMESPACE_URI,'circle');
         let barEnd = document.createElementNS(SVG_NAMESPACE_URI,'circle');
+        let percent = document.createElementNS(SVG_NAMESPACE_URI,'text');
+        let percentText = document.createTextNode(skills[skill]['width']+'%');
         
 
         group.classList.add('skillGraph')
-        group.id = (skills[skill]['name'].replace(/\s/g, ''));
+        group.id = skill;
         LI.classList.add('skillName');
         nameContainer.classList.add('nameContainer');
         nameSize.classList.add('nameSize');
         barContainer.classList.add('skillbarContainer');
         canvas.classList.add('skillBar');
         rect.classList.add('bar');
+        barEnd.classList.add('barEnd');
         barBG.classList.add('barBG');
+        percent.classList.add('percent');
 
 
 
         //------- set svg-----------
         // canvas.style.width = skills[skill]['width']+'%';
         // canvas.style.height = '5rem';
+        // canvas.style.marginLeft = HALF_CIRCLE_SIZE_NUMB * 2 + UNIT;
 
         skills[skill]['color'].forEach((color,i)=>{
             let stop = document.createElementNS(SVG_NAMESPACE_URI,'stop');
@@ -97,7 +113,7 @@ function createSkillBar(){
             gradient.appendChild(stop);
         });
 
-        gradient.id = (skills[skill]['name'].replace(/\s/g, '')+'Color');
+        gradient.id = (`${skill}Color`);
         gradient.setAttribute('x1','0%');
         gradient.setAttribute('x2','100%');
         gradient.setAttribute('y1','0%');
@@ -113,46 +129,49 @@ function createSkillBar(){
 
         filter.id = 'filter';
 
-        rect.style.width = skills[skill]['width']+'%';
-        // rect.style.height = '5rem';
-        rect.setAttributeNS(null,'x',0);
-        // rect.setAttributeNS(null,'y',0);
-        rect.setAttributeNS(null,'y',`calc( -${halfBarHeight} + ${halfCircleSize})`);
-        // rect.setAttributeNS(null,'rx',halfBarHeight);
-        // rect.setAttributeNS(null,'ry',halfBarHeight);
+        
+
+        // rect.style.width = skills[skill]['width']+'%';
+        // let rectWidthX = HALF_CIRCLE_SIZE_NUMB  * 2 + HALF_BAR_HEIGHT_NUMB + UNIT;
+        // let rectWidthX = rect.parentElement.clientWidth - (remToPx(HALF_CIRCLE_SIZE_NUMB)  * 2);
+        rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
+        rect.setAttributeNS(null,'x',HALF_CIRCLE_SIZE);
+        rect.setAttributeNS(null,'y',`calc( -${HALF_BAR_HEIGHT} + ${HALF_CIRCLE_SIZE})`);
+        // rect.setAttributeNS(null,'rx',HALF_BAR_HEIGHT);
+        // rect.setAttributeNS(null,'ry',HALF_BAR_HEIGHT);
         rect.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
-        // rect.setAttribute('transform', `translate( 0, ${halfCircleSize})`);
 
         barBG.style.width = '100%';
-        // barBG.style.height = '5rem';
         barBG.setAttributeNS(null,'x',0);
-        // barBG.setAttributeNS(null,'y',0);
-        barBG.setAttributeNS(null,'y',`calc( -${halfBarHeight} * 1.5 + ${halfCircleSize})`);
-        barBG.setAttributeNS(null,'rx',halfBarHeight);
-        barBG.setAttributeNS(null,'ry',halfBarHeight);
-        // barBG.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
-        // barBG.setAttribute('transform', `translate( 0, ${halfCircleSize})`);
+        barBG.setAttributeNS(null,'y',`calc( -${HALF_BAR_HEIGHT} * 1.5 + ${HALF_CIRCLE_SIZE})`);
+        barBG.setAttributeNS(null,'rx',HALF_BAR_HEIGHT);
+        barBG.setAttributeNS(null,'ry',HALF_BAR_HEIGHT);
 
    
-        circle.setAttributeNS(null,'cx',halfCircleSize);
-        circle.setAttributeNS(null,'cy',halfCircleSize);
-        circle.setAttributeNS(null,'r', halfCircleSize);
+        circle.setAttributeNS(null,'cx',HALF_CIRCLE_SIZE);
+        circle.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
+        circle.setAttributeNS(null,'r', HALF_CIRCLE_SIZE);
         circle.setAttributeNS(null,'fill', skills[skill]['color'][0]);
 
-        barEnd.setAttributeNS(null,'cx',skills[skill]['width']+'%');
-        barEnd.setAttributeNS(null,'cy',halfCircleSize);
-        barEnd.setAttributeNS(null,'r', halfCircleEndSize);
+        barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
+        barEnd.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
+        barEnd.setAttributeNS(null,'r', HALF_CIRCLE_SIZE_END);
         barEnd.setAttributeNS(null,'fill', skills[skill]['color'][1]);
 
+        percent.setAttribute('x',HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT);
+        percent.setAttribute('y',HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB + UNIT);
+        percent.setAttribute('text-anchor','middle');
+
+        
         g.setAttribute('filter','url(#filter)');
         //--------------------------------
 
 
         // bar.style.width = skills[skill]['width']+'%';
 
-        img.src = skillsPath + `${skill}` + '.png';
+        img.src = skillsPath + `${skills[skill]['name'].replace(/\s/g, '')}` + '.png';
         // bar.style.background = skills[skill]['color'];
-
+        
 
         p.appendChild(text);
         nameContainer.appendChild(p);
@@ -164,50 +183,74 @@ function createSkillBar(){
         filter.appendChild(feColorMatrix);
         defs.appendChild(filter);
         defs.appendChild(gradient);
-        canvas.appendChild(defs);
-        canvas.appendChild(barBG);
+        percent.appendChild(percentText);
         g.appendChild(rect);
         g.appendChild(circle);
         g.appendChild(barEnd);
+        canvas.appendChild(defs);
+        canvas.appendChild(barBG);
         canvas.appendChild(g);
+        canvas.appendChild(percent);
         barContainer.appendChild(canvas);
         group.appendChild(LI);
         group.appendChild(barContainer);
         skillGroup.appendChild(group);
+      
     };
 }
 
-
-function callSkillsIf(elem){
+function callSkills(elem){
     if(elem ===SKILL){
+        SKILL_CONTENTS.style.display = 'initial';
 
         setTimeout(() => {
-            SKILL_CONTENTS.style.display = 'initial';
-        }, transitionValue['duration'] * 1000);
+            for(skill in skills){
 
+                setBarWidth();
+
+                gsap.to(`#${skill} .bar`,{
+                    width: barWidth,
+                    duration: 1,
+                    ease:'power2.out'
+                })
+                gsap.to(`#${skill} .barEnd`,{
+                    cx: barCircleEnd,
+                    duration: 1,
+                    ease:'power2.out'
+                })
+                gsap.to(`#${skill} .percent`,{
+                    x: barCircleEnd - remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB),
+                    duration: 1,
+                    ease:'power2.out'
+                })
+            }
+            
+        }, 0);
     }
 }
-
-function callSkillsElseIf(elem){
-    if(elem ===SKILL){
-
-        setTimeout(() => {
-            SKILL_CONTENTS.style.display = 'initial';
-        }, transitionValue['duration'] * 1000);
-
-    }else{
+function stopSkills(){
+    // if(biggeredElem ===SKILL){
         SKILL_CONTENTS.style.display = 'none';
-    }
 }
 
-function callSkillsElse(elem){
-    if(elem ===SKILL){
-        SKILL_CONTENTS.style.display = 'none';
-    }
+
+function setBarWidth(){
+    barClientWidth = select(`#${skill} .bar`).parentElement.parentElement.clientWidth;
+    barWidth = (barClientWidth - ( remToPx(HALF_CIRCLE_SIZE_NUMB) * 2 + remToPx(HALF_CIRCLE_SIZE_END_NUMB))) * skills[skill]['width'] / 100 + remToPx(HALF_CIRCLE_SIZE_NUMB);
+    barCircleEnd = barWidth + remToPx(HALF_CIRCLE_SIZE_NUMB);
 }
+
 
 function skillUpdateSize(){
     if(biggerElem == SKILL){
-        console.log('skill is working')
+        for(skill in skills){
+            
+            setBarWidth();
+            
+            select(`#${skill} .bar`).style.width = barWidth;
+            select(`#${skill} .barEnd`).style.cx = barCircleEnd;
+            select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
+            select(`#${skill} .percent`).setAttributeNS(null,'transform', 'matrix(1,0,0,1,0,0)');
+        }
     }
 }

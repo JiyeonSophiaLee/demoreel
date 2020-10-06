@@ -1,27 +1,21 @@
 :root{
     --halfCircleSize :2rem;
-    --halfCircleEndSize :1.7rem;
+    --halfCircleSizeEnd :1.7rem;
     --halfBarHeight :0.5rem;
 }
 
 #skill .skillGroup .skillGraph {
     width: 96%;
-    /* height: 5rem; */
     height: calc(var(--halfCircleSize)*2);
     background: rgba(30,30,30, 0.8);
     padding: 0.5rem;
     box-sizing: content-box;
-    /* margin: 0.3rem 0 0.3rem 0; */
     border-radius: 0.6rem;
-    display: flex;
-    /* align-items:center; */
-    /* text-align: center; */
-    justify-content: center;
 }
 #skill .skillGroup .skillGraph .skillName{
-    width: 90%;
+    /* width: 96%; */
     /* background: rgb(30,30,30); */
-    border-radius: 2rem;
+    border-radius: 0.5rem 1rem;
     /* display: flex;
     justify-content: center;
     align-items: center; */
@@ -63,7 +57,7 @@
     align-items: center;
     /* height: 1.6rem; */
     height: 100%;
-    width: 96%;
+    width: 100%;
 }
 
 #skill .skillGroup .skillGraph .skillbarContainer .skillBar{
@@ -85,4 +79,9 @@
     height: calc(var(--halfBarHeight) * 3);
     /* width: 100%; */
     /* height: calc(var(--halfBarHeight)*2 ); */
+}
+#skill .skillGroup .skillGraph .skillbarContainer .percent{
+    font-size: 1.5rem;
+    fill: white;
+    font-family:'Text Me One', sans-serif;;
 }

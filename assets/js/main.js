@@ -25,8 +25,6 @@ let biggeredElem = null;
 
 
 
-
-
  
 
 function getTransitionValue() {
@@ -69,7 +67,7 @@ if(innerWidth <= 800){
   DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
-  threeJsBlocker();
+  // threeJsBlocker();
 
 }
 
@@ -97,7 +95,7 @@ const TITLEcallClickEvent = function(){
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),callSkillsElse(elem),deleteThreeJs(elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),stopSkills(),deleteThreeJs(elem)])
     // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
     .then(text=>utilitiExpandMenu.deleteMenuText())
     } 
@@ -142,6 +140,10 @@ menuController.prototype.removeEventCB = function(){
   this.elem.addEventListener('click', this.callClickEvent);
   this.restElemsEventListener('add', 'callClickEvent');
 }
+menuController.prototype.callAfterAnim = function(elem){
+  console.log('call');
+  callSkills(elem);
+}
 
 menuController.prototype.expandMenu = function(){
   
@@ -160,8 +162,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(), callThumbnailIf(this.elem),callSkillsIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -174,8 +176,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callSkillsElseIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkills()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -188,8 +190,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    Promise.all([bordersExpandMenu.expandMenuElse(this.allElems,this.restElems), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),callSkillsElse(this.elem),deleteThreeJs(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkills()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -402,7 +404,7 @@ menuUtilities.prototype.expandMenuElse = function(){
     document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
 
     
-    threeJsBlocker();
+    // threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -510,7 +512,7 @@ menuUtilities.prototype.updateSize = function(){
       }else{
         TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
         DEMO_VIDEO.style.width = '';
-        threeJsBlocker();
+        // threeJsBlocker();
       }
 
     }else{

@@ -289,6 +289,6 @@ function callThumbnailElse (elem){
         }
     }
 
-}
 
+}
 
