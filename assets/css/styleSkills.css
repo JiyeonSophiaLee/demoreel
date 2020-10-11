@@ -11,17 +11,18 @@
     padding: 0.5rem;
     box-sizing: content-box;
     border-radius: 0.6rem;
-}
-#skill .skillGroup .skillGraph .skillName{
-    /* width: 96%; */
-    /* background: rgb(30,30,30); */
-    border-radius: 0.5rem 1rem;
-    /* display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center; */
+}
+#skill .skillGroup .skillGraph .skillContainer{
+    height: 100%;
+    width: 95%;
+    display: flex;
+}
+#skill .skillGroup .skillGraph .skillContainer .skillName{
     position: absolute;
 }
-#skill .skillGroup .skillGraph .skillName .nameSize{
+#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize{
     height: calc(var(--halfCircleSize)*2);
     width: calc(var(--halfCircleSize)*2);
         
@@ -29,20 +30,20 @@
     justify-content: center;
     align-items: center;
 }
-#skill .skillGroup .skillGraph .skillName .nameSize .nameContainer{
+#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer{
     width: 85%;
     height: 85%;
     
-    display: flex;
+    display: flex;  
     justify-content: center;
     align-items: center;
     background: rgb(30,30,30);
     border-radius: 2rem;
 }
-#skill .skillGroup .skillGraph .skillName .nameSize .nameContainer p{
+#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer p{
     display: none;
 }
-#skill .skillGroup .skillGraph .skillName .nameSize .nameContainer img{
+#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer img{
     height: 60%;
     width: 60%;
     display: flex;
@@ -50,29 +51,40 @@
     justify-content: center;
     /* z-index: 2; */
 }
-#skill .skillGroup .skillGraph .skillbarContainer{
-    /* border-radius: 0.4rem 2rem; */
-    /* border-radius: 2rem; */
+
+
+
+#skill .skillGroup .skillGraph .skillContainer .skillShadowParent{
+    position: absolute;
+    height: calc(var(--halfCircleSize)*2);
     display: flex;
     align-items: center;
-    /* height: 1.6rem; */
-    height: 100%;
-    width: 100%;
+    z-index: -1;
 }
+#skill .skillGroup .skillGraph .skillContainer .skillShadow{
+    width: 100%;
+    height:var(--halfBarHeight);
+    border-radius: var(--halfCircleSize);
+}
+  
 
-#skill .skillGroup .skillGraph .skillbarContainer .skillBar{
+
+
+
+#skill .skillGroup .skillGraph .skillContainer .skillBar{
     width: 100%;
     height: 100%;
     /* z-index: 1; */
 }
-#skill .skillGroup .skillGraph .skillbarContainer .skillBar .bar{
+#skill .skillGroup .skillGraph .skillContainer .skillBar .bar{
     /* border-radius: inherit; */
     height: calc(var(--halfBarHeight) * 2);
 }
-#skill .skillGroup .skillGraph .skillbarContainer .skillBar circle{
+
+#skill .skillGroup .skillGraph .skillContainer .skillBar circle{
     width:3rem;
 }
-#skill .skillGroup .skillGraph .skillbarContainer .skillBar .barBG{
+#skill .skillGroup .skillGraph .skillContainer .skillBar .barBG{
     /* position: absolute; */
     fill:#000000;
     opacity: 0.6;
@@ -80,8 +92,60 @@
     /* width: 100%; */
     /* height: calc(var(--halfBarHeight)*2 ); */
 }
-#skill .skillGroup .skillGraph .skillbarContainer .percent{
+#skill .skillGroup .skillGraph .skillContainer .percent{
     font-size: 1.5rem;
     fill: white;
     font-family:'Text Me One', sans-serif;;
 }
+
+.skillExpand{
+    animation: skillExpandAni 1s toward;
+}
+
+@keyframes skillExpandAni{
+    to{
+        fill:'ivory'
+    }
+}
+
+
+
+
+
+
+
+
+.barShadowAni{
+    /* box-shadow: 0 0 20px #080,
+    0 0 40px #080,
+    0 0 60px #080,
+    0 0 80px #080,
+    0 0 100px #080,
+    0 0 120px #080,
+    0 0 140px #080,
+    0 0 160px #080,
+    0 0 180px #080,
+    0 0 200px #080; */
+    box-shadow:
+    0 0px 2.1px rgb(135, 135, 0),
+    0 0px 3.5px rgb(135, 135, 0),
+    0 0px 5.1px rgb(135, 135, 0),
+    0 0px 7.1px rgb(135, 135, 0),
+    0 0px 9.6px rgb(135, 135, 0),
+    0 0px 13.6px rgb(135, 135, 0),
+    0 0px 17.2px rgb(135, 135, 0),
+    0 0px 19.7px rgb(135, 135, 0),
+    0 0px 32.2px rgb(135, 135, 0),
+    0 0px 57.7px rgb(135, 135, 0),
+    0 0px 77px rgb(135, 135, 0);
+  
+    animation:animate 4s linear infinite;
+}
+@keyframes animate{
+    0%{
+      filter:hue-rotate(0)
+    }
+    100%{
+      filter:hue-rotate(360deg)
+    }
+  }

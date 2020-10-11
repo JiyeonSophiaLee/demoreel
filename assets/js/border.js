@@ -1019,7 +1019,6 @@ createBorderPath.prototype.createWavyAnimation = function(callback) {
 };
 
 createBorderPath.prototype.stopTl = function() {
-
   this.tl.pause(0);
 }
 

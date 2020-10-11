@@ -17,7 +17,7 @@ let pxToRem = (px)=> px/rootFontSize;
 let remToPx = (rem)=> rem * rootFontSize; 
 
 
-let barClientWidth, barWidth, barCircleEnd;
+// let MayaCallTL, VrayCallTL, ArnoldCallTL, ZbrushCallTL, HoudiniCallTL, MarvelousDesignerCallTL, SubstancePainterCallTL, SubstanceDesignerCallTL, MariCallTL, MudboxCallTL, PhotoshopCallTL, threeDCoatCallTL, RezomUVCallTL, AfterEffectsCallTL, NukeCallTL, PythonCallTL, HTMLCallTL, JavascriptCallTL, CSS3CallTL;
 
 
 const skills = {
@@ -47,12 +47,95 @@ const colorOffset = ['10%','90%']
 
 
 createSkillBar();
-window.addEventListener('resize', skillUpdateSize);
+window.addEventListener('resize', skillsUpdate);
 
-// console.log(skills[skill]['name'])
 
-// console.log(select(skills[skill]['name']))
-// console.log(document.querySelector(`#${skills[skill]['name']}`))
+
+// for(skill in skills){
+//     let target = select(`#${skill} .skillContainer`);
+
+//     target.addEventListener('mouseover',()=>{
+       
+//         gsap.to(
+//             `#${target.parentElement.id}Color stop:nth-child(1)`,
+//             {
+//                 stopColor:'#ffffff',
+//                 duration:3
+//             }
+//         )
+//         gsap.to(
+//             `#${target.parentElement.id}Color stop:nth-child(2)`,
+//             {
+//                 stopColor:'#ffffff',
+//                 duration:3
+//             }
+//         )
+//         gsap.fromTo(
+//             `#${target.parentElement.id} .bar`,
+//             {
+//                 height:`calc(${HALF_BAR_HEIGHT}*2)`
+//             },
+//             {
+//               height:`calc(${HALF_CIRCLE_SIZE_END})`,
+//                 duration: 3
+//             }
+//         )
+//         gsap.to(
+//             `#${target.parentElement.id} .barStart`,
+//             {
+//                 attr:{fill:'#ffffff'},
+//                 duration:3
+//             }
+//         )
+//         gsap.to(
+//             `#${target.parentElement.id} .barEnd`,
+//             {
+//                 attr:{fill:'#ffffff'},
+//                 duration:3
+//             }
+//         ) 
+//     })
+//     target.addEventListener('mouseout',()=>{
+//         gsap.to(
+//             `#${target.parentElement.id}Color stop:nth-child(1)`,
+//             {
+//                 stopColor:skills[target.parentElement.id]['color'][0],
+//                 duration:3
+//             }
+//         )
+//         // gsap.to(
+//         //     `#${target.parentElement.id}Color stop:nth-child(2)`,
+//         //     {
+//         //         stopColor:skills[target.parentElement.id]['color'][1],
+//         //         duration:3
+//         //     }
+//         // )
+//         gsap.fromTo(
+//             `#${target.parentElement.id} .bar`,
+//             {
+//                 height:`calc(${HALF_CIRCLE_SIZE_END})`
+//             },
+//             {
+//                 height:`calc(${HALF_BAR_HEIGHT}*2)`,
+//                 duration:3
+//             }
+//         )
+//         // gsap.to(
+//         //     `#${target.parentElement.id} .barStart`,
+//         //     {
+//         //         attr:{fill:skills[target.parentElement.id]['color'][0]},
+//         //         duration:3
+//         //     }
+//         // ) 
+//         // gsap.to(
+//         //     `#${target.parentElement.id} .barEnd`,
+//         //     {
+//         //         attr:{fill: skills[target.parentElement.id]['color'][1]},
+//         //         duration:3
+//         //     }
+//         // ) 
+//     })
+// }
 
 
 function createSkillBar(){
@@ -71,7 +154,9 @@ function createSkillBar(){
         let img = document.createElement('img');
         let nameSize = document.createElement('div');
         let text = document.createTextNode(skills[skill]['name']);
-        let barContainer = document.createElement('div');
+        let skillShadowParent = document.createElement('div');
+        let skillShadow = document.createElement('div');
+        let skillContainer = document.createElement('div');
         let canvas = document.createElementNS(SVG_NAMESPACE_URI,'svg');
         let defs = document.createElementNS(SVG_NAMESPACE_URI,'defs');
         let gradient = document.createElementNS(SVG_NAMESPACE_URI,'linearGradient');
@@ -81,20 +166,34 @@ function createSkillBar(){
         let g = document.createElementNS(SVG_NAMESPACE_URI,'g');
         let rect = document.createElementNS(SVG_NAMESPACE_URI,'rect');
         let barBG = document.createElementNS(SVG_NAMESPACE_URI,'rect');
-        let circle = document.createElementNS(SVG_NAMESPACE_URI,'circle');
+        let barStart = document.createElementNS(SVG_NAMESPACE_URI,'circle');
         let barEnd = document.createElementNS(SVG_NAMESPACE_URI,'circle');
         let percent = document.createElementNS(SVG_NAMESPACE_URI,'text');
         let percentText = document.createTextNode(skills[skill]['width']+'%');
-        
+
+
+
+        // this.skillsHoverOnHandler = this.skillsHoverOn.bind(this);
+        // this.skillsHoverOffHandler = this.skillsHoverOff.bind(this);
+        // this.skillHandlerObject = select(`#${skill} .skillContainer`);
+
+        // this.skillHandlerObject.addEventListener('mouseover',this.skillsHoverOnHandler);
+        // this.skillHandlerObject.addEventListener('mouseout',this.skillsHoverOffHandler);
+
+
+
 
         group.classList.add('skillGraph')
         group.id = skill;
         skillName.classList.add('skillName');
+        skillShadowParent.classList.add('skillShadowParent');
+        skillShadow.classList.add('skillShadow');
         nameContainer.classList.add('nameContainer');
         nameSize.classList.add('nameSize');
-        barContainer.classList.add('skillbarContainer');
+        skillContainer.classList.add('skillContainer');
         canvas.classList.add('skillBar');
         rect.classList.add('bar');
+        barStart.classList.add('barStart');
         barEnd.classList.add('barEnd');
         barBG.classList.add('barBG');
         percent.classList.add('percent');
@@ -114,6 +213,7 @@ function createSkillBar(){
         });
 
         gradient.id = (`${skill}Color`);
+        // gradient.id = (`${skills[skill]['name'].replace(/\s/g, '')}Color`);
         gradient.setAttribute('x1','0%');
         gradient.setAttribute('x2','100%');
         gradient.setAttribute('y1','0%');
@@ -131,42 +231,47 @@ function createSkillBar(){
 
         
 
-        // rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
+        // rect.setAttributeNS(null,'width',`calc(${25}rem)`);
+        rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
+        rect.setAttributeNS(null,'height',`calc(${HALF_BAR_HEIGHT}*2)`);
         rect.setAttributeNS(null,'x',HALF_CIRCLE_SIZE);
-        rect.setAttributeNS(null,'y',`calc( -${HALF_BAR_HEIGHT} + ${HALF_CIRCLE_SIZE})`);
-        rect.setAttributeNS(null,'fill', `url(#${skills[skill]['name'].replace(/\s/g, '')}Color)`);
+        rect.setAttributeNS(null,'y',`${HALF_CIRCLE_SIZE}`);
+        rect.setAttributeNS(null,'transform',`translate(0,${-remToPx(HALF_BAR_HEIGHT_NUMB)})`);
+        rect.setAttributeNS(null,'fill', `url(#${skill}Color)`);
 
 
         barBG.style.width = '100%';
         barBG.setAttributeNS(null,'x',0);
-        barBG.setAttributeNS(null,'y',`calc( -${HALF_BAR_HEIGHT} * 1.5 + ${HALF_CIRCLE_SIZE})`);
+        barBG.setAttributeNS(null,'y',`calc( ${HALF_CIRCLE_SIZE} - ${HALF_BAR_HEIGHT} * 1.5 )`);
         barBG.setAttributeNS(null,'rx',HALF_BAR_HEIGHT);
         barBG.setAttributeNS(null,'ry',HALF_BAR_HEIGHT);
 
    
-        circle.setAttributeNS(null,'cx',HALF_CIRCLE_SIZE);
-        circle.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
-        circle.setAttributeNS(null,'r', HALF_CIRCLE_SIZE);
-        circle.setAttributeNS(null,'fill', skills[skill]['color'][0]);
+        barStart.setAttributeNS(null,'cx',HALF_CIRCLE_SIZE);
+        barStart.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
+        barStart.setAttributeNS(null,'r', HALF_CIRCLE_SIZE);
+        barStart.setAttributeNS(null,'fill', skills[skill]['color'][0]);
 
-        // barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
+
+        barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
         barEnd.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
         barEnd.setAttributeNS(null,'r', HALF_CIRCLE_SIZE_END);
         barEnd.setAttributeNS(null,'fill', skills[skill]['color'][1]);
 
         // percent.setAttribute('x',HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT);
         // percent.setAttribute('y',HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB + UNIT);
+        percent.setAttribute('transform',`matrix(1,0,0,1,${remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB)},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
         percent.setAttribute('text-anchor','middle');
 
         
         g.setAttribute('filter','url(#filter)');
         //--------------------------------
-
-
+        
         // bar.style.width = skills[skill]['width']+'%';
 
         img.src = skillsPath + `${skills[skill]['name'].replace(/\s/g, '')}` + '.png';
         // bar.style.background = skills[skill]['color'];
+        skillShadowParent.style.width = skills[skill]['width'] - 10 +'%';
         
 
         p.appendChild(text);
@@ -181,95 +286,280 @@ function createSkillBar(){
         defs.appendChild(gradient);
         percent.appendChild(percentText);
         g.appendChild(rect);
-        g.appendChild(circle);
+        g.appendChild(barStart);
         g.appendChild(barEnd);
         canvas.appendChild(defs);
         canvas.appendChild(barBG);
         canvas.appendChild(g);
         canvas.appendChild(percent);
-        barContainer.appendChild(canvas);
-        group.appendChild(skillName);
-        group.appendChild(barContainer);
+        skillContainer.appendChild(skillName);
+        skillShadowParent.appendChild(skillShadow);
+        skillContainer.appendChild(skillShadowParent);
+        skillContainer.appendChild(canvas);
+        group.appendChild(skillContainer);
         skillGroup.appendChild(group);
       
     };
 }
 
+function getSkillTL(id){
+    this.id = id;
+    this.elem = select(`#${id}`);
+    this.bar = select(`#${this.id} .bar`);
+    this.barEnd = select(`#${this.id} .barEnd`);
+    this.percent = select(`#${this.id} .percent`);
+
+    this.callGraphTL = gsap.timeline({paused:true});
+    this.expandGraphTL = gsap.timeline({paused:true});
+
+
+
+    this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+    this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+
+    this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
+    this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+
+}
+
+getSkillTL.prototype.setBarWidth = function(){
+    let barClientWidth = select(`#skill .bar`).parentElement.parentElement.clientWidth;
+    this.barWidth = (barClientWidth - ( remToPx(HALF_CIRCLE_SIZE_NUMB) * 2 + remToPx(HALF_CIRCLE_SIZE_END_NUMB))) * skills[this.id]['width'] / 100 + remToPx(HALF_CIRCLE_SIZE_NUMB);
+    this.barCircleEnd = this.barWidth + remToPx(HALF_CIRCLE_SIZE_NUMB);
+    // console.log(this.id, this.barWidth, this.barCircleEnd)
+}
+
+getSkillTL.prototype.getCallGraphTL = function(){
+    this.barWidth;
+    this.barCircleEnd;
+
+    this.setBarWidth();
+    console.log(this.id, this.barWidth, this.barCircleEnd)
+
+    this.callGraphTL
+        .to(this.bar,
+            {
+                width: this.barWidth,
+                duration: 2.5,
+                ease: "power2.inOut"
+            },
+            0
+        )
+        .to(this.barEnd,
+            {
+                cx: this.barCircleEnd,
+                duration: 2.5,
+                ease: "power2.inOut"
+            },
+            0
+        )
+        .to(this.percent,
+            {
+                attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`},
+                duration: 2.5,
+                ease: "power2.inOut"   
+            },
+            0
+        )
+}
+getSkillTL.prototype.playCallGraphTL = function(){
+    this.callGraphTL.play();
+}
+getSkillTL.prototype.playExpandGraphTL = function(){
+    this.expandGraphTL.play();
+}
+
+
+getSkillTL.prototype.reverseCallGraphTL = function(){
+    this.callGraphTL.reverse();
+}
+getSkillTL.prototype.reverseExpandGraphTL = function(){
+    this.expandGraphTL.reverse();
+}
+
+
+getSkillTL.prototype.update = function(){
+    console.log('update is working')
+}
+
+getSkillTL.prototype.hoveroverOn = function(){
+    this.getExpandGraph();
+    this.playExpandGraphTL();
+
+    select(`#${this.id} .skillShadow`).classList.add('barShadowAni');
+    select(`#${this.id} .skillShadow`).style.height = (HALF_CIRCLE_SIZE_END_NUMB -0.5 )* 2 +'rem';  
+}
+
+getSkillTL.prototype.hoveroverOff = function(){
+    this.reverseExpandGraphTL();
+
+    select(`#${this.id} .skillShadow`).classList.remove('barShadowAni');
+}
+
+getSkillTL.prototype.getExpandGraph = function(){
+    
+    this.expandGraphTL
+        .to(
+            `#${this.id}Color stop:nth-child(1)`,
+            {
+                stopColor:'#ffffff',
+                duration:1
+            },
+            0
+         )
+        .to(
+            `#${this.id}Color stop:nth-child(2)`,
+            {
+                stopColor:'#ffffff',
+                duration:1
+            },
+            0
+        )
+        // .to(
+        //     `#${this.id} .bar`,
+        //     {   
+        //         y: - remToPx(HALF_CIRCLE_SIZE_END_NUMB -0.5 ),
+        //         height: (HALF_CIRCLE_SIZE_END_NUMB -0.5 )* 2 +'rem',
+        //         duration:1,
+        //         ease:"elastic.out(1, 0.3)"
+        //     },
+        //     0
+        // )
+        .to(
+            `#${this.id} .bar`,
+            {
+                scaleY:2.5,
+                duration:1,
+                transformOrigin:"center center"
+            },0
+        )
+        .to(
+            `#${this.id} .barStart`,
+            {
+                attr:{fill:'#ffffff'},
+                duration:1
+            },
+            0
+        )
+        .to(
+            `#${this.id} .barEnd`,
+            {
+                attr:{fill:'#ffffff'},
+                duration:1
+            },
+            0
+        )
+}
+
+
 function callSkills(elem){
-    if(elem ===SKILL){
+    // if(elem ===SKILL){
         SKILL_CONTENTS.style.display = 'initial';
+      
 
-        setTimeout(() => {
-            for(skill in skills){
+            MayaTL.getCallGraphTL();
+            VrayTL.getCallGraphTL();
+            ArnoldTL.getCallGraphTL();
+            ZbrushTL.getCallGraphTL();
+            HoudiniTL.getCallGraphTL();
+            MarvelousDesignerTL.getCallGraphTL();
+            SubstancePainterTL.getCallGraphTL();
+            SubstanceDesignerTL.getCallGraphTL();
+            MariTL.getCallGraphTL();
+            MudboxTL.getCallGraphTL();
+            PhotoshopTL.getCallGraphTL();
+            threeDCoatTL.getCallGraphTL();
+            RezomUVTL.getCallGraphTL();
+            AfterEffectsTL.getCallGraphTL();
+            NukeTL.getCallGraphTL();
+            PythonTL.getCallGraphTL();
+            HTMLTL.getCallGraphTL();
+            JavascriptTL.getCallGraphTL();
+            CSS3TL.getCallGraphTL();
 
-                setBarWidth();
+            MayaTL.playCallGraphTL();
+            VrayTL.playCallGraphTL();
+            ArnoldTL.playCallGraphTL();
+            ZbrushTL.playCallGraphTL();
+            HoudiniTL.playCallGraphTL();
+            MarvelousDesignerTL.playCallGraphTL();
+            SubstancePainterTL.playCallGraphTL();
+            SubstanceDesignerTL.playCallGraphTL();
+            MariTL.playCallGraphTL();
+            MudboxTL.playCallGraphTL();
+            PhotoshopTL.playCallGraphTL();
+            threeDCoatTL.playCallGraphTL();
+            RezomUVTL.playCallGraphTL();
+            AfterEffectsTL.playCallGraphTL();
+            NukeTL.playCallGraphTL();
+            PythonTL.playCallGraphTL();
+            HTMLTL.playCallGraphTL();
+            JavascriptTL.playCallGraphTL();
+            CSS3TL.playCallGraphTL();
                 
-
-                gsap.fromTo(
-                    `#${skill} .bar`,
-                    {
-                        width:`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`
-                    },
-                    {
-                        width: barWidth,
-                        duration: 2,
-                        ease:'power2.out'
-                    }
-                )
-                gsap.fromTo(
-                    `#${skill} .barEnd`,
-                    {
-                        cx:`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`
-                    },
-                    {
-                        cx: barCircleEnd,
-                        duration: 2,
-                        ease:'power2.out'
-                    }
-                )
-                gsap.fromTo(
-                    `#${skill} .percent`,
-                    {
-                        // attr:{transform:"matrix(1, 0, 0, 1, 100, 100)"}
-                        attr:{transform:`matrix(1,0,0,1,${remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB)},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`}
-                        // x:HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT
-                    },
-                    {
-                        // attr:{transform:"matrix(1, 0, 0, 1, 100, 100)"},
-                        attr:{transform:`matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`},
-                        // x: barCircleEnd,
-                        duration: 2,
-                        ease:'power2.out'
-                    }
-                ) 
-            }
-            
-        }, 0);
-    }
 }
+
+
 function stopSkills(){
-    // if(biggeredElem ===SKILL){
-        SKILL_CONTENTS.style.display = 'none';
+    SKILL_CONTENTS.style.display = 'none';
+    
+    MayaTL.reverseCallGraphTL();
+    MayaTL.reverseCallGraphTL();
+    VrayTL.reverseCallGraphTL();
+    ArnoldTL.reverseCallGraphTL();
+    ZbrushTL.reverseCallGraphTL();
+    HoudiniTL.reverseCallGraphTL();
+    MarvelousDesignerTL.reverseCallGraphTL();
+    SubstancePainterTL.reverseCallGraphTL();
+    SubstanceDesignerTL.reverseCallGraphTL();
+    MudboxTL.reverseCallGraphTL();
+    PhotoshopTL.reverseCallGraphTL();
+    threeDCoatTL.reverseCallGraphTL();
+    RezomUVTL.reverseCallGraphTL();
+    AfterEffectsTL.reverseCallGraphTL();
+    NukeTL.reverseCallGraphTL();
+    PythonTL.reverseCallGraphTL();
+    HTMLTL.reverseCallGraphTL();
+    JavascriptTL.reverseCallGraphTL();
+    CSS3TL.reverseCallGraphTL();
+
 }
 
 
-function setBarWidth(){
-    barClientWidth = select(`#${skill} .bar`).parentElement.parentElement.clientWidth;
-    barWidth = (barClientWidth - ( remToPx(HALF_CIRCLE_SIZE_NUMB) * 2 + remToPx(HALF_CIRCLE_SIZE_END_NUMB))) * skills[skill]['width'] / 100 + remToPx(HALF_CIRCLE_SIZE_NUMB);
-    barCircleEnd = barWidth + remToPx(HALF_CIRCLE_SIZE_NUMB);
-}
 
 
-function skillUpdateSize(){
+function skillsUpdate(){
     if(biggerElem == SKILL){
         for(skill in skills){
             
-            setBarWidth();
+            // setBarWidth();
             
-            select(`#${skill} .bar`).style.width = barWidth;
-            select(`#${skill} .barEnd`).style.cx = barCircleEnd;
-            // select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
-            select(`#${skill} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
+            // select(`#${skill} .bar`).style.width = barWidth;
+            // select(`#${skill} .barEnd`).style.cx = barCircleEnd;
+            // // select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
+            // select(`#${skill} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
         }
     }
 }
+
+
+
+let MayaTL = new getSkillTL('Maya');
+let VrayTL = new getSkillTL('Vray');
+let ArnoldTL = new getSkillTL('Arnold');
+let ZbrushTL = new getSkillTL('Zbrush');
+let HoudiniTL = new getSkillTL('Houdini');
+let MarvelousDesignerTL = new getSkillTL('MarvelousDesigner');
+let SubstancePainterTL = new getSkillTL('SubstancePainter');
+let SubstanceDesignerTL = new getSkillTL('SubstanceDesigner');
+let MariTL = new getSkillTL('Mari')
+let MudboxTL = new getSkillTL('Mudbox');
+let PhotoshopTL = new getSkillTL('Photoshop');
+let threeDCoatTL = new getSkillTL('threeDCoat');
+let RezomUVTL = new getSkillTL('RezomUV');
+let AfterEffectsTL = new getSkillTL('AfterEffects');
+let NukeTL = new getSkillTL('Nuke');
+let PythonTL = new getSkillTL('Python');
+let HTMLTL = new getSkillTL('HTML');
+let JavascriptTL = new getSkillTL('Javascript');
+let CSS3TL = new getSkillTL('CSS3');
