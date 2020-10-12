@@ -19,10 +19,12 @@
     width: 95%;
     display: flex;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillName{
+#skill .skillGroup .skillGraph .skillContainer .skillImage{
     position: absolute;
+    /* display: flex;
+    align-items: center; */
 }
-#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize{
+#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize{
     height: calc(var(--halfCircleSize)*2);
     width: calc(var(--halfCircleSize)*2);
         
@@ -30,7 +32,7 @@
     justify-content: center;
     align-items: center;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer{
+#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer{
     width: 85%;
     height: 85%;
     
@@ -40,10 +42,10 @@
     background: rgb(30,30,30);
     border-radius: 2rem;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer p{
+#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer p{
     display: none;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillName .nameSize .nameContainer img{
+#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer img{
     height: 60%;
     width: 60%;
     display: flex;
@@ -54,17 +56,21 @@
 
 
 
+
+
 #skill .skillGroup .skillGraph .skillContainer .skillShadowParent{
     position: absolute;
     height: calc(var(--halfCircleSize)*2);
+    width: inherit;
     display: flex;
     align-items: center;
     z-index: -1;
 }
 #skill .skillGroup .skillGraph .skillContainer .skillShadow{
-    width: 100%;
-    height:var(--halfBarHeight);
+    position: relative;
+    height:calc(var(--halfBarHeight) * 2);
     border-radius: var(--halfCircleSize);
+    left:var(--halfBarHeight);
 }
   
 
@@ -98,15 +104,36 @@
     font-family:'Text Me One', sans-serif;;
 }
 
-.skillExpand{
-    animation: skillExpandAni 1s toward;
+
+
+#skill .skillGroup .skillGraph .skillContainer .skillInfo{
+    position: absolute;
+    height: calc(var(--halfCircleSize)*2);
+    font-size: 1.4rem;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+#skill .skillGroup .skillGraph .skillContainer .skillInfo > div{
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: calc(var(--halfCircleSize)*2);
+}
+#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoNameContainer{
+    display: flex;
+}
+#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoNameContainer div:first-child{
+    position: relative;
+    opacity: 0;
+}
+#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoNameContainer div:last-child{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(0);
 }
 
-@keyframes skillExpandAni{
-    to{
-        fill:'ivory'
-    }
-}
 
 
 
@@ -116,28 +143,18 @@
 
 
 .barShadowAni{
-    /* box-shadow: 0 0 20px #080,
-    0 0 40px #080,
-    0 0 60px #080,
-    0 0 80px #080,
-    0 0 100px #080,
-    0 0 120px #080,
-    0 0 140px #080,
-    0 0 160px #080,
-    0 0 180px #080,
-    0 0 200px #080; */
     box-shadow:
-    0 0px 2.1px rgb(135, 135, 0),
-    0 0px 3.5px rgb(135, 135, 0),
-    0 0px 5.1px rgb(135, 135, 0),
-    0 0px 7.1px rgb(135, 135, 0),
-    0 0px 9.6px rgb(135, 135, 0),
-    0 0px 13.6px rgb(135, 135, 0),
-    0 0px 17.2px rgb(135, 135, 0),
-    0 0px 19.7px rgb(135, 135, 0),
-    0 0px 32.2px rgb(135, 135, 0),
-    0 0px 57.7px rgb(135, 135, 0),
-    0 0px 77px rgb(135, 135, 0);
+    0 0px 2.1px rgb(225, 225, 0),
+    0 0px 3.5px rgb(225, 225, 0),
+    5px 0px 5.1px rgb(225, 225, 0),
+    -5px 0px 7.1px rgb(225, 225, 0),
+    10px 0px 9.6px rgb(225, 225, 0),
+    -10px 0px 13.6px rgb(225, 225, 0),
+    15px 0px 17.2px rgb(225, 225, 0),
+    -15px 0px 19.7px rgb(225, 225, 0),
+    20px 0px 32.2px rgb(225, 225, 0),
+    -20px 0px 57.7px rgb(225, 225, 0),
+    0 0px 77px rgb(225, 225, 0);
   
     animation:animate 4s linear infinite;
 }
