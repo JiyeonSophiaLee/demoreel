@@ -52,9 +52,18 @@ body{
 
 
 /*   Fonts   */
-div{
+#bottom div{
   font-family: 'Text Me One', sans-serif;
 }
+#skill div{
+  font-family: 'Quicksand', sans-serif;
+}
+/* #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoName   {
+  font-family: 'Staatliches', cursive;
+}
+#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoDate   {
+  font-family: 'Quicksand', sans-serif;
+} */
 
 /* loader */
 
