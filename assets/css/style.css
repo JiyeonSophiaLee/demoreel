@@ -58,14 +58,7 @@ body{
 #skill div{
   font-family: 'Quicksand', sans-serif;
 }
-/* #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoName   {
-  font-family: 'Staatliches', cursive;
-}
-#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoDate   {
-  font-family: 'Quicksand', sans-serif;
-} */
 
-/* loader */
 
 #loaderContainer{
   position: absolute;
@@ -379,7 +372,7 @@ body{
           padding: 10px;
         }
       }
-      @media (max-width:1400px){
+      @media (min-width:1400px){
         #bottom #bottomMenu{
           padding: 30px;
         }

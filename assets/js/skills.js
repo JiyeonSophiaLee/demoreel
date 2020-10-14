@@ -21,25 +21,25 @@ let remToPx = (rem)=> rem * rootFontSize;
 
 
 const skills = {
-    'Maya':{ 'name':'Maya', 'width':80, 'color': ['#92c6cc', '#106768'], 'date': 'Started from : 2007'},
-    'Vray':{ 'name':'Vray', 'width':82, 'color':['#fba547', '#8fb6e2'], 'date': 'Started from : 2014'},
-    'Arnold':{ 'name':'Arnold', 'width':85, 'color':['#8dc9d2', '#1f6571'], 'date': 'Started from : 2017'},
-    'Zbrush':{ 'name':'Zbrush', 'width':60, 'color': ['#464646', '#242424'], 'date': 'Started from : 2015'},
-    'Houdini':{ 'name':'Houdini', 'width':15, 'color': ['#fece5f', '#f05023'], 'date': 'Started from : 2018'},
-    'MarvelousDesigner':{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'Started from : 2014'},
-    'SubstancePainter':{ 'name':`Substance Painter`, 'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'Started from : 2015'},
-    'SubstanceDesigner':{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'Started from : 2016'},
-    'Mari':{ 'name': 'Mari','width':70, 'color': ['#fcc021', '#000000'], 'date': 'Started from : 2011'},
-    'Mudbox':{ 'name':'Mudbox', 'width':90, 'color': ['#ea6741', '#791217'], 'date': 'Started from : 2010'},
-    'Photoshop':{ 'name':'Photoshop', 'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'Started from : 2007'},
-    'threeDCoat':{ 'name':`3D Coat`, 'width':75, 'color': ['#41919e', '#41919e'], 'date': 'Started from : 2016'},
-    'RezomUV':{ 'name':`Rezom UV`, 'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'Started from : 2014'},
-    'AfterEffects':{ 'name':`After Effects`, 'width':60, 'color': ['#c88fff', '#312963'], 'date': 'Started from : 2018'},
-    'Nuke':{ 'name':'Nuke', 'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'Started from : 2011'},
-    'Python':{ 'name':'Python', 'width':30, 'color': ['#3774a8',' #ffd647'], 'date': 'Started from : 2019'},
-    'HTML':{ 'name':'HTML', 'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'Started from : 2019'},
-    'Javascript':{ 'name':'Javascript', 'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'Started from : 2019'},
-    'CSS3':{ 'name':'CSS3', 'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'Started from : 2019'}
+    'Maya':{ 'name':'Maya', 'width':80, 'color': ['#92c6cc', '#106768'], 'date': 'from 2007'},
+    'Vray':{ 'name':'Vray', 'width':82, 'color':['#fba547', '#8fb6e2'], 'date': 'from 2014'},
+    'Arnold':{ 'name':'Arnold', 'width':85, 'color':['#8dc9d2', '#1f6571'], 'date': 'from 2017'},
+    'Zbrush':{ 'name':'Zbrush', 'width':60, 'color': ['#464646', '#242424'], 'date': 'from 2015'},
+    'Houdini':{ 'name':'Houdini', 'width':15, 'color': ['#fece5f', '#f05023'], 'date': 'from 2018'},
+    'MarvelousDesigner':{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
+    'SubstancePainter':{ 'name':`Substance Painter`, 'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
+    'SubstanceDesigner':{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
+    'Mari':{ 'name': 'Mari','width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
+    'Mudbox':{ 'name':'Mudbox', 'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
+    'Photoshop':{ 'name':'Photoshop', 'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
+    'threeDCoat':{ 'name':`3D Coat`, 'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
+    'RezomUV':{ 'name':`Rezom UV`, 'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'from 2014'},
+    'AfterEffects':{ 'name':`After Effects`, 'width':60, 'color': ['#c88fff', '#312963'], 'date': 'from 2018'},
+    'Nuke':{ 'name':'Nuke', 'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'from 2011'},
+    'Python':{ 'name':'Python', 'width':30, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'},
+    'HTML':{ 'name':'HTML', 'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'from 2019'},
+    'Javascript':{ 'name':'Javascript', 'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+    'CSS3':{ 'name':'CSS3', 'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
 }
 const skillsPath = 'assets/images/icons/';
 const colorOffset = ['10%','90%'];
@@ -56,12 +56,15 @@ window.addEventListener('resize', skillsUpdate);
 
 function createSkillBar(){
     let skillGroup = document.createElement('li');
+    // let gridLine = document.createElement('div');
     let n = 4;
 
 
 
     skillGroup.classList.add('skillGroup');
+    // gridLine.classList.add('gridLine');
     SKILL_CONTENTS.appendChild(skillGroup);
+    // SKILL_CONTENTS.appendChild(gridLine);
     SKILL_CONTENTS.style.display = 'none';
 
 
@@ -163,7 +166,6 @@ function createSkillBar(){
         });
 
         gradient.id = (`${skill}Color`);
-        // gradient.id = (`${skills[skill]['name'].replace(/\s/g, '')}Color`);
         gradient.setAttribute('x1','0%');
         gradient.setAttribute('x2','100%');
         gradient.setAttribute('y1','0%');
@@ -181,7 +183,6 @@ function createSkillBar(){
 
         
 
-        // rect.setAttributeNS(null,'width',`calc(${25}rem)`);
         rect.setAttributeNS(null,'width',`calc(${HALF_CIRCLE_SIZE} + ${HALF_CIRCLE_SIZE_END})`);
         rect.setAttributeNS(null,'height',`calc(${HALF_BAR_HEIGHT}*2)`);
         rect.setAttributeNS(null,'x',HALF_CIRCLE_SIZE);
@@ -200,20 +201,14 @@ function createSkillBar(){
         barStart.setAttributeNS(null,'cx',HALF_CIRCLE_SIZE);
         barStart.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
         barStart.setAttributeNS(null,'r', HALF_CIRCLE_SIZE);
-        // barStart.setAttributeNS(null,'fill', skills[skill]['color'][0]);
-        // barStart.setAttributeNS(null,'fill', pickRadomColor[0]);
         barStart.setAttributeNS(null,'fill', RANDOM_COLOR[n%10]);
 
 
         barEnd.setAttributeNS(null,'cx',`calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END})`);
         barEnd.setAttributeNS(null,'cy',HALF_CIRCLE_SIZE);
         barEnd.setAttributeNS(null,'r', HALF_CIRCLE_SIZE_END);
-        // barEnd.setAttributeNS(null,'fill', skills[skill]['color'][1]);
-        // barEnd.setAttributeNS(null,'fill', pickRadomColor[1]);
         barEnd.setAttributeNS(null,'fill', RANDOM_COLOR[(n + 1) %10]);
 
-        // percent.setAttribute('x',HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB + UNIT);
-        // percent.setAttribute('y',HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB + UNIT);
         percent.setAttribute('transform',`matrix(1,0,0,1,${remToPx(HALF_CIRCLE_SIZE_NUMB*2 + HALF_CIRCLE_SIZE_END_NUMB)},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
         percent.setAttribute('text-anchor','middle');
 
@@ -221,10 +216,8 @@ function createSkillBar(){
         g.setAttribute('filter','url(#filter)');
         //--------------------------------
         
-        // bar.style.width = skills[skill]['width']+'%';
 
         img.src = skillsPath + `${skills[skill]['name'].replace(/\s/g, '')}` + '.png';
-        // bar.style.background = skills[skill]['color'];
         skillShadow.style.width = `calc(${HALF_CIRCLE_SIZE} * 2 + ${HALF_CIRCLE_SIZE_END} * 2 - ${HALF_BAR_HEIGHT} * 2)`;
         skillinfoNameBG.style.background = RANDOM_COLOR[n%10];
         skillinfoDateBG.style.background = RANDOM_COLOR[(n+1)%10];
@@ -309,6 +302,7 @@ getSkillTL.prototype.setBarWidth = function(){
     let barClientWidth = select(`#skill .bar`).parentElement.parentElement.clientWidth;
     this.barWidth = (barClientWidth - ( remToPx(HALF_CIRCLE_SIZE_NUMB) * 2 + remToPx(HALF_CIRCLE_SIZE_END_NUMB))) * skills[this.id]['width'] / 100 + remToPx(HALF_CIRCLE_SIZE_NUMB);
     this.barCircleEnd = this.barWidth + remToPx(HALF_CIRCLE_SIZE_NUMB);
+    
     // console.log(this.id, this.barWidth, this.barCircleEnd)
 }
 
@@ -389,9 +383,10 @@ getSkillTL.prototype.hoveroverOff = function(){
 
 getSkillTL.prototype.getExpandGraph = function(){
     this.idParentWidth = select(`#${this.id}`).firstElementChild.clientWidth - remToPx(HALF_CIRCLE_SIZE_END_NUMB);
-    this.skillNameWidth = select(`#${this.id} .skillContainer .skillInfo .skillInfoNameContainer`).clientWidth;
+    // this.skillNameWidth = select(`#${this.id} .skillContainer .skillInfo .skillInfoNameContainer`).clientWidth;
 
     this.setBarWidth();
+
 
     
     this.expandGraphTL
@@ -496,6 +491,21 @@ getSkillTL.prototype.getExpandGraph = function(){
         )
 
 
+        
+        .fromTo(
+            `#${this.id} .percent`,
+            {
+                attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`},
+            },
+            {
+                attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`},
+                duration:1,
+                ease: "bounce.out"
+            },
+            0
+        )
+
+        
 
 
         .to(
@@ -505,6 +515,18 @@ getSkillTL.prototype.getExpandGraph = function(){
                 duration:1,
                 transformOrigin:"center center",
                 ease: "elastic.out(1, 0.3)"
+            },
+            0
+        )
+        .fromTo(
+            `#${this.id} .skillShadow`,
+            {
+                width: this.barCircleEnd
+            },
+            {
+                width: this.idParentWidth,
+                duration:1,
+                ease: "bounce.out"
             },
             0
         )
@@ -543,92 +565,36 @@ getSkillTL.prototype.getExpandGraph = function(){
 
 
 
-        // .to(
-        //     `#${this.id} .skillinfoDateBG`,
-        //     {
-        //         scaleY:1,
-        //         duration:0.3,
-        //         ease:"power2.inOut"
-        //     },
-        //     0.5
-        // )
-        // .to(
-        //     `#${this.id} .skillinfoDateBG`,
-        //     {
-        //         scaleY:0,
-        //         duration:0.3,
-        //         ease:"power2.inOut"
-        //     },
-        //     0.8
-        // )
-
-
-
-        // .to(
-        //     `#${this.id} .skillInfoDate`,
-        //     {
-        //         opacity:1,
-        //         duration:0.1
-        //     },
-        //     0.8
-        // )
-
         
 }
+getSkillTL.prototype.skillUpdate = function(){
+    this.setBarWidth();
 
+
+    select(`#${this.id} .bar`).style.width = this.barWidth;
+    select(`#${this.id} .barEnd`).style.cx = this.barCircleEnd;
+    // select(`#${this.id} .percent`).setAttributeNS(null,'x', this.barCircleEnd);
+    select(`#${this.id} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
+       
+    
+}
 
 function callSkills(elem){
     // if(elem ===SKILL){
         SKILL_CONTENTS.style.display = 'initial';
       
-
-            MayaTL.getCallGraphTL();
-            VrayTL.getCallGraphTL();
-            ArnoldTL.getCallGraphTL();
-            ZbrushTL.getCallGraphTL();
-            HoudiniTL.getCallGraphTL();
-            MarvelousDesignerTL.getCallGraphTL();
-            SubstancePainterTL.getCallGraphTL();
-            SubstanceDesignerTL.getCallGraphTL();
-            MariTL.getCallGraphTL();
-            MudboxTL.getCallGraphTL();
-            PhotoshopTL.getCallGraphTL();
-            threeDCoatTL.getCallGraphTL();
-            RezomUVTL.getCallGraphTL();
-            AfterEffectsTL.getCallGraphTL();
-            NukeTL.getCallGraphTL();
-            PythonTL.getCallGraphTL();
-            HTMLTL.getCallGraphTL();
-            JavascriptTL.getCallGraphTL();
-            CSS3TL.getCallGraphTL();
-
-            MayaTL.playCallGraphTL();
-            VrayTL.playCallGraphTL();
-            ArnoldTL.playCallGraphTL();
-            ZbrushTL.playCallGraphTL();
-            HoudiniTL.playCallGraphTL();
-            MarvelousDesignerTL.playCallGraphTL();
-            SubstancePainterTL.playCallGraphTL();
-            SubstanceDesignerTL.playCallGraphTL();
-            MariTL.playCallGraphTL();
-            MudboxTL.playCallGraphTL();
-            PhotoshopTL.playCallGraphTL();
-            threeDCoatTL.playCallGraphTL();
-            RezomUVTL.playCallGraphTL();
-            AfterEffectsTL.playCallGraphTL();
-            NukeTL.playCallGraphTL();
-            PythonTL.playCallGraphTL();
-            HTMLTL.playCallGraphTL();
-            JavascriptTL.playCallGraphTL();
-            CSS3TL.playCallGraphTL();
-                
+        TLarray.forEach((tl)=>{
+            tl.getCallGraphTL();
+            tl.playCallGraphTL();
+        })
+          
 }
 
 
 function stopSkills(){
     SKILL_CONTENTS.style.display = 'none';
     
-    MayaTL.reverseCallGraphTL();
+    // MayaTL.reverseCallGraphTL();
     MayaTL.reverseCallGraphTL();
     VrayTL.reverseCallGraphTL();
     ArnoldTL.reverseCallGraphTL();
@@ -655,15 +621,40 @@ function stopSkills(){
 
 function skillsUpdate(){
     if(biggerElem == SKILL){
-        for(skill in skills){
+        // setBarWidth
+        TLarray.forEach((tl)=>{
+            tl.skillUpdate();
+
+            // select(`#${this.id} .bar`).style.width = this.barWidth;
+        })
+        // MayaTL.setBarWidth();
+        // VrayTL.setBarWidth();
+        // ArnoldTL.setBarWidth();
+        // ZbrushTL.setBarWidth();
+        // HoudiniTL.setBarWidth();
+        // MarvelousDesignerTL.setBarWidth();
+        // SubstancePainterTL.setBarWidth();
+        // SubstanceDesignerTL.setBarWidth();
+        // MudboxTL.setBarWidth();
+        // PhotoshopTL.setBarWidth();
+        // threeDCoatTL.setBarWidth();
+        // RezomUVTL.setBarWidth();
+        // AfterEffectsTL.setBarWidth();
+        // NukeTL.setBarWidth();
+        // PythonTL.setBarWidth();
+        // HTMLTL.setBarWidth();
+        // JavascriptTL.setBarWidth();
+        // CSS3TL.setBarWidth();
+
+    //     for(skill in skills){
+    //         console.log('working?')
+    //         setBarWidth();
             
-            // setBarWidth();
-            
-            // select(`#${skill} .bar`).style.width = barWidth;
-            // select(`#${skill} .barEnd`).style.cx = barCircleEnd;
-            // // select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
-            // select(`#${skill} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
-        }
+    //         select(`#${skill} .bar`).style.width = barWidth;
+    //         select(`#${skill} .barEnd`).style.cx = barCircleEnd;
+    //         select(`#${skill} .percent`).setAttributeNS(null,'x', barCircleEnd);
+    //         select(`#${skill} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${barCircleEnd},${remToPx(HALF_CIRCLE_SIZE_NUMB + HALF_BAR_HEIGHT_NUMB )})`);
+    //     }
     }
 }
 
@@ -688,3 +679,6 @@ let PythonTL = new getSkillTL('Python');
 let HTMLTL = new getSkillTL('HTML');
 let JavascriptTL = new getSkillTL('Javascript');
 let CSS3TL = new getSkillTL('CSS3');
+
+let TLarray = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,CSS3TL]
+console.log(TLarray[0])
