@@ -228,8 +228,8 @@ function createSkillBar(){
         rect.setAttributeNS(null,'width',`calc(${halfCircleSize} + ${halfCircleSizeEnd})`);
         rect.setAttributeNS(null,'height',`calc(${halfBarHeight}*2)`);
         rect.setAttributeNS(null,'x',halfCircleSize);
-        rect.setAttributeNS(null,'y',halfCircleSize);
-        rect.setAttributeNS(null,'transform',`translate(0,${-remToPx(halfBarHeightNumb)})`);
+        rect.setAttributeNS(null,'y',remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+        // rect.setAttributeNS(null,'transform',`translate(0,${-remToPx(halfBarHeightNumb)})`);
         rect.setAttributeNS(null,'fill', `url(#${skill}Color)`);
 
 
@@ -356,6 +356,7 @@ getSkillTL.prototype.setBarWidth = function(){
     let barClientWidth = select(`#skill .bar`).parentElement.parentElement.clientWidth;
     this.barWidth = (barClientWidth - ( remToPx(halfCircleSizeNumb) * 2 + remToPx(halfCircleSizeEndNumb))) * skills[this.id]['width'] / 100 + remToPx(halfCircleSizeNumb);
     this.barCircleEnd = this.barWidth + remToPx(halfCircleSizeNumb);
+    this.idParentWidth = select(`#${this.id}`).firstElementChild.clientWidth - remToPx(halfCircleSizeEndNumb);
     
     // console.log(this.id, this.barWidth, this.barCircleEnd)
 }
@@ -413,6 +414,9 @@ getSkillTL.prototype.getCallGraphTL = function(){
 getSkillTL.prototype.playCallGraphTL = function(){
     this.callGraphTL.play();
 }
+getSkillTL.prototype.playCallGraphTL800 = function(){
+    this.callGraphTL800.play();
+}
 getSkillTL.prototype.playExpandGraphTL = function(){
     this.expandGraphTL.play();
 }
@@ -420,6 +424,9 @@ getSkillTL.prototype.playExpandGraphTL = function(){
 
 getSkillTL.prototype.reverseCallGraphTL = function(){
     this.callGraphTL.reverse();
+}
+getSkillTL.prototype.reverseCallGraphTL800 = function(){
+    this.callGraphTL800.reverse();
 }
 getSkillTL.prototype.reverseExpandGraphTL = function(){
     this.expandGraphTL.reverse();
@@ -446,7 +453,6 @@ getSkillTL.prototype.hoveroverOff = function(){
 }
 
 getSkillTL.prototype.getExpandGraph = function(){
-    this.idParentWidth = select(`#${this.id}`).firstElementChild.clientWidth - remToPx(halfCircleSizeEndNumb);
 
 
     this.setBarWidth();
@@ -656,40 +662,18 @@ getSkillTL.prototype.getExpandGraph = function(){
         )
 }
 
-getSkillTL.prototype.getExpandGraph800 = function(){
-    this.idParentWidth = select(`#${this.id}`).firstElementChild.clientWidth - remToPx(halfCircleSizeEndNumb);
+getSkillTL.prototype.getCallGraphTL800 = function(){
+
 
 
     this.setBarWidth();
 
-    this.expandGraphTL
-        this.expandGraphTL
-        .to(
-            `#${this.id}Color stop:nth-child(1)`,
-            {
-                stopColor:'#ffffff',
-                duration:1
-            },
-            0
-        )
-        .to(
-            `#${this.id}Color stop:nth-child(2)`,
-            {
-                stopColor:'#ffffff',
-                duration:1
-            },
-            0
-        )
-        
-
-
-
-
+    this.callGraphTL800
         .to(
             `#${this.id} .bar`,
             {   
-                scaleY:2.3,
-                height: remToPx(halfCircleSizeNumb),
+                attr: {y:remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb)},
+                height: remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2),
                 duration:1,
                 transformOrigin:"center center",
                 ease: "bounce.out"
@@ -711,14 +695,7 @@ getSkillTL.prototype.getExpandGraph800 = function(){
 
 
 
-        .to(
-            `#${this.id} .barStart`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
+
         .to(
             `#${this.id} .barStart`,
             {
@@ -752,14 +729,6 @@ getSkillTL.prototype.getExpandGraph800 = function(){
         .to(
             `#${this.id} .barStart1`,
             {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
-        .to(
-            `#${this.id} .barStart1`,
-            {
                 cy: remToPx(halfCircleSizeNumb*2),
                 duration:1,
                 ease: "bounce.out"
@@ -771,14 +740,6 @@ getSkillTL.prototype.getExpandGraph800 = function(){
 
 
 
-        .to(
-            `#${this.id} .barEnd`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
         .fromTo(
             `#${this.id} .barEnd`,
             {
@@ -794,14 +755,7 @@ getSkillTL.prototype.getExpandGraph800 = function(){
 
 
 
-        .to(
-            `#${this.id} .barEnd1`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
+
         .fromTo(
             `#${this.id} .barEnd1`,
             {
@@ -823,40 +777,30 @@ getSkillTL.prototype.getExpandGraph800 = function(){
         .fromTo(
             `#${this.id} .percent`,
             {
-                attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
+                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb)})`},
             },
             {
-                attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
+                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb *2.3)})`},
                 duration:1,
                 ease: "bounce.out"
             },
             0
         )
+        // .fromTo(
+        //     `#${this.id} .percent`,
+        //     {
+        //         attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
+        //     },
+        //     {
+        //         attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
+        //         duration:1,
+        //         ease: "bounce.out"
+        //     },
+        //     0
+        // )
 
-        
 
 
-        .to(
-            `#${this.id} .skillShadow`,
-            {
-                scaleY:2,
-                duration:1,
-                transformOrigin:"center center"
-            },
-            0
-        )
-        .fromTo(
-            `#${this.id} .skillShadow`,
-            {
-                width: this.barCircleEnd
-            },
-            {
-                width: this.idParentWidth,
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
 
 
         .to(
@@ -900,88 +844,225 @@ getSkillTL.prototype.getExpandGraph800 = function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------
+// .fromTo(
+//     `#${this.id} .percent`,
+//     {
+//         attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
+//     },
+//     {
+//         attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
+//         duration:1,
+//         ease: "bounce.out"
+//     },
+//     0
+// )
+
+
+
+
+
+// .to(
+//     `#${this.id} .skillInfoBG`,
+//     {
+//         scaleY:1,
+//         duration:0.3,
+//         ease:"power2.inOut"
+//     },
+//     0
+// )
+// .to(
+//     `#${this.id} .skillInfoBG`,
+//     {
+//         scaleY:0,
+//         duration:0.3,
+//         ease:"power2.inOut"
+//     },
+//     0.3
+// )
+
+// .to(
+//     `#${this.id} .skillInfoText`,
+//     {
+//         opacity:1,
+//         duration:0.1,
+//         stagger: 0.3,
+//     },
+//     0.3
+// )
         
 
 getSkillTL.prototype.skillUpdate = function(){
+    setUnitSize()
     this.setBarWidth();
-    // this.getExpandGraph();
 
 
-    select(`#${this.id} .bar`).style.width = this.barWidth;
-    select(`#${this.id} .barEnd`).style.cx = this.barCircleEnd;
-    select(`#${this.id} .barEnd1`).style.cx = this.barCircleEnd;
-    select(`#${this.id} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`);
-    
+    if(innerWidth > 800){
+        select(`#${this.id}`).style.height =  '';
+    }else{
+        // console.log('else',select(`#${this.id}`),remToPx(halfCircleSizeNumb*3))
+        select(`#${this.id}`).style.height =  remToPx(halfCircleSizeNumb*3) +'px';
+    }
+
+
+
+
 
     select(`#${this.id} .barStart`).setAttributeNS(null,'cx',halfCircleSize);
     select(`#${this.id} .barStart`).setAttributeNS(null,'cy',halfCircleSize);
     select(`#${this.id} .barStart`).setAttributeNS(null,'r', halfCircleSize);
 
-    select(`#${this.id} .barStart1`).setAttributeNS(null,'cx',halfCircleSize);
-    select(`#${this.id} .barStart1`).setAttributeNS(null,'cy',halfCircleSize);
+
+
+
+    select(`#${this.id} .barStart1`).style.cx = halfCircleSize;
+    if(innerWidth > 800){
+        select(`#${this.id} .barStart1`).style.cy = halfCircleSize;
+    }else{
+        select(`#${this.id} .barStart1`).style.cy = remToPx(halfCircleSizeNumb*2);
+    }
     select(`#${this.id} .barStart1`).setAttributeNS(null,'r', halfCircleSize);
 
 
-    select(`#${this.id} .barEnd`).setAttributeNS(null,'cy',halfCircleSize);
+    
+
+
+
+
+
+    if(innerWidth > 800){
+        select(`#${this.id} .barEnd`).style.cx = this.barCircleEnd;
+    }else{
+        select(`#${this.id} .barEnd`).style.cx = this.idParentWidth;
+    }
+    select(`#${this.id} .barEnd`).style.cy = halfCircleSize;
     select(`#${this.id} .barEnd`).setAttributeNS(null,'r',halfCircleSizeEnd);
 
-    select(`#${this.id} .barEnd1`).setAttributeNS(null,'cy',halfCircleSize);
+
+
+
+    if(innerWidth > 800){
+        select(`#${this.id} .barEnd1`).style.cx = this.barCircleEnd;
+        select(`#${this.id} .barEnd1`).style.cy = halfCircleSize;
+    }else{
+        select(`#${this.id} .barEnd1`).style.cx = this.idParentWidth;
+        select(`#${this.id} .barEnd1`).style.cy = remToPx(halfCircleSizeNumb*2);
+    }
     select(`#${this.id} .barEnd1`).setAttributeNS(null,'r',halfCircleSizeEnd);
 
 
 
-    select(`#${this.id} .bar`).style.height = `calc(${halfBarHeight}*2)`;
+  
+
+    if(innerWidth > 800){
+        select(`#${this.id} .bar`).style.width = this.barWidth;
+        select(`#${this.id} .bar`).setAttributeNS(null,'y',remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+        select(`#${this.id} .bar`).style.height = `calc(${halfBarHeight}*2)`;
+    }else{
+        select(`#${this.id} .bar`).style.width = this.idParentWidth - remToPx(halfCircleSizeEndNumb);
+        select(`#${this.id} .bar`).setAttributeNS(null,'y',remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb));
+        select(`#${this.id} .bar`).style.height = remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2);
+    }
     select(`#${this.id} .bar`).setAttributeNS(null,'x',halfCircleSize);
-    select(`#${this.id} .bar`).setAttributeNS(null,'y',halfCircleSize);
-    select(`#${this.id} .bar`).setAttributeNS(null,'transform',`translate(0,${-remToPx(halfBarHeightNumb)})`);
 
 
-    select(`#${this.id} .barBG`).style.height = `calc(${halfBarHeight} * 3)`;;
+
+
+
+    select(`#${this.id} .barBG`).style.height = `calc(${halfBarHeight} * 3)`;
     select(`#${this.id} .barBG`).setAttributeNS(null,'y',`calc( ${halfCircleSize} - ${halfBarHeight} * 1.5 )`);
+    
 
 
-    this.expandGraphTL.clear();
-    this.callGraphTL.clear();
+    
+
+        
+    if(innerWidth > 800){
+        select(`#${this.id} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`);
+    }else{
+        select(`#${this.id} .percent`).setAttributeNS(null, 'transform',`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb *2.3)})`);
+    }
+
+
+
+    if(innerWidth > 800){
+        selectAll(`#${this.id} .skillInfoText`).forEach(text=>{
+            text.style.opacity = 0;
+        })
+    }else{
+        selectAll(`#${this.id} .skillInfoText`).forEach(text=>{
+            text.style.opacity = 1;
+        })
+    }
+
+
+
+    // selectAll(`#${this.id} .skillInfoBG`).forEach(bg=>{
+    //     bg.style.transform = scaleY(0);
+    // })
+
+
+
+
+
+    if (this.expandGraphTL){
+        this.expandGraphTL.clear();
+    }
+    if(this.expandGraphTL800){
+        this.expandGraphTL800.clear();
+    }
+    if(this.callGraphTL){
+        this.callGraphTL.clear();    
+    }
+    
 }
 
-function callSkills(elem){
-    // if(elem ===SKILL){
+
+function callSkillsContents(elem){
+    if(elem ===SKILL){
         SKILL_CONTENTS.style.display = 'initial';
       
-        TLarray.forEach((tl)=>{
-            tl.getCallGraphTL();
-            tl.playCallGraphTL();
-            
-        })
-          
+        if(innerWidth > 800){
+            console.log('if')
+            TLarray.forEach((tl)=>{
+                tl.getCallGraphTL();
+                tl.playCallGraphTL();            
+            })
+        }else{
+            TLarray.forEach((tl)=>{
+                tl.getCallGraphTL800();
+                tl.playCallGraphTL800();            
+            })
+        }
+    }   
 }
 
 
-function stopSkills(){
+function stopSkillsContents(){
     SKILL_CONTENTS.style.display = 'none';
     
-    TLarray.forEach((tl)=>{
-        tl.reverseCallGraphTL();
-    })
-      
-    // MayaTL.reverseCallGraphTL();
-    // VrayTL.reverseCallGraphTL();
-    // ArnoldTL.reverseCallGraphTL();
-    // ZbrushTL.reverseCallGraphTL();
-    // HoudiniTL.reverseCallGraphTL();
-    // MarvelousDesignerTL.reverseCallGraphTL();
-    // SubstancePainterTL.reverseCallGraphTL();
-    // SubstanceDesignerTL.reverseCallGraphTL();
-    // MudboxTL.reverseCallGraphTL();
-    // PhotoshopTL.reverseCallGraphTL();
-    // threeDCoatTL.reverseCallGraphTL();
-    // RezomUVTL.reverseCallGraphTL();
-    // AfterEffectsTL.reverseCallGraphTL();
-    // NukeTL.reverseCallGraphTL();
-    // PythonTL.reverseCallGraphTL();
-    // HTMLTL.reverseCallGraphTL();
-    // JavascriptTL.reverseCallGraphTL();
-    // CSS3TL.reverseCallGraphTL();
+    if(innerWidth > 800){
+        TLarray.forEach((tl)=>{
+            tl.reverseCallGraphTL();
+        })
+    }else{
+        TLarray.forEach((tl)=>{
+            tl.reverseCallGraphTL800();
+        })
+    }
 
 }
 
@@ -989,7 +1070,7 @@ function stopSkills(){
 
 
 function skillsUpdate(){
-    if(biggerElem == SKILL){
+    // if(biggerElem == SKILL){
         // setBarWidth
         setUnitSize();
         // console.log('half circle size',halfCircleSize)
@@ -998,7 +1079,7 @@ function skillsUpdate(){
             tl.skillUpdate();
         })
 
-    }
+    // }
 }
 
 

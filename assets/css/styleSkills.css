@@ -7,8 +7,8 @@
     --halfCircleSizeEnd1400 :1.7rem;
     --halfBarHeight1400 :0.5rem;
 
-    --halfCircleSize800 :1.6rem;
-    --halfCircleSizeEnd800 :1.3rem;
+    --halfCircleSize800 :1.8rem;
+    --halfCircleSizeEnd800 :1.6rem;
     --halfBarHeight800 :0.4rem;
 }
 
@@ -76,6 +76,12 @@
     background: rgb(30,30,30);
     border-radius: 2rem;
 }
+    @media (max-width:800px){
+        #skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer{
+            width: 80%;
+            height: 80%;
+        }
+    }
 #skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer p{
     display: none;
 }
@@ -154,11 +160,13 @@
 #skill .skillGroup .skillGraph .skillContainer .percent{
     font-size: 1.3rem;
     fill: white;
-    text-shadow:
+    text-shadow:2px 2px 3px rgb(30,30,30);
+    /* text-shadow:
     0 0.3px 1.8px rgba(30,30,30, 0.214),
-    0 1.8px 9.2px rgba(30,30,30, 0.384),
-    0 3.7px 19px rgba(30,30,30, 0.476)
-  ;
+    0 1.8px 9.2px rgba(30,30,30, 0.4),
+    0 2.8px 14.2px rgba(30,30,30, 0.6),
+    0 3.7px 19px rgba(30,30,30, 0.8)
+  ; */
 }
     @media (max-width:800px){
         #skill .skillGroup .skillGraph .skillContainer .percent{     
@@ -176,17 +184,29 @@
 
 #skill .skillGroup .skillGraph .skillContainer .skillInfo{
     position: absolute;
-    height: calc(var(--halfCircleSize)*2);
-    font-size: 1.2rem;
+    height: calc(var(--halfCircleSize800)*3);
+    font-size: 1.3rem;
     color: black;
     display: flex;
     align-items: center;
     width: 100%;
 }
-    @media (max-width:800px){
+    @media (max-width: 600px){
         #skill .skillGroup .skillGraph .skillContainer .skillInfo{
             font-size: 1rem;
-            height: calc(var(--halfCircleSize800)*2);
+            height: calc(var(--halfCircleSize800)*3);
+        }
+    }
+    @media (min-width:800px){
+        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+            font-size: 0.95rem;
+            height: calc(var(--halfCircleSize)*2);
+        }
+    }
+    @media (min-width:950px){
+        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+            font-size: 1.25rem;
+            height: calc(var(--halfCircleSize)*2);
         }
     }
     @media (min-width:1400px){
@@ -217,7 +237,7 @@
     @media (min-width:1400px){
         #skill .skillGroup .skillGraph .skillContainer .skillInfo > div {
             left: calc(var(--halfCircleSize1400)*2);
-            width: calc(100% - var(--halfCircleSize1400)*2);
+            width: calc(100% - var(--halfCircleSize1400)*2 - var(--halfCircleSizeEnd1400)*2);
         }
     }
     
@@ -225,20 +245,36 @@
         display:flex;
         margin:auto;
     }
+        @media (max-width:800px){
+            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div{
+                flex-wrap:wrap;
+            }
+        }
         #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoContainer{
             display: flex;
             position: relative;
         }
+            @media (max-width:800px){
+                #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoContainer{
+                    flex-basis: 100%;
+                }
+            }
+            
+                @media (max-width:800px){
+                    #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoContainer .skillInfoText{
+                        margin: auto;
+                    }
+                }
 
             #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoContainer div:first-child{
                 position: relative;
                 opacity: 0;
             }
-                @media (max-width:600px){
+                /* @media (max-width:600px){
                     #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div{
                         text-align: end;
                     }
-                }
+                } */
             #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoContainer div:last-child{
                 position: absolute;
                 width: 100%;
@@ -253,9 +289,13 @@
             #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoDateContainer {
                 margin-right: auto;
             }
+
+
             #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoBG{
                 border-radius: 0.3rem;
             }
+
+            
 
             #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div .skillInfoNameContainer .skillInfoName{
                 font-weight:700;

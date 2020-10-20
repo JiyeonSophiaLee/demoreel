@@ -175,6 +175,7 @@ window.addEventListener('resize',()=>{
 
 
 function createProjectGroup(name){
+
     let content = document.querySelector(`#${name} .contents`);
     let thumbnails = eval(name + 'Thumbnails');
     let groupProjects = document.createElement('div');
