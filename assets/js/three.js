@@ -13,6 +13,7 @@ var model, skeleton, mixer, actions, walkAction, waveAction ,stats;
 
 var mouseX, mouseY, callClientX, callClientY;
 const mouseMultiplier = 0.001;
+const threeJSVignette = document.getElementById('threeJSVignette');
 
 
 
@@ -30,6 +31,8 @@ var clock = new THREE.Clock();
 
 init();
 animate();
+
+
 
 
 
@@ -347,7 +350,7 @@ function animate(){
     
     // controls.update();
     // stats.update();
-    // updateCameraMouse();
+    updateCameraMouse();
     
     renderer.render( scene, camera);
 
@@ -661,6 +664,12 @@ function callThreeJS(elem){
     
 
 
+
+
+
+    let getVignetteSize = biggerElem.getBoundingClientRect();
+    // threeJSVignette.style.background = 'linear-gradient(black, transparent)';
+    // threeJSVignette.style.background = `linear-gradient(to right, black, transparent ${getVignetteSize.x}, transparent ${getVignetteSize.x + getVignetteSize.width}, black 100%)`;
 
     // }else{
     //     console.log('No it has not',elem,elem.classList)
