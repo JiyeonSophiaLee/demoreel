@@ -617,7 +617,7 @@ function callThreeJS(elem){
         // cameraPositionY = 3.25;
         // cameraPositionZ = 3.8;
 
-        cameraPositionX = -3.5 + innerWidth/1225 - innerHeight/2000;
+        cameraPositionX = -2.5 + innerWidth/1225 - innerHeight/2000;
         cameraPositionY = 4.44 - innerWidth/2550;
         cameraPositionZ = 4;
 

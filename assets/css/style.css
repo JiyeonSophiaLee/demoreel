@@ -45,27 +45,47 @@ canvas{
 html,body{
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
 }
 body{
   background: var(--backgroundColor);
+  font-family: "fontello";
+  padding: 1rem;
 }
 
 
 /*   Fonts   */
-#bottom div{
+#bottom{
   font-family: 'Text Me One', sans-serif;
 }
-#skill div{
+#bottom #skill .contents{
   font-family: 'Quicksand', sans-serif;
 }
-/* #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoName   {
-  font-family: 'Staatliches', cursive;
-}
-#skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoDate   {
-  font-family: 'Quicksand', sans-serif;
-} */
 
-/* loader */
+#bottom #info .contents{
+  font-family: 'Quicksand', sans-serif;
+}
+#info .title .titleName .titleNameContainer .name:first-child{
+  /* font-family: 'GathaSans'; */
+  /* font-family: 'Aclonica', sans-serif; */
+  /* font-family: 'Julius Sans One', sans-serif; */
+  /* font-family: 'Kufam', cursive */
+  /* font-family: 'Montserrat Alternates', sans-serif; */
+  /* font-family: 'Josefin Slab', serif; */
+  /* font-family: 'Poiret One', cursive; */
+  font-family: 'Secular One', sans-serif;
+}
+#info .title .titleName .titleNameContainer .name:nth-child(2){
+  /* font-family: 'GathaSans'; */
+  /* font-family: 'Aclonica', sans-serif; */
+  /* font-family: 'Julius Sans One', sans-serif; */
+  /* font-family: 'Kufam', cursive; */
+  /* font-family: 'Montserrat Alternates', sans-serif; */
+  /* font-family: 'Josefin Slab', serif; */
+  /* font-family: 'Poiret One', cursive; */
+  font-family: 'Secular One', sans-serif;
+}
+
 
 #loaderContainer{
   position: absolute;
@@ -379,7 +399,7 @@ body{
           padding: 10px;
         }
       }
-      @media (max-width:1400px){
+      @media (min-width:1400px){
         #bottom #bottomMenu{
           padding: 30px;
         }
@@ -395,7 +415,7 @@ body{
           list-style:none;
           height:50%;
           position: relative;
-          min-height: 11.5vw;
+          min-height: 10rem;
         }
         @media (max-width:800px){
           #bottom #bottomMenu > li{
@@ -494,6 +514,7 @@ body{
             overflow-y: auto;
             overflow-x: hidden;
             padding: 0.4rem;
+            /* display: none; */
             /* z-index: 3; */
           }
             @media (max-width:800px){

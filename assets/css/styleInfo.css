@@ -1,0 +1,195 @@
+
+#info .contents{
+    background:rgba(30,30,30,0.8);
+    display: none;
+}
+
+#info .title{
+    display: grid;
+    grid-gap: 2%;
+    grid-template-columns: 0.6fr 0.4fr;
+    padding: 3% 3% 12% 3%;
+}
+#info .title .titleName {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+#info .title .titleName .titleNameContainer {
+    width: 100%;
+}
+#info .title .titleName .titleNameContainer img{
+    width: 90%;
+}
+/* #info .title .titleName .titleNameContainer .name:first-child{
+    font-size: 4.8rem;
+}
+#info .title .titleName .titleNameContainer .name:nth-child(2){
+    font-size: 4rem;
+    align-self: flex-end;
+    color:crimson;
+} */
+#info .title .titleName .position{
+    font-size: 1.2rem;
+    font-weight: normal;
+    text-align: center;
+}
+    @media (min-width:1400px){
+        #info .title .titleName .position{
+            font-size: 1.3rem;
+        }
+    }
+#info .title #myPic{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+#info .title #myPic img{
+    width: 95%;
+    animation: morphingAni 10s infinite linear;
+}
+    @keyframes morphingAni {
+        0% {
+            border-radius: 35% 47% 49% 21%/ 31% 20% 69% 53%;
+        }
+        25% {
+            border-radius: 73% 35% 85% 26%/ 58% 63% 31% 67%;
+        }
+        50% {
+            border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
+        }
+        75% {
+            border-radius: 60% 17% 30% 41%/ 71% 80% 61% 13%;
+        }
+        100%{
+            border-radius: 35% 47% 49% 21%/ 31% 20% 69% 53%;
+        }
+    }
+#info .title #myPic .bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+    background: linear-gradient(35deg, #ff6ee2, #5cd3ff);
+    animation: morphinBeforeAni 10s infinite linear;
+    z-index: -1;
+}
+    @keyframes morphinBeforeAni {
+        0% {
+            border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+        }
+        30% {
+            border-radius: 73% 35% 85% 26%/ 58% 63% 31% 67%;
+        }
+        60% {
+            border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
+        }
+        80% {
+            border-radius: 60% 17% 30% 41%/ 71% 80% 61% 13%;
+        }
+        100%{
+            border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+        }
+    }
+
+
+
+#info #contentsGroup{
+    display: grid;
+    grid-template-columns: 0.36fr 0.7fr;
+    grid-gap: 3%;
+    padding: 2% 4% 12% 2%;
+    grid-row-gap: 15%;
+}
+    @media (min-width:1400px){
+        #info #contentsGroup{
+            padding: 2% 6% 12% 2%;
+            grid-row-gap: 30%;
+        }
+    }
+    #info #contentsGroup .tableContents{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        font-size: 1.7rem;
+    }
+        @media (min-width:1400px){
+            #info #contentsGroup .tableContents{
+                font-size: 2rem;
+            }
+        }
+    #info #contentsGroup .tableContents p{
+        margin: auto;
+    
+    }
+
+    #info #contentsGroup .infoContents{
+        font-size: 1.2rem;
+    }
+        @media (min-width:1400px){
+            #info #contentsGroup .infoContents{
+                font-size: 1.3rem;
+            }
+        }
+        #info #contentsGroup .infoContents .school{
+            margin-bottom: 13%;
+        }
+
+        #info #contentsGroup .infoContents .school .schoolName{
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+            @media (min-width:1400px){
+                #info #contentsGroup .infoContents .school .schoolName{
+                    font-size: 1.4rem;
+                }
+            }
+
+        #info #contentsGroup .infoContents .school .country, .date{
+            font-size: 1.1rem;
+        }
+            @media (min-width:1400px){
+                #info #contentsGroup .infoContents .school .country, .date{
+                    font-size: 1rem;
+                }
+            }
+
+    #info #contentsGroup #contactContainer .address{
+        display: flex;
+        align-items: center;
+        margin: 0.7rem 0;
+        background: rgb(30,30,30);
+        border: solid rgba(255,255,255, 0.6) 2px;
+        border-radius: 0.5rem;
+    }
+        #info #contentsGroup #contactContainer .address *{
+            display: inline;
+        }
+        #info #contentsGroup #contactContainer .address .icon{
+            font-size: 2.1rem;
+        }
+            @media (min-width:1400px){
+                #info #contentsGroup #contactContainer .address .icon{
+                    font-size: 2.5rem;
+                }
+            }
+        #info #contentsGroup #contactContainer .address a{
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+        }
+            @media (min-width:1400px){
+                #info #contentsGroup #contactContainer .address a{
+                    font-size: 1.3rem;
+                }
+            }
+
+        #info #contentsGroup #extraContainer{
+            font-size: 1rem;
+        }

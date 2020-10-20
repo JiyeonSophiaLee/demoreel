@@ -535,7 +535,10 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
   // this.borders.path.parentElement.style.left = `-${this.extraSVGspace/2}px`;
   // this.borders.path.parentElement.style.top = `-${this.extraSVGspace/2}px`;
-  // this.borders.path.setAttribute('transform', `translate(-${this.borders.radius},0)`);
+  // this.borders.path.setAttribute('transform', `translate(-${this.borders.radius},0)`);\
+  document.querySelector(`#${this.borders.elemId} .edge`).style.width = 'inherit';
+  document.querySelector(`#${this.borders.elemId} .edge`).style.height = 'inherit';
+  document.querySelector(`#${this.borders.elemId} .edge`).style.fill = 'none';
 
 
   this.borders.path.setAttributeNS(null, 'x', this.x);

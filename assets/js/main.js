@@ -142,7 +142,8 @@ menuController.prototype.removeEventCB = function(){
 }
 menuController.prototype.callAfterAnim = function(elem){
   console.log('call');
-  callSkills(elem);
+  callSkillsContents(elem);
+  callInfoContents(elem)
 }
 
 menuController.prototype.expandMenu = function(){
@@ -162,8 +163,8 @@ menuController.prototype.expandMenu = function(){
     
 
 
-    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -176,8 +177,8 @@ menuController.prototype.expandMenu = function(){
 
     
 
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkills(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkills()])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -190,8 +191,8 @@ menuController.prototype.expandMenu = function(){
   
 
 
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkills(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkills()])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
