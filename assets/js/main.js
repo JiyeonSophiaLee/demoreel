@@ -1,6 +1,7 @@
 const MASTER = document.getElementById('master');
-const TOP_MENU = document.getElementById('topMenu');
-const MENU__ = document.getElementById('menu');
+// const TOP_MENU = document.getElementById('topMenu');
+// const MENU__ = document.getElementById('menu');
+const LOGO__ = document.getElementById('logo');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
 const DEMO_SVG = document.getElementById('demoSVG');
@@ -10,9 +11,9 @@ const WORK = document.getElementById('work');
 const SKILL = document.getElementById('skill');
 const PAINT = document.getElementById('paint');
 const INFO = document.getElementById('info');
-const TITLE = document.querySelector('#name');
+// const TITLE = document.querySelector('#name');
 const DEMO_VIDEO_RAINBOW = document.querySelector('#demoVideoRainbow');
-const TITLE_NAME_CONTAINER = document.querySelector('#nameContainer');
+// const TITLE_NAME_CONTAINER = document.querySelector('#nameContainer');
 const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
 // const nameP = document.querySelectorAll('#name p');
@@ -34,7 +35,7 @@ function getTransitionValue() {
   this.menuMax = 75;
   this.menuMin = 50;
   this.maxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--maxWidth'));
-  this.nameMaxMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nameMaxMediaQuery'));
+  // this.nameMaxMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nameMaxMediaQuery'));
   this.videoMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidth'));
   this.videoMinWidth = 90;
   this.videoMaxWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidthMediaQuery'));
@@ -73,7 +74,7 @@ if(innerWidth <= 800){
 
 
 
-const TITLEcallClickEvent = function(){
+const LOGOcallClickEvent = function(){
   if(biggerElem != null){
 
     let elem = biggerElem;
@@ -101,7 +102,7 @@ const TITLEcallClickEvent = function(){
     } 
 }
 
-TITLE.addEventListener('click',TITLEcallClickEvent);
+LOGO__.addEventListener('click',LOGOcallClickEvent);
 
 
 
@@ -123,7 +124,7 @@ function menuController(id){
 
   this.callClickEvent = () =>{
       
-        TITLE.removeEventListener('click',TITLEcallClickEvent);
+        // TITLE.removeEventListener('click',TITLEcallClickEvent);
         this.elem.removeEventListener('click', this.callClickEvent);
         this.restElemsEventListener('remove', 'callClickEvent');
 
@@ -136,7 +137,7 @@ function menuController(id){
 
 menuController.prototype.removeEventCB = function(){
   console.log('add')
-  TITLE.addEventListener('click',TITLEcallClickEvent);
+  // TITLE.addEventListener('click',TITLEcallClickEvent);
   this.elem.addEventListener('click', this.callClickEvent);
   this.restElemsEventListener('add', 'callClickEvent');
 }
@@ -285,15 +286,15 @@ menuUtilities.prototype.expandMenuIf = function(){
       DEMO_SVG.style.display= 'none';
       
       MASTER.classList.add('menutransition');
-      TOP_MENU.classList.add('menutransition');
-      TITLE_NAME_CONTAINER.classList.add('menutransition');
+      // TOP_MENU.classList.add('menutransition');
+      // TITLE_NAME_CONTAINER.classList.add('menutransition');
       TITLE_NAME.classList.add('menutransition');
 
 
       // NAME.classList.add('menutransition');
 
       MASTER.style.maxWidth = '100%';
-      TITLE_NAME_CONTAINER.style.width = innerWidth * ( 100 - transitionValue['max']) / 100 + 'px';
+      // TITLE_NAME_CONTAINER.style.width = innerWidth * ( 100 - transitionValue['max']) / 100 + 'px';
       TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
 
 
@@ -325,11 +326,11 @@ menuUtilities.prototype.expandMenuIf = function(){
       if(innerWidth > 800){
 
         MASTER.classList.remove('menutransition');
-        TOP_MENU.classList.remove('menutransition');
-        TITLE_NAME_CONTAINER.classList.remove('menutransition');
+        // TOP_MENU.classList.remove('menutransition');
+        // TITLE_NAME_CONTAINER.classList.remove('menutransition');
         TITLE_NAME.classList.remove('menutransition');
 
-        TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
+        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
 
       }else{
         BOTTOM_MENU.classList.remove('menutransition');
@@ -365,7 +366,7 @@ menuUtilities.prototype.expandMenuElseIf = function(){
     setTimeout(() => {
      
 
-      TOP_MENU.classList.remove('menutransition');
+      // TOP_MENU.classList.remove('menutransition');
   
       DEMO__.classList.remove('menutransition');
 
@@ -406,7 +407,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       
       
       MASTER.classList.add('menutransition');
-      TITLE_NAME_CONTAINER.classList.add('menutransition');
+      // TITLE_NAME_CONTAINER.classList.add('menutransition');
       DEMO__.classList.add('menutransition');
       TITLE_NAME.classList.add('menutransition');
       
@@ -421,7 +422,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       }else{  
         DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
       }
-        TITLE_NAME_CONTAINER.style.width =  transitionValue['min'] + '%';
+        // TITLE_NAME_CONTAINER.style.width =  transitionValue['min'] + '%';
       TITLE_NAME.style.width = transitionValue['videoMaxWidth'] + '%';
       
 
@@ -455,7 +456,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       MASTER.classList.remove('menutransition');
 
       DEMO__.classList.remove('menutransition');
-      TITLE_NAME_CONTAINER.classList.remove('menutransition');
+      // TITLE_NAME_CONTAINER.classList.remove('menutransition');
       TITLE_NAME.classList.remove('menutransition');
       
 
@@ -495,7 +496,7 @@ menuUtilities.prototype.updateSize = function(){
 
       if (menuExpanded ) {
         MASTER.style.maxWidth = '100%';
-        TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
+        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
         TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
 
         DEMO__.style.width = 100 - transitionValue['max'] + '%';
@@ -504,13 +505,13 @@ menuUtilities.prototype.updateSize = function(){
 
 
       }else{
-        TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
+        // TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
         DEMO_VIDEO.style.width = '';
         // threeJsBlocker();
       }
 
     }else{
-      TITLE_NAME_CONTAINER.style.width = '100%';
+      // TITLE_NAME_CONTAINER.style.width = '100%';
       // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
 
       DEMO__.style.height = demoVideoHeight +'px';

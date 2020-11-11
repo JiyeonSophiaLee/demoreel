@@ -668,8 +668,24 @@ function callThreeJS(elem){
 
 
     let getVignetteSize = biggerElem.getBoundingClientRect();
-    // threeJSVignette.style.background = 'linear-gradient(black, transparent)';
-    // threeJSVignette.style.background = `linear-gradient(to right, black, transparent ${getVignetteSize.x}, transparent ${getVignetteSize.x + getVignetteSize.width}, black 100%)`;
+    let vignetteRadius = innerWidth * 0.1;
+
+
+
+    console.log(getVignetteSize)
+    threeJSVignette.style.background = `linear-gradient(to right, rgba(0,0,0,0.8) ${getVignetteSize.x }px, red ${getVignetteSize.x }px, red ${getVignetteSize.x + getVignetteSize.width }px, rgba(0,0,0,0.6) ${getVignetteSize.x + getVignetteSize.width}px)`;
+    
+    // gsap.fromTo(
+    //     threeJSVignette,{
+    //         background:`linear-gradient(to right, rgba(0,0,0,0.8), transparent ${getVignetteSize.x}px, transparent ${getVignetteSize.x + getVignetteSize.width}px,  rgba(0,0,0,0.6)), linear-gradient(to bottom, rgba(0,0,0,0.6), transparent ${getVignetteSize.y }px, transparent ${getVignetteSize.y + getVignetteSize.height }px,  rgba(0,0,0,0.8))`
+    //     },{
+    //         background:`linear-gradient(to right, rgba(0,0,0,0.8), transparent ${getVignetteSize.x - vignetteRadius}px, transparent ${getVignetteSize.x + getVignetteSize.width + vignetteRadius * 2}px,  rgba(0,0,0,0.6)), linear-gradient(to bottom, rgba(0,0,0,0.6), transparent ${getVignetteSize.y - vignetteRadius}px, transparent ${getVignetteSize.y + getVignetteSize.height + vignetteRadius *2}px,  rgba(0,0,0,0.8))`,
+    //         duration:1,
+    //         yoyo:true,
+    //         repeat:-1
+    //     }
+    // )
+
 
     // }else{
     //     console.log('No it has not',elem,elem.classList)
