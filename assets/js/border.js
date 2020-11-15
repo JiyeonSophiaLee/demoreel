@@ -2,6 +2,27 @@ let leftRight, upDown;
 let widthBigger, widthSmaller, heightBigger, heightSmaller;
 
 
+let innerWidthMinTest = innerWidth * transitionValue['min'] / 100;
+let innerWidthMaxTest = innerWidth * transitionValue['max'] / 100;
+
+
+
+const menuTransformTL = gsap.timeline({paused:true, duration: transitionValue['duration'],ease:"power1.inOut"})
+  .fromTo(
+    MASTER,{
+      maxWidth: transitionValue['masterMaxWidth']
+    },{
+      maxWidth: '100%'
+    },0
+  )
+  .fromTo(
+    DEMO__,{
+      width: transitionValue['min'] + '%'
+    },{
+      width: (100 - transitionValue['max']) + '%'
+    },0
+  )
+
 
 //set border size---------
 setBordersSize(allElems);
@@ -96,7 +117,16 @@ function createBorderPath(borders) {
   this.subMenuChangingWidth, this.subMenuChangingHeight;
   this.topMenuSize;
 
- 
+  
+  // this.borderNeonIvoryTL = gsap.timeline({paused:true, duration: transitionValue['duration'],ease:"power1.inOut"})
+  //   .fromTo(
+  //     this.borders.path,{
+  //       stroke: this.borders.strokeColor
+  //     },{
+  //       stroke: '#SVGIvory'
+  //     },0
+  //   )
+
 
   // if(innerWidth > 1400){
   //   this.setBordersSizeFamily(this.borders.elem,'borderSize1400');
@@ -134,39 +164,52 @@ createBorderPath.prototype.expandMenuIf = function() {
     this.restElems = getRestElems(this.borders.elem);
 
 
-    leftRight = this.getLeftRight(this);
-    upDown = this.getUpDown(this);
+    // leftRight = this.getLeftRight(this);
+    // upDown = this.getUpDown(this);
 
-    widthBigger = leftRight.widthBigger;
-    widthSmaller = leftRight.widthSmaller;
-    heightBigger = upDown.heightBigger;
-    heightSmaller = upDown.heightSmaller;
+    // widthBigger = leftRight.widthBigger;
+    // widthSmaller = leftRight.widthSmaller;
+    // heightBigger = upDown.heightBigger;
+    // heightSmaller = upDown.heightSmaller;
 
-    this.subMenuChangingWidth;
-    this.subMenuChangingHeight;
+    // this.subMenuChangingWidth;
+    // this.subMenuChangingHeight;
 
     
 
-
-    allElems.forEach((allElems) => {
-      allElems.classList.add("menutransition")
-      if (allElems == this.borders.elem) {
-        allElems.firstElementChild.classList.add("menutransition");
-      }
-    })
+    // let menuMaxWidth = innerWidth * (transitionValue['max'] / 100);
+    // let menuMaxHeight = innerWidth * (transitionValue['max'] / 100);
 
 
 
-    widthBigger.forEach((widthBigger) => widthBigger.style.width = transitionValue['menuMax'] + '%')
-    widthSmaller.forEach((widthSmaller) => widthSmaller.style.width = (100 - transitionValue['menuMax']) + '%')
-    heightBigger.forEach((heightBigger) => heightBigger.style.height = transitionValue['menuMax'] + '%')
-    heightSmaller.forEach((heightSmaller) => heightSmaller.style.height = (100 - transitionValue['menuMax']) + '%')
+    // allElems.forEach((allElems) => {
+    //   allElems.classList.add("menutransition")
+    //   if (allElems == this.borders.elem) {
+    //     allElems.firstElementChild.classList.add("menutransition");
+    //   }
+    // })
+
+    menuTransformTL.play();
+    this.subMenuTransform();
+    // subMenuTransformTL.play();
+    console.log('this.subMenuChangingWidth: ',this.subMenuChangingWidth)
+
+
+    // widthBigger.forEach((widthBigger) => gsap.to(widthBigger,{width: transitionValue['menuMax'] + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
+    // widthSmaller.forEach((widthSmaller) => gsap.to(widthSmaller,{width: (100 - transitionValue['menuMax']) + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
+    // heightBigger.forEach((heightBigger) => gsap.to(heightBigger,{height: transitionValue['menuMax'] + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
+    // heightSmaller.forEach((heightSmaller) => gsap.to(heightSmaller,{height: (100 - transitionValue['menuMax']) + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
+
+    // widthBigger.forEach((widthBigger) => widthBigger.style.width = transitionValue['menuMax'] + '%')
+    // widthSmaller.forEach((widthSmaller) => widthSmaller.style.width = (100 - transitionValue['menuMax']) + '%')
+    // heightBigger.forEach((heightBigger) => heightBigger.style.height = transitionValue['menuMax'] + '%')
+    // heightSmaller.forEach((heightSmaller) => heightSmaller.style.height = (100 - transitionValue['menuMax']) + '%')
 
 
 
-    this.subMenuChanging();
-    this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
-    this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
+    // this.subMenuChanging();
+    // this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
+    // this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
     
 
     // document.querySelector(`#${this.borders.elem.id} .text`).classList.add = 'menutransition'
@@ -185,25 +228,25 @@ createBorderPath.prototype.expandMenuIf = function() {
 
 
 
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      this.borders.elem.firstElementChild.style.width = '100%';
-      this.borders.elem.firstElementChild.style.height = '100%';
-
-
-      this.borders.elem.parentElement.classList.remove('menutransition');
+    //   this.borders.elem.firstElementChild.style.width = '100%';
+    //   this.borders.elem.firstElementChild.style.height = '100%';
 
 
+    //   this.borders.elem.parentElement.classList.remove('menutransition');
 
-      allElems.forEach((allElems) => {
-        allElems.classList.remove("menutransition");
-        if (allElems == this.borders.elem) {
-          allElems.firstElementChild.classList.remove("menutransition");
-        }
 
-      })
-      resolve()
-    }, transitionValue.duration * 1000);
+
+    //   allElems.forEach((allElems) => {
+    //     allElems.classList.remove("menutransition");
+    //     if (allElems == this.borders.elem) {
+    //       allElems.firstElementChild.classList.remove("menutransition");
+    //     }
+
+    //   })
+    //   resolve()
+    // }, transitionValue.duration * 1000);
 
   
   })
@@ -348,20 +391,20 @@ createBorderPath.prototype.expandMenuElse = function() {
 
 
 
-    console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
+    // console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
       setBordersSize(this.borders.elem);
-      if(innerWidth > 1400){
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize1400)';
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize1400)';
-      }else if(innerWidth > 800){
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
-      }else{
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
-          document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
-      }
+      // if(innerWidth > 1400){
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize1400)';
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize1400)';
+      // }else if(innerWidth > 800){
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--bordersSize)';
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--bordersSize)';
+      // }else{
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
+      //     document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
+      // }
 
-      console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
+      // console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
 
 
 
@@ -400,78 +443,78 @@ createBorderPath.prototype.expandMenuElse = function() {
 
 };
 
-createBorderPath.prototype.getLeftRight = function() {
+// createBorderPath.prototype.getLeftRight = function() {
 
-  let firstNum = this.getFirstNum(this);
-  let widthBigger = [];
-  let widthSmaller = [];
+//   let firstNum = this.getFirstNum(this);
+//   let widthBigger = [];
+//   let widthSmaller = [];
 
-  let j = 0;
-  if (firstNum % 2 != 0) {
-    j = j + 1
-  }
-  for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-    j = j + 1;
-    if (this.elemParent.childNodes[i].nodeType != 1) {
-      j = j - 1;
-    }
+//   let j = 0;
+//   if (firstNum % 2 != 0) {
+//     j = j + 1
+//   }
+//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
+//     j = j + 1;
+//     if (this.elemParent.childNodes[i].nodeType != 1) {
+//       j = j - 1;
+//     }
 
-    if (this.elemParent.childNodes[i].nodeType == 1) {
-      if (j % 2 == 0) {
-        widthBigger.push(this.elemParent.childNodes[i]);
-      } else {
-        widthSmaller.push(this.elemParent.childNodes[i]);
-      }
-    }
-  }
+//     if (this.elemParent.childNodes[i].nodeType == 1) {
+//       if (j % 2 == 0) {
+//         widthBigger.push(this.elemParent.childNodes[i]);
+//       } else {
+//         widthSmaller.push(this.elemParent.childNodes[i]);
+//       }
+//     }
+//   }
 
-  return {
-    widthBigger: widthBigger,
-    widthSmaller: widthSmaller
-  }
-}
+//   return {
+//     widthBigger: widthBigger,
+//     widthSmaller: widthSmaller
+//   }
+// }
 
-createBorderPath.prototype.getUpDown = function() {
+// createBorderPath.prototype.getUpDown = function() {
 
-  let firstNum = this.getFirstNum(this);
-  let up = [];
-  let down = [];
+//   let firstNum = this.getFirstNum(this);
+//   let up = [];
+//   let down = [];
 
-  let heightBigger = [];
-  let heightSmaller = [];
+//   let heightBigger = [];
+//   let heightSmaller = [];
 
-  let j = 0;
-  for (let i = 0; i < this.elemParent.childNodes.length; i++) {
+//   let j = 0;
+//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
 
-    j = j + 1;
-    if (this.elemParent.childNodes[i].nodeType != 1) {
-      j = j - 1;
-    }
-    if (this.elemParent.childNodes[i].nodeType == 1) {
+//     j = j + 1;
+//     if (this.elemParent.childNodes[i].nodeType != 1) {
+//       j = j - 1;
+//     }
+//     if (this.elemParent.childNodes[i].nodeType == 1) {
 
-      if (j < 3) {
-        up.push(this.elemParent.childNodes[i]);
+//       if (j < 3) {
+//         up.push(this.elemParent.childNodes[i]);
 
-      } else {
-        down.push(this.elemParent.childNodes[i]);
-      }
-    }
-  }
+//       } else {
+//         down.push(this.elemParent.childNodes[i]);
+//       }
+//     }
+//   }
 
 
-  if (firstNum < 3) {
-    heightBigger = up;
-    heightSmaller = down;
-  } else {
-    heightBigger = down;
-    heightSmaller = up;
-  }
+//   if (firstNum < 3) {
+//     heightBigger = up;
+//     heightSmaller = down;
+//   } else {
+//     heightBigger = down;
+//     heightSmaller = up;
+//   }
 
-  return {
-    heightBigger: heightBigger,
-    heightSmaller: heightSmaller
-  }
-}
+//   return {
+//     heightBigger: heightBigger,
+//     heightSmaller: heightSmaller
+//   }
+// }
 
 createBorderPath.prototype.getFirstNum = function() {
 
@@ -488,6 +531,170 @@ createBorderPath.prototype.getFirstNum = function() {
   }
 }
 
+createBorderPath.prototype.subMenuTransform = function(){
+  let firstNum = this.getFirstNum(this);
+  let subMenus = [];
+  let j = 0;
+  
+
+
+  subMenus.push(this.borders.elem);
+
+  for (let i = 0; i < this.elemParent.childNodes.length; i++) {
+    j = j + 1;
+    if (this.elemParent.childNodes[i].nodeType != 1) {
+      j = j - 1;
+    }
+    if (this.elemParent.childNodes[i].nodeType == 1) {
+      if(j != firstNum){
+        if(firstNum %2 == j%2){
+          subMenus.splice(1,0, this.elemParent.childNodes[i]);
+         
+
+        }else if(Math.ceil(firstNum*0.5) == Math.ceil(j*0.5)){
+          subMenus.splice(2,0, this.elemParent.childNodes[i]);
+        
+        }else{
+          subMenus.splice(3,0, this.elemParent.childNodes[i]);
+        }
+        console.log(j,subMenus)
+      }
+    }
+  }
+
+
+
+
+  allElems.forEach((allElems) => {
+    allElems.classList.add("menutransition")
+    if (allElems == this.borders.elem) {
+      allElems.firstElementChild.classList.add("menutransition");
+    }
+  })
+
+
+
+
+  this.subMenuChanging();
+  console.log('this.subMenuChangingWidth: ',this.subMenuChangingWidth)
+
+  subMenus[0].style.width = transitionValue['menuMax'] + '%';
+  subMenus[0].style.height = transitionValue['menuMax'] + '%';
+  
+    this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
+    this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
+   
+  subMenus[1].style.width = transitionValue['menuMax'] + '%';
+  subMenus[1].style.height = (100 - transitionValue['menuMax']) + '%';
+
+  subMenus[2].style.width = (100 - transitionValue['menuMax']) + '%';
+  subMenus[2].style.height = transitionValue['menuMax'] + '%';
+
+  subMenus[3].style.width = (100 - transitionValue['menuMax']) + '%';
+  subMenus[3].style.height = (100 - transitionValue['menuMax']) + '%';
+
+
+  setTimeout(() => {
+
+    allElems.forEach((allElems) => {
+      allElems.classList.remove("menutransition")
+      if (allElems == this.borders.elem) {
+        allElems.firstElementChild.classList.remove("menutransition");
+      }
+    })
+
+      // this.borders.elem.firstElementChild.style.width = '100%';
+      // this.borders.elem.firstElementChild.style.height = '100%';
+
+  }, transitionValue['duration'] * 1000 );
+
+
+  // if (!this.subMenuTransfromTL) {
+
+  //   this.subMenuTransfromTL = gsap.timeline();
+
+  //   this.subMenuTransfromTL
+  //     .to(
+  //       subMenus[0],{
+  //         width: transitionValue['menuMax'] + '%',
+  //         height: transitionValue['menuMax'] + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       subMenus[1],{
+  //         width: transitionValue['menuMax'] + '%',
+  //         height: (100 - transitionValue['menuMax']) + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       subMenus[2],{
+  //         width: (100 - transitionValue['menuMax']) + '%',
+  //         height: transitionValue['menuMax'] + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       subMenus[3],{
+  //         width: (100 - transitionValue['menuMax']) + '%',
+  //         height: (100 - transitionValue['menuMax']) + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+
+  // } else {
+  //   this.subMenuTransfromTL.resume();
+  // }
+
+
+
+///-------------------------------
+
+
+
+  // gsap.to(
+  //   subMenus[0],{
+  //     width: transitionValue['menuMax'] + '%',
+  //     height: transitionValue['menuMax'] + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   subMenus[1],{
+  //     width: transitionValue['menuMax'] + '%',
+  //     height: (100 - transitionValue['menuMax']) + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   subMenus[2],{
+  //     width: (100 - transitionValue['menuMax']) + '%',
+  //     height: transitionValue['menuMax'] + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   subMenus[3],{
+  //     width: (100 - transitionValue['menuMax']) + '%',
+  //     height: (100 - transitionValue['menuMax']) + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+
+
+
+
+ 
+}
 
 createBorderPath.prototype.getPadding = function(){
   this.botMenuPaddingTop = parseFloat(window.getComputedStyle(BOTTOM_MENU).paddingTop);
@@ -503,17 +710,24 @@ createBorderPath.prototype.getPadding = function(){
   this.liPaddingBot = parseFloat(window.getComputedStyle(this.borders.elem).paddingBottom);
   this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
   this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
+
+
+  // this.masterPaddingTop = parseFloat(window.getComputedStyle(MASTER).paddingTop);
+  // this.masterPaddingLeft = parseFloat(window.getComputedStyle(MASTER).paddingLeft);
+  // this.masterPaddingRight = parseFloat(window.getComputedStyle(MASTER).paddingRight);
+  // this.masterPaddingBot = parseFloat(window.getComputedStyle(MASTER).paddingBottom);
+  // this.masterPaddingWidth = this.masterPaddingLeft + this.masterPaddingRight;
+  // this.masterPaddingHeight = this.masterPaddingTop + this.masterPaddingBot;
 }
 
 
 createBorderPath.prototype.subMenuChanging = function() {
   this.getPadding();
-  let innerWidthTest;
-
+  
   if(innerWidth > 800){
-    this.subMenuChangingWidth = (innerWidth * (transitionValue['max'] / 100) - this.botMenuPaddingWidth) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
-    this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100) - this.liPaddingHeight;
-
+    this.subMenuChangingWidth = ((innerWidth * (transitionValue['max'] / 100) - this.botMenuPaddingWidth) * (transitionValue['menuMax'] / 100)) - this.liPaddingWidth;
+    this.subMenuChangingHeight = ((innerHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100))- this.liPaddingHeight ;
+    
   }else{
     this.subMenuChangingWidth =(BOTTOM_MENU.parentElement.clientWidth - this.botMenuPaddingWidth ) * (transitionValue['menuMax'] / 100) - this.liPaddingWidth ;
     this.subMenuChangingHeight = (BOTTOM_MENU.parentElement.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['menuMax'] / 100) - this.liPaddingHeight ;
@@ -554,18 +768,18 @@ createBorderPath.prototype.createRectBorder = function() {
   this.borders.path.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
   
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.opacity = '0';
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'x', this.x);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'y', this.y);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'rx', this.borders.border);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'ry', this.borders.border);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).style.width = this.w + 'px';
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).style.height = this.w + 'px';
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', 'var(--bordersWidth)');
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', 'var(--bordersHeight)');
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'fill', this.borders.color);
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'stroke', 'white');
-  document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
+
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'x', this.x);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'y', this.y);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'rx', this.borders.border);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'ry', this.borders.border);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.width = this.w + 'px';
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.height = this.w + 'px';
+  // // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', 'var(--bordersWidth)');
+  // // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', 'var(--bordersHeight)');
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'fill', this.borders.color);
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'stroke', 'white');
+  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
 
 
@@ -588,10 +802,11 @@ createBorderPath.prototype.animRectBorder = function() {
   this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
   this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
   this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
-  document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
-    neon.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
-    neon.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
-  })
+
+  // document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
+  //   neon.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
+  //   neon.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
+  // })
 
 
   if (biggeredElem != null) {
@@ -606,47 +821,65 @@ createBorderPath.prototype.animRectBorder = function() {
   if (!(f % NF)) {
     
     this.stopAni();
+    console.log('this.subMenuChangingWidth: ',this.subMenuChangingWidth)
 
     if (menuExpanded) {
-
+    
       this.w = this.subMenuChangingWidth;
       this.h = this.subMenuChangingHeight;
 
-
+      // console.log('this.subMenuChangingWidth: ',this.subMenuChangingWidth)
       this.borders.path.parentElement.style.width = this.w + this.extraSVGspace + 'px';
       this.borders.path.parentElement.style.height = this.h + this.extraSVGspace + 'px';
+      // this.borders.path.parentElement.style.height = this.h + this.extraSVGspace/2 + 'px';
   
-      this.borders.path.setAttributeNS(null, 'width', this.w);
-      this.borders.path.setAttributeNS(null, 'height', this.h);
 
+      // this.borders.path.setAttributeNS(null, 'width', '10px');
+      // this.borders.path.setAttributeNS(null, 'height', this.h);
+      this.borders.path.style.width =  this.w;
+      this.borders.path.style.height = this.h;
+
+
+
+
+      
+      // console.log('this.w',this.w)
+      // document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('d', `M ${this.x} ${this.y} , ${this.x + this.w} ${this.y} , ${this.x + this.w} ${this.y +this.h} , ${this.x} ${this.y+this.h}`)
+      // // document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('d', tweenCardinal(points, true, 0))
+
+    
+    
+     
  
     }
-    document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
-      neon.style.width = 'inherit';
-      neon.style.height = 'inherit';
-    })
-    if (biggeredElem != null) {
-      this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.extraSVGspace + 'px';
-      this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + this.extraSVGspace + 'px';
-      this.biggeredElemPath.setAttribute('width', this.smallMenuSize);
-      this.biggeredElemPath.setAttribute('height', this.smallMenuSize);
+    
+    // document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
+    //   neon.style.width = 'inherit';
+    //   neon.style.height = 'inherit';
+    // })
+
+    // if (biggeredElem != null) {
+    //   this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.extraSVGspace + 'px';
+    //   this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + this.extraSVGspace + 'px';
+    //   this.biggeredElemPath.setAttribute('width', this.smallMenuSize);
+    //   this.biggeredElemPath.setAttribute('height', this.smallMenuSize);
       
 
-    }
+    // }
     f = 0;
 
 
 
-    if (menuExpanded) {
+  if (menuExpanded) {
 
-      this.createWavyAnimation(() => {
-        eval(this.borders.elem.id + 'MenuController').removeEventCB();
-        eval(this.borders.elem.id + 'MenuController').callAfterAnim(this.borders.elem);
-      });
+    this.createWavyAnimation(() => {
+      eval(this.borders.elem.id + 'MenuController').removeEventCB();
+      eval(this.borders.elem.id + 'MenuController').callAfterAnim(this.borders.elem);
+    });
 
-    } else {
-      eval(this.borders.elem.id + 'MenuController').removeEventCB()
-    }
+  } else {
+    eval(this.borders.elem.id + 'MenuController').removeEventCB()
+  }
 
 
     return
@@ -669,7 +902,7 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
     document.getElementById(`${restElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
     document.getElementById(`${restElem.id}Border`).parentElement.classList.add('menutransition');
     document.getElementById(`${restElem.id}Border`).classList.add('menutransition');
-    document.querySelector(`#${restElem.id} .borders .borderCover`).style.display = 'none';
+    // document.querySelector(`#${restElem.id} .borders .borderCover`).style.display = 'none';
   });
 
 
@@ -683,8 +916,8 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
       console.log('else is working')
       this.setBordersSizeFamily(restElem,'borderSize800');
 
-      document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
-      document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
+      // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
+      // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
     })
   }
   
@@ -694,7 +927,7 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
       document.getElementById(`${elem.id}Border`).classList.remove('menutransition');
       document.getElementById(`${elem.id}Border`).parentElement.classList.remove('menutransition');
       document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.remove('menutransition');
-      document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'initial';
+      // document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'initial';
     });
   }, transitionValue['duration'] * 1000);
 }
@@ -714,7 +947,7 @@ createBorderPath.prototype.setBordersSizeFamily = function(elem, borderSize){
 }
 
 createBorderPath.prototype.smallerRestElemBordersElseIf = function(){
-  document.querySelector(`#${biggerElem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
+  // document.querySelector(`#${biggerElem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
 
 
     document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
@@ -732,14 +965,16 @@ createBorderPath.prototype.smallerRestElemBordersElseIf = function(){
 
 createBorderPath.prototype.getDataPoints = function() {
 
-  let w = this.w + this.borders.radius * 2;
-  let h = this.h + this.borders.radius * 2;
+  // let w = this.w + this.borders.radius * 2;
+  // let h = this.h + this.borders.radius * 2;
+  let w = this.w ;
+  let h = this.h ;
 
 
-  this.x = this.borders.x - this.borders.radius;
-  this.y = this.borders.y - this.borders.radius ;
-  // this.x = this.x - this.borders.radius/2;
-  // this.y = this.y - this.borders.radius/2;
+  // this.x = this.borders.x - this.borders.radius;
+  // this.y = this.borders.y - this.borders.radius ;
+  this.x = this.borders.x;
+  this.y = this.borders.y;
 
   let points = [];
   let pointsTween = [];
@@ -927,7 +1162,7 @@ createBorderPath.prototype.createWavyAnimation = function(callback) {
     pointsTween2 = dataPoints.pointsTween2;
   }
 
-
+  console.log('points1',points1)
   for (let i = 0; i < points1.length; i++) {
 
     let duration = random(this.borders['speed'][0], this.borders['speed'][1]);
@@ -951,6 +1186,7 @@ createBorderPath.prototype.createWavyAnimation = function(callback) {
       yoyo: true,
       ease: Sine.easeInOut
     });
+    
 
 
     this.tl.add(tween1, -random(duration))
@@ -1032,7 +1268,8 @@ createBorderPath.prototype.stopTl = function() {
 
 createBorderPath.prototype.hoveroverOn = function() {
   if(this.borders.elem != biggerElem){
-    document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.add('borderCoverWhite');
+    // document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.add('borderCoverWhite');
+    this.borders.path.setAttributeNS(null, 'stroke', `url(#SVGIvory)`);
     document.querySelector(`#${this.borders.elem.id} .neon1`).classList.add(`${this.borders.elem.id}Neon1`);
     document.querySelector(`#${this.borders.elem.id} .neon2`).classList.add(`${this.borders.elem.id}Neon2`);
   }
@@ -1040,7 +1277,8 @@ createBorderPath.prototype.hoveroverOn = function() {
 
 createBorderPath.prototype.hoveroverOff = function() {
     if(this.borders.elem != biggerElem){
-      document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.remove('borderCoverWhite');
+      // document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.remove('borderCoverWhite');
+      this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
       document.querySelector(`#${this.borders.elem.id} .neon1`).classList.remove(`${this.borders.elem.id}Neon1`);
       document.querySelector(`#${this.borders.elem.id} .neon2`).classList.remove(`${this.borders.elem.id}Neon2`);
     }
