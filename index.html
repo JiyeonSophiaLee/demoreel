@@ -43,224 +43,221 @@
 
 <body id='body'>
     <div id='master'>
-        <!-- <section id='topMenu'>
-            <div id='nameContainer'>
-                <div id='name'>
-                    <img src="assets/images/svg/logo7.svg" alt="">
-                    <img src="assets/images/svg/sophia6.svg" alt="">
-                </div>
+
+        <div id='demo'>
+            <div id='logo'>
+                <img id='logoHeighter' src="assets/images/svg/logoHeighter.svg" alt="">
+                <img id='logoWider' src="assets/images/svg/logoWider.svg" alt="">
             </div>
-        </section> -->
-        <section id='bottom'>
-            <div id='demo'>
-                
-                <img id='logo' src="assets/images/svg/logo14.svg" alt="">
-                <div id='demoVideo'>
-                    <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    <div id='demoVideoRainbow'></div>
-                </div>
-                <img  id="demoSVG" class="blurSVG" src="assets/images/svg/demoSVG_v08.svg"alt="" srcset="">  
+            <div id='demoVideo'>
+                <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                <div id='demoVideoBgCSSAnim'></div>
             </div>
+            <img  id="demoSVG" class="blurSVG" src="assets/images/svg/demoSVG_v08.svg"alt="" srcset="">  
+        </div>
 
-            <div id='bottomMenu'> 
-                <li id='work'>
-                    <div class='borders'>    
-                        <div class='text'>WORK</div>      
-                        <div class='neon neon1'></div>
-                        <div class='neon neon2'></div>
-                        <svg>
-                            <defs>
+        <div id='menu'> 
+            <li id='work'>
+                <div class='borders'>    
+                    <div class='text'>WORK</div>      
+                    <div class='neon neon1'></div>
+                    <div class='neon neon2'></div>
+                    <svg>
+                        <defs>
+                            <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%"  stop-color="rgb(220, 51, 35)"/>
+                                <stop offset="90%"  stop-color="rgb(212, 116, 43)"/>
+                            </linearGradient>
+                            <linearGradient id="SVGIvory" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%"  stop-color="ivory"/>
+                                <stop offset="90%"  stop-color="ivory"/>
+                            </linearGradient>
 
-                                <linearGradient id="workBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="10%"  stop-color="rgb(220, 51, 35)"/>
-                                    <stop offset="90%"  stop-color="rgb(212, 116, 43)"/>
-                                </linearGradient>
-
-                            </defs>
-                            <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
-                            <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
-                            
-                            <rect id='workBorder'></rect>
-                            <rect class='borderCover'></rect>
-                            <rect class='edge'></rect>
-                        </svg>
-                    
+                        </defs>
+                        <path id='workBorderWavy1' fill='none' stroke="#ff3b29"></path>
+                        <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
                         
-                    </div>
-                    
-                    <div class='contents'>
-                    </div>
-                </li>
-                <li id='skill'>
-                    <div class='borders'>
-                        <div class='text'>SKILL</div>
-                        <div class='neon neon1'></div>
-                        <div class='neon neon2'></div>
-                        <svg>
-                            <defs>
-
-                                <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="10%"  stop-color="rgb(168, 63, 209)"/>
-                                    <stop offset="90%"  stop-color="rgb(192, 49, 91)"/>
-                                </linearGradient>
-
-                            </defs>
-                            <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
-                            <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
-                            
-                            <rect id='skillBorder'></rect>
-                            <rect class='borderCover'></rect>
-                            <rect class='edge'></rect>
-                        </svg>
-                        
-                    </div>
-                    <div class='contents'>
-                    </div>
-                </li>
-                <li id='paint'>
-                    <div class='borders'>
-                        <div class='text'>PAINT</div>
-                        <div class='neon neon1'></div>
-                        <div class='neon neon2'></div>
-                        <svg>
-                            <defs>
-
-                                <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="10%"  stop-color="rgb(225, 149, 46)"/>
-                                    <stop offset="90%"  stop-color="rgb(48, 171, 152)"/>
-                                </linearGradient>
-
-                            </defs>
-                            <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
-                            <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
-                            
-                            <rect id='paintBorder'></rect>
-                            <rect class='borderCover'></rect>
-                            <rect class='edge'></rect>
-                        </svg>
-                        
-                    </div>
-                    <div class='contents'>
-                    </div>
-                </li>
-                <li id='info'>
-                    <div class='borders'>
-                        <div class='text'>INFO</div>
-                        <div class='neon neon1'></div>
-                        <div class='neon neon2'></div>
-                        <svg>
-                            <defs>
-                                
-                                <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="10%"  stop-color="rgb(200, 86, 177)"/>
-                                    <stop offset="90%"  stop-color="rgb(75, 173, 209)"/>
-                                </linearGradient>
-
-                            </defs>
-                            <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
-                            <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
-                            
-                            <rect id='infoBorder' ></rect>
-                            <rect class='borderCover'></rect>
-                            <rect class='edge'></rect>
-                        </svg>
+                        <rect id='workBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
+                    </svg>
                 
-                    </div>
-                    <div class='contents'>
-                            <div class='title'>
-                                <div class = 'titleName' >
-                                    <div class='titleNameContainer'>
-                                        <img src="assets/images/svg/infoJiyeon.svg" alt="" srcset="">
-                                        <!-- <h1 class = 'name'>Hi, I'm Sophia</h1>
-                                        <h2 class = 'name'>Jiyeon Lee</h2> -->
-                                    </div>
-                                    <h3 class = 'position'>3D Artist & Frontend Engineer</h3>
+                    
+                </div>
+                
+                <div class='contents'>
+                </div>
+            </li>
+            <li id='skill'>
+                <div class='borders'>
+                    <div class='text'>SKILL</div>
+                    <div class='neon neon1'></div>
+                    <div class='neon neon2'></div>
+                    <svg>
+                        <defs>
+
+                            <linearGradient id="skillBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="10%"  stop-color="rgb(168, 63, 209)"/>
+                                <stop offset="90%"  stop-color="rgb(192, 49, 91)"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='skillBorderWavy1' fill='none' stroke="#cd4dff"></path>
+                        <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
+                        
+                        <rect id='skillBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
+                    </svg>
+                    
+                </div>
+                <div class='contents'>
+                </div>
+            </li>
+            <li id='paint'>
+                <div class='borders'>
+                    <div class='text'>PAINT</div>
+                    <div class='neon neon1'></div>
+                    <div class='neon neon2'></div>
+                    <svg>
+                        <defs>
+
+                            <linearGradient id="paintBorderColor" x1="100%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="10%"  stop-color="rgb(225, 149, 46)"/>
+                                <stop offset="90%"  stop-color="rgb(48, 171, 152)"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='paintBorderWavy1' fill='none' stroke="#ffa934"></path>
+                        <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
+                        
+                        <rect id='paintBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
+                    </svg>
+                    
+                </div>
+                <div class='contents'>
+                </div>
+            </li>
+            <li id='info'>
+                <div class='borders'>
+                    <div class='text'>INFO</div>
+                    <div class='neon neon1'></div>
+                    <div class='neon neon2'></div>
+                    <svg>
+                        <defs>
+                            
+                            <linearGradient id="infoBorderColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%"  stop-color="rgb(200, 86, 177)"/>
+                                <stop offset="90%"  stop-color="rgb(75, 173, 209)"/>
+                            </linearGradient>
+
+                        </defs>
+                        <path id='infoBorderWavy1' fill='none' stroke="#ff6ee2"></path>
+                        <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
+                        
+                        <rect id='infoBorder' ></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
+                    </svg>
+            
+                </div>
+                <div class='contents'>
+                        <div class='title'>
+                            <div class = 'titleName' >
+                                <div class='titleNameContainer'>
+                                    <img src="assets/images/svg/infoJiyeon.svg" alt="" srcset="">
+                                    <!-- <h1 class = 'name'>Hi, I'm Sophia</h1>
+                                    <h2 class = 'name'>Jiyeon Lee</h2> -->
                                 </div>
-                                <div id = 'myPic'>
-                                    <div class='bg'></div>
-                                    <img  src="assets/images/pictures/myPic.jpg" alt="">
-                                </div>
+                                <h3 class = 'position'>3D Artist & Frontend Engineer</h3>
                             </div>
+                            <div id = 'myPic'>
+                                <div class='bg'></div>
+                                <img  src="assets/images/pictures/myPic.jpg" alt="">
+                            </div>
+                        </div>
+                    
+
+
+                        <div id = 'contentsGroup'>
+
+                            <div id='summaryTitle' class = 'tableContents'>
+                                <p>WHO AM I</p>
+                            </div>
+
+                            <div id = 'summaryContainer' class = 'infoContents'>
+                                <p class = 'summary'>I am a 3D Artist, specialised in lighting.</p>
+                                <p class = 'summary'>I also love to do modeling, textureing, rigging, animating and dynamic things.</p>
+                                <p class = 'summary'>Recently, I started to learn code for understanding basics of programming a year ago, and I created my webstie by myself which is still in progress. </p>
+                                <p class = 'summary'>JS librareis that I worked are ThreeJS and Gsap in this website.</p>
+                                <p class = 'summary'>When having a extra time, I often play LOL and hiking. My Id is DTree in North America server.</p>
+                                <p class = 'summary'>It's more than wecolme to talk and share ideas, so feel free to reach out to me.</p>
+                            </div>
+
+
+
+                            <div id='educationTitle' class = 'tableContents'>
+                                <p>EDUCATION</p>
+                            </div>
+                            
                         
 
-
-                            <div id = 'contentsGroup'>
-
-                                <div id='summaryTitle' class = 'tableContents'>
-                                    <p>WHO AM I</p>
-                                </div>
-
-                                <div id = 'summaryContainer' class = 'infoContents'>
-                                    <p class = 'summary'>I am a 3D Artist, specialised in lighting.</p>
-                                    <p class = 'summary'>I also love to do modeling, textureing, rigging, animating and dynamic things.</p>
-                                    <p class = 'summary'>Recently, I started to learn code for understanding basics of programming a year ago, and I created my webstie by myself which is still in progress. </p>
-                                    <p class = 'summary'>JS librareis that I worked are ThreeJS and Gsap in this website.</p>
-                                    <p class = 'summary'>When having a extra time, I often play LOL and hiking. My Id is DTree in North America server.</p>
-                                    <p class = 'summary'>It's more than wecolme to talk and share ideas, so feel free to reach out to me.</p>
-                                </div>
-
-
-
-                                <div id='educationTitle' class = 'tableContents'>
-                                    <p>EDUCATION</p>
-                                </div>
-                                
                             
-
-                                
-                                <div id= 'educationContainer' class = 'infoContents'>
-                                    <div class ='school'>
-                                        <p class= 'education Mockwon schoolName'> Mockwon University</p>
-                                        <p class= 'education Mockwon'> BA in Animation</p>
-                                        <p class= 'education Mockwon country'> South Korea</p>
-                                        <p class= 'education Mockwon date'> 2007 ~ 2011</p>
-                                    </div>
-                                    <div class='school'>
-                                        <p class= 'education AcademyOfArt schoolName'> Arty University</p>
-                                        <p class= 'education AcademyOfArt'> MA in VisualEffects & Animation</p>
-                                        <p class= 'education AcademyOfArt country'> USA </p>
-                                        <p class= 'education AcademyOfArt date'> 2013 ~ 2017</p>
-                                    </div>
+                            <div id= 'educationContainer' class = 'infoContents'>
+                                <div class ='school'>
+                                    <p class= 'education Mockwon schoolName'> Mockwon University</p>
+                                    <p class= 'education Mockwon'> BA in Animation</p>
+                                    <p class= 'education Mockwon country'> South Korea</p>
+                                    <p class= 'education Mockwon date'> 2007 ~ 2011</p>
                                 </div>
-
-
-                                
-                                <div id='contactTitle' class = 'tableContents'>
-                                    <p>WHERE TO FIND ME</p>
-                                </div>
-                                
-
-                                <div id= 'contactContainer' class = 'infoContents'>
-                                    <div id = 'email' class ='address'>
-                                        <div class='icon-mail icon'></div>
-                                        <a href="jiyeon.sophia.lee@gmail.com">jiyeon.sophia.lee@gmail.com</a>
-                                    </div>
-                                    <div id ='artStation' class ='address'>
-                                        <div class='icon-picture icon'></div>
-                                        <a href="https://www.artstation.com/jiyeon_sophia">https://www.artstation.com/jiyeon_sophia</a>
-                                    </div>
-                                    <div id ='github' class ='address'>
-                                        <div class='icon-github icon'></div>
-                                        <a href="https://github.com/JiyeonSophiaLee">https://github.com/JiyeonSophiaLee</a>
-                                    </div>
-                                </div>
-
-
-                                <div id='extraTitle' class = 'tableContents'>
-                                </div>
-                                <div id='extraContainer' class = 'tableContents'>
-                                    Thanks for coming
+                                <div class='school'>
+                                    <p class= 'education AcademyOfArt schoolName'> Arty University</p>
+                                    <p class= 'education AcademyOfArt'> MA in VisualEffects & Animation</p>
+                                    <p class= 'education AcademyOfArt country'> USA </p>
+                                    <p class= 'education AcademyOfArt date'> 2013 ~ 2017</p>
                                 </div>
                             </div>
 
 
                             
+                            <div id='contactTitle' class = 'tableContents'>
+                                <p>WHERE TO FIND ME</p>
+                            </div>
+                            
+
+                            <div id= 'contactContainer' class = 'infoContents'>
+                                <div id = 'email' class ='address'>
+                                    <div class='icon-mail icon'></div>
+                                    <a href="jiyeon.sophia.lee@gmail.com">jiyeon.sophia.lee@gmail.com</a>
+                                </div>
+                                <div id ='artStation' class ='address'>
+                                    <div class='icon-picture icon'></div>
+                                    <a href="https://www.artstation.com/jiyeon_sophia">https://www.artstation.com/jiyeon_sophia</a>
+                                </div>
+                                <div id ='github' class ='address'>
+                                    <div class='icon-github icon'></div>
+                                    <a href="https://github.com/JiyeonSophiaLee">https://github.com/JiyeonSophiaLee</a>
+                                </div>
+                            </div>
+
+
+                            <div id='extraTitle' class = 'tableContents'>
+                            </div>
+                            <div id='extraContainer' class = 'tableContents'>
+                                Thanks for coming
+                            </div>
+                        </div>
+
 
                         
-                </li>
-                
-            </div>
-        </section>
+
+                    
+            </li>
+            
+        </div>
+   
         <!-- <div id='threeJSVignette'></div>
         <div id='threejsBlocker'></div>
         <div id='threeJS'></div>

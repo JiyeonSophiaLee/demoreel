@@ -1,5 +1,5 @@
 const INFO_CONTENTS = document.querySelector(`#info .contents`);
-INFO_CONTENTS.style.display = 'none'
+// INFO_CONTENTS.style.display = 'none'
 
 
 function callInfoContents(elem){

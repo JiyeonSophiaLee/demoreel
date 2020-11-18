@@ -1,12 +1,14 @@
 const MASTER = document.getElementById('master');
 // const TOP_MENU = document.getElementById('topMenu');
 // const MENU__ = document.getElementById('menu');
+// const BOTTOM = document.getElementById('bottom');
 const LOGO__ = document.getElementById('logo');
+const LOGO_HEIGHTER = document.getElementById('logoHeighter');
+const LOGO_WIDER = document.getElementById('logoWider');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
 const DEMO_SVG = document.getElementById('demoSVG');
-const BOTTOM = document.getElementById('bottom');
-const BOTTOM_MENU = document.getElementById('bottomMenu');
+const MENU__ = document.getElementById('menu');
 const WORK = document.getElementById('work');
 const SKILL = document.getElementById('skill');
 const PAINT = document.getElementById('paint');
@@ -29,23 +31,24 @@ let biggeredElem = null;
  
 
 function getTransitionValue() {
-  this.min = 50;
-  this.max = 75;
+  this.symetryDemoMenu = 50;
+  this.unSymetryDemoMenu = 75;
   this.duration = 1;
-  this.menuMax = 75;
-  this.menuMin = 50;
-  this.masterMaxWidth = getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth');
+  this.symetryEachMenu = 50;
+  this.unSymetryEachMenu = 75;
+  this.masterMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth'));
   // this.nameMaxMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nameMaxMediaQuery'));
-  this.videoMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidth'));
-  this.videoMinWidth = 90;
-  this.videoMaxWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--videoDemoWidthMediaQuery'));
-  this.videoMinWidthMediaQuery = 50;
+  this.symetryDemoVideoWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidth'));
+  this.unSymetryDemoVideoWidth = 90;
+  this.symetryDemoVideoWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidthMediaQuery'));
+  this.unSymetryDemoVideoWidthMediaQuery = 50;
   this.borderMinMediaQuery = 13;
   this.borderMinMediaQueryUnit = 'vw';
   this.bordersSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSize');
   this.bordersSmallSize = getComputedStyle(document.documentElement).getPropertyValue('--bordersSmallSize');
   this.borderSize800 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize800');
   this.borderSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize1400');
+  this.gsapEase = "power1.inOut";
 };
 
 let transitionValue = new getTransitionValue();
@@ -61,7 +64,7 @@ let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
 
 if(innerWidth <= 800){
-  DEMO__.style.height = demoVideoHeight +'px';
+  // DEMO__.style.height = demoVideoHeight +'px';
 }else{
   
   // threeJsBlocker();
@@ -156,10 +159,14 @@ menuController.prototype.expandMenu = function(){
     menuExpanded = true;
     biggerElem = this.elem;
     
-    demoVideoHeight = DEMO_VIDEO.parentElement.clientWidth * (transitionValue['videoMinWidthMediaQuery'] / 100) * (9/16);
+    //----calculate demo height in order to give the same result to all functions------------------------
+    if(innerWidth > 800){
+      demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+    }else{
+      demoVideoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+    }
     
-
-
+    
     // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
     Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
@@ -170,12 +177,20 @@ menuController.prototype.expandMenu = function(){
     biggeredElem = biggerElem;
     biggerElem = this.elem;
 
-    demoVideoHeight =  DEMO_VIDEO.parentElement.clientWidth * (transitionValue['videoMinWidthMediaQuery'] / 100) * (9/16);
+
+
+    //----calculate demo height in order to give the same result to all functions------------------------
+    // demoVideoHeight =  DEMO_VIDEO.parentElement.clientWidth * (transitionValue['unSymetryDemoVideoWidthMediaQuery'] / 100) * (9/16);
+    if(innerWidth > 800){
+      demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+    }else{
+      demoVideoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+    }
 
     
 
     // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents()])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -189,7 +204,7 @@ menuController.prototype.expandMenu = function(){
 
 
     // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents()])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -267,82 +282,50 @@ function menuUtilities(id){
 
 }
 
-
 menuUtilities.prototype.expandMenuIf = function(){
   return new Promise((resolve, reject)=>{
+   
     
-    // DEMO__.classList.add('menutransition');
-    // DEMO_VIDEO.classList.add('menutransition');
-    // DEMO_VIDEO_BG_CSS_ANIM.style.opacity = '50%';
-    
-    // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
-    
+ 
     if(innerWidth > 800){
-      
-      // DEMO_SVG.style.display= 'none';
       DEMO_SVG.classList.remove('blurSVG');
+
+      demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
       
-      // MASTER.classList.add('menutransition');
-      // TOP_MENU.classList.add('menutransition');
-      // TITLE_NAME_CONTAINER.classList.add('menutransition');
-      // TITLE_NAME.classList.add('menutransition');
-
-
-      // NAME.classList.add('menutransition');
-
-      // MASTER.style.maxWidth = '100%';
-      // TITLE_NAME_CONTAINER.style.width = innerWidth * ( 100 - transitionValue['max']) / 100 + 'px';
-      // TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
-
       gsap.to(
         DEMO_VIDEO,{
-          width: transitionValue['videoMinWidth'] + '%',
-          height: ((innerWidth * (100-transitionValue.max) / 100) * transitionValue['videoMinWidth']/100)  * (9/16) +'px',
+          width: transitionValue['unSymetryDemoVideoWidth'] + '%',
+          height: demoVideoHeight +'px',
           duration: transitionValue['duration'],
-          ease:"power1.inOut"
+          ease: transitionValue['gsapEase']
         }
       )
-      // DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
-      // DEMO_VIDEO.style.height = ((innerWidth * (100-transitionValue.max) / 100) * transitionValue['videoMinWidth']/100)  * (9/16) +'px';
 
-      // DEMO__.style.width = ( 100 - transitionValue['max']) + '%';
-      
     }else{
-
-      BOTTOM_MENU.classList.add('menutransition');
-
-      DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] + '%';
-
-      DEMO__.style.height = demoVideoHeight +'px' ;
-      DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
-
+      demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      
+      gsap.to(
+        DEMO_VIDEO,{
+          width: transitionValue['unSymetryDemoVideoWidthMediaQuery'] + '%',
+          height: demoVideoHeight +'px',
+          duration: transitionValue['duration'],
+          ease: transitionValue['gsapEase']
+        }
+      )
     }
 
 
-  
     setTimeout(() => {
+      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
 
-
-      DEMO_VIDEO.classList.remove('menutransition');
-      DEMO__.classList.remove('menutransition');
-
       if(innerWidth > 800){
-
         DEMO_SVG.classList.add('blurSVG');
-        // MASTER.classList.remove('menutransition');
-        // TOP_MENU.classList.remove('menutransition');
-        // TITLE_NAME_CONTAINER.classList.remove('menutransition');
-        // TITLE_NAME.classList.remove('menutransition');
-
-        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
 
       }else{
-        BOTTOM_MENU.classList.remove('menutransition');
       }
 
-      document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-    }, transitionValue.duration * 1000);
+    }, transitionValue['duration'] * 1000);
 
     resolve();  
   })
@@ -369,19 +352,12 @@ menuUtilities.prototype.expandMenuElseIf = function(){
 
 
     setTimeout(() => {
-     
-
-      // TOP_MENU.classList.remove('menutransition');
-  
-      DEMO__.classList.remove('menutransition');
 
       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden';
       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
 
       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.opacity = '0';
       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
-      // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
-      // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
       document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'initial';
       document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'initial';
     }, transitionValue.duration * 1000);
@@ -393,10 +369,7 @@ menuUtilities.prototype.expandMenuElseIf = function(){
 menuUtilities.prototype.expandMenuElse = function(){
   return new Promise((resolve, reject)=>{
 
-    DEMO_VIDEO.classList.add('menutransition');
-    DEMO_VIDEO.style.width = transitionValue['videoMaxWidth'] + '%';
-    DEMO_VIDEO_BG_CSS_ANIM.style.opacity = '100%';
-
+    
     document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
@@ -408,39 +381,37 @@ menuUtilities.prototype.expandMenuElse = function(){
   
 
     if(innerWidth > 800){
-      DEMO_SVG.style.display= 'initial';
+      // DEMO_SVG.style.display= 'initial';
       
-      
-      MASTER.classList.add('menutransition');
-      // TITLE_NAME_CONTAINER.classList.add('menutransition');
-      DEMO__.classList.add('menutransition');
-      // TITLE_NAME.classList.add('menutransition');
-      
-      
+      let demoHeight;
 
-
-      MASTER.style.maxWidth = transitionValue['maxWidth'] + 'px';
-
-      DEMO__.style.width = transitionValue['min'] + '%';
       if(innerWidth > 1400){
-        DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
-      }else{  
-        DEMO_VIDEO.style.height = ((DEMO__.parentElement.clientWidth * (transitionValue.min) / 100) * transitionValue['videoMaxWidth']/100) * (9/16) +'px';
+        // DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16) +'px';
+        height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
+
+      }else{ 
+        height = ((DEMO__.parentElement.clientWidth * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
+
       }
-        // TITLE_NAME_CONTAINER.style.width =  transitionValue['min'] + '%';
-      // TITLE_NAME.style.width = transitionValue['videoMaxWidth'] + '%';
-      
+
+      gsap.to(
+        DEMO_VIDEO,{
+          width: transitionValue['symetryDemoVideoWidth'] + '%',
+          height: height +'px',
+          duration: transitionValue['duration'],
+          ease: transitionValue['gsapEase']
+        }
+      )
 
     }else{
-      let demoVideoHeight = innerWidth * transitionValue['videoMaxWidthMediaQuery'] / 100  * (9/16);
-      
-      
-      DEMO__.classList.add('menutransition');
-      BOTTOM_MENU.classList.add('menutransition');
-
-      DEMO__.style.height = demoVideoHeight +'px' ;
-      DEMO_VIDEO.style.height = demoVideoHeight +'px' ;
-      DEMO_VIDEO.style.width = '';
+      gsap.to(
+        DEMO_VIDEO,{
+          width: transitionValue['symetryDemoVideoWidthMediaQuery'] + '%',
+          height: (innerWidth * transitionValue['symetryDemoVideoWidthMediaQuery']/100)  * (9/16) +'px',
+          duration: transitionValue['duration'],
+          ease: transitionValue['gsapEase']
+        }
+      )
 
     }
 
@@ -458,7 +429,7 @@ menuUtilities.prototype.expandMenuElse = function(){
     if(innerWidth > 800){
       MASTER.classList.remove('menutransition');
 
-      DEMO__.classList.remove('menutransition');
+      // DEMO__.classList.remove('menutransition');
       // TITLE_NAME_CONTAINER.classList.remove('menutransition');
       // TITLE_NAME.classList.remove('menutransition');
       
@@ -466,7 +437,7 @@ menuUtilities.prototype.expandMenuElse = function(){
       
     }else{
       DEMO__.classList.remove('menutransition');
-      BOTTOM_MENU.classList.remove('menutransition');
+      MENU__.classList.remove('menutransition');
 
 
     }
@@ -488,23 +459,23 @@ menuUtilities.prototype.updateSize = function(){
 
     if(innerWidth > 800){
       
-      BOTTOM_MENU.style.height = '100%'
-      DEMO__.style.height = '';
+      MENU__.style.height = '100%'
+      DEMO__.style.height = '100%';
       
       
 
       if (menuExpanded ) {
         MASTER.style.maxWidth = '100%';
-        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['max']) + '%';
-        // TITLE_NAME.style.width = transitionValue['videoMinWidth'] + '%';
+        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['unSymetryDemoMenu']) + '%';
+        // TITLE_NAME.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
 
-        DEMO__.style.width = 100 - transitionValue['max'] + '%';
-        DEMO_VIDEO.style.width = transitionValue['videoMinWidth'] + '%';
-        // NAME.style.width = 100 - transitionValue['max'] + '%';
+        DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
+        // NAME.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
 
 
       }else{
-        // TITLE_NAME_CONTAINER.style.width = transitionValue['min'] + '%';
+        // TITLE_NAME_CONTAINER.style.width = transitionValue['symetryDemoMenu'] + '%';
         DEMO_VIDEO.style.width = '';
         // threeJsBlocker();
       }
@@ -513,7 +484,7 @@ menuUtilities.prototype.updateSize = function(){
       // TITLE_NAME_CONTAINER.style.width = '100%';
       // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
 
-      DEMO__.style.height = demoVideoHeight +'px';
+      // DEMO__.style.height = demoVideoHeight +'px';
     
       DEMO__.style.width = '';
 
@@ -521,7 +492,7 @@ menuUtilities.prototype.updateSize = function(){
       if (menuExpanded ) {
 
         // TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
-        DEMO_VIDEO.style.width = transitionValue['videoMinWidthMediaQuery'] +'%';
+        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
       }
     }
   // }
