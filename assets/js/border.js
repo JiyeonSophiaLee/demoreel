@@ -690,14 +690,11 @@ createBorderPath.prototype.subMenuChanging = function() {
     
   }else{
     this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-    this.subMenuChangingHeight = (innerHeight - LOGO_WIDER.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-    console.log('this.subMenuChangingWidth',this.subMenuChangingWidth)
-    console.log('this.subMenuChangingHeight',this.subMenuChangingHeight);
-    console.log('(innerHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight',(innerHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+    this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
     console.log('innerHeight',innerHeight)
+    console.log('tLOGO_WIDER.clientHeight',LOGO__.clientHeight);
     console.log('demoVideoHeight',demoVideoHeight)
     console.log('this.botMenuPaddingHeight',this.botMenuPaddingHeight)
-    console.log('transitionValue[unSymetryEachMenu] / 100',transitionValue['unSymetryEachMenu'] / 100)
     console.log('this.liPaddingHeight',this.liPaddingHeight)
   }
 
