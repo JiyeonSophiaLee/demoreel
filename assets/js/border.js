@@ -400,7 +400,7 @@ createBorderPath.prototype.expandMenuElse = function() {
     }, transitionValue.duration * 1000);
 
   
-})
+  })
 
 };
 
@@ -691,11 +691,6 @@ createBorderPath.prototype.subMenuChanging = function() {
   }else{
     this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
     this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-    console.log('innerHeight',innerHeight)
-    console.log('tLOGO_WIDER.clientHeight',LOGO__.clientHeight);
-    console.log('demoVideoHeight',demoVideoHeight)
-    console.log('this.botMenuPaddingHeight',this.botMenuPaddingHeight)
-    console.log('this.liPaddingHeight',this.liPaddingHeight)
   }
 
 }
@@ -841,12 +836,12 @@ createBorderPath.prototype.animRectBorder = function() {
   if (menuExpanded) {
 
     this.createWavyAnimation(() => {
-      eval(this.borders.elem.id + 'MenuController').removeEventCB();
+      eval(this.borders.elem.id + 'MenuController').addEventCB();
       eval(this.borders.elem.id + 'MenuController').callAfterAnim(this.borders.elem);
     });
 
   } else {
-    eval(this.borders.elem.id + 'MenuController').removeEventCB()
+    eval(this.borders.elem.id + 'MenuController').addEventCB()
   }
 
 
@@ -865,7 +860,6 @@ createBorderPath.prototype.stopAni = function() {
 
 
 createBorderPath.prototype.smallerRestElemBorders = function(){
-
   this.restElems.forEach((restElem)=>{
     document.getElementById(`${restElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
     document.getElementById(`${restElem.id}Border`).parentElement.classList.add('menutransition');
@@ -880,13 +874,14 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
 
     })
   }else{
+    if(innerWidth < 800){
     this.restElems.forEach((restElem)=>{
-      console.log('else is working')
-      this.setBordersSizeFamily(restElem,'borderSize800');
+        this.setBordersSizeFamily(restElem,'borderSize800');
 
-      // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
-      // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
-    })
+        // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
+        // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
+      })
+    }
   }
   
  
