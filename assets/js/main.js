@@ -74,31 +74,42 @@ if(innerWidth <= 800){
 
 
 const LOGOcallClickEvent = function(){
-  if(biggerElem != null){
+  // if(biggerElem != null){
 
-    let elem = biggerElem;
+  //   let elem = biggerElem;
     
-    let bordersExpandMenu = eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border');
-    let utilitiExpandMenu = eval(elem.id + 'MenuUtilities');
+  //   let bordersExpandMenu = eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border');
+  //   let utilitiExpandMenu = eval(elem.id + 'MenuUtilities');
 
 
-    menuExpanded =false;
-    biggerElem = null;
-    biggeredElem = null;
+  //   menuExpanded =false;
+  //   biggerElem = null;
+  //   biggeredElem = null;
 
 
+
+  //   allElems.forEach((elem)=>{
+  //     elem.removeEventListener('click',eval(`${elem.id}MenuController`)['callClickEvent']);
+  //   })
+
+
+    
+
+  //   // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),stopSkills(),deleteThreeJs(elem)])
+  //   Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
+  //   .then(text=>utilitiExpandMenu.deleteMenuText())
+  //   } 
+  if(biggerElem != null){
+    console.log('logo clicked')
 
     allElems.forEach((elem)=>{
-      elem.removeEventListener('click',eval(`${elem.id}MenuController`)['callClickEvent']);
+      elem.removeEventListener('click',eval(elem.id+'MenuController')['callClickEvent'])
     })
+    LOGO__.removeEventListener('click',LOGOcallClickEvent);
+    // eval(biggerElem.id + 'MenuController').elemEventListener(allElems,'remove','callClickEvent')
 
-
-    
-
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),stopSkills(),deleteThreeJs(elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
-    .then(text=>utilitiExpandMenu.deleteMenuText())
-    } 
+    eval(biggerElem.id + 'MenuController').expandMenu();
+  }
 }
 
 LOGO__.addEventListener('click',LOGOcallClickEvent);
@@ -123,9 +134,11 @@ function menuController(id){
 
   this.callClickEvent = () =>{
       
-        // TITLE.removeEventListener('click',TITLEcallClickEvent);
-        this.elem.removeEventListener('click', this.callClickEvent);
-        this.restElemsEventListener('remove', 'callClickEvent');
+     
+        // this.elem.removeEventListener('click', this.callClickEvent);
+        // this.restElemsEventListener('remove', 'callClickEvent');
+        this.elemEventListener(allElems,'remove','callClickEvent');
+        LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
         this.expandMenu();
     
@@ -134,11 +147,10 @@ function menuController(id){
   this.elem.addEventListener('click',this.callClickEvent);
 }
 
-menuController.prototype.removeEventCB = function(){
+menuController.prototype.addEventCB = function(){
   console.log('add')
-  // TITLE.addEventListener('click',TITLEcallClickEvent);
-  this.elem.addEventListener('click', this.callClickEvent);
-  this.restElemsEventListener('add', 'callClickEvent');
+  this.elemEventListener(allElems,'add','callClickEvent');
+  LOGO__.addEventListener('click',LOGOcallClickEvent);
 }
 menuController.prototype.callAfterAnim = function(elem){
   console.log('call');
@@ -152,12 +164,12 @@ menuController.prototype.expandMenu = function(){
   let utilitiExpandMenu = eval(this.elem.id + 'MenuUtilities');
  
 
-  
-
+console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
 
   if (menuExpanded == false ){
     menuExpanded = true;
     biggerElem = this.elem;
+    console.log('if is working')
     
     //----calculate demo height in order to give the same result to all functions------------------------
     if(innerWidth > 800){
@@ -176,7 +188,7 @@ menuController.prototype.expandMenu = function(){
   }else if(biggerElem != this.elem){
     biggeredElem = biggerElem;
     biggerElem = this.elem;
-
+    console.log('if else is working')
 
 
     //----calculate demo height in order to give the same result to all functions------------------------
@@ -201,7 +213,7 @@ menuController.prototype.expandMenu = function(){
     biggeredElem = null;
 
   
-
+    console.log('else is working')
 
     // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
     Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
@@ -214,17 +226,23 @@ menuController.prototype.expandMenu = function(){
   
 }
 
-menuController.prototype.restElemsEventListener = function(listener, handler) {
+menuController.prototype.elemEventListener = function(elems,listener, handler) {
+  let arrayElems = [];
+  if(Array.isArray(elems)){
+    arrayElems = elems;
+  }else{
+    arrayElems.push(elems);
+  }
   
-  for (let i = 0; i < this.restElems.length; i++) {
-    let controllerId = eval(this.restElems[i].id+'MenuController')
+  arrayElems.forEach((elem)=>{
+    let controllerId = eval(elem.id+'MenuController')
 
     if (listener == 'add') {
-      this.restElems[i].addEventListener('click', controllerId[handler]);
+      elem.addEventListener('click', controllerId[handler]);
     } else {
-      this.restElems[i].removeEventListener('click', controllerId[handler]);
+      elem.removeEventListener('click', controllerId[handler]);
     }
-  }
+  })
 }
 
 
