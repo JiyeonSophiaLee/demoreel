@@ -88,10 +88,10 @@ function init() {
 
     sky0 = getSky(16,'assets/images/hdr/space_00.jpg');
     sky1 = getSky(16,'assets/images/hdr/space_01.jpg');
-    sky2 = getSky(16,'assets/images/hdr/space_02.jpg');
+    sky2 = getSky(16,'assets/images/hdr/space_test.jpg');
     sky3 = getSky(16,'assets/images/hdr/space_03.jpg');
     
-
+    console.log('assets/images/hdr/space_test2.jpg')
     scene.add(sky0);
     scene.add(sky1);
     scene.add(sky2);
@@ -668,12 +668,12 @@ function callThreeJS(elem){
 
 
     let getVignetteSize = biggerElem.getBoundingClientRect();
-    let vignetteRadius = innerWidth * 0.1;
+    // let vignetteRadius = innerWidth * 0.1;
 
 
 
     console.log(getVignetteSize)
-    threeJSVignette.style.background = `linear-gradient(to right, rgba(0,0,0,0.8) ${getVignetteSize.x }px, red ${getVignetteSize.x }px, red ${getVignetteSize.x + getVignetteSize.width }px, rgba(0,0,0,0.6) ${getVignetteSize.x + getVignetteSize.width}px)`;
+    // threeJSVignette.style.background = `linear-gradient(to right, rgba(0,0,0,0.8) ${getVignetteSize.x }px, red ${getVignetteSize.x }px, red ${getVignetteSize.x + getVignetteSize.width }px, rgba(0,0,0,0.6) ${getVignetteSize.x + getVignetteSize.width}px)`;
     
     // gsap.fromTo(
     //     threeJSVignette,{

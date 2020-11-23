@@ -1036,7 +1036,6 @@ function callSkillsContents(elem){
         SKILL_CONTENTS.style.display = 'initial';
       
         if(innerWidth > 800){
-            console.log('if')
             TLarray.forEach((tl)=>{
                 tl.getCallGraphTL();
                 tl.playCallGraphTL();            
