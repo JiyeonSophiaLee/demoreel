@@ -3,13 +3,13 @@
   src: url(../fonts/GathaSans.ttf);
 }
 @font-face{
-  font-family: 'absender1';
-  src: url(../fonts/absender1.ttf);
+  font-family: 'theboldfont';
+  src: url(../fonts/theboldfont.ttf);
 }
-@font-face{
-  font-family: 'secrcode';
-  src: url(../fonts/secrcode.ttf);
-}
+/* @font-face{
+  font-family: 'REVOLUTION';
+  src: url(../fonts/REVOLUTION.ttf);
+} */
 
 *{
   margin: 0;
@@ -36,6 +36,8 @@ canvas{
   --bordersSmallSize:5rem;
   --borderSize800: 7rem;
   --borderSize1400: 8.7rem;
+
+  --LiScrollbarWidth: 8px;
 }
 /* @media (max-width:800px){
   :root{
@@ -63,24 +65,145 @@ body{
 
 
 /*   Fonts   */
-#master{
+/* #master{
   font-family: 'Text Me One', sans-serif;
+} */
+#loader {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 48px;
 }
-#skill .contents{
+/* #skill .contents{
   font-family: 'Quicksand', sans-serif;
 }
 
 #info .contents{
   font-family: 'Quicksand', sans-serif;
+} */
+
+#menu > li .borders{
+  font-family: 'Text Me One', sans-serif;
+  font-size:2vw;
 }
+  @media (max-width:800px){
+    #menu > li .borders{
+      font-size: 1.5rem;
+    }
+  }
+  @media (min-width:1400px){
+    #menu > li .borders{
+      font-size: 1.8rem;
+    }
+  }
+
+#menu li .contents{
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+}
+  @media (min-width:1100px){
+    #menu li .contents{
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+    }
+  }
+
 #info .title .titleName .titleNameContainer .name:first-child{
-  font-family: 'Secular One', sans-serif;
+  font-family: 'theboldfont';
+  font-size: 6vw;
+  line-height: 6vw;
+  /* letter-spacing: 0.2vw; */
 }
+  @media (max-width:800px){
+    #info .title .titleName .titleNameContainer .name:first-child{
+        font-size: 3.2rem;
+        line-height: 3.2rem;
+    }
+  }
 #info .title .titleName .titleNameContainer .name:nth-child(2){
-  font-family: 'Secular One', sans-serif;
+  font-family: 'theboldfont';
+  font-size: 5vw;
+  line-height: 5vw;
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  /* letter-spacing: 0.2vw; */
 }
+  @media (max-width:800px){
+    #info .title .titleName .titleNameContainer .name:nth-child(2){
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+  }
+  @media (min-width:1100px){
+    #info .title .titleName .titleNameContainer .name:nth-child(2){
+      font-size: 4.5vw;
+      line-height: 4.5vw;
+    }
+  }
+#info .title .titleName .position{
+  font-size: 2vw;
+  font-weight: 500;
+  color: tomato;
+}
+  /* @media (min-width:1400px){
+      #info .title .titleName .position{
+          font-size: 1.3rem;
+      }
+  } */
 
 
+  #info #contentsGroup .tableContents{
+    font-size: 2.3rem;
+    font-weight: 500;
+  }
+    @media (min-width:1100px){
+      #info #contentsGroup .tableContents{
+        font-size: 3rem;
+        line-height: 3rem;
+      }
+    }
+
+
+  #info #contentsGroup .infoContents .school .schoolName{
+    font-size: 1.7rem;
+    line-height: 1.7rem;
+    font-weight: bold;
+  }
+    @media (min-width:1100px){
+      #info #contentsGroup .infoContents .school .schoolName{
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+    }
+
+  #info #contentsGroup .infoContents .school .country, .date{
+    font-size: 1.1rem;
+  }
+    @media (min-width:1100px){
+      #info #contentsGroup .infoContents .school .country, .date{
+        font-size: 1.3rem;
+      }
+    }
+
+    /* #info #contentsGroup #contactContainer .address .icon{
+      font-size: 2.1rem;
+  }
+      @media (min-width:1400px){
+          #info #contentsGroup #contactContainer .address .icon{
+              font-size: 2.5rem;
+          }
+      }
+  #info #contentsGroup #contactContainer .address a{
+    font-size: 1.1rem;
+  }
+    @media (min-width:1400px){
+      #info #contentsGroup #contactContainer .address a{
+          font-size: 1.3rem;
+      }
+    } */
+
+
+
+/* Loader */
 #loaderContainer{
   position: absolute;
   top: 0;
@@ -97,8 +220,6 @@ body{
     align-self: center;
     color: #FFF;
     position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 48px;
     letter-spacing: 4px;
   }
   #loader::before {
@@ -405,20 +526,10 @@ body{
             display:grid;
             text-align: center ;
             position: relative;
-            font-size:2vw;
             align-items: center;
             z-index: 2;
           }
-          @media (max-width:800px){
-            #menu > li .borders{
-              font-size: 1.5rem;
-            }
-          }
-          @media (min-width:1400px){
-            #menu > li .borders{
-              font-size: 1.8rem;
-            }
-          }
+
 
 
           #menu > li .borders .neon{
@@ -482,7 +593,7 @@ body{
               height: calc(100% - 40px);
               overflow-y: auto;
               overflow-x: hidden;
-              padding: 0.4rem;
+              padding: 0.4rem 1rem 0.4rem 0.4rem;
               /* display: none; */
               /* z-index: 3; */
             }
@@ -492,7 +603,7 @@ body{
                 }
               }
               #menu li .contents::-webkit-scrollbar {
-                width: 8px;
+                width: var(--LiScrollbarWidth);
                 border: black 2px solid;
               }
               
@@ -554,9 +665,9 @@ body{
 }
 
 
-.fontMinSOPHIA{
+/* .fontMinSOPHIA{
   font-size: 6vw !important;
-}
+} */
 
 
 /* 

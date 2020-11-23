@@ -1,7 +1,4 @@
 const MASTER = document.getElementById('master');
-// const TOP_MENU = document.getElementById('topMenu');
-// const MENU__ = document.getElementById('menu');
-// const BOTTOM = document.getElementById('bottom');
 const LOGO__ = document.getElementById('logo');
 const LOGO_HEIGHTER = document.getElementById('logoHeighter');
 const LOGO_WIDER = document.getElementById('logoWider');
@@ -13,12 +10,9 @@ const WORK = document.getElementById('work');
 const SKILL = document.getElementById('skill');
 const PAINT = document.getElementById('paint');
 const INFO = document.getElementById('info');
-// const TITLE = document.querySelector('#name');
 const DEMO_VIDEO_BG_CSS_ANIM = document.querySelector('#demoVideoBgCSSAnim');
-// const TITLE_NAME_CONTAINER = document.querySelector('#nameContainer');
 const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
-// const nameP = document.querySelectorAll('#name p');
 
 const allElems = [WORK,PAINT,SKILL,INFO];
 
@@ -37,7 +31,6 @@ function getTransitionValue() {
   this.symetryEachMenu = 50;
   this.unSymetryEachMenu = 75;
   this.masterMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth'));
-  // this.nameMaxMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nameMaxMediaQuery'));
   this.symetryDemoVideoWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidth'));
   this.unSymetryDemoVideoWidth = 90;
   this.symetryDemoVideoWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidthMediaQuery'));
@@ -74,40 +67,12 @@ if(innerWidth <= 800){
 
 
 const LOGOcallClickEvent = function(){
-  // if(biggerElem != null){
-
-  //   let elem = biggerElem;
-    
-  //   let bordersExpandMenu = eval('run' + elem.id.charAt(0).toUpperCase() + elem.id.slice(1) + 'Border');
-  //   let utilitiExpandMenu = eval(elem.id + 'MenuUtilities');
-
-
-  //   menuExpanded =false;
-  //   biggerElem = null;
-  //   biggeredElem = null;
-
-
-
-  //   allElems.forEach((elem)=>{
-  //     elem.removeEventListener('click',eval(`${elem.id}MenuController`)['callClickEvent']);
-  //   })
-
-
-    
-
-  //   // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(), callThumbnailElse(elem),stopSkills(),deleteThreeJs(elem)])
-  //   Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
-  //   .then(text=>utilitiExpandMenu.deleteMenuText())
-  //   } 
   if(biggerElem != null){
-    console.log('logo clicked')
-
     allElems.forEach((elem)=>{
       elem.removeEventListener('click',eval(elem.id+'MenuController')['callClickEvent'])
     })
     LOGO__.removeEventListener('click',LOGOcallClickEvent);
-    // eval(biggerElem.id + 'MenuController').elemEventListener(allElems,'remove','callClickEvent')
-
+    
     eval(biggerElem.id + 'MenuController').expandMenu();
   }
 }
@@ -119,18 +84,10 @@ LOGO__.addEventListener('click',LOGOcallClickEvent);
 
 
 
-// function getdemoVideoBgCSSAnim(){
-//   demoVideoBgCSSAnim.style.width = demoVideoHeight + 4 + 'px';
-//   console.log('rainbow is working');
-// }
-
-
-
-
 function menuController(id){
   this.elem = document.getElementById(id);
   // this.allElems = this.getAllElems(this)
-  this.restElems = getRestElems(this.elem);
+  // this.restElems = getRestElems(this.elem);
 
   this.callClickEvent = () =>{
       
@@ -154,8 +111,8 @@ menuController.prototype.addEventCB = function(){
 }
 menuController.prototype.callAfterAnim = function(elem){
   console.log('call');
-  // callSkillsContents(elem);
-  // callInfoContents(elem)
+  callSkillsContents(elem);
+  callInfoContents(elem)
 }
 
 menuController.prototype.expandMenu = function(){
@@ -169,7 +126,6 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
   if (menuExpanded == false ){
     menuExpanded = true;
     biggerElem = this.elem;
-    console.log('if is working')
     
     //----calculate demo height in order to give the same result to all functions------------------------
     if(innerWidth > 800){
@@ -179,8 +135,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
     }
     
     
-    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -201,8 +157,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
 
     
 
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -215,8 +171,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
   
     console.log('else is working')
 
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
