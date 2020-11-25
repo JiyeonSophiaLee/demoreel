@@ -77,7 +77,7 @@ const LOGOcallClickEvent = function(){
   }
 }
 
-LOGO__.addEventListener('click',LOGOcallClickEvent);
+LOGO__.addEventListener('click',LOGOcallClickEvent,false);
 
 
 
@@ -90,10 +90,7 @@ function menuController(id){
   // this.restElems = getRestElems(this.elem);
 
   this.callClickEvent = () =>{
-      
-     
-        // this.elem.removeEventListener('click', this.callClickEvent);
-        // this.restElemsEventListener('remove', 'callClickEvent');
+    console.log('MENU')
         this.elemEventListener(allElems,'remove','callClickEvent');
         LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
@@ -101,7 +98,7 @@ function menuController(id){
     
   }
 
-  this.elem.addEventListener('click',this.callClickEvent);
+  this.elem.addEventListener('click',this.callClickEvent,false);
 }
 
 menuController.prototype.addEventCB = function(){
@@ -135,8 +132,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
     }
     
     
-    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf()])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -157,8 +154,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
 
     
 
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf()])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -171,8 +168,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
   
     console.log('else is working')
 
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse()])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 

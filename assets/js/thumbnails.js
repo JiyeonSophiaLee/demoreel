@@ -3,24 +3,28 @@ const tableName =  'table_scene_thumbnails'
 const tableExtension = '.jpg'
 const tableSceneMain = '_01';
 const tableSceneSub = ['_02','_03','_04','_05','_06','_07'];
+const tableArtstation = 'https://www.artstation.com/artwork/Q2roZ'
 
 const chandelierPath = 'assets/images/projects/chandelier_scene_thumbnails/';
 const chandelierName =  'chandelier_scene_thumbnails'
 const chandelierExtension = '.jpg'
 const chandelierSceneMain = '_01';
 const chandelierSceneSub = ['_02','_03','_04','_05','_06','_07'];
+const chandelierArtstation = 'https://www.artstation.com/artwork/Q2roZ'
 
 const sunrisePath = 'assets/images/projects/sunrise_scene_thumbnails/';
 const sunriseName =  'sunrise_scene_thumbnails'
 const sunriseExtension = '.jpg'
 const sunriseSceneMain = '_02';
 const sunriseSceneSub = ['_01','_03','_04','_05'];
+const sunriseArstation = 'https://www.artstation.com/artwork/lVYmZO'
 
 const womanPath = 'assets/images/projects/woman_scene_thumbnails/';
 const womanName =  'woman_scene_thumbnails'
 const womanExtension = '.jpg'
 const womanSceneMain = '_03';
 const womanSceneSub = ['_01','_02','_04','_05','_06','_07','_08'];
+const womanaScceneArstation = 'https://www.artstation.com/artwork/xzJvV1'
 
 const wishingBoxPath = 'assets/images/projects/wishingBox_thumbnails/';
 const wishingBoxName =  'wishingBox_thumbnails'
@@ -38,10 +42,10 @@ const giantSceneSub = ['_02','_03','_04','_05','_06','_07'];
 
 
 
-const tableScene = new projectThumbnail(tablePath,tableName,tableExtension,tableSceneMain,tableSceneSub);
-const chandelierScene = new projectThumbnail(chandelierPath,chandelierName,chandelierExtension,chandelierSceneMain,chandelierSceneSub);
-const sunriseScene = new projectThumbnail(sunrisePath,sunriseName,sunriseExtension,sunriseSceneMain,sunriseSceneSub);
-const womanScene = new projectThumbnail(womanPath,womanName,womanExtension,womanSceneMain,womanSceneSub);
+const tableScene = new projectThumbnail(tablePath,tableName,tableExtension,tableSceneMain,tableSceneSub,tableArtstation);
+const chandelierScene = new projectThumbnail(chandelierPath,chandelierName,chandelierExtension,chandelierSceneMain,chandelierSceneSub,chandelierArtstation);
+const sunriseScene = new projectThumbnail(sunrisePath,sunriseName,sunriseExtension,sunriseSceneMain,sunriseSceneSub,sunriseArstation);
+const womanScene = new projectThumbnail(womanPath,womanName,womanExtension,womanSceneMain,womanSceneSub,womanaScceneArstation);
 const wishingBoxScene = new projectThumbnail(wishingBoxPath,wishingBoxName,wishingBoxExtension,wishingBoxSceneMain,wishingBoxSceneSub);
 const giantScene = new projectThumbnail(giantPath,giantBoxName,giantExtension,giantSceneMain,giantSceneSub);
 
@@ -58,12 +62,14 @@ const painting01Name =  'painting01'
 const painting01Extension = '.jpg'
 const painting01SceneMain = '_01';
 const painting01SceneSub = [];
+const painting01Artstation = 'https://www.artstation.com/artwork/KD3eR';
 
 const painting02Path = 'assets/images/paintings/painting02/';
 const painting02Name =  'painting02'
 const painting02Extension = '.jpg'
 const painting02SceneMain = '_01';
 const painting02SceneSub = ['_02','_03','_04','_05'];
+const painting02Artstation = 'https://www.artstation.com/artwork/Km68B';
 
 const painting03Path = 'assets/images/paintings/painting03/';
 const painting03Name =  'painting03'
@@ -92,8 +98,8 @@ const painting06SceneSub = ['_02','_03','_04','_05'];
 
 
 
-const painting01 = new projectThumbnail(painting01Path,painting01Name,painting01Extension,painting01SceneMain,painting01SceneSub);
-const painting02 = new projectThumbnail(painting02Path,painting02Name,painting02Extension,painting02SceneMain,painting02SceneSub);
+const painting01 = new projectThumbnail(painting01Path,painting01Name,painting01Extension,painting01SceneMain,painting01SceneSub,painting01Artstation);
+const painting02 = new projectThumbnail(painting02Path,painting02Name,painting02Extension,painting02SceneMain,painting02SceneSub,painting02Artstation);
 const painting03 = new projectThumbnail(painting03Path,painting03Name,painting03Extension,painting03SceneMain,painting03SceneSub);
 const painting04 = new projectThumbnail(painting04Path,painting04Name,painting04Extension,painting04SceneMain,painting04SceneSub);
 const painting05 = new projectThumbnail(painting05Path,painting05Name,painting05Extension,painting05SceneMain,painting05SceneSub);
@@ -107,44 +113,109 @@ const paintThumbnails = [painting01,painting02,painting03,painting04,painting05,
 
 
 
-function projectThumbnail(path, projectName, extension ,main, sub){
+function projectThumbnail(path, projectName, extension ,main, sub, artstation = null){
     this.path = path;
     this.projectName = projectName;
     this.extension = extension;
     this.main = main;
     this.sub = sub;
+    this.artstation = artstation;
 }
 projectThumbnail.prototype.createProjectImage = function(){
     let div = document.createElement('div');
 
     let img = document.createElement('img');
     img.src = this.path + this.projectName + this.main + this.extension;
-    
+    img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
     div.classList.add('projects');
     img.classList.add('mainContent');
 
-    div.appendChild(img);
+
+
+    if(this.artstation !=null){
+        
+        let a = document.createElement('a');
+        a.href= this.artstation;
+        a.setAttribute('target','_blank');
+
+        a.classList.add('a');
+
+        a.appendChild(img);
+        div.appendChild(a);
+
+    }else{
+        div.appendChild(img);
+    }
 
     this.sub.forEach(sub => {
         let img = document.createElement('img');
         img.src = this.path + this.projectName + sub + this.extension;
+        img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
         img.classList.add('subContent');
-        div.appendChild(img);
+
+        if(this.artstation !=null){
+
+            let a = document.createElement('a');
+            a.href= this.artstation;
+            a.setAttribute('target','_blank');
+            
+            a.classList.add('a');
+
+            a.appendChild(img)
+            div.appendChild(a);
+    
+        }else{
+            div.appendChild(img);
+        }
     });
     return div;
 };
 projectThumbnail.prototype.createLineingImage = function(){
-    let imgs = {mainContent:[], subContent:[]};
-    let mainImg = this.path + this.projectName + this.main + this.extension;
+    let imgs = [];
 
-    imgs.mainContent.push(mainImg);
+    let img = document.createElement('img');
+    img.src = this.path + this.projectName + this.main + this.extension;
+    img.classList.add('mainContent');
+    img.addEventListener('click',(e)=>{ e.stopPropagation() });
+
+    if(this.artstation !=null){
+
+        let a = document.createElement('a');
+        a.href= this.artstation;
+        a.setAttribute('target','_blank');
+        
+        a.classList.add('a');
+
+        a.appendChild(img);
+        imgs.push(a);
+
+    }else{
+        imgs.push(img);
+    };
 
     this.sub.forEach(sub=>{
-        let subImg = this.path + this.projectName + sub + this.extension;
+        let img = document.createElement('img');
+        img.src = this.path + this.projectName + sub + this.extension;
+        img.classList.add('subContent');
+        img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-        imgs.subContent.push(subImg);
+        if(this.artstation !=null){
+
+            let a = document.createElement('a');
+            a.href= this.artstation;
+            a.setAttribute('target','_blank');
+            
+            a.classList.add('a');
+    
+            a.appendChild(img);
+            imgs.push(a);
+    
+        }else{
+            imgs.push(img);
+        };
+
     });
     return imgs
 }
@@ -172,7 +243,7 @@ window.addEventListener('resize',()=>{
 
 
 
-
+///untill
 
 function createProjectGroup(name){
 
@@ -199,18 +270,10 @@ function createProjectGroup(name){
     })
     thumbnails.forEach(project=>{
         let div = project.createLineingImage();
-        let img = document.createElement('img');
-        
-        img.src = div['mainContent'];
-        img.classList.add('mainContent');
-        lineImgs.appendChild(img);
 
-        div['subContent'].forEach(function(test, i){
-            let img = document.createElement('img');
-        
-            img.src = div['subContent'][i];
-            img.classList.add('subContent');
-            lineImgs.appendChild(img);
+        // console.log(div)
+        div.forEach((img)=>{
+            lineImgs.appendChild(img)
         })
     })
 }

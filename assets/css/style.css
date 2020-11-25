@@ -294,7 +294,7 @@ body{
   #master{
     width: 100%;
     height: 100%;
-    min-width: 20rem;
+    min-width: 25rem;
     max-width: 1400px;
     min-height: var(--botMinHeight);
     /* text-align: center; */
