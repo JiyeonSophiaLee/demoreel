@@ -1,18 +1,4 @@
 const demoMenuTransformTL = gsap.timeline({paused:true, duration: transitionValue['duration'],ease: transitionValue['gsapEase']})
-  // .fromTo(
-  //   MASTER,{
-  //     maxWidth: transitionValue['masterMaxWidth']
-  //   },{
-  //     maxWidth: '100%'
-  //   },0
-  // )
-  // .fromTo(
-  //   DEMO__,{
-  //     width:transitionValue['symetryDemoMenu'] + '%'
-  //   },{
-  //     width: (100 - transitionValue['unSymetryDemoMenu']) + '%'
-  //   },0
-  // )
 
 
 //set border size---------
@@ -49,7 +35,7 @@ function border(id) {
   this.elemId = id;
   this.elem = document.getElementById(id);
   this.id = id + 'Border';
-  this.path = document.getElementById(this.id),
+  this.rect = document.getElementById(this.id),
   this.x = 0;
   this.y = 0;
   this.w = document.getElementById(this.id).parentElement.parentElement.clientWidth;
@@ -61,7 +47,7 @@ function border(id) {
   this.speed = [2, 3];
   this.color = 'none';
   this.stroke = true;
-  this.strokeColor = `url(#${this.path.id}Color)`;
+  this.strokeColor = `url(#${this.rect.id}Color)`;
   this.strokeWidth = innerWidth > 800 ? 8 : 5;
   this.strokeWidthUnit = 'px';
   this.strokeLineCap = 'square'; //square, butt or round
@@ -108,24 +94,7 @@ function createBorderPath(borders) {
   this.subMenuChangingWidth, this.subMenuChangingHeight;
   this.topMenuSize;
 
-  
-  // this.borderNeonIvoryTL = gsap.timeline({paused:true, duration: transitionValue['duration'],ease:"power1.inOut"})
-  //   .fromTo(
-  //     this.borders.path,{
-  //       stroke: this.borders.strokeColor
-  //     },{
-  //       stroke: '#SVGIvory'
-  //     },0
-  //   )
 
-
-  // if(innerWidth > 1400){
-  //   this.setBordersSizeFamily(this.borders.elem,'borderSize1400');
-  // }else if(innerWidth > 800){
-  //   this.setBordersSizeFamily(this.borders.elem,'borderSize');
-  // }else{
-  //   this.setBordersSizeFamily(this.borders.elem,'borderSize800');
-  // }
 
   //----call path-----
 
@@ -157,6 +126,8 @@ createBorderPath.prototype.expandMenuIf = function() {
 
     // demoMenuTransformTL.play();
     if(innerWidth > 800){
+      demoMenuTransformTL.clear();
+
       demoMenuTransformTL
         .fromTo(
           MASTER,{
@@ -173,66 +144,23 @@ createBorderPath.prototype.expandMenuIf = function() {
           },0
         )
 
-        demoMenuTransformTL.play()
+        demoMenuTransformTL.play();
+    
+      
     }else{
 
     }
     this.unSymetryEachMenuTransform();
 
     
-    // widthBigger.forEach((widthBigger) => gsap.to(widthBigger,{width: transitionValue['unSymetryEachMenu'] + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
-    // widthSmaller.forEach((widthSmaller) => gsap.to(widthSmaller,{width: (100 - transitionValue['unSymetryEachMenu']) + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
-    // heightBigger.forEach((heightBigger) => gsap.to(heightBigger,{height: transitionValue['unSymetryEachMenu'] + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
-    // heightSmaller.forEach((heightSmaller) => gsap.to(heightSmaller,{height: (100 - transitionValue['unSymetryEachMenu']) + '%', duration: transitionValue['duration'],ease:"power1.inOut"}))
-
-    // widthBigger.forEach((widthBigger) => widthBigger.style.width = transitionValue['unSymetryEachMenu'] + '%')
-    // widthSmaller.forEach((widthSmaller) => widthSmaller.style.width = (100 - transitionValue['unSymetryEachMenu']) + '%')
-    // heightBigger.forEach((heightBigger) => heightBigger.style.height = transitionValue['unSymetryEachMenu'] + '%')
-    // heightSmaller.forEach((heightSmaller) => heightSmaller.style.height = (100 - transitionValue['unSymetryEachMenu']) + '%')
-
-
-
-    // this.subMenuChanging();
-    // this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
-    // this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
-    
-
-    // document.querySelector(`#${this.borders.elem.id} .text`).classList.add = 'menutransition'
-    // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
-    // document.querySelector(`#${this.borders.elem.id} .text`).style.alignItems = 'flex-start'
 
 
     
-    this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
+    this.borders.rect.setAttributeNS(null, 'stroke', 'ivory');
     if(innerWidth<800){
       this.smallerRestElemBorders();
     }
     this.animRectBorder(this)
-
-
-
-
-
-    // setTimeout(() => {
-
-    //   this.borders.elem.firstElementChild.style.width = '100%';
-    //   this.borders.elem.firstElementChild.style.height = '100%';
-
-
-    //   this.borders.elem.parentElement.classList.remove('menutransition');
-
-
-
-    //   allElems.forEach((allElems) => {
-    //     allElems.classList.remove("menutransition");
-    //     if (allElems == this.borders.elem) {
-    //       allElems.firstElementChild.classList.remove("menutransition");
-    //     }
-
-    //   })
-    //   resolve()
-    // }, transitionValue.duration * 1000);
-
   
   })
   
@@ -242,66 +170,22 @@ createBorderPath.prototype.expandMenuIf = function() {
 createBorderPath.prototype.expandMenuElseIf = function() {
   return new Promise((resolve,reject)=>{
 
-    // leftRight = this.getLeftRight(this);
-    // upDown = this.getUpDown(this);
-  
-    // widthBigger = leftRight.widthBigger;
-    // widthSmaller = leftRight.widthSmaller;
-    // heightBigger = upDown.heightBigger;
-    // heightSmaller = upDown.heightSmaller;
-  
-    // this.subMenuChangingWidth;
-    // this.subMenuChangingHeight;
     
-  
-    // allElems.forEach((allElem) => {
-    //   allElem.classList.add("menutransition")
-    //   if (allElem == this.borders.elem) {
-    //     allElem.firstElementChild.classList.add("menutransition")
-    //   }
-    // })
-
-    
-
-
     this.smallMenuSize = this.borders.elem.firstElementChild.clientWidth;
-    // this.biggeredElemPath = biggeredElem == null ? 1 : document.getElementById(biggeredElem.id + 'Border');
     this.biggeredElemPath = document.getElementById(biggeredElem.id + 'Border');
 
 
 
     this.unSymetryEachMenuTransform();
 
-
-
-
-    // widthBigger.forEach((widthBigger) => widthBigger.style.width = transitionValue['unSymetryEachMenu'] + '%')
-    // widthSmaller.forEach((widthSmaller) => widthSmaller.style.width = (100 - transitionValue['unSymetryEachMenu']) + '%')
-    // heightBigger.forEach((heightBigger) => heightBigger.style.height = transitionValue['unSymetryEachMenu'] + '%')
-    // heightSmaller.forEach((heightSmaller) => heightSmaller.style.height = (100 - transitionValue['unSymetryEachMenu']) + '%')
-
-
-
-    // this.subMenuChanging();
-    // this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
-    // this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
-    
-
     biggeredElem.firstElementChild.classList.add("menutransition");
-    // biggeredElem.firstElementChild.style.width = '';
-    // biggeredElem.firstElementChild.style.height = '';
+
     setDefaultBorderSize(biggeredElem);
-    // document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.width = this.smallMenuSize + 'px';
-    // document.querySelector(`#${biggeredElem.id} .borders .borderCover`).style.height = this.smallMenuSize + 'px';
 
 
 
 
-
-
-
-
-    // this.borders.path.setAttributeNS(null, 'stroke', 'ivory');
+    
     this.biggeredElemPath.setAttributeNS(null, 'stroke', eval(biggeredElem.id + 'Border').strokeColor);
 
     //--- stop biggredElem wavy animation ---------------------------------------------------------
@@ -320,20 +204,8 @@ createBorderPath.prototype.expandMenuElseIf = function() {
   
     setTimeout(() => {
 
-      // this.borders.elem.firstElementChild.style.width = '100%';
-      // this.borders.elem.firstElementChild.style.height = '100%';
-
       biggeredElem.firstElementChild.classList.remove("menutransition");
 
-
-  
-      // allElems.forEach((allElems) => {
-      //   allElems.classList.remove("menutransition");
-      //   if (allElems == this.borders.elem) {
-      //     allElems.firstElementChild.classList.remove("menutransition");
-      //   }
-  
-      // })
       resolve()
     }, transitionValue.duration * 1000);
   
@@ -357,19 +229,49 @@ createBorderPath.prototype.expandMenuElse = function() {
     })
 
 
-
-    // console.log(document.querySelector(`#${this.borders.elem.id} .borders .borderCover`))
-    // this.border.elem.firstElementChild.classList.add("menutransition")
     if(innerWidth > 800){
-      demoMenuTransformTL.reverse()
+      // demoMenuTransformTL
+      //   .fromTo(
+      //     MASTER,{
+      //       maxWidth: transitionValue['masterMaxWidth']
+      //     },{
+      //       maxWidth: '100%'
+      //     },0
+      //   )
+      //   .fromTo(
+      //     DEMO__,{
+      //       width:transitionValue['symetryDemoMenu'] + '%'
+      //     },{
+      //       width: (100 - transitionValue['unSymetryDemoMenu']) + '%'
+      //     },0
+      //   )
+      demoMenuTransformTL.reverse();
 
+      // gsap.fromTo(
+      //   MASTER,{
+      //       maxWidth: '100%'
+      //     },{
+      //       maxWidth: transitionValue['masterMaxWidth'],
+      //       duration: transitionValue['duration'],
+      //       ease: transitionValue['gsapEase']
+      //     }
+      // )
+      // gsap.fromTo(
+      //   DEMO__,{
+      //     width: (100 - transitionValue['unSymetryDemoMenu']) + '%'
+      //   },{
+      //     width: transitionValue['symetryDemoMenu'] + '%',
+      //     duration: transitionValue['duration'],
+      //     ease: transitionValue['gsapEase']
+      //   }
+      // )
     }
     setDefaultBorderSize(this.borders.elem);
 
 
 
 
-      this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+      this.borders.rect.setAttributeNS(null, 'stroke', this.borders.strokeColor);
 
       //--- stop this.elem wavy animation ---------------------------------------------------------
       document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('d', '');
@@ -403,79 +305,6 @@ createBorderPath.prototype.expandMenuElse = function() {
   })
 
 };
-
-// createBorderPath.prototype.getLeftRight = function() {
-
-//   let firstNum = this.getFirstNum(this);
-//   let widthBigger = [];
-//   let widthSmaller = [];
-
-//   let j = 0;
-//   if (firstNum % 2 != 0) {
-//     j = j + 1
-//   }
-//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-//     j = j + 1;
-//     if (this.elemParent.childNodes[i].nodeType != 1) {
-//       j = j - 1;
-//     }
-
-//     if (this.elemParent.childNodes[i].nodeType == 1) {
-//       if (j % 2 == 0) {
-//         widthBigger.push(this.elemParent.childNodes[i]);
-//       } else {
-//         widthSmaller.push(this.elemParent.childNodes[i]);
-//       }
-//     }
-//   }
-
-//   return {
-//     widthBigger: widthBigger,
-//     widthSmaller: widthSmaller
-//   }
-// }
-
-// createBorderPath.prototype.getUpDown = function() {
-
-//   let firstNum = this.getFirstNum(this);
-//   let up = [];
-//   let down = [];
-
-//   let heightBigger = [];
-//   let heightSmaller = [];
-
-//   let j = 0;
-//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-
-//     j = j + 1;
-//     if (this.elemParent.childNodes[i].nodeType != 1) {
-//       j = j - 1;
-//     }
-//     if (this.elemParent.childNodes[i].nodeType == 1) {
-
-//       if (j < 3) {
-//         up.push(this.elemParent.childNodes[i]);
-
-//       } else {
-//         down.push(this.elemParent.childNodes[i]);
-//       }
-//     }
-//   }
-
-
-//   if (firstNum < 3) {
-//     heightBigger = up;
-//     heightSmaller = down;
-//   } else {
-//     heightBigger = down;
-//     heightSmaller = up;
-//   }
-
-//   return {
-//     heightBigger: heightBigger,
-//     heightSmaller: heightSmaller
-//   }
-// }
 
 createBorderPath.prototype.getFirstNum = function() {
 
@@ -671,13 +500,6 @@ createBorderPath.prototype.getPadding = function(){
   this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
   this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
 
-
-  // this.masterPaddingTop = parseFloat(window.getComputedStyle(MASTER).paddingTop);
-  // this.masterPaddingLeft = parseFloat(window.getComputedStyle(MASTER).paddingLeft);
-  // this.masterPaddingRight = parseFloat(window.getComputedStyle(MASTER).paddingRight);
-  // this.masterPaddingBot = parseFloat(window.getComputedStyle(MASTER).paddingBottom);
-  // this.masterPaddingWidth = this.masterPaddingLeft + this.masterPaddingRight;
-  // this.masterPaddingHeight = this.masterPaddingTop + this.masterPaddingBot;
 }
 
 
@@ -701,73 +523,53 @@ createBorderPath.prototype.subMenuChanging = function() {
 
 createBorderPath.prototype.createRectBorder = function() {
   
-  // this.borders.path.parentElement.style.width = this.borders.w + this.borders.radius * 2 + 'px';
-  // this.borders.path.parentElement.style.height = this.borders.h + this.borders.radius * 2 + 'px';
-  this.borders.path.parentElement.style.width = this.borders.w + this.extraSVGspace + 'px';
-  this.borders.path.parentElement.style.height = this.borders.h + this.extraSVGspace +'px';
-  // this.borders.path.parentElement.style.top = `-${this.borders.radius}px`;
-  this.borders.path.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
-  // this.borders.path.parentElement.style.left = `-${this.extraSVGspace/2}px`;
-  // this.borders.path.parentElement.style.top = `-${this.extraSVGspace/2}px`;
-  // this.borders.path.setAttribute('transform', `translate(-${this.borders.radius},0)`);
+  // this.borders.rect.parentElement.style.width = this.borders.w + this.borders.radius * 2 + 'px';
+  // this.borders.rect.parentElement.style.height = this.borders.h + this.borders.radius * 2 + 'px';
+  this.borders.rect.parentElement.style.width = this.borders.w + this.extraSVGspace + 'px';
+  this.borders.rect.parentElement.style.height = this.borders.h + this.extraSVGspace +'px';
+  // this.borders.rect.parentElement.style.top = `-${this.borders.radius}px`;
+  this.borders.rect.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
+  // this.borders.rect.parentElement.style.left = `-${this.extraSVGspace/2}px`;
+  // this.borders.rect.parentElement.style.top = `-${this.extraSVGspace/2}px`;
+  // this.borders.rect.setAttribute('transform', `translate(-${this.borders.radius},0)`);
 
   // document.querySelector(`#${this.borders.elemId} .edge`).style.width = 'inherit';
   // document.querySelector(`#${this.borders.elemId} .edge`).style.height = 'inherit';
   // document.querySelector(`#${this.borders.elemId} .edge`).style.fill = 'none';
 
 
-  this.borders.path.setAttributeNS(null, 'x', this.x);
-  this.borders.path.setAttributeNS(null, 'y', this.y);
-  this.borders.path.setAttributeNS(null, 'rx', this.borders.border);
-  this.borders.path.setAttributeNS(null, 'ry', this.borders.border);
-  this.borders.path.style.width = this.w + 'px';
-  this.borders.path.style.height = this.w + 'px';
-  // this.borders.path.setAttributeNS(null, 'width', this.w);
-  // this.borders.path.setAttributeNS(null, 'height', this.h);
-  this.borders.path.setAttributeNS(null, 'fill', this.borders.color);
-  this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
-  this.borders.path.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
+  this.borders.rect.setAttributeNS(null, 'x', this.x);
+  this.borders.rect.setAttributeNS(null, 'y', this.y);
+  this.borders.rect.setAttributeNS(null, 'rx', this.borders.border);
+  this.borders.rect.setAttributeNS(null, 'ry', this.borders.border);
+  this.borders.rect.style.width = this.w + 'px';
+  this.borders.rect.style.height = this.w + 'px';
+  // this.borders.rect.setAttributeNS(null, 'width', this.w);
+  // this.borders.rect.setAttributeNS(null, 'height', this.h);
+  this.borders.rect.setAttributeNS(null, 'fill', this.borders.color);
+  this.borders.rect.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+  this.borders.rect.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
   
-
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'x', this.x);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'y', this.y);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'rx', this.borders.border);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'ry', this.borders.border);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.width = this.w + 'px';
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).style.height = this.w + 'px';
-  // // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'width', 'var(--bordersWidth)');
-  // // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'height', 'var(--bordersHeight)');
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'fill', this.borders.color);
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttributeNS(null, 'stroke', 'white');
-  // document.querySelector(`#${this.borders.elem.id} .borderCover`).setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
-
-
-
 
 
   document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
   document.getElementById(this.borders.elem.id + 'BorderWavy2').setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
 
 
-  // this.borders.path.setAttributeNS('transform', 'translate(20,0)');
+  // this.borders.rect.setAttributeNS('transform', 'translate(20,0)');
 
-  // this.borders.path.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
+  // this.borders.rect.setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
 
 }
 
 createBorderPath.prototype.animRectBorder = function() {
   f += dir;
 
-  this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
-  this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
-  this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
-  this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
-
-  // document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
-  //   neon.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
-  //   neon.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
-  // })
+  this.borders.rect.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
+  this.borders.rect.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
+  this.borders.rect.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
+  this.borders.rect.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
 
 
   if (biggeredElem != null) {
@@ -788,15 +590,13 @@ createBorderPath.prototype.animRectBorder = function() {
       this.w = this.subMenuChangingWidth;
       this.h = this.subMenuChangingHeight;
 
-      this.borders.path.parentElement.style.width = this.w + this.extraSVGspace + 'px';
-      this.borders.path.parentElement.style.height = this.h + this.extraSVGspace + 'px';
-      // this.borders.path.parentElement.style.height = this.h + this.extraSVGspace/2 + 'px';
+      this.borders.rect.parentElement.style.width = this.w + this.extraSVGspace + 'px';
+      this.borders.rect.parentElement.style.height = this.h + this.extraSVGspace + 'px';
   
 
-      // this.borders.path.setAttributeNS(null, 'width', '10px');
-      // this.borders.path.setAttributeNS(null, 'height', this.h);
-      this.borders.path.style.width =  this.w;
-      this.borders.path.style.height = this.h;
+
+      this.borders.rect.style.width =  this.w;
+      this.borders.rect.style.height = this.h;
 
 
 
@@ -816,19 +616,6 @@ createBorderPath.prototype.animRectBorder = function() {
  
     }
     
-    // document.querySelectorAll(`#${this.borders.elem.id} .neon`).forEach((neon)=>{
-    //   neon.style.width = 'inherit';
-    //   neon.style.height = 'inherit';
-    // })
-
-    // if (biggeredElem != null) {
-    //   this.biggeredElemPath.parentElement.style.width = this.smallMenuSize + this.extraSVGspace + 'px';
-    //   this.biggeredElemPath.parentElement.style.height = this.smallMenuSize + this.extraSVGspace + 'px';
-    //   this.biggeredElemPath.setAttribute('width', this.smallMenuSize);
-    //   this.biggeredElemPath.setAttribute('height', this.smallMenuSize);
-      
-
-    // }
     f = 0;
 
 
@@ -878,8 +665,6 @@ createBorderPath.prototype.smallerRestElemBorders = function(){
     this.restElems.forEach((restElem)=>{
         this.setBordersSizeFamily(restElem,'borderSize800');
 
-        // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.width = 'var(--borderSize800)';
-        // document.querySelector(`#${this.borders.elem.id} .borders .borderCover`).style.height = 'var(--borderSize800)';
       })
     }
   }
@@ -910,8 +695,6 @@ createBorderPath.prototype.setBordersSizeFamily = function(elem, borderSize){
 }
 
 createBorderPath.prototype.smallerRestElemBordersElseIf = function(){
-  // document.querySelector(`#${biggerElem.id} .borders .borderCover`).classList.remove('borderCoverWhite');
-
 
     document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
     document.querySelector(`#${biggeredElem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
@@ -1055,11 +838,14 @@ createBorderPath.prototype.updateSize = function() {
 
 
     if (this.borders.elem == biggerElem) {
+      let width = this.borders.elem.firstElementChild.clientWidth;
+      let height = this.borders.elem.firstElementChild.clientHeight;
+      console.log('width: ',width)
 
-      this.borders.path.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px'
-      this.borders.path.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px'
-      this.borders.path.style.width = this.borders.elem.firstElementChild.clientWidth;
-      this.borders.path.style.height = this.borders.elem.firstElementChild.clientHeight;
+      this.borders.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
+      this.borders.rect.parentElement.style.height = height + this.extraSVGspace + 'px'
+      this.borders.rect.style.width = width + 'px';
+      this.borders.rect.style.height = height + 'px';
 
       this.w = this.borders.elem.firstElementChild.clientWidth;
       this.h = this.borders.elem.firstElementChild.clientHeight;
@@ -1231,7 +1017,7 @@ createBorderPath.prototype.stopTl = function() {
 createBorderPath.prototype.hoveroverOn = function() {
   if(this.borders.elem != biggerElem){
     // document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.add('borderCoverWhite');
-    this.borders.path.setAttributeNS(null, 'stroke', `url(#SVGIvory)`);
+    this.borders.rect.setAttributeNS(null, 'stroke', `url(#SVGIvory)`);
     document.querySelector(`#${this.borders.elem.id} .neon1`).classList.add(`${this.borders.elem.id}Neon1`);
     document.querySelector(`#${this.borders.elem.id} .neon2`).classList.add(`${this.borders.elem.id}Neon2`);
   }
@@ -1240,7 +1026,7 @@ createBorderPath.prototype.hoveroverOn = function() {
 createBorderPath.prototype.hoveroverOff = function() {
     if(this.borders.elem != biggerElem){
       // document.querySelector(`#${this.borders.elem.id} .borderCover`).classList.remove('borderCoverWhite');
-      this.borders.path.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+      this.borders.rect.setAttributeNS(null, 'stroke', this.borders.strokeColor);
       document.querySelector(`#${this.borders.elem.id} .neon1`).classList.remove(`${this.borders.elem.id}Neon1`);
       document.querySelector(`#${this.borders.elem.id} .neon2`).classList.remove(`${this.borders.elem.id}Neon2`);
     }
