@@ -79,6 +79,7 @@ function createBorderPath(borders) {
   this.w = this.borders.w;
   this.h = this.borders.h;
 
+  //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.borders.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
   this.extraSVGspace = this.borders.radius * 5 ;
 
 
@@ -86,7 +87,7 @@ function createBorderPath(borders) {
   this.points = [];
   this.pointsTween = [];
 
-  // this.padding;
+
   this.expanding = false;
   this.stop = false;
 
@@ -126,8 +127,6 @@ createBorderPath.prototype.expandMenuIf = function() {
 
     // demoMenuTransformTL.play();
     if(innerWidth > 800){
-      demoMenuTransformTL.clear();
-
       demoMenuTransformTL
         .fromTo(
           MASTER,{
@@ -246,6 +245,7 @@ createBorderPath.prototype.expandMenuElse = function() {
       //     },0
       //   )
       demoMenuTransformTL.reverse();
+      demoMenuTransformTL.clear();
 
       // gsap.fromTo(
       //   MASTER,{
@@ -527,10 +527,10 @@ createBorderPath.prototype.createRectBorder = function() {
   // this.borders.rect.parentElement.style.height = this.borders.h + this.borders.radius * 2 + 'px';
   this.borders.rect.parentElement.style.width = this.borders.w + this.extraSVGspace + 'px';
   this.borders.rect.parentElement.style.height = this.borders.h + this.extraSVGspace +'px';
-  // this.borders.rect.parentElement.style.top = `-${this.borders.radius}px`;
-  this.borders.rect.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
-  // this.borders.rect.parentElement.style.left = `-${this.extraSVGspace/2}px`;
-  // this.borders.rect.parentElement.style.top = `-${this.extraSVGspace/2}px`;
+  // -------------svg transform and translate is not working on Safari, so need to use top and left -------------
+  // this.borders.rect.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
+  this.borders.rect.parentElement.style.left = `-${this.extraSVGspace/2}px`;
+  this.borders.rect.parentElement.style.top = `0`;
   // this.borders.rect.setAttribute('transform', `translate(-${this.borders.radius},0)`);
 
   // document.querySelector(`#${this.borders.elemId} .edge`).style.width = 'inherit';
@@ -548,7 +548,10 @@ createBorderPath.prototype.createRectBorder = function() {
   // this.borders.rect.setAttributeNS(null, 'height', this.h);
   this.borders.rect.setAttributeNS(null, 'fill', this.borders.color);
   this.borders.rect.setAttributeNS(null, 'stroke', this.borders.strokeColor);
-  this.borders.rect.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
+  // this.borders.rect.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
+  this.borders.rect.style.left = this.extraSVGspace/2 + 'px';
+  this.borders.rect.style.top = this.extraSVGspace/2 + 'px';
+
 
   
 
