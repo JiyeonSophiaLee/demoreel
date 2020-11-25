@@ -77,7 +77,7 @@ const LOGOcallClickEvent = function(){
   }
 }
 
-LOGO__.addEventListener('click',LOGOcallClickEvent);
+LOGO__.addEventListener('click',LOGOcallClickEvent,false);
 
 
 
@@ -90,8 +90,7 @@ function menuController(id){
   // this.restElems = getRestElems(this.elem);
 
   this.callClickEvent = () =>{
-      
-     
+    console.log('MENU')
         // this.elem.removeEventListener('click', this.callClickEvent);
         // this.restElemsEventListener('remove', 'callClickEvent');
         this.elemEventListener(allElems,'remove','callClickEvent');
@@ -101,7 +100,7 @@ function menuController(id){
     
   }
 
-  this.elem.addEventListener('click',this.callClickEvent);
+  this.elem.addEventListener('click',this.callClickEvent,false);
 }
 
 menuController.prototype.addEventCB = function(){
