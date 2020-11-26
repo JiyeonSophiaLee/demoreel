@@ -530,7 +530,7 @@ createBorderPath.prototype.createRectBorder = function() {
   // -------------svg transform and translate is not working on Safari, so need to use top and left -------------
   // this.borders.rect.parentElement.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
   this.borders.rect.parentElement.style.left = `-${this.extraSVGspace/2}px`;
-  this.borders.rect.parentElement.style.top = `0`;
+  this.borders.rect.parentElement.style.top = `-${this.extraSVGspace/2}px`;
   // this.borders.rect.setAttribute('transform', `translate(-${this.borders.radius},0)`);
 
   // document.querySelector(`#${this.borders.elemId} .edge`).style.width = 'inherit';
@@ -548,6 +548,7 @@ createBorderPath.prototype.createRectBorder = function() {
   // this.borders.rect.setAttributeNS(null, 'height', this.h);
   this.borders.rect.setAttributeNS(null, 'fill', this.borders.color);
   this.borders.rect.setAttributeNS(null, 'stroke', this.borders.strokeColor);
+  // this.borders.rect.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
   this.borders.rect.setAttribute('transform', `translate(${this.extraSVGspace/2},${this.extraSVGspace/2})`);
   // this.borders.rect.style.left = this.extraSVGspace/2 + 'px';
   // this.borders.rect.style.top = this.extraSVGspace/2 + 'px';
