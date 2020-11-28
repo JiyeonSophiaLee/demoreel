@@ -31,6 +31,7 @@ function getTransitionValue() {
   this.symetryEachMenu = 50;
   this.unSymetryEachMenu = 75;
   this.masterMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth'));
+  this.masterMinWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMinWidth'));
   this.symetryDemoVideoWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidth'));
   this.unSymetryDemoVideoWidth = 90;
   this.symetryDemoVideoWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidthMediaQuery'));
@@ -128,12 +129,18 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
     if(innerWidth > 800){
       demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
     }else{
-      demoVideoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      if(innerWidth > remToPx(transitionValue['masterMinWidth'])){
+        demoVideoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+
+      }else{
+        demoVideoHeight = (remToPx(transitionValue['masterMinWidth']) * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+
+      }
     }
     
     
-    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -154,8 +161,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
 
     
 
-    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -168,8 +175,8 @@ console.log(this.elem.id, 'EXPAND MENUS IS WORKING')
   
     console.log('else is working')
 
-    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem)])
+    Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+    // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem)])
     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
@@ -261,7 +268,7 @@ menuUtilities.prototype.expandMenuIf = function(){
     if(innerWidth > 800){
       DEMO_SVG.classList.remove('blurSVG');
 
-      demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+      // demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
       
       gsap.to(
         DEMO_VIDEO,{
@@ -273,7 +280,7 @@ menuUtilities.prototype.expandMenuIf = function(){
       )
 
     }else{
-      demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      // demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       
       gsap.to(
         DEMO_VIDEO,{

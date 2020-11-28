@@ -86,12 +86,12 @@ function init() {
     // const sky0Geo = new THREE.SphereGeometry(7, 25,25);
     // const sky0Mesh = new THREE.MeshBasicMaterial( {map:new THREE.TextureLoader().load('/assets/images/hdr/shutterstock_1168717975.jpg'), side:THREE.DoubleSide} );
 
-    sky0 = getSky(16,'assets/images/hdr/space_00.jpg');
-    sky1 = getSky(16,'assets/images/hdr/space_01.jpg');
-    sky2 = getSky(16,'assets/images/hdr/space_test.jpg');
-    sky3 = getSky(16,'assets/images/hdr/space_03.jpg');
+    sky0 = getSky(16,'assets/images/hdr/space_00.png');
+    sky1 = getSky(16,'assets/images/hdr/space_01.png');
+    sky2 = getSky(16,'assets/images/hdr/space_02.png');
+    sky3 = getSky(16,'assets/images/hdr/space_03.png');
     
-    console.log('assets/images/hdr/space_test2.jpg')
+    console.log(sky0)
     scene.add(sky0);
     scene.add(sky1);
     scene.add(sky2);
@@ -563,8 +563,8 @@ function callThreeJS(elem){
 
         // cameraPositionX = 1;
         // cameraPositionX = -0.2;
-        cameraPositionX = -0.97 + innerWidth/1800 - innerHeight/2400;
-        cameraPositionY = 1.67;
+        cameraPositionX = -0.97 + innerWidth/1000 - innerHeight/2400;
+        cameraPositionY = 1.67 ;
         cameraPositionZ = 3.27;
 
         cameraRotationX = -0.25;
@@ -667,12 +667,12 @@ function callThreeJS(elem){
 
 
 
-    let getVignetteSize = biggerElem.getBoundingClientRect();
+    // let getVignetteSize = biggerElem.getBoundingClientRect();
     // let vignetteRadius = innerWidth * 0.1;
 
 
 
-    console.log(getVignetteSize)
+    // console.log(getVignetteSize)
     // threeJSVignette.style.background = `linear-gradient(to right, rgba(0,0,0,0.8) ${getVignetteSize.x }px, red ${getVignetteSize.x }px, red ${getVignetteSize.x + getVignetteSize.width }px, rgba(0,0,0,0.6) ${getVignetteSize.x + getVignetteSize.width}px)`;
     
     // gsap.fromTo(
