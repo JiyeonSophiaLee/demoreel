@@ -14,6 +14,7 @@ const DEMO_VIDEO_BG_CSS_ANIM = document.querySelector('#demoVideoBgCSSAnim');
 const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
 
+
 const allElems = [WORK,PAINT,SKILL,INFO];
 
 let menuExpanded = false;

@@ -159,7 +159,9 @@
             margin-bottom: 13%;
         }
 
-
+#info #contentsGroup #educationTitle{
+    overflow-wrap: anywhere;
+}
 
 #info #contentsGroup #contactContainer{
     width:fit-content;

@@ -140,6 +140,7 @@ projectThumbnail.prototype.createProjectImage = function(){
         a.setAttribute('target','_blank');
 
         a.classList.add('a');
+        a.classList.add('mainContent');
 
         a.appendChild(img);
         div.appendChild(a);
@@ -187,6 +188,7 @@ projectThumbnail.prototype.createLineingImage = function(){
         a.setAttribute('target','_blank');
         
         a.classList.add('a');
+        a.classList.add('mainContent');
 
         a.appendChild(img);
         imgs.push(a);
