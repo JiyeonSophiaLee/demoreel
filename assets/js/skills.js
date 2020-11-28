@@ -363,22 +363,23 @@ getSkillTL.prototype.setBarWidth = function(){
 
 getSkillTL.prototype.getCallGraphTL = function(){
 
-    this.barWidth;
-    this.barCircleEnd;
-
     this.setBarWidth();
     
-
+   console.log(remToPx(halfCircleSizeNumb)*2)
+   console.log(remToPx(halfCircleSizeEndNumb))
     this.callGraphTL
-        .to(this.bar,
-            {
+        .fromTo(this.bar,{
+                width: remToPx(halfCircleSizeNumb) + remToPx(halfCircleSizeEndNumb)
+            },{
                 width: this.barWidth,
                 duration: 2.5,
                 ease: "power2.inOut"
             },
             0
         )
-        .to(this.barEnd,
+        .fromTo(this.barEnd,{
+                cx: remToPx(halfCircleSizeNumb)*2 + remToPx(halfCircleSizeEndNumb)
+            },
             {
                 cx: this.barCircleEnd,
                 duration: 2.5,
@@ -386,7 +387,9 @@ getSkillTL.prototype.getCallGraphTL = function(){
             },
             0
         )
-        .to(`#${this.id} .barEnd1`,
+        .fromTo(`#${this.id} .barEnd1`,{
+                cx: remToPx(halfCircleSizeNumb)*2 + remToPx(halfCircleSizeEndNumb)
+            },
             {
                 cx: this.barCircleEnd,
                 duration: 2.5,
@@ -394,8 +397,9 @@ getSkillTL.prototype.getCallGraphTL = function(){
             },
             0
         )
-        .to(this.percent,
-            {
+        .fromTo(this.percent,{
+                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb*2 + halfCircleSizeEndNumb)},${remToPx(halfCircleSizeNumb)})`}
+            },{
                 attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
                 duration: 2.5,
                 ease: "power2.inOut"   
@@ -844,66 +848,6 @@ getSkillTL.prototype.getCallGraphTL800 = function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// -------------------------
-// .fromTo(
-//     `#${this.id} .percent`,
-//     {
-//         attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
-//     },
-//     {
-//         attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
-//         duration:1,
-//         ease: "bounce.out"
-//     },
-//     0
-// )
-
-
-
-
-
-// .to(
-//     `#${this.id} .skillInfoBG`,
-//     {
-//         scaleY:1,
-//         duration:0.3,
-//         ease:"power2.inOut"
-//     },
-//     0
-// )
-// .to(
-//     `#${this.id} .skillInfoBG`,
-//     {
-//         scaleY:0,
-//         duration:0.3,
-//         ease:"power2.inOut"
-//     },
-//     0.3
-// )
-
-// .to(
-//     `#${this.id} .skillInfoText`,
-//     {
-//         opacity:1,
-//         duration:0.1,
-//         stagger: 0.3,
-//     },
-//     0.3
-// )
-        
 
 getSkillTL.prototype.skillUpdate = function(){
     setUnitSize()
