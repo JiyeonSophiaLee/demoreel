@@ -22,10 +22,12 @@ let lighterAbot = document.createElement('a');
 lighterContainer.style.fontFamily = 'Darker Grotesque';
 lighterContainer.style.fontSize = '1.6rem';
 lighterContainer.style.textAlign = 'center';
-lighterContainer.style.border = '3px double rgb(100 50 10)';
+lighterContainer.style.background = 'black';
+// lighterContainer.style.border = '3px double rgb(100 50 10)';
 lighterContainer.style.borderRadius = '0.3rem';
-lighterContainer.style.padding = '0.5rem';
+lighterContainer.style.padding = '0.5rem 1.5rem';
 lighterContainer.style.margin = '1rem';
+lighterContainer.style.alignSelf = 'center';
 
 lighterAtop.innerHTML = 'This is lighter version';
 lighterAtop.setAttribute('target','_black');
@@ -49,9 +51,9 @@ LOADER_CONTAINDER.appendChild(lighterContainer);
 
 
 
-window.onload = function(){
-    loaderAnim();
-}
+// window.onload = function(){
+//     loaderAnim();
+// }
 function loaderAnim(){
     // loaderF += 1;
     // if(loaderF==loaderN-1){
