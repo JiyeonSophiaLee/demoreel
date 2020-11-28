@@ -511,8 +511,17 @@ createBorderPath.prototype.subMenuChanging = function() {
     this.subMenuChangingHeight = ((innerHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight ;
     
   }else{
-    this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-    this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+    console.log(remToPx(transitionValue['masterMinWidth']))
+    if(innerWidth > remToPx(transitionValue['masterMinWidth'])){
+      this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+
+    }else{
+      console.log('MASTER.offsetHeight:     ',MASTER.offsetHeight)
+      this.subMenuChangingWidth =(remToPx(transitionValue['masterMinWidth']) - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.subMenuChangingHeight = (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+
+    }
   }
 
 }
@@ -844,7 +853,7 @@ createBorderPath.prototype.updateSize = function() {
     if (this.borders.elem == biggerElem) {
       let width = this.borders.elem.firstElementChild.clientWidth;
       let height = this.borders.elem.firstElementChild.clientHeight;
-      console.log('width: ',width)
+      console.log('width: ',width,'height: ',height)
 
       this.borders.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
       this.borders.rect.parentElement.style.height = height + this.extraSVGspace + 'px'
