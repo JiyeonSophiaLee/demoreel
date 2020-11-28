@@ -127,6 +127,8 @@ createBorderPath.prototype.expandMenuIf = function() {
 
     // demoMenuTransformTL.play();
     if(innerWidth > 800){
+      
+      demoMenuTransformTL.clear();
       demoMenuTransformTL
         .fromTo(
           MASTER,{
@@ -245,7 +247,6 @@ createBorderPath.prototype.expandMenuElse = function() {
       //     },0
       //   )
       demoMenuTransformTL.reverse();
-      demoMenuTransformTL.clear();
 
       // gsap.fromTo(
       //   MASTER,{
