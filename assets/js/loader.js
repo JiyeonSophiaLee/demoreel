@@ -51,9 +51,9 @@ LOADER_CONTAINDER.appendChild(lighterContainer);
 
 
 
-// window.onload = function(){
-//     loaderAnim();
-// }
+window.onload = function(){
+    loaderAnim();
+}
 function loaderAnim(){
     // loaderF += 1;
     // if(loaderF==loaderN-1){
