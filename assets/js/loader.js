@@ -22,31 +22,31 @@ let lighterAbot = document.createElement('a');
 lighterContainer.style.fontFamily = 'Darker Grotesque';
 lighterContainer.style.fontSize = '1.6rem';
 lighterContainer.style.textAlign = 'center';
-lighterContainer.style.background = 'black';
+lighterContainer.style.background = 'rgb(10 10 10)';
 // lighterContainer.style.border = '3px double rgb(100 50 10)';
 lighterContainer.style.borderRadius = '0.3rem';
 lighterContainer.style.padding = '0.5rem 1.5rem';
 lighterContainer.style.margin = '1rem';
 lighterContainer.style.alignSelf = 'center';
 
-lighterAtop.innerHTML = 'This is lighter version';
+lighterAtop.innerHTML = 'This is lighter version <br> This does not contain THREE JJJS';
 lighterAtop.setAttribute('target','_black');
 lighterAtop.setAttribute('href','demoLigherVersion.html');
 lighterAtop.style.color = 'BurlyWood';
 lighterAtop.style.textDecoration = 'none';
 lighterAtop.style.display = 'block';
 
-lighterAbot.innerHTML = 'This does not contain THREE JS';
-lighterAbot.setAttribute('target','_black');
-lighterAbot.setAttribute('href','demoLigherVersion.html');
-lighterAbot.style.color = 'BurlyWood';
-lighterAbot.style.textDecoration = 'none';
+// lighterAbot.innerHTML = 'This does not contain THREE JS';
+// lighterAbot.setAttribute('target','_black');
+// lighterAbot.setAttribute('href','demoLigherVersion.html');
+// lighterAbot.style.color = 'BurlyWood';
+// lighterAbot.style.textDecoration = 'none';
 
 
 
 
 lighterContainer.appendChild(lighterAtop);
-lighterContainer.appendChild(lighterAbot);
+// lighterContainer.appendChild(lighterAbot);
 LOADER_CONTAINDER.appendChild(lighterContainer);
 
 
@@ -57,7 +57,7 @@ window.onload = function(){
 function loaderAnim(){
     // loaderF += 1;
     // if(loaderF==loaderN-1){
-        LOADER__.classList.add('loaderFadeOutTrans');
+        // LOADER__.classList.add('loaderFadeOutTrans');
         LOADER_CONTAINDER.classList.add('loaderFadeOutTrans');
         
     //     // LOADER_CONTAINDER.firstElementChild.classList.remove('loaderAnimEnd');
