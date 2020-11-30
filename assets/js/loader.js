@@ -29,7 +29,7 @@ lighterContainer.style.padding = '0.5rem 1.5rem';
 lighterContainer.style.margin = '1rem';
 lighterContainer.style.alignSelf = 'center';
 
-lighterAtop.innerHTML = 'This is lighter version <br> This does not contain THREE JJJS';
+lighterAtop.innerHTML = 'This is lighter version <br> This does not contain THREE JS';
 lighterAtop.setAttribute('target','_black');
 lighterAtop.setAttribute('href','demoLigherVersion.html');
 lighterAtop.style.color = 'BurlyWood';
