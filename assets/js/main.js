@@ -1,5 +1,6 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Boder, {SetDefaultBorderSize}from '/assets/js/border.js';
+import UtilityController from '/assets/js/utilityController.js';
 
 let menuExpanded = false;
 let biggerElem = null;
@@ -8,7 +9,7 @@ let biggeredElem = null;
 // let resizeFinish;
 
 // console.log(new BORDER('work'))
-SetDefaultBorderSize(ISU.allElems)
+SetDefaultBorderSize(ISU.allElems,menuExpanded)
 
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
@@ -26,8 +27,6 @@ const LOGOcallClickEvent = function(){
   }
 }
 
-ISU.LOGO__.addEventListener('click',LOGOcallClickEvent,false);
-
 
 
 
@@ -37,21 +36,23 @@ function menuController(id){
   this.id = id;
   this.elem = document.getElementById(id);
   this.Border = this.Border(this.id);
+  this.UtilityController = this.UtilityController(this.id);
 
   this.callClickEvent = () =>{
         this.elemEventListener(ISU.allElems,'remove','callClickEvent');
         ISU.LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
         this.expandMenu();
-    
   }
+  this.updateSizeHandler = this.updateSize.bind(this);
 
+  
   this.elem.addEventListener('click',this.callClickEvent,false);
-
-
+  window.addEventListener('resize',this.updateSizeHandler);
 }
 
 menuController.prototype.Border = (id)=>new Boder(id);
+menuController.prototype.UtilityController = (id)=>new UtilityController(id);
 
 
 //--Event Listenr functions----------
@@ -100,17 +101,19 @@ menuController.prototype.expandMenu = function(){
     }else{
       if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-
+        // console.log('this is menuController demoVideoHeight: ',demoVideoHeight)    
+        // console.log('window.innerWidth',window.innerWidth)  
+        // console.log('ISU.transitionValue[unSymetryDemoVideoWidthMediaQuery] /100: ',ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)
+        // console.log('9/16')  
       }else{
         demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-
       }
     }
 
     
     
     // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([this.Border.expandMenuIf()])
+    Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
       .then((success) => this.Border.animRectBorder())
       .then((success) => this.Border.createWavyAnimation())
       .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
@@ -155,253 +158,34 @@ menuController.prototype.expandMenu = function(){
 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //--- menu Utiliti controller------------------------------------------------------------------------
-// //----------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function menuUtilities(id){
+menuController.prototype.updateSize = function(){
+  demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
+  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
   
-//   this.elem = document.getElementById(id);
-//   // this.padding;
+  if(innerWidth > 800){
+    ISU.MENU__.style.height = '100%';
+    ISU.DEMO__.style.height = '100%';
+
+    if (menuExpanded) {
+      ISU.MASTER.style.maxWidth = '100%';
+
+      ISU.DEMO__.style.width = 100 - ISU.transitionValue['unSymetryDemoMenu'] + '%';
+      ISU.DEMO_VIDEO.style.width = ISU.transitionValue['unSymetryDemoVideoWidth'] + '%';
+
+    }else{
+      ISU.DEMO_VIDEO.style.width = '';
+    }
+
+  }else{
+    ISU.DEMO__.style.width = '';
+
+    if(menuExpanded ) {
+      ISU.DEMO_VIDEO.style.width = ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
+    }
+  }
+}
 
 
-
-//   this.updateSizeHandler = this.updateSize.bind(this);
-
-//   window.addEventListener('resize', this.updateSizeHandler);
-
-// }
-
-// menuUtilities.prototype.expandMenuIf = function(){
-//   return new Promise((resolve, reject)=>{
-   
-    
- 
-//     if(innerWidth > 800){
-//       DEMO_SVG.classList.remove('blurSVG');
-
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['unSymetryDemoVideoWidth'] + '%',
-//           height: demoVideoHeight +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }else{
-      
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['unSymetryDemoVideoWidthMediaQuery'] + '%',
-//           height: demoVideoHeight +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-//     }
-
-
-//     setTimeout(() => {
-//       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-//       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
-
-//       if(innerWidth > 800){
-//         DEMO_SVG.classList.add('blurSVG');
-
-//       }else{
-//       }
-
-//     }, transitionValue['duration'] * 1000);
-
-//     resolve();  
-//   })
-// }
-
-
-// menuUtilities.prototype.expandMenuElseIf = function(){
-//   return new Promise((resolve, reject)=>{
-
-//     // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
-
-//     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
-//     document.querySelector(`#${biggeredElem.id} .contents`).style.zIndex = '0';
-    
-//     // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
-//     // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
-//     document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'none';
-//     document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'none';
-
-//     document.querySelector(`#${biggeredElem.id} .neon1`).classList.remove(`${biggeredElem.id}Neon1`);
-//     document.querySelector(`#${biggeredElem.id} .neon2`).classList.remove(`${biggeredElem.id}Neon2`);
-    
-
-
-
-//     setTimeout(() => {
-
-//       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden';
-//       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
-
-//       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.opacity = '0';
-//       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
-//       document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'initial';
-//       document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'initial';
-//     }, transitionValue.duration * 1000);
-
-//     resolve()  
-//   })
-// }
-
-// menuUtilities.prototype.expandMenuElse = function(){
-//   return new Promise((resolve, reject)=>{
-
-    
-//     document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
-//     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
-//     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
-//     document.querySelector(`#${this.elem.id} .neon1`).classList.remove(`${this.elem.id}Neon1`);
-//     document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
-
-
-  
-
-//     if(innerWidth > 800){
-      
-//       let demoHeight;
-
-//       if(innerWidth > 1400){
-//         height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
-
-//       }else{ 
-//         height = ((DEMO__.parentElement.clientWidth * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
-
-//       }
-
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['symetryDemoVideoWidth'] + '%',
-//           height: height +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }else{
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['symetryDemoVideoWidthMediaQuery'] + '%',
-//           height: (innerWidth * transitionValue['symetryDemoVideoWidthMediaQuery']/100)  * (9/16) +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }
-
-
-
-//     document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
-    
-//   setTimeout(() => {
-//     DEMO_VIDEO.classList.remove('menutransition');
-//     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
-//     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
-
-
-//     if(innerWidth > 800){
-//       MASTER.classList.remove('menutransition');
-
-      
-//     }else{
-//       DEMO__.classList.remove('menutransition');
-//       MENU__.classList.remove('menutransition');
-
-
-//     }
-//   }, transitionValue.duration * 1000);
-  
-//   resolve()  
-// })
-// }
-
-// menuUtilities.prototype.deleteMenuText = function(){
-//   // document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-  
-// }
-
-// menuUtilities.prototype.updateSize = function(){
-//   demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
-
-//   DEMO_VIDEO.style.height = demoVideoHeight +'px';
-
-//     if(innerWidth > 800){
-      
-//       MENU__.style.height = '100%'
-//       DEMO__.style.height = '100%';
-      
-      
-
-//       if (menuExpanded ) {
-//         MASTER.style.maxWidth = '100%';
-
-//         DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
-//         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
-
-
-//       }else{
-//         DEMO_VIDEO.style.width = '';
-//       }
-
-//     }else{
-//       DEMO__.style.width = '';
-
-      
-//       if (menuExpanded ) {
-//         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
-//       }
-//     }
-
-// }
 
 
 
@@ -427,9 +211,6 @@ let infoMenuController = new menuController('info');
 
 
 
-// let workMenuUtilities = new menuUtilities('work');
-// let skillMenuUtilities = new menuUtilities('skill');
-// let paintMenuUtilities = new menuUtilities('paint');
-// let infoMenuUtilities = new menuUtilities('info');
+
 
 

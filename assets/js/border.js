@@ -10,28 +10,46 @@ const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transition
 //set border size---------
 // setDefaultBorderSize(ISU.allElems);
 
-export function SetDefaultBorderSize(elems){
+export function SetDefaultBorderSize(elems, menuExpanded=false, extraSVGspace=null){
+  console.log('menuExpanded: ',menuExpanded)
+
   let arrayElems = [];
   if(Array.isArray(elems)){
     arrayElems = elems;
   }else{
     arrayElems.push(elems);
   }
-  if(innerWidth > 1400){
+  if(innerWidth >= 1400){
+    console.log('innerWidth >= 1400')
     arrayElems.forEach(elem=>{
       elem.firstElementChild.style.width = 'var(--borderSize1400)';
       elem.firstElementChild.style.height = 'var(--borderSize1400)';
     });
   }else if(innerWidth > 800){
+    console.log('innerWidth > 800')
     arrayElems.forEach(elem=>{
-      elem.firstElementChild.style.width = 'var(--bordersSize)';
-      elem.firstElementChild.style.height = 'var(--bordersSize)';
+      elem.firstElementChild.style.width = 'var(--borderSize)';
+      elem.firstElementChild.style.height = 'var(--borderSize)';
     });
   }else{
-    arrayElems.forEach(elem=>{
-      elem.firstElementChild.style.width = 'var(--borderSize800)';
-      elem.firstElementChild.style.height = 'var(--borderSize800)';
-    });
+    console.log('else')
+    if(menuExpanded == false){
+      arrayElems.forEach(elem=>{
+        elem.firstElementChild.style.width = 'var(--borderSize800)';
+        elem.firstElementChild.style.height = 'var(--borderSize800)';
+      });
+    }else{
+      arrayElems.forEach(elem=>{
+        ISU.select(`#${elem.id} .borders`).style.width = 'var(--borderSmallSize)';
+        ISU.select(`#${elem.id} .borders`).style.height = 'var(--borderSmallSize)';
+        
+        ISU.select(`#${elem.id} .borders svg`).style.width = `calc(var(--borderSmallSize) + ${extraSVGspace}px`;
+        ISU.select(`#${elem.id} .borders svg`).style.height = `calc(var(--borderSmallSize) + ${extraSVGspace}px`;
+        
+        ISU.select(`#${elem.id} .borders svg rect`).style.width = 'var(--borderSmallSize)';
+        ISU.select(`#${elem.id} .borders svg rect`).style.height = 'var(--borderSmallSize)';
+      })
+    }
   }
 }
 //------------------------
@@ -96,7 +114,7 @@ export default function Border(id) {
   // this.stop = false;
 
 
-  this.subMenuChangingWidth, this.subMenuChangingHeight;
+  this.getOpeningMenuSizeWidth, this.getOpeningMenuSizeHeight;
   // this.topMenuSize;
 
 
@@ -124,9 +142,10 @@ export default function Border(id) {
 
 //---- expand Menu -------------------------------------------------------------------------
 
-Border.prototype.expandMenuIf = function() {
+Border.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
   return new Promise((resolve,reject)=>{
-
+    this.demoVideoHeight = demoVideoHeight;
+    
     if(innerWidth > 800){
       demoMenuTransformTL.clear();
       demoMenuTransformTL
@@ -150,18 +169,15 @@ Border.prototype.expandMenuIf = function() {
     this.unSymetryEachMenuTransform();
 
     
-
-
+    this.rect.setAttributeNS(null, 'stroke', 'ivory');
+    if(innerWidth <= 800){
+      this.smallerRestElemBorders(menuExpanded);
+    }
     
-//     this.borders.rect.setAttributeNS(null, 'stroke', 'ivory');
-//     if(innerWidth<800){
-//       this.smallerRestElemBorders();
-//     }
-//     this.animRectBorder(this)
+    resolve();
+  })
   
-//   })
-  
-// };
+};
 
 
 // Border.prototype.expandMenuElseIf = function() {
@@ -196,10 +212,10 @@ Border.prototype.expandMenuIf = function() {
 //     this.animRectBorder(this)
 
 
-      setTimeout(()=>{
-        console.log('menu expanding is working')
-        resolve();
-      },2000)
+      // setTimeout(()=>{
+      //   console.log('menu expanding is working')
+      //   resolve();
+      // },2000)
   
 //     setTimeout(() => {
 
@@ -209,9 +225,9 @@ Border.prototype.expandMenuIf = function() {
 //       
   
     
-  })
+//   })
   
-};
+// };
   
   
 // Border.prototype.expandMenuElse = function() {
@@ -305,227 +321,222 @@ Border.prototype.expandMenuIf = function() {
 
 // };
 
-// Border.prototype.getFirstNum = function() {
+Border.prototype.getFirstNum = function() {
+  let j = 0;
 
-//   let j = 0;
+  for (let i = 0; i < this.elem.parentElement.childNodes.length; i++) {
+    j = j + 1;
+    if (this.elem.parentElement.childNodes[i].nodeType != 1) {
+      j = j - 1;
+    }
+    if (this.elem.parentElement.childNodes[i] === this.elem) {
+      return j;
+    }
+  }
+}
 
-//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-//     j = j + 1;
-//     if (this.elemParent.childNodes[i].nodeType != 1) {
-//       j = j - 1;
-//     }
-//     if (this.elemParent.childNodes[i] === this.borders.elem) {
-//       return j;
-//     }
-//   }
-// }
-
-// Border.prototype.unSymetryEachMenuTransform = function(){
-//   let firstNum = this.getFirstNum(this);
-//   let subMenus = [];
-//   let j = 0;
+Border.prototype.unSymetryEachMenuTransform = function(){
+  let firstNum = this.getFirstNum();
+  let allMenusInOrder = [];
+  let j = 0;
   
 
+  allMenusInOrder.push(this.elem);
 
-//   subMenus.push(this.borders.elem);
-
-//   for (let i = 0; i < this.elemParent.childNodes.length; i++) {
-//     j = j + 1;
-//     if (this.elemParent.childNodes[i].nodeType != 1) {
-//       j = j - 1;
-//     }
-//     if (this.elemParent.childNodes[i].nodeType == 1) {
-//       if(j != firstNum){
-//         if(firstNum %2 == j%2){
-//           subMenus.splice(1,0, this.elemParent.childNodes[i]);
+  for (let i = 0; i < this.elem.parentElement.childNodes.length; i++) {
+    j = j + 1;
+    if (this.elem.parentElement.childNodes[i].nodeType != 1) {
+      j = j - 1;
+    }
+    if (this.elem.parentElement.childNodes[i].nodeType == 1) {
+      if(j != firstNum){
+        if(firstNum %2 == j%2){
+          allMenusInOrder.splice(1,0, this.elem.parentElement.childNodes[i]);
          
 
-//         }else if(Math.ceil(firstNum*0.5) == Math.ceil(j*0.5)){
-//           subMenus.splice(2,0, this.elemParent.childNodes[i]);
+        }else if(Math.ceil(firstNum*0.5) == Math.ceil(j*0.5)){
+          allMenusInOrder.splice(2,0, this.elem.parentElement.childNodes[i]);
         
-//         }else{
-//           subMenus.splice(3,0, this.elemParent.childNodes[i]);
-//         }
-//       }
-//     }
-//   }
+        }else{
+          allMenusInOrder.splice(3,0, this.elem.parentElement.childNodes[i]);
+        }
+      }
+    }
+  }
 
 
 
 
-//   allElems.forEach((allElems) => {
-//     allElems.classList.add("menutransition")
-//     if (allElems == this.borders.elem) {
-//       allElems.firstElementChild.classList.add("menutransition");
-//     }
-//   })
+  ISU.allElems.forEach((elem) => {
+    elem.classList.add("menutransition")
+    if (elem == this.elem) {
+      elem.firstElementChild.classList.add("menutransition");
+    }
+  })
 
 
+  this.getOpeningMenuSize();
 
-
-//   this.subMenuChanging();
-
-
-//   subMenus[0].style.width = transitionValue['unSymetryEachMenu'] + '%';
-//   subMenus[0].style.height = transitionValue['unSymetryEachMenu'] + '%';
   
-//     this.borders.elem.firstElementChild.style.width = this.subMenuChangingWidth + "px";
-//     this.borders.elem.firstElementChild.style.height = this.subMenuChangingHeight + "px";
+  allMenusInOrder[0].style.width = ISU.transitionValue['unSymetryEachMenu'] + '%';
+  allMenusInOrder[0].style.height = ISU.transitionValue['unSymetryEachMenu'] + '%';
+  
+    // this.elem.firstElementChild.style.width = this.getOpeningMenuSizeWidth + "px";
+    // this.elem.firstElementChild.style.height = this.getOpeningMenuSizeHeight + "px";
    
-//   subMenus[1].style.width = transitionValue['unSymetryEachMenu'] + '%';
-//   subMenus[1].style.height = (100 - transitionValue['unSymetryEachMenu']) + '%';
+  allMenusInOrder[1].style.width = ISU.transitionValue['unSymetryEachMenu'] + '%';
+  allMenusInOrder[1].style.height = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
 
-//   subMenus[2].style.width = (100 - transitionValue['unSymetryEachMenu']) + '%';
-//   subMenus[2].style.height = transitionValue['unSymetryEachMenu'] + '%';
+  allMenusInOrder[2].style.width = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
+  allMenusInOrder[2].style.height = ISU.transitionValue['unSymetryEachMenu'] + '%';
 
-//   subMenus[3].style.width = (100 - transitionValue['unSymetryEachMenu']) + '%';
-//   subMenus[3].style.height = (100 - transitionValue['unSymetryEachMenu']) + '%';
-
-
-//   setTimeout(() => {
-
-//     allElems.forEach((allElems) => {
-//       allElems.classList.remove("menutransition")
-//       if (allElems == this.borders.elem) {
-//         allElems.firstElementChild.classList.remove("menutransition");
-//       }
-//     })
-
-//       this.borders.elem.firstElementChild.style.width = '100%';
-//       this.borders.elem.firstElementChild.style.height = '100%';
-
-//   }, transitionValue['duration'] * 1000 );
+  allMenusInOrder[3].style.width = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
+  allMenusInOrder[3].style.height = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
 
 
-//   // if (!this.subMenuTransfromTL) {
+  setTimeout(() => {
+    ISU.allElems.forEach((elem) => {
+      elem.classList.remove("menutransition")
+      if (elem == this.elem) {
+        elem.firstElementChild.classList.remove("menutransition");
+      }
+    })
 
-//   //   this.subMenuTransfromTL = gsap.timeline();
+    this.elem.firstElementChild.style.width = '100%';
+    this.elem.firstElementChild.style.height = '100%';
 
-//   //   this.subMenuTransfromTL
-//   //     .to(
-//   //       subMenus[0],{
-//   //         width: transitionValue['unSymetryEachMenu'] + '%',
-//   //         height: transitionValue['unSymetryEachMenu'] + '%',
-//   //         duration: transitionValue['duration'],
-//   //         ease:'none'
-//   //       },0
-//   //     )
-//   //     .to(
-//   //       subMenus[1],{
-//   //         width: transitionValue['unSymetryEachMenu'] + '%',
-//   //         height: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //         duration: transitionValue['duration'],
-//   //         ease:'none'
-//   //       },0
-//   //     )
-//   //     .to(
-//   //       subMenus[2],{
-//   //         width: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //         height: transitionValue['unSymetryEachMenu'] + '%',
-//   //         duration: transitionValue['duration'],
-//   //         ease:'none'
-//   //       },0
-//   //     )
-//   //     .to(
-//   //       subMenus[3],{
-//   //         width: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //         height: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //         duration: transitionValue['duration'],
-//   //         ease:'none'
-//   //       },0
-//   //     )
-
-//   // } else {
-//   //   this.subMenuTransfromTL.resume();
-//   // }
+  }, ISU.transitionValue['duration'] * 1000 );
 
 
+  // if (!this.subMenuTransfromTL) {
 
-// ///-------------------------------
+  //   this.subMenuTransfromTL = gsap.timeline();
+
+  //   this.subMenuTransfromTL
+  //     .to(
+  //       allMenusInOrder[0],{
+  //         width: transitionValue['unSymetryEachMenu'] + '%',
+  //         height: transitionValue['unSymetryEachMenu'] + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       allMenusInOrder[1],{
+  //         width: transitionValue['unSymetryEachMenu'] + '%',
+  //         height: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       allMenusInOrder[2],{
+  //         width: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //         height: transitionValue['unSymetryEachMenu'] + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+  //     .to(
+  //       allMenusInOrder[3],{
+  //         width: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //         height: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //         duration: transitionValue['duration'],
+  //         ease:'none'
+  //       },0
+  //     )
+
+  // } else {
+  //   this.subMenuTransfromTL.resume();
+  // }
 
 
 
-//   // gsap.to(
-//   //   subMenus[0],{
-//   //     width: transitionValue['unSymetryEachMenu'] + '%',
-//   //     height: transitionValue['unSymetryEachMenu'] + '%',
-//   //     duration: transitionValue['duration'],
-//   //     ease:'none'
-//   //   }
-//   // )
-//   // gsap.to(
-//   //   subMenus[1],{
-//   //     width: transitionValue['unSymetryEachMenu'] + '%',
-//   //     height: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //     duration: transitionValue['duration'],
-//   //     ease:'none'
-//   //   }
-//   // )
-//   // gsap.to(
-//   //   subMenus[2],{
-//   //     width: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //     height: transitionValue['unSymetryEachMenu'] + '%',
-//   //     duration: transitionValue['duration'],
-//   //     ease:'none'
-//   //   }
-//   // )
-//   // gsap.to(
-//   //   subMenus[3],{
-//   //     width: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //     height: (100 - transitionValue['unSymetryEachMenu']) + '%',
-//   //     duration: transitionValue['duration'],
-//   //     ease:'none'
-//   //   }
-//   // )
+///-------------------------------
+
+
+
+  // gsap.to(
+  //   allMenusInOrder[0],{
+  //     width: transitionValue['unSymetryEachMenu'] + '%',
+  //     height: transitionValue['unSymetryEachMenu'] + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   allMenusInOrder[1],{
+  //     width: transitionValue['unSymetryEachMenu'] + '%',
+  //     height: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   allMenusInOrder[2],{
+  //     width: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //     height: transitionValue['unSymetryEachMenu'] + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
+  // gsap.to(
+  //   allMenusInOrder[3],{
+  //     width: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //     height: (100 - transitionValue['unSymetryEachMenu']) + '%',
+  //     duration: transitionValue['duration'],
+  //     ease:'none'
+  //   }
+  // )
 
 
 
 
  
-// }
+}
 
-// Border.prototype.getPadding = function(){
-//   this.botMenuPaddingTop = parseFloat(window.getComputedStyle(MENU__).paddingTop);
-//   this.botMenuPaddingLeft = parseFloat(window.getComputedStyle(MENU__).paddingLeft);
-//   this.botMenuPaddingRight = parseFloat(window.getComputedStyle(MENU__).paddingRight);
-//   this.botMenuPaddingBot = parseFloat(window.getComputedStyle(MENU__).paddingBottom);
-//   this.botMenuPaddingWidth = this.botMenuPaddingLeft + this.botMenuPaddingRight;
-//   this.botMenuPaddingHeight = this.botMenuPaddingTop + this.botMenuPaddingBot;
+Border.prototype.getPadding = function(){
+  this.menuPaddingTop = parseFloat(window.getComputedStyle(ISU.MENU__).paddingTop);
+  this.menuPaddingLeft = parseFloat(window.getComputedStyle(ISU.MENU__).paddingLeft);
+  this.menuPaddingRight = parseFloat(window.getComputedStyle(ISU.MENU__).paddingRight);
+  this.menuPaddingBot = parseFloat(window.getComputedStyle(ISU.MENU__).paddingBottom);
+  this.menuPaddingWidth = this.menuPaddingLeft + this.menuPaddingRight;
+  this.menuPaddingHeight = this.menuPaddingTop + this.menuPaddingBot;
 
-//   this.liPaddingTop = parseFloat(window.getComputedStyle(this.borders.elem).paddingTop);
-//   this.liPaddingLeft = parseFloat(window.getComputedStyle(this.borders.elem).paddingLeft);
-//   this.liPaddingRight = parseFloat(window.getComputedStyle(this.borders.elem).paddingRight);
-//   this.liPaddingBot = parseFloat(window.getComputedStyle(this.borders.elem).paddingBottom);
-//   this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
-//   this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
+  this.liPaddingTop = parseFloat(window.getComputedStyle(this.elem).paddingTop);
+  this.liPaddingLeft = parseFloat(window.getComputedStyle(this.elem).paddingLeft);
+  this.liPaddingRight = parseFloat(window.getComputedStyle(this.elem).paddingRight);
+  this.liPaddingBot = parseFloat(window.getComputedStyle(this.elem).paddingBottom);
+  this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
+  this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
 
-// }
+}
 
 
-// Border.prototype.subMenuChanging = function() {
-//   this.getPadding();
+Border.prototype.getOpeningMenuSize = function() {
+  this.getPadding();
   
-//   if(innerWidth > 800){
-//     this.subMenuChangingWidth = ((innerWidth * (transitionValue['unSymetryDemoMenu'] / 100) - this.botMenuPaddingWidth) * (transitionValue['unSymetryEachMenu'] / 100)) - this.liPaddingWidth;
-//     this.subMenuChangingHeight = ((innerHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight ;
-    
-//   }else{
-//     if(innerWidth > remToPx(transitionValue['masterMinWidth'])){
-//       console.log('IF IS WORKING')
-//       this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-//       this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-//       console.log('innerWidth',innerWidth,'innerHeight',innerHeight);
-//       console.log('innerHeight',innerHeight,'innerHeight - LOGO__.clientHeight',innerHeight - LOGO__.clientHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100)', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'this.liPaddingHeight',this.liPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight )
-//       console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
-//     }else{
-//       console.log('ELSE IS WORKING')
-//       this.subMenuChangingWidth =(remToPx(transitionValue['masterMinWidth']) - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-//       this.subMenuChangingHeight = (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-//       console.log('MASTER.clientHeight',MASTER.clientHeight,'MASTER.offsetHeight: ',MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',MASTER.offsetHeight - LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
-//     }
-//   }
+  if(window.innerWidth > 800){
+    this.getOpeningMenuSizeWidth = ((window.innerWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100)) - this.liPaddingWidth;
+    this.getOpeningMenuSizeHeight = ((window.innerHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
+  }else{
+    if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+      this.getOpeningMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.getOpeningMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      // console.log('window.innerHeight: ',window.innerHeight)
+      // console.log('ISU.LOGO__.clientHeight: ',ISU.LOGO__.clientHeight)
+      // console.log('this.demoVideoHeight: ',this.demoVideoHeight)
+      // console.log('this.menuPaddingHeight: ',this.menuPaddingHeight)
+      // console.log('ISU.transitionValue[unSymetryEachMenu] / 100: ',ISU.transitionValue['unSymetryEachMenu'] / 100)
+      // console.log('this.liPaddingHeight: ',this.liPaddingHeight)
+    }else{
+      this.getOpeningMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.getOpeningMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      // console.log('MASTER.clientHeight',ISU.MASTER.clientHeight,'MASTER.offsetHeight: ',ISU.MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+    }
+  }
 
-// }
+}
 
 
 //---- create rectangle border ------------------------------------------------------------------
@@ -563,14 +574,13 @@ Border.prototype.createRectBorder = function() {
 
 Border.prototype.animRectBorder = function() {
   return new Promise((resolve,reject)=>{
-
   
-//   f += dir;
+    f += dir;
 
-//   this.borders.rect.parentElement.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
-//   this.borders.rect.parentElement.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
-//   this.borders.rect.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
-//   this.borders.rect.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
+  this.svgCanvas.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
+  this.svgCanvas.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
+  this.rect.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
+  this.rect.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
 
 
 //   if (biggeredElem != null) {
@@ -588,8 +598,8 @@ Border.prototype.animRectBorder = function() {
 
 //     if (menuExpanded) {
     
-//       this.w = this.subMenuChangingWidth;
-//       this.h = this.subMenuChangingHeight;
+//       this.w = this.getOpeningMenuSizeWidth;
+//       this.h = this.getOpeningMenuSizeHeight;
 
 //       this.borders.rect.parentElement.style.width = this.w + this.extraSVGspace + 'px';
 //       this.borders.rect.parentElement.style.height = this.h + this.extraSVGspace + 'px';
@@ -640,7 +650,7 @@ Border.prototype.animRectBorder = function() {
 //     return
 //   }
 
-//   requestAni = requestAnimationFrame(() => this.animRectBorder(this));
+  requestAni = requestAnimationFrame(() => this.animRectBorder(this));
   })
 }
 
@@ -651,41 +661,43 @@ Border.prototype.animRectBorder = function() {
 // }
 
 
-// Border.prototype.smallerRestElemBorders = function(){
-  // this.restElems = ISU.getRestElems(this.borders.elem);
-  //   console.log(this.restElems)
-//   this.restElems.forEach((restElem)=>{
-//     document.getElementById(`${restElem.id}Border`).parentElement.parentElement.classList.add('menutransition');
-//     document.getElementById(`${restElem.id}Border`).parentElement.classList.add('menutransition');
-//     document.getElementById(`${restElem.id}Border`).classList.add('menutransition');
-//     // document.querySelector(`#${restElem.id} .borders .borderCover`).style.display = 'none';
-//   });
+Border.prototype.smallerRestElemBorders = function(menuExpanded){
+  this.restElems = ISU.getRestElems(this.elem);
 
+  this.restElems.forEach((elem)=>{
+    document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.add('menutransition');
+    document.getElementById(`${elem.id}Border`).parentElement.classList.add('menutransition');
+    document.getElementById(`${elem.id}Border`).classList.add('menutransition');
+  });
 
-//   if(menuExpanded){
-//     this.restElems.forEach((restElem)=>{
-//       this.setBordersSizeFamily(restElem,'bordersSmallSize');
+  //Using 'SetDefaultBorderSize', not prototype, takes argument 'this.extraSVGspace' to all Border[menu] element, which can have different 'this.extraSVGspace'.
+  //it might cause problem, but in this case, it does not matter because all Border[menu] element have same extraSVGsapce value.
+  SetDefaultBorderSize(this.restElems,menuExpanded,this.extraSVGspace);
 
-//     })
-//   }else{
-//     if(innerWidth < 800){
-//     this.restElems.forEach((restElem)=>{
-//         this.setBordersSizeFamily(restElem,'borderSize800');
+  // if(menuExpanded){
+    // this.restElems.forEach((restElem)=>{
+    //   this.setBordersSizeFamily(restElem,'borderSmallSize');
 
-//       })
-//     }
-//   }
+    // })
+  // }else{
+
+    // if(innerWidth <= 800){
+    // this.restElems.forEach((restElem)=>{
+        // this.setBordersSizeFamily(restElem,'borderSize800');
+
+      // })
+    // }
+  // }
   
  
-//   setTimeout(() => {
-//     this.restElems.forEach((elem)=>{
-//       document.getElementById(`${elem.id}Border`).classList.remove('menutransition');
-//       document.getElementById(`${elem.id}Border`).parentElement.classList.remove('menutransition');
-//       document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.remove('menutransition');
-//       // document.querySelector(`#${elem.id} .borders .borderCover`).style.display = 'initial';
-//     });
-//   }, transitionValue['duration'] * 1000);
-// }
+  setTimeout(() => {
+    this.restElems.forEach((elem)=>{
+      document.getElementById(`${elem.id}Border`).classList.remove('menutransition');
+      document.getElementById(`${elem.id}Border`).parentElement.classList.remove('menutransition');
+      document.getElementById(`${elem.id}Border`).parentElement.parentElement.classList.remove('menutransition');
+    });
+  }, ISU.transitionValue['duration'] * 1000);
+}
 
 // Border.prototype.setBordersSizeFamily = function(elem, borderSize){
 //   document.querySelector(`#${elem.id} .borders`).style.width = `var(--${borderSize})`;
@@ -695,16 +707,15 @@ Border.prototype.animRectBorder = function() {
 //   document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue[borderSize]} + ${this.extraSVGspace}px`;
   
 
-//   document.querySelectorAll(`#${elem.id} .borders svg rect`).forEach((rect)=>{
-//     rect.style.width = `var(--${borderSize})`;
-//     rect.style.height = `var(--${borderSize})`;
-//   })
+//   document.querySelector(`#${elem.id} .borders svg rect`).style.width = `var(--${borderSize})`;
+//   document.querySelector(`#${elem.id} .borders svg rect`).style.height = `var(--${borderSize})`;
+  
 // }
 
 // Border.prototype.smallerRestElemBordersElseIf = function(){
 
-//     document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['bordersSmallSize'];
-//     document.querySelector(`#${biggeredElem.id} .borders`).style.height = transitionValue['bordersSmallSize'];
+//     document.querySelector(`#${biggeredElem.id} .borders`).style.width = transitionValue['borderSmallSize'];
+//     document.querySelector(`#${biggeredElem.id} .borders`).style.height = transitionValue['borderSmallSize'];
 
 
 //     setTimeout(() => {
@@ -845,13 +856,13 @@ Border.prototype.animRectBorder = function() {
 
 
 //     if (this.borders.elem == biggerElem) {
-//       this.subMenuChanging();
+//       this.getOpeningMenuSize();
 
 //       let width = this.borders.elem.firstElementChild.clientWidth;
 //       // let height = this.borders.elem.firstElementChild.offsetHeight;
-//       let height = this.subMenuChangingHeight;
+//       let height = this.getOpeningMenuSizeHeight;
 //       // console.log('this.borders.elem: ',this.borders.elem.firstElementChild,'this.borders.elem.firstElementChild.clientHeight: ',this.borders.elem.firstElementChild.getBoundingClientRect().height)
-//       console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
+//       console.log('this.getOpeningMenuSizeHeight',this.getOpeningMenuSizeHeight)
 //       console.log('width: ',width,'height: ',height)
 
 //       this.borders.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
@@ -861,7 +872,7 @@ Border.prototype.animRectBorder = function() {
 
 //       this.w = width;
 //       // this.h = height;
-//       this.h = this.subMenuChangingHeight;
+//       this.h = this.getOpeningMenuSizeHeight;
 //       this.createWavyAnimation(() => {});
 
 //     }else{
@@ -869,11 +880,11 @@ Border.prototype.animRectBorder = function() {
 //         this.setBordersSizeFamily(this.borders.elem,'borderSize1400');
 
 //       }else if(innerWidth > 800){
-//         this.setBordersSizeFamily(this.borders.elem,'bordersSize');
+//         this.setBordersSizeFamily(this.borders.elem,'borderSize');
 
 //       }else{
 //         if(menuExpanded){
-//           this.setBordersSizeFamily(this.borders.elem,'bordersSmallSize');
+//           this.setBordersSizeFamily(this.borders.elem,'borderSmallSize');
 //         }else{
 //           this.setBordersSizeFamily(this.borders.elem,'borderSize800');
 //         }
