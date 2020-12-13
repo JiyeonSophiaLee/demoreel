@@ -216,6 +216,7 @@ menuController.prototype.expandMenu = function(){
    
     
  
+<<<<<<< HEAD
 //     if(innerWidth > 800){
 //       DEMO_SVG.classList.remove('blurSVG');
 
@@ -229,6 +230,24 @@ menuController.prototype.expandMenu = function(){
 //       )
 
 //     }else{
+=======
+    if(innerWidth > 800){
+      DEMO_SVG.classList.remove('blurSVG');
+
+      // demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+      
+      gsap.to(
+        DEMO_VIDEO,{
+          width: transitionValue['unSymetryDemoVideoWidth'] + '%',
+          height: demoVideoHeight +'px',
+          duration: transitionValue['duration'],
+          ease: transitionValue['gsapEase']
+        }
+      )
+
+    }else{
+      // demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
       
 //       gsap.to(
 //         DEMO_VIDEO,{
@@ -305,12 +324,23 @@ menuController.prototype.expandMenu = function(){
 
   
 
+<<<<<<< HEAD
 //     if(innerWidth > 800){
+=======
+    if(innerWidth > 800){
+      // DEMO_SVG.style.display= 'initial';
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
       
 //       let demoHeight;
 
+<<<<<<< HEAD
 //       if(innerWidth > 1400){
 //         height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
+=======
+      if(innerWidth > 1400){
+        // DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16) +'px';
+        height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
 
 //       }else{ 
 //         height = ((DEMO__.parentElement.clientWidth * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
@@ -342,14 +372,27 @@ menuController.prototype.expandMenu = function(){
 
 //     document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
     
+<<<<<<< HEAD
 //   setTimeout(() => {
 //     DEMO_VIDEO.classList.remove('menutransition');
 //     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
 //     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
+=======
+  setTimeout(() => {
+    DEMO_VIDEO.classList.remove('menutransition');
+    // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'initial';
+    document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
+    document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
 
 
 //     if(innerWidth > 800){
 //       MASTER.classList.remove('menutransition');
+
+      // DEMO__.classList.remove('menutransition');
+      // TITLE_NAME_CONTAINER.classList.remove('menutransition');
+      // TITLE_NAME.classList.remove('menutransition');
+      
 
       
 //     }else{
@@ -381,6 +424,7 @@ menuController.prototype.expandMenu = function(){
       
       
 
+<<<<<<< HEAD
 //       if (menuExpanded ) {
 //         MASTER.style.maxWidth = '100%';
 
@@ -400,6 +444,46 @@ menuController.prototype.expandMenu = function(){
 //         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
 //       }
 //     }
+=======
+      if (menuExpanded ) {
+        MASTER.style.maxWidth = '100%';
+        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['unSymetryDemoMenu']) + '%';
+        // TITLE_NAME.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
+
+        DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
+        // NAME.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
+
+
+      }else{
+        // TITLE_NAME_CONTAINER.style.width = transitionValue['symetryDemoMenu'] + '%';
+        DEMO_VIDEO.style.width = '';
+        // threeJsBlocker();
+      }
+
+    }else{
+      // TITLE_NAME_CONTAINER.style.width = '100%';
+      // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
+
+      // DEMO__.style.height = demoVideoHeight +'px';
+    
+      DEMO__.style.width = '';
+
+      
+      if (menuExpanded ) {
+
+        // TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
+        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
+      }
+    }
+  // }
+  // clearTimeout(resizeFinish);
+  // resizeFinish = setTimeout(() => {
+  //   DEMO_SVG.classList.add('blurSVG')
+  // }, 200);
+
+  // getMediaQeury800()
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
 
 // }
 
@@ -411,9 +495,43 @@ menuController.prototype.expandMenu = function(){
 // //----------------------------------------------------------------------------------------------------------
 
 
+// function getAllElems(elem) {
+//   let allElems = [];
+  
+//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+//     if (elem.parentElement.childNodes[i].nodeType == 1) {
+//       allElems.push(elem.parentElement.childNodes[i]);
+//     }
+//   }
+  
+//   return allElems;
+// }
 
 
 
+<<<<<<< HEAD
+=======
+function threeJsBlocker(){
+  if(innerHeight < body.scrollHeight){
+    THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
+  }else{
+    THREEJS_BlOCKER.style.height = '';
+  }
+}
+
+// function nameSplit(){
+//   nameP.forEach((pIndex)=>{
+//     pIndex.innerHTML='<span>' +
+//     pIndex.innerHTML.split('').join('</span><span>') +'</span>';
+//   })
+// }
+
+
+
+
+
+// DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
+>>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
 
 let workMenuController = new menuController('work');
 let skillMenuController = new menuController('skill');
