@@ -11,28 +11,25 @@ const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transition
 // setDefaultBorderSize(ISU.allElems);
 
 export function SetDefaultBorderSize(elems, menuExpanded=false, extraSVGspace=null){
-  console.log('menuExpanded: ',menuExpanded)
+  let arrayElems = [...elems];
+  // if(Array.isArray(elems)){
+  //   arrayElems = elems;
+  // }else{
+  //   arrayElems.push(elems);
+  // }
 
-  let arrayElems = [];
-  if(Array.isArray(elems)){
-    arrayElems = elems;
-  }else{
-    arrayElems.push(elems);
-  }
   if(innerWidth >= 1400){
-    console.log('innerWidth >= 1400')
     arrayElems.forEach(elem=>{
       elem.firstElementChild.style.width = 'var(--borderSize1400)';
       elem.firstElementChild.style.height = 'var(--borderSize1400)';
     });
   }else if(innerWidth > 800){
-    console.log('innerWidth > 800')
     arrayElems.forEach(elem=>{
+      console.log(elem)
       elem.firstElementChild.style.width = 'var(--borderSize)';
       elem.firstElementChild.style.height = 'var(--borderSize)';
     });
   }else{
-    console.log('else')
     if(menuExpanded == false){
       arrayElems.forEach(elem=>{
         elem.firstElementChild.style.width = 'var(--borderSize800)';
@@ -144,7 +141,7 @@ export default function Border(id) {
 
 Border.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
   return new Promise((resolve,reject)=>{
-    this.demoVideoHeight = demoVideoHeight;
+    // this.demoVideoHeight = demoVideoHeight;
     
     if(innerWidth > 800){
       demoMenuTransformTL.clear();
@@ -166,7 +163,7 @@ Border.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
 
         demoMenuTransformTL.play();
     }
-    this.unSymetryEachMenuTransform();
+    this.unSymetryEachMenuTransform(demoVideoHeight);
 
     
     this.rect.setAttributeNS(null, 'stroke', 'ivory');
@@ -335,13 +332,13 @@ Border.prototype.getFirstNum = function() {
   }
 }
 
-Border.prototype.unSymetryEachMenuTransform = function(){
+Border.prototype.unSymetryEachMenuTransform = function(demoVideoHeight){
   let firstNum = this.getFirstNum();
-  let allMenusInOrder = [];
+  let allMenusInOrder = [this.elem];
   let j = 0;
   
 
-  allMenusInOrder.push(this.elem);
+  // allMenusInOrder.push(this.elem);
 
   for (let i = 0; i < this.elem.parentElement.childNodes.length; i++) {
     j = j + 1;
@@ -375,14 +372,14 @@ Border.prototype.unSymetryEachMenuTransform = function(){
   })
 
 
-  this.getOpeningMenuSize();
+  this.getOpeningMenuSize(demoVideoHeight);
 
   
   allMenusInOrder[0].style.width = ISU.transitionValue['unSymetryEachMenu'] + '%';
   allMenusInOrder[0].style.height = ISU.transitionValue['unSymetryEachMenu'] + '%';
   
-    // this.elem.firstElementChild.style.width = this.getOpeningMenuSizeWidth + "px";
-    // this.elem.firstElementChild.style.height = this.getOpeningMenuSizeHeight + "px";
+    this.elem.firstElementChild.style.width = this.getOpeningMenuSizeWidth + "px";
+    this.elem.firstElementChild.style.height = this.getOpeningMenuSizeHeight + "px";
    
   allMenusInOrder[1].style.width = ISU.transitionValue['unSymetryEachMenu'] + '%';
   allMenusInOrder[1].style.height = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
@@ -392,7 +389,7 @@ Border.prototype.unSymetryEachMenuTransform = function(){
 
   allMenusInOrder[3].style.width = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
   allMenusInOrder[3].style.height = (100 - ISU.transitionValue['unSymetryEachMenu']) + '%';
-
+console.log('allMenusInOrder[0]',allMenusInOrder[0])
 
   setTimeout(() => {
     ISU.allElems.forEach((elem) => {
@@ -513,7 +510,7 @@ Border.prototype.getPadding = function(){
 }
 
 
-Border.prototype.getOpeningMenuSize = function() {
+Border.prototype.getOpeningMenuSize = function(demoVideoHeight) {
   this.getPadding();
   
   if(window.innerWidth > 800){
@@ -522,17 +519,17 @@ Border.prototype.getOpeningMenuSize = function() {
   }else{
     if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
       this.getOpeningMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-      this.getOpeningMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      this.getOpeningMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
       // console.log('window.innerHeight: ',window.innerHeight)
       // console.log('ISU.LOGO__.clientHeight: ',ISU.LOGO__.clientHeight)
-      // console.log('this.demoVideoHeight: ',this.demoVideoHeight)
+      // console.log(']demoVideoHeight: ',]demoVideoHeight)
       // console.log('this.menuPaddingHeight: ',this.menuPaddingHeight)
       // console.log('ISU.transitionValue[unSymetryEachMenu] / 100: ',ISU.transitionValue['unSymetryEachMenu'] / 100)
       // console.log('this.liPaddingHeight: ',this.liPaddingHeight)
     }else{
       this.getOpeningMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-      this.getOpeningMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-      // console.log('MASTER.clientHeight',ISU.MASTER.clientHeight,'MASTER.offsetHeight: ',ISU.MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - this.demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+      this.getOpeningMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      // console.log('MASTER.clientHeight',ISU.MASTER.clientHeight,'MASTER.offsetHeight: ',ISU.MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight -demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
     }
   }
 
@@ -572,85 +569,51 @@ Border.prototype.createRectBorder = function() {
 
 }
 
-Border.prototype.animRectBorder = function() {
+Border.prototype.animRectBorder = function( menuExpanded, biggeredElem=null) {
   return new Promise((resolve,reject)=>{
-  
-    f += dir;
-
-  this.svgCanvas.style.width = this.borders.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
-  this.svgCanvas.style.height = this.borders.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
-  this.rect.style.width = this.borders.elem.firstElementChild.clientWidth +'px';
-  this.rect.style.height = this.borders.elem.firstElementChild.clientHeight +'px';
-
-
-//   if (biggeredElem != null) {
-//     this.biggeredElemPath.parentElement.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth + this.extraSVGspace + 'px';
-//     this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.extraSVGspace + 'px';
-//     this.biggeredElemPath.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth +'px';
-//     this.biggeredElemPath.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight +'px';
-//   }
-  
-  
-
-//   if (!(f % NF)) {
+    console.log('animRectBorder is working')
     
-//     this.stopAni();
+    function runAnimRectBorder(){
+      f += dir;
 
-//     if (menuExpanded) {
-    
-//       this.w = this.getOpeningMenuSizeWidth;
-//       this.h = this.getOpeningMenuSizeHeight;
-
-//       this.borders.rect.parentElement.style.width = this.w + this.extraSVGspace + 'px';
-//       this.borders.rect.parentElement.style.height = this.h + this.extraSVGspace + 'px';
-  
-
-
-//       this.borders.rect.style.width =  this.w;
-//       this.borders.rect.style.height = this.h;
-
-
-
-// //  //---------------------------------------------------
-// //       let dataPoints = this.getDataPoints(this);
-
-// //       let p0 = dataPoints.points2;
-// //       let p = dataPoints.pointsTween2;
+      this.svgCanvas.style.width = this.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
+      this.svgCanvas.style.height = this.elem.firstElementChild.clientHeight + this.extraSVGspace + 'px';
+      this.rect.style.width = this.elem.firstElementChild.clientWidth +'px';
+      this.rect.style.height = this.elem.firstElementChild.clientHeight +'px';
       
-// //       console.log('p0',p0)
-// //       console.log( `M ${p0[0].x} ${p0[0].y} , ${p0[1].x} ${p0[1].y} , ${p0[2].x} ${p0[2].y} , ${p0[3].x} ${p0[3].y} , ${p0[4].x} ${p0[4].y} , ${p0[5].x} ${p0[5].y} , ${p0[6].x} ${p0[6].y} , ${p0[7].x} ${p0[7].y}`)
-// //       document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttribute('d', `M ${p0[0].x} ${p0[0].y} , ${p0[1].x} ${p0[1].y} , ${p0[2].x} ${p0[2].y} , ${p0[3].x} ${p0[3].y} , ${p0[4].x} ${p0[4].y} , ${p0[5].x} ${p0[5].y} , ${p0[6].x} ${p0[6].y} , ${p0[7].x} ${p0[7].y}`)
-// //       document.getElementById(this.borders.elem.id + 'BorderWavy2').setAttribute('d', `M ${p[0].x} ${p[0].y} , ${p[1].x} ${p[1].y} , ${p[2].x} ${p[2].y} , ${p[3].x} ${p[3].y} , ${p[4].x} ${p[4].y} , ${p[5].x} ${p[5].y} , ${p[6].x} ${p[6].y} , ${p[7].x} ${p[7].y}`)
-// //  //---------------------------------------------------
- 
-     
- 
-//     }
+      if (biggeredElem != null) {
+        this.biggeredElemPath.parentElement.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth + this.extraSVGspace + 'px';
+        this.biggeredElemPath.parentElement.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight + this.extraSVGspace + 'px';
+        this.biggeredElemPath.style.width = this.biggeredElemPath.parentElement.parentElement.clientWidth +'px';
+        this.biggeredElemPath.style.height = this.biggeredElemPath.parentElement.parentElement.clientHeight +'px';
+      }
     
-//     f = 0;
+      requestAni = requestAnimationFrame(()=>runAnimRectBorder.call(this));
+  
 
-
-    setTimeout(()=>{
-      console.log('animRectBorder is working');
-      resolve()
-    },2000)
-  // if (menuExpanded) {
-    // resolve()
-//     this.createWavyAnimation(() => {
-//       eval(this.borders.elem.id + 'MenuController').addEventCB();
-//       eval(this.borders.elem.id + 'MenuController').callAfterAnim(this.borders.elem);
-//     });
-
-  // } else {
-    // reject()
-//     eval(this.borders.elem.id + 'MenuController').addEventCB()
-  // }
-
-
-//     return
-//   }
-
-  requestAni = requestAnimationFrame(() => this.animRectBorder(this));
+      if (!(f % NF)) {
+        cancelAnimationFrame(requestAni);
+        requestAni = null;
+        f = 0;
+        
+        if (menuExpanded) {
+          this.svgCanvas.style.width = this.getOpeningMenuSizeWidth + this.extraSVGspace + 'px';
+          this.svgCanvas.style.height = this.getOpeningMenuSizeHeight + this.extraSVGspace + 'px';
+      
+          this.rect.style.width =  this.getOpeningMenuSizeWidth;
+          this.rect.style.height = this.getOpeningMenuSizeHeight;
+        }
+        
+        if (menuExpanded) {
+          resolve();
+        } else {
+          reject('reject');
+        }
+  
+      }
+    }
+    runAnimRectBorder.call(this);
+  
   })
 }
 
@@ -672,23 +635,9 @@ Border.prototype.smallerRestElemBorders = function(menuExpanded){
 
   //Using 'SetDefaultBorderSize', not prototype, takes argument 'this.extraSVGspace' to all Border[menu] element, which can have different 'this.extraSVGspace'.
   //it might cause problem, but in this case, it does not matter because all Border[menu] element have same extraSVGsapce value.
-  SetDefaultBorderSize(this.restElems,menuExpanded,this.extraSVGspace);
-
-  // if(menuExpanded){
-    // this.restElems.forEach((restElem)=>{
-    //   this.setBordersSizeFamily(restElem,'borderSmallSize');
-
-    // })
-  // }else{
-
-    // if(innerWidth <= 800){
-    // this.restElems.forEach((restElem)=>{
-        // this.setBordersSizeFamily(restElem,'borderSize800');
-
-      // })
-    // }
-  // }
+  SetDefaultBorderSize(this.restElems, menuExpanded, this.extraSVGspace);
   
+
  
   setTimeout(() => {
     this.restElems.forEach((elem)=>{
@@ -698,19 +647,6 @@ Border.prototype.smallerRestElemBorders = function(menuExpanded){
     });
   }, ISU.transitionValue['duration'] * 1000);
 }
-
-// Border.prototype.setBordersSizeFamily = function(elem, borderSize){
-//   document.querySelector(`#${elem.id} .borders`).style.width = `var(--${borderSize})`;
-//   document.querySelector(`#${elem.id} .borders`).style.height = `var(--${borderSize})`;
-
-//   document.querySelector(`#${elem.id} .borders svg`).style.width = `calc(${transitionValue[borderSize]} + ${this.extraSVGspace}px`;
-//   document.querySelector(`#${elem.id} .borders svg`).style.height = `calc(${transitionValue[borderSize]} + ${this.extraSVGspace}px`;
-  
-
-//   document.querySelector(`#${elem.id} .borders svg rect`).style.width = `var(--${borderSize})`;
-//   document.querySelector(`#${elem.id} .borders svg rect`).style.height = `var(--${borderSize})`;
-  
-// }
 
 // Border.prototype.smallerRestElemBordersElseIf = function(){
 
@@ -902,42 +838,45 @@ Border.prototype.smallerRestElemBorders = function(menuExpanded){
 
 Border.prototype.createWavyAnimation = function() {
   return new Promise((resolve,reject)=>{
-    if(menuExpanded ==false){
-      reject()
-    }else{
+    console.log('createAnimation is working');
+    
 
- 
+  if (!this.wavyAnimTL) {
+    console.log('true')
+    this.wavyAnimTL = gsap.timeline({
+      onUpdate: update,
+      onUpdateParams: [this]
 
-//   if (!this.tl) {
-
-//     this.tl = gsap.timeline({
-//       onUpdate: update,
-//       onUpdateParams: [this]
-
-//     });
-//     let dataPoints = this.getDataPoints(this);
+    });
+    console.log('this.wavyAnimTL',this.wavyAnimTL)
+    let dataPoints = this.getDataPoints(this);
   
 
-//     let points1 = dataPoints.points1;
-//     let points2 = dataPoints.points2;
+    let points1 = dataPoints.points1;
+    let points2 = dataPoints.points2;
 
 
-//     let pointsTween1 = dataPoints.pointsTween1;
-//     let pointsTween2 = dataPoints.pointsTween2;
+    let pointsTween1 = dataPoints.pointsTween1;
+    let pointsTween2 = dataPoints.pointsTween2;
 
-//   } else {
-//     this.tl.resume();
+    console.log('points1',points1)
+    console.log('points2',points2)
+    console.log('pointsTween1',pointsTween1)
+    console.log('pointsTween2',pointsTween2)
+
+  } else {
+    this.wavyAnimTL.resume();
 
 
-//     dataPoints = this.getDataPoints(this);
+    dataPoints = this.getDataPoints(this);
 
-//     points1 = dataPoints.points1;
-//     points2 = dataPoints.points2;
+    points1 = dataPoints.points1;
+    points2 = dataPoints.points2;
 
 
-//     pointsTween1 = dataPoints.pointsTween1;
-//     pointsTween2 = dataPoints.pointsTween2;
-//   }
+    pointsTween1 = dataPoints.pointsTween1;
+    pointsTween2 = dataPoints.pointsTween2;
+  }
 
 
 //   for (let i = 0; i < points1.length; i++) {
@@ -966,8 +905,8 @@ Border.prototype.createWavyAnimation = function() {
     
 
 
-//     this.tl.add(tween1, -random(duration))
-//     this.tl.add(tween2, -random(duration))
+//     this.wavyAnimTL.add(tween1, -random(duration))
+//     this.wavyAnimTL.add(tween2, -random(duration))
 //   }
 
 //   document.getElementById(this.borders.elem.id + 'BorderWavy1').setAttributeNS(null, 'stroke-width', this.borders.strokeWidth + this.borders.strokeWidthUnit);
@@ -1032,13 +971,13 @@ Border.prototype.createWavyAnimation = function() {
 
 //   console.log('done wavy animation')
     resolve();
-    }
+    // }
 
   })
 };
 
 // Border.prototype.stopTl = function() {
-//   this.tl.pause(0);
+//   this.wavyAnimTL.pause(0);
 // }
 
 

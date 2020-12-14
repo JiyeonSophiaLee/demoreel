@@ -55,24 +55,23 @@ menuController.prototype.Border = (id)=>new Boder(id);
 menuController.prototype.UtilityController = (id)=>new UtilityController(id);
 
 
+
 //--Event Listenr functions----------
 menuController.prototype.addEventCB = function(){
-  console.log('add')
-  this.elemEventListener(ISU.allElems,'add','callClickEvent');
-  ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
+    console.log('add')
+    this.elemEventListener(ISU.allElems,'add','callClickEvent');
+    ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
 }
 menuController.prototype.callAfterAnim = function(elem){
-  console.log('call');
-  // callSkillsContents(elem);
-  // callInfoContents(elem)
+    console.log('call');
 }
 menuController.prototype.elemEventListener = function(elems,listener, handler) {
-  let arrayElems = [];
-  if(Array.isArray(elems)){
-    arrayElems = elems;
-  }else{
-    arrayElems.push(elems);
-  }
+  let arrayElems = [...elems];
+  // if(Array.isArray(elems)){
+  //   arrayElems = elems;
+  // }else{
+    // arrayElems.push(elems);
+  // }
   
   arrayElems.forEach((elem)=>{
     let controllerId = eval(elem.id+'MenuController')
@@ -111,14 +110,23 @@ menuController.prototype.expandMenu = function(){
     }
 
     
-    
-    // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
-      .then((success) => this.Border.animRectBorder())
-      .then((success) => this.Border.createWavyAnimation())
-      .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
-      .catch((fail)=> this.addEventCB())
-    
+    // Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
+    //   .then((success) => this.Border.animRectBorder(menuExpanded), (err)=> {console.log('done1'); return Promise.reject(err);})
+    //     .then((success) => this.Border.createWavyAnimation())
+    //     .catch((fail)=> this.addEventCB())
+    //       .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
+
+    async function callPromise(){
+      try{
+        const all = await Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
+        const animRect = await this.Border.animRectBorder(menuExpanded);
+        const wavyAnim = await this.Border.createWavyAnimation();
+        const callAfter = await Promise.all([this.addEventCB(), this.callAfterAnim(this.elem)]);
+      }catch(e){
+        const addEvent = await this.addEventCB();
+      }
+    }
+    callPromise.call(this)
 
 
   }else if(biggerElem != this.elem){
@@ -140,6 +148,12 @@ menuController.prototype.expandMenu = function(){
 //     Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
 //     // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
 //     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
+    // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([this.Border.expandMenuElseIf(demoVideoHeight, menuExpanded), this.UtilityController.expandMenuElseIf(demoVideoHeight)])
+      .then((success) => this.Border.animRectBorder(menuExpanded, biggeredElem))
+        .then((success) => this.Border.createWavyAnimation())
+        //.catch((fail)=> this.addEventCB())
+          .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
 
 
 
