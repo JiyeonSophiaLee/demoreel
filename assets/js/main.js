@@ -1,5 +1,6 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Boder, {SetDefaultBorderSize}from '/assets/js/border.js';
+import UtilityController from '/assets/js/utilityController.js';
 
 let menuExpanded = false;
 let biggerElem = null;
@@ -8,7 +9,7 @@ let biggeredElem = null;
 // let resizeFinish;
 
 // console.log(new BORDER('work'))
-SetDefaultBorderSize(ISU.allElems)
+SetDefaultBorderSize(ISU.allElems,menuExpanded)
 
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
@@ -26,8 +27,6 @@ const LOGOcallClickEvent = function(){
   }
 }
 
-ISU.LOGO__.addEventListener('click',LOGOcallClickEvent,false);
-
 
 
 
@@ -37,41 +36,42 @@ function menuController(id){
   this.id = id;
   this.elem = document.getElementById(id);
   this.Border = this.Border(this.id);
+  this.UtilityController = this.UtilityController(this.id);
 
   this.callClickEvent = () =>{
         this.elemEventListener(ISU.allElems,'remove','callClickEvent');
         ISU.LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
         this.expandMenu();
-    
   }
+  this.updateSizeHandler = this.updateSize.bind(this);
 
+  
   this.elem.addEventListener('click',this.callClickEvent,false);
-
-
+  window.addEventListener('resize',this.updateSizeHandler);
 }
 
 menuController.prototype.Border = (id)=>new Boder(id);
+menuController.prototype.UtilityController = (id)=>new UtilityController(id);
+
 
 
 //--Event Listenr functions----------
 menuController.prototype.addEventCB = function(){
-  console.log('add')
-  this.elemEventListener(ISU.allElems,'add','callClickEvent');
-  ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
+    console.log('add')
+    this.elemEventListener(ISU.allElems,'add','callClickEvent');
+    ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
 }
 menuController.prototype.callAfterAnim = function(elem){
-  console.log('call');
-  // callSkillsContents(elem);
-  // callInfoContents(elem)
+    console.log('call');
 }
 menuController.prototype.elemEventListener = function(elems,listener, handler) {
-  let arrayElems = [];
-  if(Array.isArray(elems)){
-    arrayElems = elems;
-  }else{
-    arrayElems.push(elems);
-  }
+  let arrayElems = [...elems];
+  // if(Array.isArray(elems)){
+  //   arrayElems = elems;
+  // }else{
+    // arrayElems.push(elems);
+  // }
   
   arrayElems.forEach((elem)=>{
     let controllerId = eval(elem.id+'MenuController')
@@ -100,22 +100,33 @@ menuController.prototype.expandMenu = function(){
     }else{
       if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-
+        // console.log('this is menuController demoVideoHeight: ',demoVideoHeight)    
+        // console.log('window.innerWidth',window.innerWidth)  
+        // console.log('ISU.transitionValue[unSymetryDemoVideoWidthMediaQuery] /100: ',ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)
+        // console.log('9/16')  
       }else{
         demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-
       }
     }
 
     
-    
-    // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([this.Border.expandMenuIf()])
-      .then((success) => this.Border.animRectBorder())
-      .then((success) => this.Border.createWavyAnimation())
-      .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
-      .catch((fail)=> this.addEventCB())
-    
+    // Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
+    //   .then((success) => this.Border.animRectBorder(menuExpanded), (err)=> {console.log('done1'); return Promise.reject(err);})
+    //     .then((success) => this.Border.createWavyAnimation())
+    //     .catch((fail)=> this.addEventCB())
+    //       .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
+
+    async function callPromise(){
+      try{
+        const all = await Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
+        const animRect = await this.Border.animRectBorder(menuExpanded);
+        const wavyAnim = await this.Border.createWavyAnimation();
+        const callAfter = await Promise.all([this.addEventCB(), this.callAfterAnim(this.elem)]);
+      }catch(e){
+        const addEvent = await this.addEventCB();
+      }
+    }
+    callPromise.call(this)
 
 
   }else if(biggerElem != this.elem){
@@ -137,6 +148,12 @@ menuController.prototype.expandMenu = function(){
 //     Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
 //     // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
 //     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
+    // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
+    Promise.all([this.Border.expandMenuElseIf(demoVideoHeight, menuExpanded), this.UtilityController.expandMenuElseIf(demoVideoHeight)])
+      .then((success) => this.Border.animRectBorder(menuExpanded, biggeredElem))
+        .then((success) => this.Border.createWavyAnimation())
+        //.catch((fail)=> this.addEventCB())
+          .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
 
 
 
@@ -155,337 +172,34 @@ menuController.prototype.expandMenu = function(){
 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //--- menu Utiliti controller------------------------------------------------------------------------
-// //----------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function menuUtilities(id){
+menuController.prototype.updateSize = function(){
+  demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
+  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
   
-//   this.elem = document.getElementById(id);
-//   // this.padding;
+  if(innerWidth > 800){
+    ISU.MENU__.style.height = '100%';
+    ISU.DEMO__.style.height = '100%';
 
+    if (menuExpanded) {
+      ISU.MASTER.style.maxWidth = '100%';
 
-
-//   this.updateSizeHandler = this.updateSize.bind(this);
-
-//   window.addEventListener('resize', this.updateSizeHandler);
-
-// }
-
-// menuUtilities.prototype.expandMenuIf = function(){
-//   return new Promise((resolve, reject)=>{
-   
-    
- 
-<<<<<<< HEAD
-//     if(innerWidth > 800){
-//       DEMO_SVG.classList.remove('blurSVG');
-
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['unSymetryDemoVideoWidth'] + '%',
-//           height: demoVideoHeight +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }else{
-=======
-    if(innerWidth > 800){
-      DEMO_SVG.classList.remove('blurSVG');
-
-      // demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-      
-      gsap.to(
-        DEMO_VIDEO,{
-          width: transitionValue['unSymetryDemoVideoWidth'] + '%',
-          height: demoVideoHeight +'px',
-          duration: transitionValue['duration'],
-          ease: transitionValue['gsapEase']
-        }
-      )
+      ISU.DEMO__.style.width = 100 - ISU.transitionValue['unSymetryDemoMenu'] + '%';
+      ISU.DEMO_VIDEO.style.width = ISU.transitionValue['unSymetryDemoVideoWidth'] + '%';
 
     }else{
-      // demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
-      
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['unSymetryDemoVideoWidthMediaQuery'] + '%',
-//           height: demoVideoHeight +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-//     }
-
-
-//     setTimeout(() => {
-//       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-//       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
-
-//       if(innerWidth > 800){
-//         DEMO_SVG.classList.add('blurSVG');
-
-//       }else{
-//       }
-
-//     }, transitionValue['duration'] * 1000);
-
-//     resolve();  
-//   })
-// }
-
-
-// menuUtilities.prototype.expandMenuElseIf = function(){
-//   return new Promise((resolve, reject)=>{
-
-//     // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'none';
-
-//     document.querySelector(`#${biggeredElem.id} .text`).style.visibility = 'visible'
-//     document.querySelector(`#${biggeredElem.id} .contents`).style.zIndex = '0';
-    
-//     // document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
-//     // document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
-//     document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'none';
-//     document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'none';
-
-//     document.querySelector(`#${biggeredElem.id} .neon1`).classList.remove(`${biggeredElem.id}Neon1`);
-//     document.querySelector(`#${biggeredElem.id} .neon2`).classList.remove(`${biggeredElem.id}Neon2`);
-    
-
-
-
-//     setTimeout(() => {
-
-//       document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden';
-//       document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '3';
-
-//       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.opacity = '0';
-//       // document.querySelector(`#${biggeredElem.id} .borderCover`).style.display = 'initial';
-//       document.querySelector(`#${biggeredElem.id} .neon1`).style.display = 'initial';
-//       document.querySelector(`#${biggeredElem.id} .neon2`).style.display = 'initial';
-//     }, transitionValue.duration * 1000);
-
-//     resolve()  
-//   })
-// }
-
-// menuUtilities.prototype.expandMenuElse = function(){
-//   return new Promise((resolve, reject)=>{
-
-    
-//     document.querySelector(`#${this.elem.id} .contents`).style.zIndex = '0';
-//     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'none';
-//     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'none';
-//     document.querySelector(`#${this.elem.id} .neon1`).classList.remove(`${this.elem.id}Neon1`);
-//     document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
-
-
-  
-
-<<<<<<< HEAD
-//     if(innerWidth > 800){
-=======
-    if(innerWidth > 800){
-      // DEMO_SVG.style.display= 'initial';
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
-      
-//       let demoHeight;
-
-<<<<<<< HEAD
-//       if(innerWidth > 1400){
-//         height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
-=======
-      if(innerWidth > 1400){
-        // DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16) +'px';
-        height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
-
-//       }else{ 
-//         height = ((DEMO__.parentElement.clientWidth * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
-
-//       }
-
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['symetryDemoVideoWidth'] + '%',
-//           height: height +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }else{
-//       gsap.to(
-//         DEMO_VIDEO,{
-//           width: transitionValue['symetryDemoVideoWidthMediaQuery'] + '%',
-//           height: (innerWidth * transitionValue['symetryDemoVideoWidthMediaQuery']/100)  * (9/16) +'px',
-//           duration: transitionValue['duration'],
-//           ease: transitionValue['gsapEase']
-//         }
-//       )
-
-//     }
-
-
-
-//     document.querySelector(`#${this.elem.id} .text`).style.visibility = 'visible'
-    
-<<<<<<< HEAD
-//   setTimeout(() => {
-//     DEMO_VIDEO.classList.remove('menutransition');
-//     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
-//     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
-=======
-  setTimeout(() => {
-    DEMO_VIDEO.classList.remove('menutransition');
-    // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'initial';
-    document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
-    document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
-
-
-//     if(innerWidth > 800){
-//       MASTER.classList.remove('menutransition');
-
-      // DEMO__.classList.remove('menutransition');
-      // TITLE_NAME_CONTAINER.classList.remove('menutransition');
-      // TITLE_NAME.classList.remove('menutransition');
-      
-
-      
-//     }else{
-//       DEMO__.classList.remove('menutransition');
-//       MENU__.classList.remove('menutransition');
-
-
-//     }
-//   }, transitionValue.duration * 1000);
-  
-//   resolve()  
-// })
-// }
-
-// menuUtilities.prototype.deleteMenuText = function(){
-//   // document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-  
-// }
-
-// menuUtilities.prototype.updateSize = function(){
-//   demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
-
-//   DEMO_VIDEO.style.height = demoVideoHeight +'px';
-
-//     if(innerWidth > 800){
-      
-//       MENU__.style.height = '100%'
-//       DEMO__.style.height = '100%';
-      
-      
-
-<<<<<<< HEAD
-//       if (menuExpanded ) {
-//         MASTER.style.maxWidth = '100%';
-
-//         DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
-//         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
-
-
-//       }else{
-//         DEMO_VIDEO.style.width = '';
-//       }
-
-//     }else{
-//       DEMO__.style.width = '';
-
-      
-//       if (menuExpanded ) {
-//         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
-//       }
-//     }
-=======
-      if (menuExpanded ) {
-        MASTER.style.maxWidth = '100%';
-        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['unSymetryDemoMenu']) + '%';
-        // TITLE_NAME.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
-
-        DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
-        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
-        // NAME.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
-
-
-      }else{
-        // TITLE_NAME_CONTAINER.style.width = transitionValue['symetryDemoMenu'] + '%';
-        DEMO_VIDEO.style.width = '';
-        // threeJsBlocker();
-      }
-
-    }else{
-      // TITLE_NAME_CONTAINER.style.width = '100%';
-      // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
-
-      // DEMO__.style.height = demoVideoHeight +'px';
-    
-      DEMO__.style.width = '';
-
-      
-      if (menuExpanded ) {
-
-        // TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
-        DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
-      }
+      ISU.DEMO_VIDEO.style.width = '';
     }
-  // }
-  // clearTimeout(resizeFinish);
-  // resizeFinish = setTimeout(() => {
-  //   DEMO_SVG.classList.add('blurSVG')
-  // }, 200);
 
-  // getMediaQeury800()
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
+  }else{
+    ISU.DEMO__.style.width = '';
 
-// }
+    if(menuExpanded ) {
+      ISU.DEMO_VIDEO.style.width = ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
+    }
+  }
+}
+
+
 
 
 
@@ -495,43 +209,9 @@ menuController.prototype.expandMenu = function(){
 // //----------------------------------------------------------------------------------------------------------
 
 
-// function getAllElems(elem) {
-//   let allElems = [];
-  
-//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
-//     if (elem.parentElement.childNodes[i].nodeType == 1) {
-//       allElems.push(elem.parentElement.childNodes[i]);
-//     }
-//   }
-  
-//   return allElems;
-// }
 
 
 
-<<<<<<< HEAD
-=======
-function threeJsBlocker(){
-  if(innerHeight < body.scrollHeight){
-    THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
-  }else{
-    THREEJS_BlOCKER.style.height = '';
-  }
-}
-
-// function nameSplit(){
-//   nameP.forEach((pIndex)=>{
-//     pIndex.innerHTML='<span>' +
-//     pIndex.innerHTML.split('').join('</span><span>') +'</span>';
-//   })
-// }
-
-
-
-
-
-// DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
->>>>>>> parent of fb87344... Merge pull request #46 from JiyeonSophiaLee/new-Title-Font-design
 
 let workMenuController = new menuController('work');
 let skillMenuController = new menuController('skill');
@@ -545,9 +225,6 @@ let infoMenuController = new menuController('info');
 
 
 
-// let workMenuUtilities = new menuUtilities('work');
-// let skillMenuUtilities = new menuUtilities('skill');
-// let paintMenuUtilities = new menuUtilities('paint');
-// let infoMenuUtilities = new menuUtilities('info');
+
 
 
