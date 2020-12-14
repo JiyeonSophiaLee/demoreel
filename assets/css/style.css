@@ -76,10 +76,8 @@ body{
   flex-direction: column;
 }
 #loader {
-  /* font-family: Arial, Helvetica, sans-serif; */
-  /* font-size: 48px; */
-  font-family: 'theboldfont';
-  font-size: 6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 48px;
 }
 /* #skill .contents{
   font-family: 'Quicksand', sans-serif;
@@ -229,33 +227,24 @@ body{
     align-self: center;
     color: #FFF;
     position: relative;
-    /* letter-spacing: 4px; */
-    letter-spacing: 0.3rem;
+    letter-spacing: 4px;
   }
   #loader::before {
     content: '';
     position: absolute;
-    /* right: 70px;
+    right: 70px;
     bottom: 10px;
     height: 28px;
-    width: 5.15px; */
-    right: 9.6rem;
-    bottom: 1.3rem;
-    height: 2.3rem;
-    width: 1.1rem;
+    width: 5.15px;
     background: currentColor;
   }
   #loader::after {
     content: '';
-    position: absolute;
-    /* width: 8px;
+    width: 8px;
     height: 8px;
+    position: absolute;
     left: 125px;
-    top: 2px; */
-    width: 1.1rem;
-    height: 1.1rem;
-    left: 16.5rem;
-    top: 2.1rem;
+    top: 2px;
     border-radius: 50%;
     background: red;
     animation: loaderAnim 1s ease-in infinite;
