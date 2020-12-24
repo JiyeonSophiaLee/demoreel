@@ -1,16 +1,25 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
-import Boder, {SetDefaultBorderSize}from '/assets/js/border.js';
+import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';
+import Thumbnails, {ThumbnailReszie, workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
+import Skills from '/assets/js/skills.js';
+//------gsap------//
+// import gsap from '/assets/scripts/gsap-core.js';
+// import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
+// import { CSSRulePlugin } from "/assets/scripts/CSSRulePlugin.js";
+// gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
+// let test = new Thumbnails(workThumbnails)
 
 let menuExpanded = false;
 let biggerElem = null;
 let biggeredElem = null;
+let biggeredController =null;
 
 // let resizeFinish;
 
-// console.log(new BORDER('work'))
-SetDefaultBorderSize(ISU.allElems,menuExpanded)
-
+ISU.allElems.forEach((elem)=>{
+  SetDefaultRectSize(elem)
+});
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
 ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
@@ -31,12 +40,15 @@ const LOGOcallClickEvent = function(){
 
 
 
-function menuController(id){
+function MenuController(id, hasThumbnail=false){
 
   this.id = id;
   this.elem = document.getElementById(id);
-  this.Border = this.Border(this.id);
+  this.Rect = this.Rect(this.id);
   this.UtilityController = this.UtilityController(this.id);
+  if(hasThumbnail){
+    this.Thumbnails = this.Thumbnails(this.id,hasThumbnail);
+  };
 
   this.callClickEvent = () =>{
         this.elemEventListener(ISU.allElems,'remove','callClickEvent');
@@ -51,21 +63,34 @@ function menuController(id){
   window.addEventListener('resize',this.updateSizeHandler);
 }
 
-menuController.prototype.Border = (id)=>new Boder(id);
-menuController.prototype.UtilityController = (id)=>new UtilityController(id);
-
+MenuController.prototype.Rect = (id)=>new Rect(id);
+MenuController.prototype.UtilityController = (id)=>new UtilityController(id);
+MenuController.prototype.Thumbnails = (id,hasThumbnail)=> new Thumbnails(id,hasThumbnail);
 
 
 //--Event Listenr functions----------
-menuController.prototype.addEventCB = function(){
-    console.log('add')
-    this.elemEventListener(ISU.allElems,'add','callClickEvent');
-    ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
+MenuController.prototype.addEventCB = function(){
+  console.log('add')
+  this.elemEventListener(ISU.allElems,'add','callClickEvent');
+  ISU.LOGO__.addEventListener('click',LOGOcallClickEvent);
 }
-menuController.prototype.callAfterAnim = function(elem){
-    console.log('call');
+MenuController.prototype.callBefore = function(){
+  if(typeof biggeredController.Thumbnails =='object'){
+    biggeredController.Thumbnails.callThumbnailBefore();
+  }
+  // callSkillContents(elem);
+  // callInfoContents(elem);
 }
-menuController.prototype.elemEventListener = function(elems,listener, handler) {
+MenuController.prototype.callAfter = function(){
+  console.log('callAfter');
+  if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
+    console.log('object?')
+    this.Thumbnails.callThumbnailAfter();
+  }
+  // callSkillContents(elem);
+  // callInfoContents(elem);
+}
+MenuController.prototype.elemEventListener = function(elems,listener, handler) {
   let arrayElems = [...elems];
   // if(Array.isArray(elems)){
   //   arrayElems = elems;
@@ -87,42 +112,29 @@ menuController.prototype.elemEventListener = function(elems,listener, handler) {
 
 //---------------------------------------
 
-menuController.prototype.expandMenu = function(){
+MenuController.prototype.expandMenu = function(){
 
   if (menuExpanded == false ){
-      menuExpanded = true;
-      biggerElem = this.elem;
-
+    menuExpanded = true;
+    biggerElem = this.elem;
     
     //----calculate demo height in order to give the same result to all functions------------------------
-    if(window.innerWidth > 800){
-      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-    }else{
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-        // console.log('this is menuController demoVideoHeight: ',demoVideoHeight)    
-        // console.log('window.innerWidth',window.innerWidth)  
-        // console.log('ISU.transitionValue[unSymetryDemoVideoWidthMediaQuery] /100: ',ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)
-        // console.log('9/16')  
-      }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }
-    }
-
+    getDemoVideHeight();
     
-    // Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
-    //   .then((success) => this.Border.animRectBorder(menuExpanded), (err)=> {console.log('done1'); return Promise.reject(err);})
-    //     .then((success) => this.Border.createWavyAnimation())
+    // Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)])
+    //   .then((success) => this.Rect.animRect(menuExpanded), (err)=> {console.log('done1'); return Promise.reject(err);})
+    //     .then((success) => this.Rect.createWavyAnimation())
     //     .catch((fail)=> this.addEventCB())
     //       .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Border.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
-        const animRect = await this.Border.animRectBorder(menuExpanded);
-        const wavyAnim = await this.Border.createWavyAnimation();
-        const callAfter = await Promise.all([this.addEventCB(), this.callAfterAnim(this.elem)]);
+        const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
+        const animRect = await this.Rect.animRect(menuExpanded);
+        const wavyAnim = await this.Rect.createWavyAnimation();
+        const callAfter = await Promise.all([this.callAfter(), this.addEventCB()]);
       }catch(e){
+        console.log('error');
         const addEvent = await this.addEventCB();
       }
     }
@@ -130,49 +142,72 @@ menuController.prototype.expandMenu = function(){
 
 
   }else if(biggerElem != this.elem){
-//     biggeredElem = biggerElem;
-//     biggerElem = this.elem;
-//     console.log('if else is working')
+    biggeredElem = biggerElem;
+    biggerElem = this.elem;
+    biggeredController = eval(biggeredElem.id+'MenuController');
 
+    //----calculate demo height in order to give the same result to all functions------------------------
+    getDemoVideHeight();
 
-//     //----calculate demo height in order to give the same result to all functions------------------------
-//     // demoVideoHeight =  DEMO_VIDEO.parentElement.clientWidth * (transitionValue['unSymetryDemoVideoWidthMediaQuery'] / 100) * (9/16);
-//     if(innerWidth > 800){
-//       demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-//     }else{
-//       demoVideoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-//     }
+    async function callPromise(){
+      try{
+        const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.callBefore()]);
+        const stopWavyAnim = await biggeredController.Rect.stopWavyAnim();
+        const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
+        const wavyAnim = await this.Rect.createWavyAnimation();
+        const callAfter = await Promise.all([this.callAfter(), this.addEventCB()]);
+      }catch(e){
+        console.log('error');
+        const addEvent = await this.addEventCB();
+      }
+    }
 
-    
+    callPromise.call(this);
 
-//     Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem),callThreeJS(this.elem)])
-//     // Promise.all([bordersExpandMenu.expandMenuElseIf(), utilitiExpandMenu.expandMenuElseIf(),stopSkillsContents(),stopInfoContents(), callThumbnailElseIf(this.elem)])
-//     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
-    // Promise.all([this.Border.expandMenuIf(), utilitiExpandMenu.expandMenuIf(),callThumbnailIf(this.elem),callThreeJS(this.elem)])
-    Promise.all([this.Border.expandMenuElseIf(demoVideoHeight, menuExpanded), this.UtilityController.expandMenuElseIf(demoVideoHeight)])
-      .then((success) => this.Border.animRectBorder(menuExpanded, biggeredElem))
-        .then((success) => this.Border.createWavyAnimation())
-        //.catch((fail)=> this.addEventCB())
-          .then((success) => {this.addEventCB(); this.callAfterAnim(this.elem)})
+  }else{
+    menuExpanded =false;
+    biggerElem = null;
+    biggeredElem = null;
+    biggeredController = eval(this.id+'MenuController');
 
+    async function callPromise(){
+      try{
+        const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.callBefore()]);
+        const stopWavyAnim = await this.Rect.stopWavyAnim();
+        const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
+        // const wavyAnim = await this.Rect.createWavyAnimation();
+        const callAfter = await Promise.all([this.callAfter(), this.addEventCB()]);
+      }catch(e){
+        console.log('error');
+        const addEvent = await this.addEventCB();
+      }
+    }
 
+    callPromise.call(this);
 
-//   }else{
-//     menuExpanded =false;
-//     biggerElem = null;
-//     biggeredElem = null;
-
-  
-//     console.log('else is working')
-
-//     Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
-//     // Promise.all([bordersExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem)])
+//     Promise.all([rectsExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem),deleteThreeJs(this.elem)])
+//     // Promise.all([rectsExpandMenu.expandMenuElse(), utilitiExpandMenu.expandMenuElse(),stopSkillsContents(),stopInfoContents(), callThumbnailElse(this.elem)])
 //     .then(text=>eval(this.elem.id + 'MenuUtilities').deleteMenuText())
 
 
   }
+  function getDemoVideHeight(){
+    if(window.innerWidth > 800){
+      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+    }else{
+      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }else{
+        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }
+    };
+  };
 }
-menuController.prototype.updateSize = function(){
+MenuController.prototype.updateSize = function(){
+
+  this.Rect.updateResize();
+  // ThumbnailReszie(biggerElem);
+
   demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
   ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
   
@@ -209,22 +244,31 @@ menuController.prototype.updateSize = function(){
 // //----------------------------------------------------------------------------------------------------------
 
 
+// function Package(id,...constructor){
+//   this.id = id;
+//   // let [MenuController,Thumbnail] =constructor;
+//   // // this.contructor = contructor
+//   // console.log(MenuController)
+
+//   // let [MenuController,b,c] = [1,2,3];
+
+//   // console.log('b',b)
+
+// }
+// // Package.prototype = new MenuController(); 
+
+// let workPackage = new Package('work',new MenuController('work'))
+
+let workMenuController = new MenuController('work', workThumbnails);
+let skillMenuController = new MenuController('skill');
+let paintMenuController = new MenuController('paint', paintThumbnails);
+let infoMenuController = new MenuController('info');
 
 
 
-
-let workMenuController = new menuController('work');
-let skillMenuController = new menuController('skill');
-let paintMenuController = new menuController('paint');
-let infoMenuController = new menuController('info');
 
 // workMenuController.border = new BORDER('work');
 // skillMenuController.border = new BORDER('skill');
 // paintMenuController.border = new BORDER('paint');
 // infoMenuController.border = new BORDER('info');
-
-
-
-
-
 
