@@ -13,6 +13,7 @@ const INFO = document.getElementById('info');
 const DEMO_VIDEO_BG_CSS_ANIM = document.querySelector('#demoVideoBgCSSAnim');
 const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
+const SKILL_CONTENTS = document.querySelector(`#skill .contents`);
 
 const allElems = [WORK,PAINT,SKILL,INFO];
 
@@ -32,6 +33,7 @@ export {
   DEMO_VIDEO_BG_CSS_ANIM,
   TITLE_NAME,
   THREEJS_BlOCKER,
+  SKILL_CONTENTS,
   allElems
 }
 
@@ -69,12 +71,12 @@ function getTransitionValue() {
   this.unSymetryDemoVideoWidth = 90;
   this.symetryDemoVideoWidthMediaQuery = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidthMediaQuery'));
   this.unSymetryDemoVideoWidthMediaQuery = 50;
-  this.borderMinMediaQuery = 13;
-  this.borderMinMediaQueryUnit = 'vw';
-  this.borderSize = getComputedStyle(document.documentElement).getPropertyValue('--borderSize');
-  this.borderSmallSize = getComputedStyle(document.documentElement).getPropertyValue('--borderSmallSize');
-  this.borderSize800 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize800');
-  this.borderSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--borderSize1400');
+  this.rectMinMediaQuery = 13;
+  this.rectMinMediaQueryUnit = 'vw';
+  this.rectSize = getComputedStyle(document.documentElement).getPropertyValue('--rectSize');
+  this.rectSmallerSize = getComputedStyle(document.documentElement).getPropertyValue('--rectSmallerSize');
+  this.rectSize800 = getComputedStyle(document.documentElement).getPropertyValue('--rectSize800');
+  this.rectSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--rectSize1400');
   this.gsapEase = "power1.inOut";
 };
 
