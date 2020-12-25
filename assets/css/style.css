@@ -33,21 +33,21 @@ canvas{
   --masterMaxWidth : 1400px;
   --masterMinWidth : 25rem;
 
-  --borderSize:10vw;
-  --borderSmallSize:5rem;
-  --borderSize800: 7rem;
-  --borderSize1400: 8.7rem;
+  --rectSize:10vw;
+  --rectSmallerSize:5rem;
+  --rectSize800: 7rem;
+  --rectSize1400: 8.7rem;
 
   --LiScrollbarWidth: 8px;
 }
 /* @media (max-width:800px){
   :root{
-    --bordersSize: 7rem;
+    --rectSize: 7rem;
   }
 }
 @media (min-width:1400px){
   :root{
-    --bordersSize: 8.7rem;
+    --rectSize: 8.7rem;
   }
 } */
 
@@ -76,8 +76,10 @@ body{
   flex-direction: column;
 }
 #loader {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 48px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  /* font-size: 48px; */
+  font-family: 'theboldfont';
+  font-size: 6rem;
 }
 /* #skill .contents{
   font-family: 'Quicksand', sans-serif;
@@ -87,17 +89,17 @@ body{
   font-family: 'Quicksand', sans-serif;
 } */
 
-#menu > li .borders{
+#menu li .rects{
   font-family: 'Text Me One', sans-serif;
   font-size:2vw;
 }
   @media (max-width:800px){
-    #menu > li .borders{
+    #menu li .rects{
       font-size: 1.5rem;
     }
   }
   @media (min-width:1400px){
-    #menu > li .borders{
+    #menu li .rects{
       font-size: 1.8rem;
     }
   }
@@ -114,19 +116,19 @@ body{
     }
   }
 
-#info .title .titleName .titleNameContainer .name:first-child{
+#info .top .me .mynName .name:first-child{
   font-family: 'theboldfont';
   font-size: 6vw;
   line-height: 6vw;
   /* letter-spacing: 0.2vw; */
 }
   @media (max-width:800px){
-    #info .title .titleName .titleNameContainer .name:first-child{
+    #info .top .me .mynName .name:first-child{
         font-size: 3.2rem;
         line-height: 3.2rem;
     }
   }
-#info .title .titleName .titleNameContainer .name:nth-child(2){
+#info .top .me .mynName .name:nth-child(2){
   font-family: 'theboldfont';
   font-size: 5vw;
   line-height: 5vw;
@@ -135,18 +137,18 @@ body{
   /* letter-spacing: 0.2vw; */
 }
   @media (max-width:800px){
-    #info .title .titleName .titleNameContainer .name:nth-child(2){
+    #info .top .me .mynName .name:nth-child(2){
         font-size: 3rem;
         line-height: 3rem;
     }
   }
   @media (min-width:1100px){
-    #info .title .titleName .titleNameContainer .name:nth-child(2){
+    #info .top .me .mynName .name:nth-child(2){
       font-size: 4.5vw;
       line-height: 4.5vw;
     }
   }
-#info .title .titleName .position{
+#info .top .me .position{
   font-size: 2vw;
   font-weight: 500;
   color: tomato;
@@ -158,35 +160,35 @@ body{
   } */
 
 
-  #info #contentsGroup .tableContents{
+  #info .bot .heads{
     font-size: 2.3rem;
     font-weight: 500;
   }
     @media (min-width:1100px){
-      #info #contentsGroup .tableContents{
+      #info .bot .heads{
         font-size: 3rem;
         line-height: 3rem;
       }
     }
 
 
-  #info #contentsGroup .infoContents .school .schoolName{
+  #info .bot .bodies .school .schoolName{
     font-size: 1.7rem;
     line-height: 1.7rem;
     font-weight: bold;
   }
     @media (min-width:1100px){
-      #info #contentsGroup .infoContents .school .schoolName{
+      #info .bot .bodies .school .schoolName{
         font-size: 2rem;
         line-height: 2rem;
       }
     }
 
-  #info #contentsGroup .infoContents .school .country, .date{
+  #info .bot .bodies .school .country, .date{
     font-size: 1.1rem;
   }
     @media (min-width:1100px){
-      #info #contentsGroup .infoContents .school .country, .date{
+      #info .bot .bodies .school .country, .date{
         font-size: 1.3rem;
       }
     }
@@ -210,7 +212,7 @@ body{
 
 
 
-/* Loader */
+/* -------Loader---------- */
 #loaderContainer{
   position: absolute;
   top: 0;
@@ -227,24 +229,33 @@ body{
     align-self: center;
     color: #FFF;
     position: relative;
-    letter-spacing: 4px;
+    /* letter-spacing: 4px; */
+    letter-spacing: 0.3rem;
   }
   #loader::before {
     content: '';
     position: absolute;
-    right: 70px;
+    /* right: 70px;
     bottom: 10px;
     height: 28px;
-    width: 5.15px;
+    width: 5.15px; */
+    right: 9.6rem;
+    bottom: 1.3rem;
+    height: 2.3rem;
+    width: 1.1rem;
     background: currentColor;
   }
   #loader::after {
     content: '';
-    width: 8px;
-    height: 8px;
     position: absolute;
+    /* width: 8px;
+    height: 8px;
     left: 125px;
-    top: 2px;
+    top: 2px; */
+    width: 1.1rem;
+    height: 1.1rem;
+    left: 16.5rem;
+    top: 2.1rem;
     border-radius: 50%;
     background: red;
     animation: loaderAnim 1s ease-in infinite;
@@ -263,9 +274,10 @@ body{
       transform: translateY(8px) scaleY(0.8) scaleX(0.8);
     }
   }
-/* ------------------- */
-  
 
+
+
+/* -------Three JS---------- */
   #threejsBlocker{
     background:var(--backgroundColor);
     position:fixed;
@@ -298,6 +310,7 @@ body{
 
 
 
+/* -------main body---------- */
   #master{
     width: 100%;
     height: 100%;
@@ -540,7 +553,7 @@ body{
 
 
 
-          #menu > li .borders{
+          #menu > li .rects{
             /* width: var(--bordersSize);
             height: var(--bordersSize); */
             display:grid;
@@ -551,14 +564,17 @@ body{
           }
 
 
+          #menu > li .rects .text{
+            position: relative;
+          }
 
-          #menu > li .borders .neon{
+          #menu > li .rects .neon{
             width: inherit;
             height: inherit;
             border-radius: inherit;
             position: absolute;
           }
-          /* #menu > li .borders:hover{
+          /* #menu > li .rects:hover{
             border-radius: 10px;
             box-shadow:
             0 0px 1px rgba(255, 255, 255, 0.404),
@@ -569,34 +585,44 @@ body{
             inset 0 0px 15px rgba(255, 255, 255, 1);
           
           } */
-            #menu > li .borders svg{
+            #menu > li .rects svg{
               position: absolute;
             }
             
-              #menu > li .borders svg rect{
+              #menu > li .rects svg rect{
                 stroke-width: 0.5vw;
               }
               @media (max-width:800px){
-                #menu > li .borders svg rect{
+                #menu > li .rects svg rect{
                   stroke-width: 0.3rem;
                 }
               }
               @media (min-width:1400px){
-                #menu > li .borders svg rect{
+                #menu > li .rects svg rect{
+                  stroke-width: 7px;
+                }
+              }
+              #menu > li .rects svg .wavyPath{
+                stroke-width: 0.5vw;
+              }
+              @media (max-width:800px){
+                #menu > li .rects svg .wavyPath{
+                  stroke-width: 0.3rem;
+                }
+              }
+              @media (min-width:1400px){
+                #menu > li .rects svg .wavyPath{
                   stroke-width: 7px;
                 }
               }
     
 
-            #menu > li .borders .text{
-              position: relative;
-            }
             
             #menu #work{
               justify-content: flex-end;
             }
 
-            #menu #work .borders{
+            #menu #work .rects{
               align-self: flex-end;
               /* transition-duration: var(--subMenuNeonDuration);
               transition: box-shadow ease-in-out; */
@@ -640,7 +666,7 @@ body{
           #menu #skill{
             justify-content: flex-start;
           }
-            #menu #skill .borders{
+            #menu #skill .rects{
               align-self:flex-end;
               border:none;
             }
@@ -650,7 +676,7 @@ body{
             justify-content: flex-end;
             
           }
-            #menu #paint .borders{
+            #menu #paint .rects{
               align-self: flex-start;
               border:none;
             }
@@ -660,7 +686,7 @@ body{
             justify-content: flex-start;
             
           }
-          #menu #info .borders{
+          #menu #info .rects{
               align-self: flex-start;
               border:none;
             }
