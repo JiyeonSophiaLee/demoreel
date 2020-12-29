@@ -53,15 +53,15 @@ function MenuController(id, hasThumbnail=false, hasSkills=false){
     this.Skills = this.Skills(this.id, hasSkills);
   }
 
+
   this.callClickEvent = () =>{
         this.elemEventListener(ISU.allElems,'remove','callClickEvent');
         ISU.LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
         this.expandMenu();
   }
-  this.updateSizeHandler = this.updateSize.bind(this);
-
   
+  this.updateSizeHandler = this.updateSize.bind(this);
   this.elem.addEventListener('click',this.callClickEvent,false);
   window.addEventListener('resize',this.updateSizeHandler);
 }
@@ -83,7 +83,8 @@ MenuController.prototype.callFuncs = function(){
   if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
     this.Thumbnails.callThumbnail();
   }
-  if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
+  if(typeof this.Skills =='object' && this.id == biggerElem.id){
+    console.log('call skill')
     this.Skills.callSkills();
   }
   
