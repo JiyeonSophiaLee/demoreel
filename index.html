@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sophia_Jiyeon_Demo_website</title>
+    <title>Document</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/styleContent.css">
@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="assets/css/styleInfo.css">
     <link rel="stylesheet" href="assets/css/fontello.css">
     <link href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap" rel="stylesheet">
+   
 
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap" rel="stylesheet">
+    
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
@@ -28,9 +30,6 @@
    <!-- <script src="assets/THREE_js/script/RoughnessMipmapper.js"></script> -->
    <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
    <script src="//cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.min.js"></script>
-
-
-
    
 </head>
 
@@ -49,7 +48,7 @@
                 <iframe  src="https://player.vimeo.com/video/374348394?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&muted=1"frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                 <div id='demoVideoBgCSSAnim'></div>
             </div>
-            <!-- <div id="demoSVG" class="blurSVG" ></div> -->
+            <img  id="demoSVG" class="blurSVG" src="assets/images/svg/demoSVG_v08.svg"alt="" srcset="">  
         </div>
 
         <div id='menu'> 
@@ -74,6 +73,8 @@
                         <path id='workBorderWavy2' fill='none' stroke="#ff8c34"></path>
                         
                         <rect id='workBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
                     </svg>
                 
                     
@@ -100,6 +101,8 @@
                         <path id='skillBorderWavy2' fill='none' stroke="#ff4179"></path>
                         
                         <rect id='skillBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
                     </svg>
                     
                 </div>
@@ -124,6 +127,8 @@
                         <path id='paintBorderWavy2' fill='none' stroke="#30ab98"></path>
                         
                         <rect id='paintBorder'></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
                     </svg>
                     
                 </div>
@@ -148,6 +153,8 @@
                         <path id='infoBorderWavy2' fill='none' stroke="#5cd3ff"></path>
                         
                         <rect id='infoBorder' ></rect>
+                        <!-- <rect class='borderCover'></rect> -->
+                        <!-- <rect class='edge'></rect> -->
                     </svg>
             
                 </div>
@@ -159,6 +166,7 @@
                         </div>
                         <div class = 'titleName' >
                             <div class='titleNameContainer'>
+                                <!-- <img src="assets/images/svg/infoJiyeon.svg" alt="" srcset=""> -->
                                 <h1 class = 'name'>Hi, I'm Sophia</h1>
                                 <h2 class = 'name'>Jiyeon Lee</h2>
                             </div>
@@ -175,14 +183,12 @@
                             <div id='summaryTitle' class = 'tableContents'>
                                 <p>WHO AM I</p>
                             </div>
- 
+
                             <div id = 'summaryContainer' class = 'infoContents'>
-                                <p class = 'summary'>I am a 3D Artist, specialised in <strong>lighting</strong>.</p>
-                                <p class = 'summary'>
-                                    I also love to do <strong>modeling, textureing, rigging, animating</strong> and <strong>dynamic things</strong>.<br>
-                                    Recently, I started to learn code, <strong>Javascript</strong>, for understanding basics of programming a year ago, and I created my webstie by myself which is still in progress.<br>
-                                    JS librareis that I worked are <strong>ThreeJS</strong> and <strong>Gsap</strong> in this website.
-                                </p>
+                                <p class = 'summary'>I am a 3D Artist, specialised in lighting.</p>
+                                <p class = 'summary'>I also love to do modeling, textureing, rigging, animating and dynamic things.</p>
+                                <p class = 'summary'>Recently, I started to learn code for understanding basics of programming a year ago, and I created my webstie by myself which is still in progress. </p>
+                                <p class = 'summary'>JS librareis that I worked are ThreeJS and Gsap in this website.</p>
                                 <p class = 'summary'>When having a extra time, I often play LOL and hiking. My Id is DTree in North America server.</p>
                                 <p class = 'summary'>It's more than wecolme to talk and share ideas, so feel free to reach out to me.</p>
                             </div>
@@ -202,7 +208,7 @@
                                     <p class= 'education Mockwon date'> 2007 ~ 2011</p>
                                 </div>
                                 <div class='school'>
-                                    <p class= 'education AcademyOfArt schoolName'> Academy of Art University</p>
+                                    <p class= 'education AcademyOfArt schoolName'> Arty University</p>
                                     <p class= 'education AcademyOfArt'> MA in VisualEffects & Animation</p>
                                     <p class= 'education AcademyOfArt country'> USA </p>
                                     <p class= 'education AcademyOfArt date'> 2013 ~ 2017</p>
@@ -242,21 +248,21 @@
             
         </div>
    
+        <!-- <div id='threeJSVignette'></div> -->
         <div id='threejsBlocker'></div>
         <div id='threeJS'></div>
         <div id='loaderContainer'>
-            <div id='loader'>Load&nbsp;&nbsp;ng</div>
+            <div id='loader'>Load&nbsp;ng</div>
         </div>
 
 </div>
 </body>
 
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/border.js"></script>
-    <script src="assets/js/thumbnails.js"></script>
-    <script src="assets/js/skills.js"></script>
-    <script src="assets/js/info.js"></script>
-    <script src="assets/js/loader.js"></script>
-    <script src="assets/js/three.js"></script>
-
+<script src="assets/js/main.js"></script>
+<script src="assets/js/border.js"></script>
+<script src="assets/js/thumbnails.js"></script>
+<script src="assets/js/skills.js"></script>
+<script src="assets/js/info.js"></script>
+<script src="assets/js/loader.js"></script>
+<script src="assets/js/three.js"></script>
 </html>

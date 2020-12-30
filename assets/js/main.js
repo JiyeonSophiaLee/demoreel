@@ -15,7 +15,6 @@ const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
 
 
-
 const allElems = [WORK,PAINT,SKILL,INFO];
 
 let menuExpanded = false;
@@ -58,6 +57,14 @@ let resizeFinish;
 
 let demoVideoHeight = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16);
 DEMO_VIDEO.style.height = demoVideoHeight +'px';
+
+if(innerWidth <= 800){
+  // DEMO__.style.height = demoVideoHeight +'px';
+}else{
+  
+  // threeJsBlocker();
+
+}
 
 
 
@@ -345,7 +352,8 @@ menuUtilities.prototype.expandMenuElse = function(){
     document.querySelector(`#${this.elem.id} .neon1`).classList.remove(`${this.elem.id}Neon1`);
     document.querySelector(`#${this.elem.id} .neon2`).classList.remove(`${this.elem.id}Neon2`);
 
-
+    
+    // threeJsBlocker();
   
 
     if(innerWidth > 800){
@@ -433,6 +441,7 @@ menuUtilities.prototype.updateSize = function(){
 
       }else{
         DEMO_VIDEO.style.width = '';
+        // threeJsBlocker();
       }
 
     }else{
@@ -467,6 +476,14 @@ function getRestElems(elem) {
   return restElems;
 }
 
+
+function threeJsBlocker(){
+  if(innerHeight < body.scrollHeight){
+    THREEJS_BlOCKER.style.height = body.scrollHeight +'px';
+  }else{
+    THREEJS_BlOCKER.style.height = '';
+  }
+}
 
 
 let workMenuController = new menuController('work');

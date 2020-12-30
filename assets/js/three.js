@@ -52,8 +52,11 @@ function init() {
     renderer = new THREE.WebGLRenderer( { antialias: false} );
     container.appendChild( renderer.domElement );
     renderer.setPixelRatio( window.devicePixelRatio );
-    setRendererSetSize()
-
+    if(innerHeight < document.body.scrollHeight){
+        renderer.setSize( document.body.clientWidth, document.body.scrollHeight );
+    }else{
+        renderer.setSize( document.body.clientWidth, window.innerHeight);
+    }
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -88,7 +91,7 @@ function init() {
     sky2 = getSky(16,'assets/images/hdr/space_02.png');
     sky3 = getSky(16,'assets/images/hdr/space_03.png');
     
-
+    console.log(sky0)
     scene.add(sky0);
     scene.add(sky1);
     scene.add(sky2);
@@ -304,15 +307,6 @@ function init() {
 
     
 }
-function setRendererSetSize(){
-    // if(innerHeight < document.body.scrollHeight){
-    //     renderer.setSize( document.body.clientWidth, document.body.scrollHeight );
-    // }else{
-    //     renderer.setSize( document.body.clientWidth, window.innerHeight);
-    // }
-    // renderer.setSize( document.body.scrollWidth, document.body.scrollHeight )
-    renderer.setSize( window.innerWidth, window.innerHeight )
-}
 
 
 function onWindowResize() {
@@ -323,7 +317,12 @@ function onWindowResize() {
     }
     camera.updateProjectionMatrix();
 
-    setRendererSetSize()
+    if(innerHeight < body.scrollHeight){
+        renderer.setSize( body.clientWidth, body.scrollHeight );
+    }else{
+        renderer.setSize( body.clientWidth, window.innerHeight );
+    }
+
     
     // animate();
 }
@@ -487,6 +486,20 @@ function setWeight( action, weight ) {
 
 
 function callThreeJS(elem){
+
+    // if(innerHeight < body.scrollHeight){
+    //     camera.aspect = body.clientWidth / body.scrollHeight;
+    // }else{
+    //     camera.aspect = body.clientWidth / window.innerHeight;
+    // }
+    // camera.updateProjectionMatrix();
+
+    // if(innerHeight < body.scrollHeight){
+    //     renderer.setSize( body.clientWidth, body.scrollHeight );
+    // }else{
+    //     renderer.setSize( body.clientWidth, window.innerHeight );
+    // }
+
 
     pointLight.intensity = 1.5;
     dirLight.intensity = 1;

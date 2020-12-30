@@ -512,18 +512,16 @@ createBorderPath.prototype.subMenuChanging = function() {
     this.subMenuChangingHeight = ((innerHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight ;
     
   }else{
+    console.log(remToPx(transitionValue['masterMinWidth']))
     if(innerWidth > remToPx(transitionValue['masterMinWidth'])){
-      console.log('IF IS WORKING')
       this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-      console.log('innerWidth',innerWidth,'innerHeight',innerHeight);
-      console.log('innerHeight',innerHeight,'innerHeight - LOGO__.clientHeight',innerHeight - LOGO__.clientHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100)', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'this.liPaddingHeight',this.liPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight )
-      console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
+
     }else{
-      console.log('ELSE IS WORKING')
+      console.log('MASTER.offsetHeight:     ',MASTER.offsetHeight)
       this.subMenuChangingWidth =(remToPx(transitionValue['masterMinWidth']) - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.subMenuChangingHeight = (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-      console.log('MASTER.clientHeight',MASTER.clientHeight,'MASTER.offsetHeight: ',MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',MASTER.offsetHeight - LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+
     }
   }
 
@@ -854,13 +852,8 @@ createBorderPath.prototype.updateSize = function() {
 
 
     if (this.borders.elem == biggerElem) {
-      this.subMenuChanging();
-
       let width = this.borders.elem.firstElementChild.clientWidth;
-      // let height = this.borders.elem.firstElementChild.offsetHeight;
-      let height = this.subMenuChangingHeight;
-      // console.log('this.borders.elem: ',this.borders.elem.firstElementChild,'this.borders.elem.firstElementChild.clientHeight: ',this.borders.elem.firstElementChild.getBoundingClientRect().height)
-      console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
+      let height = this.borders.elem.firstElementChild.clientHeight;
       console.log('width: ',width,'height: ',height)
 
       this.borders.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
@@ -868,9 +861,8 @@ createBorderPath.prototype.updateSize = function() {
       this.borders.rect.style.width = width + 'px';
       this.borders.rect.style.height = height + 'px';
 
-      this.w = width;
-      // this.h = height;
-      this.h = this.subMenuChangingHeight;
+      this.w = this.borders.elem.firstElementChild.clientWidth;
+      this.h = this.borders.elem.firstElementChild.clientHeight;
       this.createWavyAnimation(() => {});
 
     }else{
