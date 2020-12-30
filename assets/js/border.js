@@ -399,6 +399,7 @@ Rect.prototype.getExpandMenuSize = function(demoVideoHeight) {
     this.getExpandMenuSizeWidth = ((window.innerWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100)) - this.liPaddingWidth;
     this.getExpandMenuSizeHeight = ((window.innerHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
   }else{
+<<<<<<< HEAD
     if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
       this.getExpandMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
@@ -412,6 +413,20 @@ Rect.prototype.getExpandMenuSize = function(demoVideoHeight) {
       this.getExpandMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.getExpandMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
       // console.log('MASTER.clientHeight',ISU.MASTER.clientHeight,'MASTER.offsetHeight: ',ISU.MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight -demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+=======
+    if(innerWidth > remToPx(transitionValue['masterMinWidth'])){
+      console.log('IF IS WORKING')
+      this.subMenuChangingWidth =(innerWidth - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.subMenuChangingHeight = (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      console.log('innerWidth',innerWidth,'innerHeight',innerHeight);
+      console.log('innerHeight',innerHeight,'innerHeight - LOGO__.clientHeight',innerHeight - LOGO__.clientHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight,'innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight',innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100)', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'this.liPaddingHeight',this.liPaddingHeight,'(innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight', (innerHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight )
+      console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
+    }else{
+      console.log('ELSE IS WORKING')
+      this.subMenuChangingWidth =(remToPx(transitionValue['masterMinWidth']) - this.botMenuPaddingWidth ) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.subMenuChangingHeight = (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      console.log('MASTER.clientHeight',MASTER.clientHeight,'MASTER.offsetHeight: ',MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',MASTER.offsetHeight - LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
+>>>>>>> parent of 08f1a4b... Revert "save for laste version before starting parcel"
     }
   }
 
@@ -662,6 +677,7 @@ Rect.prototype.updateSize = function() {
   this.radius = innerWidth > 800 ? 7 : 4;
   this.strokeWidth = innerWidth > 800 ? 8 : 5;
   
+<<<<<<< HEAD
   console.log('this.radius: ',this.radius)
   console.log('this.strokeWidth: ',this.radius)
 
@@ -701,6 +717,45 @@ Rect.prototype.updateSize = function() {
 //         }
 //       }
 //     }
+=======
+
+
+    if (this.borders.elem == biggerElem) {
+      this.subMenuChanging();
+
+      let width = this.borders.elem.firstElementChild.clientWidth;
+      // let height = this.borders.elem.firstElementChild.offsetHeight;
+      let height = this.subMenuChangingHeight;
+      // console.log('this.borders.elem: ',this.borders.elem.firstElementChild,'this.borders.elem.firstElementChild.clientHeight: ',this.borders.elem.firstElementChild.getBoundingClientRect().height)
+      console.log('this.subMenuChangingHeight',this.subMenuChangingHeight)
+      console.log('width: ',width,'height: ',height)
+
+      this.borders.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
+      this.borders.rect.parentElement.style.height = height + this.extraSVGspace + 'px'
+      this.borders.rect.style.width = width + 'px';
+      this.borders.rect.style.height = height + 'px';
+
+      this.w = width;
+      // this.h = height;
+      this.h = this.subMenuChangingHeight;
+      this.createWavyAnimation(() => {});
+
+    }else{
+      if(innerWidth > 1400){
+        this.setBordersSizeFamily(this.borders.elem,'borderSize1400');
+
+      }else if(innerWidth > 800){
+        this.setBordersSizeFamily(this.borders.elem,'bordersSize');
+
+      }else{
+        if(menuExpanded){
+          this.setBordersSizeFamily(this.borders.elem,'bordersSmallSize');
+        }else{
+          this.setBordersSizeFamily(this.borders.elem,'borderSize800');
+        }
+      }
+    }
+>>>>>>> parent of 08f1a4b... Revert "save for laste version before starting parcel"
   
 
 };

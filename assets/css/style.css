@@ -360,6 +360,23 @@ body{
       padding: 2% 0;
       height: 100%;
     }
+<<<<<<< HEAD
+=======
+    #demo::after{
+      content: '';
+      background: url(/assets/images/svg/demoSVG_v08.svg) no-repeat center;
+      filter:blur(3px);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    @media (max-width:800px){
+      #demo::after{
+        display: none;
+      }
+    }
+>>>>>>> parent of 08f1a4b... Revert "save for laste version before starting parcel"
     
     @media (max-width:800px){
       #demo{
@@ -706,9 +723,9 @@ body{
   opacity: 0;
   transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
-.blurSVG{
+/* .blurSVG{
   filter:blur(3px);
-}
+} */
 
 
 /* .fontMinSOPHIA{
