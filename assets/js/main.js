@@ -269,6 +269,8 @@ menuUtilities.prototype.expandMenuIf = function(){
     if(innerWidth > 800){
       DEMO_SVG.classList.remove('blurSVG');
 
+      // demoVideoHeight = ((innerWidth * (100-transitionValue['unSymetryDemoMenu']) / 100) * transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+      
       gsap.to(
         DEMO_VIDEO,{
           width: transitionValue['unSymetryDemoVideoWidth'] + '%',
@@ -279,6 +281,7 @@ menuUtilities.prototype.expandMenuIf = function(){
       )
 
     }else{
+      // demoHeight = (innerWidth * transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       
       gsap.to(
         DEMO_VIDEO,{
@@ -357,10 +360,12 @@ menuUtilities.prototype.expandMenuElse = function(){
   
 
     if(innerWidth > 800){
+      // DEMO_SVG.style.display= 'initial';
       
       let demoHeight;
 
       if(innerWidth > 1400){
+        // DEMO_VIDEO.style.height = ((transitionValue['maxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16) +'px';
         height = ((transitionValue['masterMaxWidth'] * transitionValue['symetryDemoMenu'] / 100) * transitionValue['symetryDemoVideoWidth']/100) * (9/16);
 
       }else{ 
@@ -395,12 +400,18 @@ menuUtilities.prototype.expandMenuElse = function(){
     
   setTimeout(() => {
     DEMO_VIDEO.classList.remove('menutransition');
+    // document.querySelector(`#${this.elem.id} .borderCover`).style.display = 'initial';
     document.querySelector(`#${this.elem.id} .neon1`).style.display = 'initial';
     document.querySelector(`#${this.elem.id} .neon2`).style.display = 'initial';
 
 
     if(innerWidth > 800){
       MASTER.classList.remove('menutransition');
+
+      // DEMO__.classList.remove('menutransition');
+      // TITLE_NAME_CONTAINER.classList.remove('menutransition');
+      // TITLE_NAME.classList.remove('menutransition');
+      
 
       
     }else{
@@ -434,24 +445,42 @@ menuUtilities.prototype.updateSize = function(){
 
       if (menuExpanded ) {
         MASTER.style.maxWidth = '100%';
+        // TITLE_NAME_CONTAINER.style.width = ( 100 - transitionValue['unSymetryDemoMenu']) + '%';
+        // TITLE_NAME.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
 
         DEMO__.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidth'] + '%';
+        // NAME.style.width = 100 - transitionValue['unSymetryDemoMenu'] + '%';
 
 
       }else{
+        // TITLE_NAME_CONTAINER.style.width = transitionValue['symetryDemoMenu'] + '%';
         DEMO_VIDEO.style.width = '';
         // threeJsBlocker();
       }
 
     }else{
+      // TITLE_NAME_CONTAINER.style.width = '100%';
+      // TITLE_NAME.style.width =transitionValue['nameMaxMediaQuery']+'%';
+
+      // DEMO__.style.height = demoVideoHeight +'px';
+    
       DEMO__.style.width = '';
 
       
       if (menuExpanded ) {
+
+        // TITLE_NAME.style.width = transitionValue['nameMaxMediaQuery'] + '%';
         DEMO_VIDEO.style.width = transitionValue['unSymetryDemoVideoWidthMediaQuery'] +'%';
       }
     }
+  // }
+  // clearTimeout(resizeFinish);
+  // resizeFinish = setTimeout(() => {
+  //   DEMO_SVG.classList.add('blurSVG')
+  // }, 200);
+
+  // getMediaQeury800()
 
 }
 
@@ -463,6 +492,17 @@ menuUtilities.prototype.updateSize = function(){
 //----------------------------------------------------------------------------------------------------------
 
 
+// function getAllElems(elem) {
+//   let allElems = [];
+  
+//   for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+//     if (elem.parentElement.childNodes[i].nodeType == 1) {
+//       allElems.push(elem.parentElement.childNodes[i]);
+//     }
+//   }
+  
+//   return allElems;
+// }
 
 function getRestElems(elem) {
   let restElems = [];
@@ -485,6 +525,18 @@ function threeJsBlocker(){
   }
 }
 
+// function nameSplit(){
+//   nameP.forEach((pIndex)=>{
+//     pIndex.innerHTML='<span>' +
+//     pIndex.innerHTML.split('').join('</span><span>') +'</span>';
+//   })
+// }
+
+
+
+
+
+// DEMO_VIDEO.addEventListener('click',()=>{console.log('this is working');DEMO_VIDEO.style.height = parseFloat(window.getComputedStyle(DEMO_VIDEO).width) * (9/16) +'px';})
 
 let workMenuController = new menuController('work');
 let skillMenuController = new menuController('skill');
