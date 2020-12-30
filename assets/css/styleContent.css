@@ -27,27 +27,27 @@
     }
 
 
-.alinedImagesChild{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  background: rgba(10, 10, 10, 0.7);
+.lineImgs{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    background: rgba(10, 10, 10, 0.7);
 }
 @media (min-width:2500px){
-  .alinedImagesChild{
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  
-  }
+    .lineImgs{
+        grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+   
+    }
 }
 
-  .alinedImagesChild img{
+.lineImgs img{
     border-radius: 20px;
     padding: 0.1vw;
-  }
-  @media (min-width:2500px){
-    .alinedImagesChild img{
-      padding: 3px;
+}
+@media (min-width:2500px){
+    .lineImgs img{
+        padding: 3px;
     }
-  }
+}
 
 
 

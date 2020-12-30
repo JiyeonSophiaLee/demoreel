@@ -1,124 +1,142 @@
-import * as ISU from '/assets/js/InitialSetUp.js';
+const tablePath = 'assets/images/projects/table_scene_thumbnails/';
+const tableName =  'table_scene_thumbnails'
+const tableExtension = '.jpg'
+const tableSceneMain = '_01';
+const tableSceneSub = ['_02','_03','_04','_05','_06','_07'];
+const tableArtstation = 'https://www.artstation.com/artwork/Q2roZ'
 
-function SetProperty(path,name,extension,main,sub,artstation=null){
-  this.path = path;
-  this.name = name;
-  this.extension = extension;
-  this.main = main;
-  this.sub = sub;
-  this.artstation = artstation;
+const chandelierPath = 'assets/images/projects/chandelier_scene_thumbnails/';
+const chandelierName =  'chandelier_scene_thumbnails'
+const chandelierExtension = '.jpg'
+const chandelierSceneMain = '_01';
+const chandelierSceneSub = ['_02','_03','_04','_05','_06','_07'];
+const chandelierArtstation = 'https://www.artstation.com/artwork/Q2roZ'
+
+const sunrisePath = 'assets/images/projects/sunrise_scene_thumbnails/';
+const sunriseName =  'sunrise_scene_thumbnails'
+const sunriseExtension = '.jpg'
+const sunriseSceneMain = '_02';
+const sunriseSceneSub = ['_01','_03','_04','_05'];
+const sunriseArstation = 'https://www.artstation.com/artwork/lVYmZO'
+
+const womanPath = 'assets/images/projects/woman_scene_thumbnails/';
+const womanName =  'woman_scene_thumbnails'
+const womanExtension = '.jpg'
+const womanSceneMain = '_03';
+const womanSceneSub = ['_01','_02','_04','_05','_06','_07','_08'];
+const womanaScceneArstation = 'https://www.artstation.com/artwork/xzJvV1'
+
+const wishingBoxPath = 'assets/images/projects/wishingBox_thumbnails/';
+const wishingBoxName =  'wishingBox_thumbnails'
+const wishingBoxExtension = '.jpg'
+const wishingBoxSceneMain = '_03';
+const wishingBoxSceneSub = ['_01','_02','_04','_05','_06'];
+
+const giantPath = 'assets/images/projects/giant_thumbnails/';
+const giantBoxName =  'giant_thumbnails'
+const giantExtension = '.jpg'
+const giantSceneMain = '_01';
+const giantSceneSub = ['_02','_03','_04','_05','_06','_07'];
+
+
+
+
+
+const tableScene = new projectThumbnail(tablePath,tableName,tableExtension,tableSceneMain,tableSceneSub,tableArtstation);
+const chandelierScene = new projectThumbnail(chandelierPath,chandelierName,chandelierExtension,chandelierSceneMain,chandelierSceneSub,chandelierArtstation);
+const sunriseScene = new projectThumbnail(sunrisePath,sunriseName,sunriseExtension,sunriseSceneMain,sunriseSceneSub,sunriseArstation);
+const womanScene = new projectThumbnail(womanPath,womanName,womanExtension,womanSceneMain,womanSceneSub,womanaScceneArstation);
+const wishingBoxScene = new projectThumbnail(wishingBoxPath,wishingBoxName,wishingBoxExtension,wishingBoxSceneMain,wishingBoxSceneSub);
+const giantScene = new projectThumbnail(giantPath,giantBoxName,giantExtension,giantSceneMain,giantSceneSub);
+
+
+const workThumbnails = [tableScene,chandelierScene,sunriseScene,womanScene,wishingBoxScene,giantScene];
+
+
+
+
+
+
+const painting01Path = 'assets/images/paintings/painting01/';
+const painting01Name =  'painting01'
+const painting01Extension = '.jpg'
+const painting01SceneMain = '_01';
+const painting01SceneSub = [];
+const painting01Artstation = 'https://www.artstation.com/artwork/KD3eR';
+
+const painting02Path = 'assets/images/paintings/painting02/';
+const painting02Name =  'painting02'
+const painting02Extension = '.jpg'
+const painting02SceneMain = '_01';
+const painting02SceneSub = ['_02','_03','_04','_05'];
+const painting02Artstation = 'https://www.artstation.com/artwork/Km68B';
+
+const painting03Path = 'assets/images/paintings/painting03/';
+const painting03Name =  'painting03'
+const painting03Extension = '.jpg'
+const painting03SceneMain = '_01';
+const painting03SceneSub = ['_02','_03','_04','_05'];
+
+const painting04Path = 'assets/images/paintings/painting04/';
+const painting04Name =  'painting04'
+const painting04Extension = '.jpg'
+const painting04SceneMain = '_01';
+const painting04SceneSub = ['_02','_03','_04','_05'];
+
+const painting05Path = 'assets/images/paintings/painting05/';
+const painting05Name =  'painting05'
+const painting05Extension = '.jpg'
+const painting05SceneMain = '_01';
+const painting05SceneSub = ['_02'];
+
+const painting06Path = 'assets/images/paintings/painting06/';
+const painting06Name =  'painting06'
+const painting06Extension = '.jpg'
+const painting06SceneMain = '_01';
+const painting06SceneSub = ['_02','_03','_04','_05'];
+
+
+
+
+const painting01 = new projectThumbnail(painting01Path,painting01Name,painting01Extension,painting01SceneMain,painting01SceneSub,painting01Artstation);
+const painting02 = new projectThumbnail(painting02Path,painting02Name,painting02Extension,painting02SceneMain,painting02SceneSub,painting02Artstation);
+const painting03 = new projectThumbnail(painting03Path,painting03Name,painting03Extension,painting03SceneMain,painting03SceneSub);
+const painting04 = new projectThumbnail(painting04Path,painting04Name,painting04Extension,painting04SceneMain,painting04SceneSub);
+const painting05 = new projectThumbnail(painting05Path,painting05Name,painting05Extension,painting05SceneMain,painting05SceneSub);
+const painting06 = new projectThumbnail(painting06Path,painting06Name,painting06Extension,painting06SceneMain,painting06SceneSub);
+
+
+const paintThumbnails = [painting01,painting02,painting03,painting04,painting05,painting06];
+
+
+
+
+
+
+function projectThumbnail(path, projectName, extension ,main, sub, artstation = null){
+    this.path = path;
+    this.projectName = projectName;
+    this.extension = extension;
+    this.main = main;
+    this.sub = sub;
+    this.artstation = artstation;
 }
-
-//------------work thumbnails------------//
-
-const table      = new SetProperty('assets/images/projects/table_scene_thumbnails/'     , 'table_scene_thumbnails'     , '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07'],       'https://www.artstation.com/artwork/Q2roZ');
-const chandelier = new SetProperty('assets/images/projects/chandelier_scene_thumbnails/', 'chandelier_scene_thumbnails', '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07'],       'https://www.artstation.com/artwork/Q2roZ');
-const sunrise    = new SetProperty('assets/images/projects/sunrise_scene_thumbnails/'   , 'sunrise_scene_thumbnails'   , '.jpg' , '_02', ['_01','_03','_04','_05'],                   'https://www.artstation.com/artwork/lVYmZO');
-const woman      = new SetProperty('assets/images/projects/woman_scene_thumbnails/'     , 'woman_scene_thumbnails'     , '.jpg' , '_03', ['_01','_02','_04','_05','_06','_07','_08'], 'https://www.artstation.com/artwork/xzJvV1');
-const wishingBox = new SetProperty('assets/images/projects/wishingBox_thumbnails/'      , 'wishingBox_thumbnails'      , '.jpg' , '_03', ['_01','_02','_04','_05','_06']);
-const giant      = new SetProperty('assets/images/projects/giant_thumbnails/'           , 'giant_thumbnails'           , '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07']);
-
-export const workThumbnails = [table, chandelier, sunrise, woman, wishingBox, giant];
-
-//------------paint thumbnails------------//
-
-const paint01 = new SetProperty('assets/images/paintings/painting01/', 'painting01', '.jpg', '_01', []                       , 'https://www.artstation.com/artwork/KD3eR');
-const paint02 = new SetProperty('assets/images/paintings/painting02/', 'painting02', '.jpg', '_01', ['_02','_03','_04','_05'], 'https://www.artstation.com/artwork/Km68B');
-const paint03 = new SetProperty('assets/images/paintings/painting03/', 'painting03', '.jpg', '_01', ['_02','_03','_04','_05']);
-const paint04 = new SetProperty('assets/images/paintings/painting04/', 'painting04', '.jpg', '_01', ['_02','_03','_04','_05']);
-const paint05 = new SetProperty('assets/images/paintings/painting05/', 'painting05', '.jpg', '_01', ['_02']);
-const paint06 = new SetProperty('assets/images/paintings/painting06/', 'painting06', '.jpg', '_01', ['_02','_03','_04','_05']);
-
-export const paintThumbnails = [paint01, paint02, paint03, paint04, paint05, paint06]
-
-
-
-
-
-//------------Thumbnails constructor------------//
-
-export default function Thumbnails(id,projects){
-  this.id = id;
-  this.projects = projects;
-  // // this.path = projects.reduce((prev,cur)=>{ prev.push(cur.path); return prev},[]);
-  // // this.name = projects.reduce((prev,cur)=>{ prev.push(cur.name); return prev},[]);
-  // // this.extension = projects.reduce((prev,cur)=>{ prev.push(cur.extension); return prev},[]);
-  // // this.main = projects.reduce((prev,cur)=>{ prev.push(cur.main); return prev},[]);
-  // // this.sub = projects.reduce((prev,cur)=>{ prev.push(cur.sub); return prev},[]);
-  // // this.artstation = projects.reduce((prev,cur)=>{ prev.push(cur.artstation); return prev},[]);
-
-  this.createThumbnails();
-}
-
-
-// -------------------- expand Menu  --------------------//
-
-Thumbnails.prototype.callThumbnail = function(){
-  // if(innerWidth < 1400){
-  //   ISU.select(`#${this.id} .contents .groupedImages`).style.display = 'initial';
-  // }else{
-    ISU.select(`#${this.id} .contents .alinedImages`).style.display = 'initial';
-  // }
-}
-Thumbnails.prototype.stopThumbnail = function(){
-
-    ISU.select(`#${this.id} .contents .alinedImages`).style.display = 'none';
-
-  //if(innerWidth < 1400){
-  //    document.querySelector(`#${biggeredElem.id} .contents .groupedImages`).style.display = 'none';
-  //}else{
-  //}
-}
-
-
-// -------------------- create Thumbnail  --------------------//
-
-Thumbnails.prototype.createThumbnails = function(){
-  let content = document.querySelector(`#${this.id} .contents`);
-  let groupedImages = document.createElement('div');
-  let alinedImages = document.createElement('div');
-  let alinedImagesChild = document.createElement('div');
-
-  groupedImages.classList.add('groupedImages');
-  alinedImages.classList.add('alinedImages');
-  alinedImagesChild.classList.add('alinedImagesChild');
-  
-  groupedImages.style.display = 'none';
-  alinedImages.style.display = 'none'
-  
-  alinedImages.appendChild(alinedImagesChild);
-  content.appendChild(alinedImages);
-  content.appendChild(groupedImages);
-
-
-  // this.projects.forEach((project)=>{
-  //   let groupedImgs = this.createGroupedImages(project);
-  //   groupedImages.appendChild(groupedImgs);
-  // })
-  // console.log('this.id: ', this.id)
-  // console.log('this.projects: ',this.projects)
-  this.projects.forEach(project=>{
-    let alinedImgs = this.createAlinedImages(project);
-
-    alinedImgs.forEach((img)=>{
-      alinedImagesChild.appendChild(img)
-    })
-  })
-}
-Thumbnails.prototype.createGroupedImages = function(project){
+projectThumbnail.prototype.createProjectImage = function(){
     let div = document.createElement('div');
-    let img = document.createElement('img');
 
-    img.src = project.path + project.name + project.main + project.extension;
+    let img = document.createElement('img');
+    img.src = this.path + this.projectName + this.main + this.extension;
     img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
     div.classList.add('projects');
     img.classList.add('mainContent');
 
 
-    if(project.artstation !=null){
+
+    if(this.artstation !=null){
+        
         let a = document.createElement('a');
-        a.href= project.artstation;
+        a.href= this.artstation;
         a.setAttribute('target','_blank');
 
         a.classList.add('a');
@@ -131,9 +149,9 @@ Thumbnails.prototype.createGroupedImages = function(project){
         div.appendChild(img);
     }
 
-    project.sub.forEach(sub => {
+    this.sub.forEach(sub => {
         let img = document.createElement('img');
-        img.src = project.path + project.name + sub + project.extension;
+        img.src = this.path + this.projectName + sub + this.extension;
         img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
         img.classList.add('subContent');
@@ -141,7 +159,7 @@ Thumbnails.prototype.createGroupedImages = function(project){
         if(this.artstation !=null){
 
             let a = document.createElement('a');
-            a.href= project.artstation;
+            a.href= this.artstation;
             a.setAttribute('target','_blank');
             
             a.classList.add('a');
@@ -153,45 +171,24 @@ Thumbnails.prototype.createGroupedImages = function(project){
             div.appendChild(img);
         }
     });
-    
     return div;
 };
-Thumbnails.prototype.createAlinedImages = function(project){
-  let imgs = [];
+projectThumbnail.prototype.createLineingImage = function(){
+    let imgs = [];
 
-  let img = document.createElement('img');
-  img.src = project.path + project.name + project.main + project.extension;
-  img.classList.add('mainContent');
-  img.addEventListener('click',(e)=>{ e.stopPropagation() });
-
-  if(project.artstation !=null){
-    let a = document.createElement('a');
-    a.href= project.artstation;
-    a.setAttribute('target','_blank');
-    
-    a.classList.add('a');
-    a.classList.add('mainContent');
-
-    a.appendChild(img);
-    imgs.push(a);
-
-  }else{
-    imgs.push(img);
-  };
-
-  project.sub.forEach(sub=>{
     let img = document.createElement('img');
-    img.src = project.path + project.name + sub + project.extension;
-    img.classList.add('subContent');
+    img.src = this.path + this.projectName + this.main + this.extension;
+    img.classList.add('mainContent');
     img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-    if(project.artstation !=null){
+    if(this.artstation !=null){
 
         let a = document.createElement('a');
-        a.href= project.artstation;
+        a.href= this.artstation;
         a.setAttribute('target','_blank');
         
         a.classList.add('a');
+        a.classList.add('mainContent');
 
         a.appendChild(img);
         imgs.push(a);
@@ -200,25 +197,29 @@ Thumbnails.prototype.createAlinedImages = function(project){
         imgs.push(img);
     };
 
-  });
-  return imgs
-};
+    this.sub.forEach(sub=>{
+        let img = document.createElement('img');
+        img.src = this.path + this.projectName + sub + this.extension;
+        img.classList.add('subContent');
+        img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
+        if(this.artstation !=null){
 
+            let a = document.createElement('a');
+            a.href= this.artstation;
+            a.setAttribute('target','_blank');
+            
+            a.classList.add('a');
+    
+            a.appendChild(img);
+            imgs.push(a);
+    
+        }else{
+            imgs.push(img);
+        };
 
-
-
-
-export const ThumbnailReszie = function(biggerElem){
-  if(biggerElem === ISU.WORK || biggerElem === ISU.PAINT){
-    if(innerWidth < 1400){
-      document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'initial';
-      document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'none';
-    }else{
-      document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'none';
-      document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'initial';
-    }
-  }
+    });
+    return imgs
 }
 
 
@@ -229,6 +230,14 @@ export const ThumbnailReszie = function(biggerElem){
 
 
 
+createProjectGroup('work');
+createProjectGroup('paint');
+
+window.addEventListener('resize',()=>{
+    if(biggerElem === WORK || biggerElem === PAINT){
+        workSwitchProjectLine();
+    }
+})
 
 
 
@@ -236,12 +245,116 @@ export const ThumbnailReszie = function(biggerElem){
 
 
 
+///untill
+
+function createProjectGroup(name){
+
+    let content = document.querySelector(`#${name} .contents`);
+    let thumbnails = eval(name + 'Thumbnails');
+    let groupProjects = document.createElement('div');
+    let groupIneImags = document.createElement('div');
+    let lineImgs = document.createElement('div');
+
+    groupProjects.classList.add('groupProjects');
+    groupIneImags.classList.add('groupIneImags');
+    lineImgs.classList.add('lineImgs');
+    
+    groupProjects.style.display = 'none';
+    groupIneImags.style.display = 'none'
+    
+    content.appendChild(groupProjects);
+    content.appendChild(groupIneImags);
+    groupIneImags.appendChild(lineImgs);
+
+    thumbnails.forEach(project=>{
+        let div = project.createProjectImage();
+        groupProjects.appendChild(div);
+    })
+    thumbnails.forEach(project=>{
+        let div = project.createLineingImage();
+
+        // console.log(div)
+        div.forEach((img)=>{
+            lineImgs.appendChild(img)
+        })
+    })
+}
 
 
 
 
 
 
+function workSwitchProjectLine(){
+    if(biggerElem === WORK || biggerElem === PAINT )
+        if(innerWidth < 1400){
+            document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'initial';
+            document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'none';
+        }else{
+            document.querySelector(`#${biggerElem.id} .contents .groupProjects`).style.display = 'none';
+            document.querySelector(`#${biggerElem.id} .contents .groupIneImags`).style.display = 'initial';
+        }
+}
 
 
+
+
+
+function callThumbnailIf (elem){
+    if(elem === WORK || elem === PAINT){
+        setTimeout(() => {
+            if(innerWidth < 1400){
+                document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
+            }else{
+                document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
+            }
+        }, transitionValue.duration * 1000);
+    }
+        
+    
+}
+function callThumbnailElseIf (elem){
+
+    if(elem === WORK || elem === PAINT){
+
+        biggredElemWorkPaint()
+        
+        setTimeout(() => {
+            if(innerWidth < 1400){
+                document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'initial';
+            }else{
+                document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'initial';
+            }
+        }, transitionValue.duration * 1000);
+        
+    }else{
+        biggredElemWorkPaint();
+    }
+    
+
+
+
+    
+    function biggredElemWorkPaint(){
+        if(biggeredElem === WORK || biggeredElem === PAINT){
+            if(innerWidth < 1400){
+                document.querySelector(`#${biggeredElem.id} .contents .groupProjects`).style.display = 'none';
+            }else{
+                document.querySelector(`#${biggeredElem.id} .contents .groupIneImags`).style.display = 'none';
+            }
+        }
+    }   
+}
+
+function callThumbnailElse (elem){
+    if(elem === WORK || elem === PAINT){
+        if(innerWidth<  1400){
+            document.querySelector(`#${elem.id} .contents .groupProjects`).style.display = 'none';
+        }else{
+            document.querySelector(`#${elem.id} .contents .groupIneImags`).style.display = 'none';
+        }
+    }
+
+
+}
 
