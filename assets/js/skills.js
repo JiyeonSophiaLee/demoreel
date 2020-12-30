@@ -187,24 +187,24 @@ Skills.prototype.callSkills =function(){
 
 function SkillsTL(id){
   this.id = id;
-
+  this.elem = document.getElementById(id)
 
   this.barTail_startPosition_cx = ISU.remToPx(halfCircleSizeNumb)*2 + ISU.remToPx(halfCircleSizeEndNumb);
 
 
   this.callGraphTL = gsap.timeline({paused:true});
   this.callGraphTL800 = gsap.timeline({paused:true});
-  // this.expandGraphTL = gsap.timeline({paused:true});
+  this.expandGraphTL = gsap.timeline({paused:true});
   
 
   // this.createSkillBars()
 
 
-    // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
-//     this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+  // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+  // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
 
-    // this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
-//     this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+  // this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
+  // this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
 
 }
 SkillsTL.prototype.setDefaultValues = function(){
@@ -216,8 +216,24 @@ SkillsTL.prototype.setDefaultValues = function(){
   this.barTail2 = ISU.select(`#${this.id} .barTail2`);
   this.percent = ISU.select(`#${this.id} .percent`);
   this.skillShadow = ISU.select(`#${this.id} .skillShadow`);
-  this.skillInfo = ISU.select(`#${this.id} .skillInfo`)
-  this.skillInfoBG = ISU.select(`#${this.id} .skillInfoBG`)
+  this.skillInfo = ISU.select(`#${this.id} .skillInfo`);
+  this.skillInfoBG = ISU.select(`#${this.id} .skillInfoBG`);
+  this.skillInfoText = ISU.select(`#${this.id} .skillInfoText`);
+  this.skillColor1 = [ISU.select(`#${this.id}Color stop:nth-child(1)`)];
+  this.skillColor2 = [ISU.select(`#${this.id}Color stop:nth-child(2)`)];
+  this.skillColor1.push(window.getComputedStyle(this.skillColor1[0]).stopColor)
+  this.skillColor2.push(window.getComputedStyle(this.skillColor2[0]).stopColor)
+
+
+
+  this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+  this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+
+  this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
+  this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+
+  // this.setWidths();
+  // this.getExpandGraph();
 }
 
 
@@ -228,7 +244,7 @@ SkillsTL.prototype.setWidths = function(){
   this.barEachWidth = (svgWidth - ( ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100 + ISU.remToPx(halfCircleSizeNumb);
   this.barCircleEachEnd = this.barEachWidth + ISU.remToPx(halfCircleSizeNumb);
   this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
-    
+  console.log('setWidths is working')
 }
 
 SkillsTL.prototype.getCallGraphTL = function(){
@@ -251,14 +267,14 @@ SkillsTL.prototype.getCallGraphTL = function(){
             ease: ISU.transitionValue['skillTLEase']
         },0
     )
-    .fromTo(this.barTail2,{
-            cx: this.barTail_startPosition_cx
-        },{
-            cx: this.barCircleEachEnd,
-            duration: ISU.transitionValue['skillTLDuration'],
-            ease: ISU.transitionValue['skillTLEase']
-        },0
-    )
+    // .fromTo(this.barTail2,{
+    //         cx: this.barTail_startPosition_cx
+    //     },{
+    //         cx: this.barCircleEachEnd,
+    //         duration: ISU.transitionValue['skillTLDuration'],
+    //         ease: ISU.transitionValue['skillTLEase']
+    //     },0
+    // )
     .fromTo(this.percent,{
             attr:{transform:`matrix(1,0,0,1,${this.barTail_startPosition_cx},${ISU.remToPx(halfCircleSizeNumb)})`}
         },{
@@ -267,14 +283,14 @@ SkillsTL.prototype.getCallGraphTL = function(){
             ease: ISU.transitionValue['skillTLEase']
         },0
     )
-    .to(this.skillShadow,
-        {
-            width: this.barCircleEachEnd,
-            duration: ISU.transitionValue['skillTLDuration'],
-            ease: ISU.transitionValue['skillTLEase']
-        },
-        0
-    )
+    // .to(this.skillShadow,
+    //     {
+    //         width: this.barCircleEachEnd,
+    //         duration: ISU.transitionValue['skillTLDuration'],
+    //         ease: ISU.transitionValue['skillTLEase']
+    //     },
+    //     0
+    // )
   this.callGraphTL.play();
     // this.playCallGraphTL();
 }
@@ -372,41 +388,39 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
       },0
     )
 
-
-    // .to(this.skillInfo,
+//------------this is needed to check it later----------------
+    // // .to(this.skillInfo,
+    // //     {
+    // //         height: ISU.remToPx(halfCircleSizeNumb) * 3,
+    // //         duration:0.3,
+    // //         ease:"power2.inOut"
+    // //     },
+    // //     0
+    // // )
+    // .to(this.skillInfoBG,
     //     {
-    //         height: ISU.remToPx(halfCircleSizeNumb) * 3,
+    //         scaleY:1,
     //         duration:0.3,
-    //         ease:"power2.inOut"
-    //     },
-    //     0
+    //         ease: ISU.transitionValue['skillTLEase']
+    //     },0
     // )
-    .to(this.skillInfoBG,
-        {
-            scaleY:1,
-            duration:0.3,
-            ease:"power2.inOut"
-        },0
-    )
-//         .to(
-//             `#${this.id} .skillInfoBG`,
-//             {
-//                 scaleY:0,
-//                 duration:0.3,
-//                 ease:"power2.inOut"
-//             },
-//             0.3
-//         )
-        
-//         .to(
-//             `#${this.id} .skillInfoText`,
-//             {
-//                 opacity:1,
-//                 duration:0.1,
-//                 stagger: 0.3,
-//             },
-//             0.3
-//         )
+    // .to(this.skillInfoBG,
+    //     {
+    //         scaleY:0,
+    //         duration:0.3,
+    //         ease: ISU.transitionValue['skillTLEase']
+    //     },0.3
+    // )
+    // .to(this.skillInfoText,
+    //     {
+    //         opacity:1,
+    //         duration:0.1,
+    //         stagger: 0.3,
+    //     },
+    //     0.3
+    // )
+
+
   this.callGraphTL800.play();
 }
 
@@ -435,177 +449,121 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
 
 
 
-// SkillsTL.prototype.hoveroverOn = function(){
-//     if(innerWidth > 800){
-//         this.getExpandGraph();
+SkillsTL.prototype.hoveroverOn = function(){
+  if(innerWidth > 800){
 //         this.playExpandGraphTL();
-    
+    // this.setWidths();
+    this.getExpandGraph();
+    this.expandGraphTL.play();
 //         select(`#${this.id} .skillShadow`).classList.add('barShadowAni');
-//     }
-// }
+  }
+}
 
-// SkillsTL.prototype.hoveroverOff = function(){
-//     if(innerWidth > 800){
+SkillsTL.prototype.hoveroverOff = function(){
+  if(innerWidth > 800){
 //         this.reverseExpandGraphTL();
-
+    this.expandGraphTL.reverse();
 //         select(`#${this.id} .skillShadow`).classList.remove('barShadowAni');
-//     }
-// }
+  }
+}
 
-// SkillsTL.prototype.getExpandGraph = function(){
+SkillsTL.prototype.getExpandGraph = function(){
+  this.setWidths();
+  
 
-
-//     this.setWidths();
-
-//     this.expandGraphTL
-//         .to(
-//             `#${this.id}Color stop:nth-child(1)`,
-//             {
-//                 stopColor:'#ffffff',
-//                 duration:1
-//             },
-//             0
-//         )
-//         .to(
-//             `#${this.id}Color stop:nth-child(2)`,
-//             {
-//                 stopColor:'#ffffff',
-//                 duration:1
-//             },
-//             0
-//         )
-        
+  this.expandGraphTL
+    .fromTo(this.skillColor1[0],{
+        stopColor: this.skillColor1[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
+    .fromTo(this.skillColor2[0],{
+        stopColor: this.skillColor2[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
 
 
+    .to(this.bar,{   
+        scaleY:2.3,
+        duration:1,
+        transformOrigin:"center center",
+        ease: "elastic.out(1, 0.3)"
+      },0
+    )
+    .fromTo(this.bar,{
+        width: this.barEachWidth
+      },{   
+        width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
 
 
-//         .to(
-//             `#${this.id} .bar`,
-//             {   
-//                 scaleY:2.3,
-//                 duration:1,
-//                 transformOrigin:"center center",
-//                 ease: "elastic.out(1, 0.3)"
-//             },0
-//         )
-//         .fromTo(
-//             `#${this.id} .bar`,
-//             {
-//                 width: this.barEachWidth
-//             },
-//             {   
-//                 width: this.barFullWidth - remToPx(halfCircleSizeEndNumb),
-//                 duration:1,
-//                 ease: "bounce.out"
-//             },0
-//         )
+    .to(this.barHead1,
+      {
+        attr:{fill:'#ffffff'},
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
+    .to(this.barHead1,
+      {
+        scale:0.95,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+      },
+      0
+    )
+    .to(this.barHead1,
+      {
+        scale:1,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+    }, 0.5
+    )
 
 
-
-
-
-//         .to(
-//             `#${this.id} .barHead1`,
-//             {
-//                 attr:{fill:'#ffffff'},
-//                 duration:1
-//             },
-//             0
-//         )
-//         .to(
-//             `#${this.id} .barHead1`,
-//             {
-//                 scale:0.95,
-//                 transformOrigin:"center center",
-//                 duration:0.5,
-//                 ease: "elastic.out(1, 0.3)"
-//             },
-//             0
-//         )
-//         .to(
-//             `#${this.id} .barHead1`,
-//             {
-//                 scale:1,
-//                 transformOrigin:"center center",
-//                 duration:0.5,
-//                 ease: "elastic.out(1, 0.3)"
-//             },
-//             0.5
-//         )
-
-//         .to(
-//             `#${this.id} .barHead2`,
-//             {
-//                 attr:{fill:'#ffffff'},
-//                 duration:1
-//             },
-//             0
-//         )
-
-
-
-
-
-//         .to(
-//             `#${this.id} .barTail1`,
-//             {
-//                 attr:{fill:'#ffffff'},
-//                 duration:1
-//             },
-//             0
-//         )
-//         .fromTo(
-//             `#${this.id} .barTail1`,
-//             {
-//                 cx: this.barCircleEachEnd,
-//             },
-//             {
-//                 cx: this.barFullWidth,
-//                 duration:1,
-//                 ease: "bounce.out"
-//             },
-//             0
-//         )
-
-//         .to(
-//             `#${this.id} .barTail2`,
-//             {
-//                 attr:{fill:'#ffffff'},
-//                 duration:1
-//             },
-//             0
-//         )
-//         .fromTo(
-//             `#${this.id} .barTail2`,
-//             {
-//                 cx: this.barCircleEachEnd,
-//             },
-//             {
-//                 cx: this.barFullWidth,
-//                 duration:1,
-//                 ease: "bounce.out"
-//             },
-//             0
-//         )
-
+    .to(this.barTail1,
+      {
+        attr:{fill:'#ffffff'},
+        duration:1
+      },0
+    )
+    .fromTo(this.barTail1,{
+        cx: this.barCircleEachEnd,
+      },{
+        cx: this.barFullWidth,
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
 
         
-//         .fromTo(
-//             `#${this.id} .percent`,
-//             {
-//                 attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${remToPx(halfCircleSizeNumb)})`},
-//             },
-//             {
-//                 attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${remToPx(halfCircleSizeNumb)})`},
-//                 duration:1,
-//                 ease: "bounce.out"
-//             },
-//             0
-//         )
+    .fromTo(this.percent,
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
+        },
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${ISU.remToPx(halfCircleSizeNumb)})`},
+            duration:1,
+            ease: "bounce.out"
+        },
+        0
+    )
 
         
 
-
+//----check this later
 //         .to(
 //             `#${this.id} .skillShadow`,
 //             {
@@ -660,7 +618,8 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
 //             },
 //             0.3
 //         )
-// }
+
+}
 
 
 

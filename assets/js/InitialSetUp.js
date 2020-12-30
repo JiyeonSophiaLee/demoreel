@@ -77,7 +77,6 @@ function getTransitionValue() {
   this.rectSmallerSize = getComputedStyle(document.documentElement).getPropertyValue('--rectSmallerSize');
   this.rectSize800 = getComputedStyle(document.documentElement).getPropertyValue('--rectSize800');
   this.rectSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--rectSize1400');
-  this.gsapEase = "power1.inOut";
   this.skillTLDuration = 2.5;
   this.skillTLEase = "power2.inOut";
   this.skillTLDuration800 = 1;

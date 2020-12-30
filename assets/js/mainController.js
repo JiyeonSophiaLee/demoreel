@@ -61,9 +61,21 @@ function MenuController(id, hasThumbnail=false, hasSkills=false){
         this.expandMenu();
   }
   
+  
+  
+ 
+
+
   this.updateSizeHandler = this.updateSize.bind(this);
-  this.elem.addEventListener('click',this.callClickEvent,false);
+  this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+  this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+  
+
+
   window.addEventListener('resize',this.updateSizeHandler);
+  this.elem.addEventListener('click',this.callClickEvent,false);
+  this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
+  this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 }
 
 MenuController.prototype.Rect = (id)=>new Rect(id);
@@ -248,28 +260,15 @@ MenuController.prototype.updateSize = function(){
 
 
 
+//----------------hoverover----------------//
 
+MenuController.prototype.hoveroverOn = function(){
+  this.Rect.hoveroverOn(biggerElem);
+}
+MenuController.prototype.hoveroverOff = function(){
+  this.Rect.hoveroverOff(biggerElem);
+}
 
-
-
-// //---- general Function ------------------------------------------------------------------------------------
-// //----------------------------------------------------------------------------------------------------------
-
-
-// function Package(id,...constructor){
-//   this.id = id;
-//   // let [MenuController,Thumbnail] =constructor;
-//   // // this.contructor = contructor
-//   // console.log(MenuController)
-
-//   // let [MenuController,b,c] = [1,2,3];
-
-//   // console.log('b',b)
-
-// }
-// // Package.prototype = new MenuController(); 
-
-// let workPackage = new Package('work',new MenuController('work'))
 
 let workMenuController = new MenuController('work', workThumbnails);
 let skillMenuController = new MenuController('skill',false, skillListTL);

@@ -4,7 +4,8 @@ import * as ISU from '/assets/js/InitialSetUp.js';
 // import { CSSRulePlugin } from "/assets/scripts/CSSRulePlugin.js";
 // gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
 
-const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transitionValue['duration'],ease: ISU.transitionValue['gsapEase']})
+const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transitionValue['duration'],ease: "power1.inOut"})
+
 
 
 //set border size---------
@@ -75,6 +76,30 @@ export default function Rect(id) {
   // this.variableH = this.h;
   this.restElems = ISU.getRestElems(this.elem);
 
+
+  this.rectColor1 = [ISU.select(`#${this.id}RectColor stop:nth-child(1)`)];
+  this.rectColor2 = [ISU.select(`#${this.id}RectColor stop:nth-child(2)`)];
+  this.rectColor1.push(window.getComputedStyle(this.rectColor1[0]).stopColor);
+  this.rectColor2.push(window.getComputedStyle(this.rectColor2[0]).stopColor);
+
+
+  this.neonOnTL = gsap.timeline({paused:true})
+  this.neonOnTL
+    .fromTo(this.rectColor1[0],{
+      stopColor: this.rectColor1[1]
+    },{
+      stopColor: 'rgb(254,246,222)',
+      duration:0.5,
+      ease: "power2.inOut"
+    },0)
+    .fromTo(this.rectColor2[0],{
+      stopColor: this.rectColor2[1]
+    },{
+      stopColor: 'rgb(254,246,222)',
+      duration:0.5,
+      ease: "power2.inOut"
+    },0)
+
   //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.rects.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
   this.extraSVGspace = this.radius * 5 ;
 
@@ -106,8 +131,8 @@ export default function Rect(id) {
 
 
   // window.addEventListener('resize', this.updateSizeHandler);
-  // this.rects.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
-  // this.rects.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
+  // this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
+  // this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 
 }
 
@@ -824,23 +849,26 @@ Rect.prototype.stopWavyAnim = function() {
 // //---- create Wavy Animation --------------------------------------------------------------------
 // //-----------------------------------------------------------------------------------------------
 
-// Rect.prototype.hoveroverOn = function() {
-//   // if(this.rects.elem != biggerElem){
-//     // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.add('rectCoverWhite');
-//     this.rect.setAttributeNS(null, 'stroke', `url(#SVGIvory)`);
-//     document.querySelector(`#${this.id} .neon1`).classList.add(`${this.id}Neon1`);
-//     document.querySelector(`#${this.id} .neon2`).classList.add(`${this.id}Neon2`);
-//   // }
-// };
+Rect.prototype.hoveroverOn = function(biggerElem) {
+  if(this.elem != biggerElem){
+    // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.add('rectCoverWhite');
+  
+    this.neonOnTL.play();
+    document.querySelector(`#${this.id} .neon1`).classList.add(`${this.id}Neon1`);
+    document.querySelector(`#${this.id} .neon2`).classList.add(`${this.id}Neon2`);
+  }
+};
 
-// Rect.prototype.hoveroverOff = function() {
-//     // if(this.rects.elem != biggerElem){
-//       // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.remove('rectCoverWhite');
-//       this.rects.rect.setAttributeNS(null, 'stroke', this.rects.strokeColor);
-//       document.querySelector(`#${this.rects.elem.id} .neon1`).classList.remove(`${this.rects.elem.id}Neon1`);
-//       document.querySelector(`#${this.rects.elem.id} .neon2`).classList.remove(`${this.rects.elem.id}Neon2`);
-//     // }
-// };
+Rect.prototype.hoveroverOff = function(biggerElem) {
+  if(this.elem != biggerElem){
+    // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.remove('rectCoverWhite');
+
+    
+    this.neonOnTL.reverse();
+    document.querySelector(`#${this.id} .neon1`).classList.remove(`${this.id}Neon1`);
+    document.querySelector(`#${this.id} .neon2`).classList.remove(`${this.id}Neon2`);
+  }
+};
 
 
 
