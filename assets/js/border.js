@@ -124,13 +124,13 @@ export default function Rect(id) {
 
   //-----------------
 
-  // this.updateSizeHandler = this.updateSize.bind(this);
+  // this.updateResizeHandler = this.updateResize.bind(this);
   // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
   // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
 
 
 
-  // window.addEventListener('resize', this.updateSizeHandler);
+  // window.addEventListener('resize', this.updateResizeHandler);
   // this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
   // this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 
@@ -547,6 +547,7 @@ Rect.prototype.getDataPoints = function() {
   // let h = this.h ;
   let w = this.getExpandMenuSizeWidth ;
   let h = this.getExpandMenuSizeHeight ;
+
   // this.x = this.rects.x - this.rects.radius;
   // this.y = this.rects.y - this.rects.radius ;
   let x = this.x;
@@ -657,51 +658,26 @@ Rect.prototype.getDataPoints = function() {
 };
 
 
-Rect.prototype.updateSize = function() {
+Rect.prototype.updateResize = function(biggerElem) {
 
   this.radius = innerWidth > 800 ? 7 : 4;
   this.strokeWidth = innerWidth > 800 ? 8 : 5;
   
-  console.log('this.radius: ',this.radius)
-  console.log('this.strokeWidth: ',this.radius)
-
-
-//     if (this.rects.elem == biggerElem) {
-//       this.getExpandMenuSize();
-
-//       let width = this.rects.elem.firstElementChild.clientWidth;
-//       // let height = this.rects.elem.firstElementChild.offsetHeight;
-//       let height = this.getExpandMenuSizeHeight;
-//       // console.log('this.rects.elem: ',this.rects.elem.firstElementChild,'this.rects.elem.firstElementChild.clientHeight: ',this.rects.elem.firstElementChild.getBoundingClientRect().height)
-//       console.log('this.getExpandMenuSizeHeight',this.getExpandMenuSizeHeight)
-//       console.log('width: ',width,'height: ',height)
-
-//       this.rects.rect.parentElement.style.width = width + this.extraSVGspace + 'px'
-//       this.rects.rect.parentElement.style.height = height + this.extraSVGspace + 'px'
-//       this.rects.rect.style.width = width + 'px';
-//       this.rects.rect.style.height = height + 'px';
-
-//       this.w = width;
-//       // this.h = height;
-//       this.h = this.getExpandMenuSizeHeight;
-//       this.createWavyAnimation(() => {});
-
-//     }else{
-//       if(innerWidth > 1400){
-//         this.setRectsSizeFamily(this.rects.elem,'rectSize1400');
-
-//       }else if(innerWidth > 800){
-//         this.setRectsSizeFamily(this.rects.elem,'rectSize');
-
-//       }else{
-//         if(menuExpanded){
-//           this.setRectsSizeFamily(this.rects.elem,'RectSmallerSize');
-//         }else{
-//           this.setRectsSizeFamily(this.rects.elem,'rectSize800');
-//         }
-//       }
-//     }
   
+  if (this.elem == biggerElem) {
+    this.getExpandMenuSize();
+    this.createWavyAnimation();
+
+  }else{
+    SetDefaultRectSize(this.elem);
+  }
+  let width = this.svgCanvas.parentElement.clientWidth;
+  let height = this.svgCanvas.parentElement.clientHeight;
+
+  this.svgCanvas.style.width = width + this.extraSVGspace + 'px'
+  this.svgCanvas.style.height = height + this.extraSVGspace + 'px'
+  this.rect.style.width = width + 'px';
+  this.rect.style.height = height + 'px';
 
 };
 
@@ -713,70 +689,63 @@ Rect.prototype.updateSize = function() {
 Rect.prototype.createWavyAnimation = function() {
   return new Promise((resolve,reject)=>{
     console.log('createWavyAnimation is working');
-    let dataPoints, points1, points2, pointsTween1, pointsTween2;
+    // let dataPoints, points1, points2, pointsTween1, pointsTween2;
+    
     
     if (!this.wavyAnimTL) {
       this.wavyAnimTL = gsap.timeline({
         onUpdate: update,
         onUpdateParams: [this]
       });
-    
-    // dataPoints = this.getDataPoints(this);
 
-    // points1 = dataPoints.points1;
-    // points2 = dataPoints.points2;
-
-    // pointsTween1 = dataPoints.pointsTween1;
-    // pointsTween2 = dataPoints.pointsTween2;
-   
     } else {
       this.wavyAnimTL.resume();
+      
     }
-
-    dataPoints = this.getDataPoints(this);
-
-    points1 = dataPoints.points1;
-    points2 = dataPoints.points2;
-
-
-    pointsTween1 = dataPoints.pointsTween1;
-    pointsTween2 = dataPoints.pointsTween2;
+    this.dataPoints = this.getDataPoints(this);
     
+    this.points1 = this.dataPoints.points1;
+    this.points2 = this.dataPoints.points2;
 
-    for (let i = 0; i < points1.length; i++) {
+    this.pointsTween1 = this.dataPoints.pointsTween1;
+    this.pointsTween2 = this.dataPoints.pointsTween2;
+
+
+
+    for (let i = 0; i < this.points1.length; i++) {
       let duration = random(this.speed[0], this.speed[1]);
 
 
-      let tween1 = gsap.to(points1[i], {
+      let tween1 = gsap.to(this.points1[i], {
         duration: duration,
-        x: pointsTween1[i].x,
-        y: pointsTween1[i].y,
+        x: this.pointsTween1[i].x,
+        y: this.pointsTween1[i].y,
         repeat: -1,
         yoyo: true,
         ease: Sine.easeInOut
       });
 
-      let tween2 = gsap.to(points2[i], {
+      let tween2 = gsap.to(this.points2[i], {
         duration: duration,
-        x: pointsTween2[i].x,
-        y: pointsTween2[i].y,
+        x: this.pointsTween2[i].x,
+        y: this.pointsTween2[i].y,
         repeat: -1,
         yoyo: true,
         ease: Sine.easeInOut
       });
       
 
-
       this.wavyAnimTL.add(tween1, -random(duration))
       this.wavyAnimTL.add(tween2, -random(duration))
     }
+    
 
     document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidth + this.strokeWidthUnit);
     document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidth + this.strokeWidthUnit);
 
     function update(self) {
-      document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(points1, true, 0.5))
-      document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(points2, true, 0.5))
+      document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 0.5));
+      document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 0.5));
     }
 
 

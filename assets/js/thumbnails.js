@@ -48,6 +48,8 @@ export default function Thumbnails(id,projects){
   // // this.artstation = projects.reduce((prev,cur)=>{ prev.push(cur.artstation); return prev},[]);
 
   this.createThumbnails();
+
+
 }
 
 
@@ -208,40 +210,16 @@ Thumbnails.prototype.createAlinedImages = function(project){
 
 
 
-
-export const ThumbnailReszie = function(biggerElem){
-  if(biggerElem === ISU.WORK || biggerElem === ISU.PAINT){
-    if(innerWidth < 1400){
-      document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'initial';
-      document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'none';
-    }else{
-      document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'none';
-      document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'initial';
-    }
-  }
+Thumbnails.prototype.updateResize = function(){
+  console.log('grsrg')
+  // if(biggerElem === this.elem){
+  //   // if(innerWidth < 1400){
+  //   //   document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'initial';
+  //   //   document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'none';
+  //   // }else{
+  //   //   document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'none';
+  //   //   document.querySelector(`#${biggerElem.id} .contents .alinedImages`).style.display = 'initial';
+  //   // }
+  // }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,7 +1,7 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';
-import Thumbnails, {ThumbnailReszie, workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
+import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
 import Skills, {skillListTL} from '/assets/js/skills.js';
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
@@ -55,10 +55,10 @@ function MenuController(id, hasThumbnail=false, hasSkills=false){
 
 
   this.callClickEvent = () =>{
-        this.elemEventListener(ISU.allElems,'remove','callClickEvent');
-        ISU.LOGO__.removeEventListener('click',LOGOcallClickEvent);
+    this.elemEventListener(ISU.allElems,'remove','callClickEvent');
+    ISU.LOGO__.removeEventListener('click',LOGOcallClickEvent);
 
-        this.expandMenu();
+    this.expandMenu();
   }
   
   
@@ -66,13 +66,13 @@ function MenuController(id, hasThumbnail=false, hasSkills=false){
  
 
 
-  this.updateSizeHandler = this.updateSize.bind(this);
+  this.updateResizeHandler = this.updateResize.bind(this);
   this.hoveroverOnHandler = this.hoveroverOn.bind(this);
   this.hoveroverOffHandler = this.hoveroverOff.bind(this);
   
 
 
-  window.addEventListener('resize',this.updateSizeHandler);
+  window.addEventListener('resize',this.updateResizeHandler);
   this.elem.addEventListener('click',this.callClickEvent,false);
   this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
   this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
@@ -175,11 +175,11 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.callFuncs()]);
+        const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs()]);
         const stopWavyAnim = await biggeredController.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
         const wavyAnim = await this.Rect.createWavyAnimation();
-        const stopFuncs = await Promise.all([this.stopFuncs(), this.addEventCB()]);
+        const stopFuncs = await Promise.all([this.callFuncs(), this.addEventCB()]);
       }catch(e){
         console.log('error');
         const addEvent = await this.addEventCB();
@@ -196,11 +196,11 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse()]);
+        const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
         const stopWavyAnim = await this.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
         // const wavyAnim = await this.Rect.createWavyAnimation();
-        const stopFuncs = await Promise.all([this.stopFuncs(), this.addEventCB()]);
+        const stopFuncs = await Promise.all([this.callFuncs(), this.addEventCB()]);
       }catch(e){
         console.log('error');
         const addEvent = await this.addEventCB();
@@ -227,10 +227,22 @@ MenuController.prototype.expandMenu = function(){
     };
   };
 }
-MenuController.prototype.updateSize = function(){
 
-  // this.Rect.updateResize();
-  // ThumbnailReszie(biggerElem);
+
+//---------updateResize--------------//
+
+
+MenuController.prototype.updateResize = function(){
+
+  this.Rect.updateResize(biggerElem);
+  if(biggerElem != null){
+    if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
+      this.Thumbnails.updateResize();
+    }
+    if(typeof this.Skills =='object' && this.id == biggerElem.id){
+      this.Skills.updateResize();
+    }   
+  }
 
   demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
   ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
