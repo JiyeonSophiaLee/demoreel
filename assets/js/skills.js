@@ -77,15 +77,15 @@ export default function Skills(id,skillListTL){
   this.createSkillSet();
 }
 Skills.prototype.createSkillSet = function(){
-  let skillGroup = document.createElement('li');
+  let skillMain = document.createElement('li');
   // let gridLine = document.createElement('div');
   let n = 4;
   
   
   
-  skillGroup.classList.add('skillGroup');
+  skillMain.classList.add('skillMain');
   // gridLine.classList.add('gridLine');
-  ISU.SKILL_CONTENTS.appendChild(skillGroup);
+  ISU.SKILL_CONTENTS.appendChild(skillMain);
   // SKILL_CONTENTS.appendChild(gridLine);
   ISU.SKILL_CONTENTS.style.display = 'none';
 
@@ -107,20 +107,16 @@ Skills.prototype.createSkillSet = function(){
     
     
     let group =
-      `<div id="${skill}" class="skillGraph">
-        <div class="skillContainer">
+      `<div id="${skill}" class="_skill">
+        <div class="_skillChild">
           <div class="skillImage">
-            <div class="nameSize">
-              <div class="nameContainer">
+            <div>
                 <p>${skillList[skill]['name']}</p>
                 <img src="${SkillsTLPath + `${skillList[skill]['name'].replace(/\s/g, '')}` + '.png'}"></img>
-              </div>
+
             </div>
           </div>
-          <div class="skillShadowParent">
-            <div class="skillShadow" width="calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd} * 2 - ${halfBarHeight} * 2)"></div>
-          </div>
-          <svg class="skillBar">
+          <svg class="skillGraph">
             <defs> 
               <filter id="filter">
                 <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"></feGaussianBlur>
@@ -143,11 +139,11 @@ Skills.prototype.createSkillSet = function(){
           <div class="skillInfo">
             <div>
               <div>
-                <div class="skillInfoNameContainer skillInfoContainer">
+                <div class="skillInfo_Name _skillInfo">
                   <div class="skillInfoName skillInfoText">${skillList[skill]['name']}</div>
                   <div class="skillinfoNameBG skillInfoBG" style="background:${RANDOM_COLOR[n%10]}"></div>
                 </div>
-                <div class="skillInfoDateContainer skillInfoContainer">
+                <div class="skillInfo_Date _skillInfo">
                   <div class="skillInfoDate skillInfoText">${skillList[skill]['date']}</div>
                   <div class="skillinfoDateBG skillInfoBG" style="background:${RANDOM_COLOR[(n+1)%10]}"></div>
                 </div>
@@ -159,7 +155,7 @@ Skills.prototype.createSkillSet = function(){
     
       n += 1;
       
-      skillGroup.innerHTML += group;
+      skillMain.innerHTML += group;
     };
 
   skillListTL.forEach((tl)=>{

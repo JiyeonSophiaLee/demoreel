@@ -12,6 +12,7 @@ const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transition
 // SetDefaultRectSize(ISU.allElems);
 
 export function SetDefaultRectSize(elem, menuExpanded=false){
+
   if(innerWidth >= 1400){
       ISU.select(`#${elem.id} .rects`).style.width = 'var(--rectSize1400)';
       ISU.select(`#${elem.id} .rects`).style.height = 'var(--rectSize1400)';
@@ -57,26 +58,29 @@ export default function Rect(id) {
   this.w = this.svgCanvas.parentElement.clientWidth;
   this.h = this.svgCanvas.parentElement.clientHeight;
   this.border = 5;
-  this.multiply = 6;
+  this.borderWavyPath;
+  this.multiply = 3;
   this.scale = 1;
-  this.radius = window.innerWidth > 800 ? 8 : 4;
+  this.radius;
   this.speed = [2, 3];
   this.color = 'none';
   this.stroke = true;
   this.strokeColor = `url(#${this.rectId}Color)`;
+  //--------------stroke width is controlled by css--------------//
   // this.strokeWidth = window.innerWidth > 800 ? 8 : 5;
   // this.strokeWidthUnit = 'px';
   this.strokeLineCap = 'square'; //square, butt or round
   this.margin = 0;
-
+  this.setUpdateValues();
 
   // this.variableX = this.x;
   // this.variableY = this.y;
   // this.variableW = this.w;
   // this.variableH = this.h;
+  this.wavyAnimTLRunning = false;
   this.restElems = ISU.getRestElems(this.elem);
 
-
+  
   this.rectColor1 = [ISU.select(`#${this.id}RectColor stop:nth-child(1)`)];
   this.rectColor2 = [ISU.select(`#${this.id}RectColor stop:nth-child(2)`)];
   this.rectColor1.push(window.getComputedStyle(this.rectColor1[0]).stopColor);
@@ -89,15 +93,15 @@ export default function Rect(id) {
       stopColor: this.rectColor1[1]
     },{
       stopColor: 'rgb(254,246,222)',
-      duration:0.5,
-      ease: "power2.inOut"
+      duration:0.6,
+      ease: "Sine.inOut"
     },0)
     .fromTo(this.rectColor2[0],{
       stopColor: this.rectColor2[1]
     },{
       stopColor: 'rgb(254,246,222)',
-      duration:0.5,
-      ease: "power2.inOut"
+      duration:0.6,
+      ease: "Sine.inOut"
     },0)
 
   //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.rects.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
@@ -265,6 +269,12 @@ Rect.prototype.expandMenuElse = function() {
   })
 
 };
+Rect.prototype.setUpdateValues = function(){
+  console.log(Math.abs((window.innerWidth - window.innerHeight )) * 0.01 + 25)
+  this.borderWavyPath = Math.abs((window.innerWidth - window.innerHeight )) * 0.01 + 25;
+  this.radius = window.innerWidth > 800 ? 9 : 5;
+}
+
 
 Rect.prototype.getFirstNum = function() {
   let j = 0;
@@ -453,7 +463,7 @@ Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
   return new Promise((resolve,reject)=>{
     console.log('animRect is working')
     
-    function runanimRect(){
+    function runAnimRect(){
       f += dir;
 
       this.svgCanvas.style.width = this.elem.firstElementChild.clientWidth + this.extraSVGspace + 'px';
@@ -468,7 +478,7 @@ Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
         this.biggeredElemRect.style.height = this.biggeredElemRect.parentElement.parentElement.clientHeight +'px';
       }
     
-      requestAni = requestAnimationFrame(()=>runanimRect.call(this));
+      requestAni = requestAnimationFrame(()=>runAnimRect.call(this));
   
 
       if (!(f % NF)) {
@@ -490,7 +500,7 @@ Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
   
       }
     }
-    runanimRect.call(this);
+    runAnimRect.call(this);
   
   })
 }
@@ -552,49 +562,50 @@ Rect.prototype.getDataPoints = function() {
   // this.y = this.rects.y - this.rects.radius ;
   let x = this.x;
   let y = this.y;
+  console.log('W',w)
 
   let points1 = [];
   let points2 = [];
   let pointsTween1 = [];
   let pointsTween2 = [];
 
-  if (this.border > this.w / 2) {
-    return this.border = this.rects.w / 2;
+  if (this.borderWavyPath > this.w / 2) {
+    return this.borderWavyPath = this.w / 2;
   }
 
   let getPositions = function() {
     return {
       position0: {
-        x: x + this.border,
+        x: x + this.borderWavyPath,
         y: y
       },
       position1: {
-        x: x + w - this.border,
+        x: x + w - this.borderWavyPath,
         y: y
       },
       position2: {
         x: x + w,
-        y: y + this.border
+        y: y + this.borderWavyPath
       },
       position3: {
         x: x + w,
-        y: y + h - this.border
+        y: y + h - this.borderWavyPath
       },
       position4: {
-        x: x + w - this.border,
+        x: x + w - this.borderWavyPath,
         y: y + h
       },
       position5: {
-        x: x + this.border,
+        x: x + this.borderWavyPath,
         y: y + h
       },
       position6: {
         x: x,
-        y: y + h - this.border
+        y: y + h - this.borderWavyPath
       },
       position7: {
         x: x,
-        y: y + this.border
+        y: y + this.borderWavyPath
       }
     }
   }
@@ -657,20 +668,28 @@ Rect.prototype.getDataPoints = function() {
 
 };
 
-
-Rect.prototype.updateResize = function(biggerElem) {
-
-  this.radius = innerWidth > 800 ? 7 : 4;
-  this.strokeWidth = innerWidth > 800 ? 8 : 5;
+Rect.prototype.updateResize = function(biggerElem,menuExpanded) {
   
+  this.setUpdateValues();
+  // this.radius = innerWidth > 800 ? 7 : 4;
+  // this.strokeWidth = innerWidth > 800 ? 8 : 5;
   
-  if (this.elem == biggerElem) {
-    this.getExpandMenuSize();
-    this.createWavyAnimation();
-
-  }else{
-    SetDefaultRectSize(this.elem);
+  if(menuExpanded && this.elem == biggerElem){
+    if(innerWidth <= 800 && this.wavyAnimTLRunning){
+      this.wavyAnimTL.pause(0);
+      document.getElementById(this.id + 'RectWavy1').setAttribute('d', '');
+      document.getElementById(this.id + 'RectWavy2').setAttribute('d', '');
+    }else{
+      this.getExpandMenuSize();
+      this.createWavyAnimation();
+    }
   }
+  
+
+  if(this.elem != biggerElem){
+    SetDefaultRectSize(this.elem,menuExpanded);
+  }
+
   let width = this.svgCanvas.parentElement.clientWidth;
   let height = this.svgCanvas.parentElement.clientHeight;
 
@@ -688,129 +707,140 @@ Rect.prototype.updateResize = function(biggerElem) {
 
 Rect.prototype.createWavyAnimation = function() {
   return new Promise((resolve,reject)=>{
-    console.log('createWavyAnimation is working');
-    // let dataPoints, points1, points2, pointsTween1, pointsTween2;
-    
-    
-    if (!this.wavyAnimTL) {
-      this.wavyAnimTL = gsap.timeline({
-        onUpdate: update,
-        onUpdateParams: [this]
-      });
-
-    } else {
-      this.wavyAnimTL.resume();
+    if(window.innerWidth > 800){
+      console.log('createWavyAnimation is working');
+      // let dataPoints, points1, points2, pointsTween1, pointsTween2;
       
-    }
-    this.dataPoints = this.getDataPoints(this);
-    
-    this.points1 = this.dataPoints.points1;
-    this.points2 = this.dataPoints.points2;
-
-    this.pointsTween1 = this.dataPoints.pointsTween1;
-    this.pointsTween2 = this.dataPoints.pointsTween2;
-
-
-
-    for (let i = 0; i < this.points1.length; i++) {
-      let duration = random(this.speed[0], this.speed[1]);
-
-
-      let tween1 = gsap.to(this.points1[i], {
-        duration: duration,
-        x: this.pointsTween1[i].x,
-        y: this.pointsTween1[i].y,
-        repeat: -1,
-        yoyo: true,
-        ease: Sine.easeInOut
-      });
-
-      let tween2 = gsap.to(this.points2[i], {
-        duration: duration,
-        x: this.pointsTween2[i].x,
-        y: this.pointsTween2[i].y,
-        repeat: -1,
-        yoyo: true,
-        ease: Sine.easeInOut
-      });
+      
+      if (!this.wavyAnimTL) {
+        this.wavyAnimTL = gsap.timeline({
+          onUpdate: update,
+          onUpdateParams: [this]
+        });
+  
+      } else {
+        this.wavyAnimTL.resume();
+        
+      }
+      this.dataPoints = this.getDataPoints(this);
+      
+      this.points1 = this.dataPoints.points1;
+      this.points2 = this.dataPoints.points2;
+  
+      this.pointsTween1 = this.dataPoints.pointsTween1;
+      this.pointsTween2 = this.dataPoints.pointsTween2;
+  
+  
+  
+      for (let i = 0; i < this.points1.length; i++) {
+        let duration = random(this.speed[0], this.speed[1]);
+  
+  
+        let tween1 = gsap.to(this.points1[i], {
+          duration: duration,
+          x: this.pointsTween1[i].x,
+          y: this.pointsTween1[i].y,
+          repeat: -1,
+          yoyo: true,
+          ease: Sine.easeInOut
+        });
+  
+        let tween2 = gsap.to(this.points2[i], {
+          duration: duration,
+          x: this.pointsTween2[i].x,
+          y: this.pointsTween2[i].y,
+          repeat: -1,
+          yoyo: true,
+          ease: Sine.easeInOut
+        });
+        
+  
+        this.wavyAnimTL.add(tween1, -random(duration))
+        this.wavyAnimTL.add(tween2, -random(duration))
+      }
       
 
-      this.wavyAnimTL.add(tween1, -random(duration))
-      this.wavyAnimTL.add(tween2, -random(duration))
-    }
-    
+      // document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath );
+      // document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath + this.strokeWidthUnit);
 
-    document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidth + this.strokeWidthUnit);
-    document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidth + this.strokeWidthUnit);
+      function update(self) {
+        document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 1));
+        document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 1));
+      }
+  
+      this.wavyAnimTLRunning = true;
+      
 
-    function update(self) {
-      document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 0.5));
-      document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 0.5));
-    }
-
-
-    function tweenCardinal(data, closed, tension) {
-
-      if (data.length < 1) return "M0 0";
-      if (tension == null) tension = 1;
-
-      var size = data.length - (closed ? 0 : 1);
-      var path = "M" + data[0].x + " " + data[0].y + " C";
-
-      for (var i = 0; i < size; i++) {
-
-        var p0, p1, p2, p3;
-
-        if (closed) {
-          p0 = data[(i - 1 + size) % size];
-          p1 = data[i];
-          p2 = data[(i + 1) % size];
-          p3 = data[(i + 2) % size];
-
-        } else {
-          p0 = i == 0 ? data[0] : data[i - 1];
-          p1 = data[i];
-          p2 = data[i + 1];
-          p3 = i == size - 1 ? p2 : data[i + 2];
+      function tweenCardinal(data, closed, tension) {
+  
+        if (data.length < 1) return "M0 0";
+        if (tension == null) tension = 1;
+  
+        var size = data.length - (closed ? 0 : 1);
+        var path = "M" + data[0].x + " " + data[0].y + " C";
+  
+        for (var i = 0; i < size; i++) {
+  
+          var p0, p1, p2, p3;
+  
+          if (closed) {
+            p0 = data[(i - 1 + size) % size];
+            p1 = data[i];
+            p2 = data[(i + 1) % size];
+            p3 = data[(i + 2) % size];
+  
+          } else {
+            p0 = i == 0 ? data[0] : data[i - 1];
+            p1 = data[i];
+            p2 = data[i + 1];
+            p3 = i == size - 1 ? p2 : data[i + 2];
+          }
+  
+          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+  
+          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+  
+          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
         }
-
-        var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-        var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-
-        var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-        var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-
-        path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+  
+        return closed ? path + "z" : path;
       }
-
-      return closed ? path + "z" : path;
+  
+      function random(min, max) {
+        if (max == null) {
+          max = min;
+          min = 0;
+        }
+        if (min > max) {
+          var tmp = min;
+          min = max;
+          max = tmp;
+        }
+        return min + (max - min) * Math.random();
+      }
+  
+      console.log('done wavy animation')
+        
     }
-
-    function random(min, max) {
-      if (max == null) {
-        max = min;
-        min = 0;
-      }
-      if (min > max) {
-        var tmp = min;
-        min = max;
-        max = tmp;
-      }
-      return min + (max - min) * Math.random();
-    }
-
-    console.log('done wavy animation')
-      
-    resolve();
+  
+    
       // }
-
+    resolve();
   })
 };
 
 Rect.prototype.stopWavyAnim = function() {
-  console.log('stopWavyAnimTl is working')
-  this.wavyAnimTL.pause(0);
-  this.rect.setAttributeNS(null, 'stroke',this.strokeColor);
+  console.log('stopWavyAnimTl is working',this.elem.id)
+  if(window.innerWidth > 800){
+    this.wavyAnimTL.pause(0);
+    this.wavyAnimTLRunning = false;
+  }
+  
+  this.neonOnTL.reverse();
+  this.rect.style.stroke=this.strokeColor;
+
 }
 
 
@@ -821,7 +851,7 @@ Rect.prototype.stopWavyAnim = function() {
 Rect.prototype.hoveroverOn = function(biggerElem) {
   if(this.elem != biggerElem){
     // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.add('rectCoverWhite');
-  
+
     this.neonOnTL.play();
     document.querySelector(`#${this.id} .neon1`).classList.add(`${this.id}Neon1`);
     document.querySelector(`#${this.id} .neon2`).classList.add(`${this.id}Neon2`);

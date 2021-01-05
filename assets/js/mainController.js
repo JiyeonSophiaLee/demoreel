@@ -3,12 +3,17 @@ import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';
 import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
 import Skills, {skillListTL} from '/assets/js/skills.js';
+import Info from '/assets/js/info.js';
+import Astronaut from '/assets/js/three.js';
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
 // import { CSSRulePlugin } from "/assets/scripts/CSSRulePlugin.js";
 // gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
 // let test = new Thumbnails(workThumbnails)
+
+const astronaut = new Astronaut();
+astronaut.animate();
 
 let menuExpanded = false;
 let biggerElem = null;
@@ -40,7 +45,7 @@ const LOGOcallClickEvent = function(){
 
 
 
-function MenuController(id, hasThumbnail=false, hasSkills=false){
+function MenuController(id, hasThumbnail=false, hasSkills=false, hasInfo = false){
   this.id = id;
   this.elem = document.getElementById(id);
   this.Rect = this.Rect(this.id);
@@ -51,6 +56,9 @@ function MenuController(id, hasThumbnail=false, hasSkills=false){
   };
   if(hasSkills != false){
     this.Skills = this.Skills(this.id, hasSkills);
+  }
+  if(hasInfo == true){
+    this.Info = this.Info(this.id);
   }
 
 
@@ -82,6 +90,7 @@ MenuController.prototype.Rect = (id)=>new Rect(id);
 MenuController.prototype.UtilityController = (id)=>new UtilityController(id);
 MenuController.prototype.Thumbnails = (id,hasThumbnail)=> new Thumbnails(id,hasThumbnail);
 MenuController.prototype.Skills = (id,hasSkills)=>new Skills(id,hasSkills);
+MenuController.prototype.Info = (id)=>new Info(id);
 
 
 //--Event Listenr functions----------
@@ -96,8 +105,11 @@ MenuController.prototype.callFuncs = function(){
     this.Thumbnails.callThumbnail();
   }
   if(typeof this.Skills =='object' && this.id == biggerElem.id){
-    console.log('call skill')
     this.Skills.callSkills();
+  }
+  if(typeof this.Info =='object' && this.id == biggerElem.id){
+    console.log('-------this.elem-------', this.elem)
+    this.Info.callInfo();
   }
   
   // callInfoContents(elem);
@@ -109,6 +121,9 @@ MenuController.prototype.stopFuncs = function(){
   }
   if(typeof biggeredController.Skills =='object'){
     biggeredController.Skills.stopSkills();
+  }
+  if(typeof biggeredController.Info =='object'){
+    biggeredController.Info.stopInfo();
   }
 
   // callSkillContents(elem);
@@ -234,7 +249,7 @@ MenuController.prototype.expandMenu = function(){
 
 MenuController.prototype.updateResize = function(){
 
-  this.Rect.updateResize(biggerElem);
+  this.Rect.updateResize(biggerElem,menuExpanded);
   if(biggerElem != null){
     if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
       this.Thumbnails.updateResize();
@@ -285,7 +300,7 @@ MenuController.prototype.hoveroverOff = function(){
 let workMenuController = new MenuController('work', workThumbnails);
 let skillMenuController = new MenuController('skill',false, skillListTL);
 let paintMenuController = new MenuController('paint', paintThumbnails);
-let infoMenuController = new MenuController('info');
+let infoMenuController = new MenuController('info',false,false,true);
 
 
 

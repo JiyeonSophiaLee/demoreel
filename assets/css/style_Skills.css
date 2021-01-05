@@ -14,7 +14,7 @@
 
 
 
-#skill .skillGroup .skillGraph {
+#skill .skillMain ._skill {
     /* width: 96%; */
     height: calc(var(--halfCircleSize)*2);
     background: rgba(30,30,30, 0.8);
@@ -26,27 +26,27 @@
     position: relative;
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph {
-            height: calc(var(--halfCircleSize800)*2);
+        #skill .skillMain ._skill {
+            height: calc(var(--halfCircleSize800)*3);
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph {
+        #skill .skillMain ._skill {
             height: calc(var(--halfCircleSize1400)*2);
         }
     }
-#skill .skillGroup .skillGraph .skillContainer{
+#skill .skillMain ._skill ._skillChild{
     height: 100%;
     width: 95%;
     display: flex;
     position: relative;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillImage{
+#skill .skillMain ._skill ._skillChild .skillImage{
     position: absolute;
     /* display: flex;
     align-items: center; */
 }
-#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize{
+#skill .skillMain ._skill ._skillChild .skillImage {
     height: calc(var(--halfCircleSize)*2);
     width: calc(var(--halfCircleSize)*2);
         
@@ -55,18 +55,18 @@
     align-items: center;
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize{
+        #skill .skillMain ._skill ._skillChild .skillImage{
             height: calc(var(--halfCircleSize800)*2);
             width: calc(var(--halfCircleSize800)*2);
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize{
+        #skill .skillMain ._skill ._skillChild .skillImage {
             height: calc(var(--halfCircleSize1400)*2);
             width: calc(var(--halfCircleSize1400)*2);
         }
     }
-#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer{
+#skill .skillMain ._skill ._skillChild .skillImage > div {
     width: 85%;
     height: 85%;
     
@@ -77,15 +77,15 @@
     border-radius: 2rem;
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer{
+        #skill .skillMain ._skill ._skillChild .skillImage > div {
             width: 80%;
             height: 80%;
         }
     }
-#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer p{
+#skill .skillMain ._skill ._skillChild .skillImage > div  p{
     display: none;
 }
-#skill .skillGroup .skillGraph .skillContainer .skillImage .nameSize .nameContainer img{
+#skill .skillMain ._skill ._skillChild .skillImage > div  img{
     height: 60%;
     width: 60%;
     display: flex;
@@ -98,7 +98,7 @@
 
 
 
-#skill .skillGroup .skillGraph .skillContainer .skillShadowParent{
+#skill .skillMain ._skill ._skillChild .skillShadowParent{
     position: absolute;
     height: calc(var(--halfCircleSize)*2);
     width: inherit;
@@ -107,28 +107,28 @@
     z-index: -1;
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillShadowParent{
+        #skill .skillMain ._skill ._skillChild .skillShadowParent{
             height: calc(var(--halfCircleSize800)*2);
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .skillShadowParent{
+        #skill .skillMain ._skill ._skillChild .skillShadowParent{
             height: calc(var(--halfCircleSize1400)*2);
         }
     }
-#skill .skillGroup .skillGraph .skillContainer .skillShadow{
+#skill .skillMain ._skill ._skillChild .skillShadow{
     position: relative;
     height:calc(var(--halfBarHeight) * 2);
     border-radius: var(--halfCircleSize);
     left:var(--halfBarHeight);
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillShadow{
+        #skill .skillMain ._skill ._skillChild .skillShadow{
             border-radius: var(--halfCircleSize800);
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .skillShadow{
+        #skill .skillMain ._skill ._skillChild .skillShadow{
             border-radius: var(--halfCircleSize1400);
         }
     }
@@ -136,12 +136,12 @@
 
 
 
-#skill .skillGroup .skillGraph .skillContainer .skillBar{
+#skill .skillMain ._skill ._skillChild .skillGraph{
     width: 100%;
     height: 100%;
     /* z-index: 1; */
 }
-#skill .skillGroup .skillGraph .skillContainer .skillBar .barBG{
+#skill .skillMain ._skill ._skillChild .skillGraph .barBG{
     /* position: absolute; */
     fill:#000000;
     opacity: 0.6;
@@ -149,25 +149,30 @@
     /* width: 100%; */
     /* height: calc(var(--halfBarHeight)*2 ); */
 }
-#skill .skillGroup .skillGraph .skillContainer .skillBar .bar{
-    /* border-radius: inherit; */
+/* #skill .skillMain ._skill ._skillChild .skillGraph .bar{
     height: calc(var(--halfBarHeight) * 2);
 }
+    @media (max-width:800px){
+        #skill .skillMain ._skill ._skillChild .skillGraph .bar{
+            height:calc(var(--halfCircleSize)*2 + var(--halfBarHeight)*2);
+        }
+    } */
 
-#skill .skillGroup .skillGraph .skillContainer .skillBar .barHead2,.barTail2{
+#skill .skillMain ._skill ._skillChild .skillGraph .barHead2,.barTail2{
+    /* height: calc(var(--halfCircleSize)*2); */
     display: none;
 }
-@media (max-width:800px){
-    #skill .skillGroup .skillGraph .skillContainer .skillBar .barHead2,.barTail2{
-        display: initial;
+    @media (max-width:800px){
+        #skill .skillMain ._skill ._skillChild .skillGraph .barHead2,.barTail2{
+            display: initial;
+        }
     }
-}
 
-/* #skill .skillGroup .skillGraph .skillContainer .skillBar circle{
+/* #skill .skillMain ._skill ._skillChild .skillGraph circle{
     width:3rem;
 } */
 
-#skill .skillGroup .skillGraph .skillContainer .percent{
+#skill .skillMain ._skill ._skillChild .percent{
     font-size: 1.3rem;
     fill: white;
     text-shadow:2px 2px 3px rgb(30,30,30);
@@ -179,12 +184,12 @@
   ; */
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .percent{     
+        #skill .skillMain ._skill ._skillChild .percent{     
             font-size: 1.1rem;
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .percent{
+        #skill .skillMain ._skill ._skillChild .percent{
             font-size: 1.5rem;
         }
     }
@@ -192,9 +197,10 @@
 
 
 
-#skill .skillGroup .skillGraph .skillContainer .skillInfo{
+#skill .skillMain ._skill ._skillChild .skillInfo{
     position: absolute;
-    height: calc(var(--halfCircleSize800)*3);
+    /* height: calc(var(--halfCircleSize800)*3); */
+    height: 100%;
     font-size: 1.3rem;
     color: black;
     display: flex;
@@ -202,31 +208,31 @@
     width: 100%;
 }
     @media (max-width: 600px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+        #skill .skillMain ._skill ._skillChild .skillInfo{
             font-size: 1rem;
             /* height: calc(var(--halfCircleSize800)*3); */
         }
     }
     @media (min-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+        #skill .skillMain ._skill ._skillChild .skillInfo{
             font-size: 0.95rem;
-            height: calc(var(--halfCircleSize)*2);
+            /* height: calc(var(--halfCircleSize)*2); */
         }
     }
     @media (min-width:950px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+        #skill .skillMain ._skill ._skillChild .skillInfo{
             font-size: 1.25rem;
             /* height: calc(var(--halfCircleSize)*2); */
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo{
+        #skill .skillMain ._skill ._skillChild .skillInfo{
             font-size: 1.4rem;
             /* height: calc(var(--halfCircleSize1400)*2); */
         }
     }
 
-#skill .skillGroup .skillGraph .skillContainer .skillInfo > div{
+#skill .skillMain ._skill ._skillChild .skillInfo > div{
     display: flex;
     align-items: center;
     position: relative;
@@ -234,90 +240,87 @@
     width: calc(100% - var(--halfCircleSize)*2 - var(--halfCircleSizeEnd)*2);
 }
     @media (max-width:800px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo > div {
+        #skill .skillMain ._skill ._skillChild .skillInfo > div {
             left: calc(var(--halfCircleSize800)*2);
             width: calc(100% - var(--halfCircleSize800)*2);
         }
     }
     @media (max-width:630px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo > div {
+        #skill .skillMain ._skill ._skillChild .skillInfo > div {
             flex-wrap: wrap;
         }
     }
     @media (min-width:1400px){
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo > div {
+        #skill .skillMain ._skill ._skillChild .skillInfo > div {
             left: calc(var(--halfCircleSize1400)*2);
             width: calc(100% - var(--halfCircleSize1400)*2 - var(--halfCircleSizeEnd1400)*2);
         }
     }
     
-    #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div{
+    #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
         display:flex;
         margin:auto;
     }
         @media (max-width:800px){
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
                 flex-wrap:wrap;
             }
         }
-        #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoContainer{
+        #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo{
             display: flex;
             position: relative;
         }
             @media (max-width:800px){
-                #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoContainer{
+                #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo{
                     flex-basis: 100%;
                 }
             }
             
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div {
-                opacity: 0;
-            }
-
                 @media (max-width:800px){
-                    #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoContainer .skillInfoText{
+                    #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo .skillInfoText{
                         margin: auto;
                     }
                 }
 
-                
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoContainer div:first-child{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo div:first-child{
                 position: relative;
                 opacity: 0;
             }
                 /* @media (max-width:600px){
-                    #skill .skillGroup .skillGraph .skillContainer .skillInfo > div > div{
+                    #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
                         text-align: end;
                     }
                 } */
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoContainer div:last-child{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo div:last-child{
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 /* transform-origin: left; */
                 transform: scaleY(0);
             }
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoNameContainer {
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Name {
                 margin-left: auto;
                 margin-right:0.7rem;
             }
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoDateContainer {
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Date {
                 margin-right: auto;
             }
 
 
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoBG{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfoBG{
                 border-radius: 0.3rem;
             }
 
             
 
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoNameContainer .skillInfoName{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Name .skillInfoName{
                 font-weight:700;
             }
-            #skill .skillGroup .skillGraph .skillContainer .skillInfo > div .skillInfoDateContainer .skillInfoDate{
+            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Date .skillInfoDate{
                 /* font-size: 1.4rem; */
             }
+
+
 
 
 

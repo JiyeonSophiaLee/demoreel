@@ -14,6 +14,7 @@ const DEMO_VIDEO_BG_CSS_ANIM = document.querySelector('#demoVideoBgCSSAnim');
 const TITLE_NAME = document.querySelector('#name');
 const THREEJS_BlOCKER = document.getElementById('threejsBlocker');
 const SKILL_CONTENTS = document.querySelector(`#skill .contents`);
+const INFO_CONTENTS = document.querySelector(`#info .contents`);
 
 const allElems = [WORK,PAINT,SKILL,INFO];
 
@@ -34,6 +35,7 @@ export {
   TITLE_NAME,
   THREEJS_BlOCKER,
   SKILL_CONTENTS,
+  INFO_CONTENTS,
   allElems
 }
 

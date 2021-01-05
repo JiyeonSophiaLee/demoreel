@@ -1,13 +1,13 @@
-const INFO_CONTENTS = document.querySelector(`#info .contents`);
-// INFO_CONTENTS.style.display = 'none'
+import * as ISU from '/assets/js/InitialSetUp.js';
 
 
-function callInfoContents(elem){
-    if(elem.id == 'info'){
-        INFO_CONTENTS.style.display='initial';
-    }
+export default function Info(id){
+  this.id = id
+}
+Info.prototype.callInfo = function(){
+  ISU.INFO_CONTENTS.style.display='initial';
 }
 
-function stopInfoContents(){
-    INFO_CONTENTS.style.display='none';
+Info.prototype.stopInfo = function(){
+  ISU.INFO_CONTENTS.style.display='none';
 }
