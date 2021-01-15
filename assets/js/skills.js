@@ -1,11 +1,24 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
 
-let halfCircleSize;
-let halfCircleSizeEnd;
-let halfBarHeight;
+const HalfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
+const HalfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
+const HalfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
 
+const HalfCircleSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize1400');
+const HalfCircleSizeEnd1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd1400');
+const HalfBarHeight1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight1400');
+
+const HalfCircleSize800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize800');
+const HalfCircleSizeEnd800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd800');
+const HalfBarHeight800 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight800');
+
+let halfCircleSize;
 let halfCircleSizeNumb;
+
+let halfCircleSizeEnd;
 let halfCircleSizeEndNumb;
+
+let halfBarHeight;
 let halfBarHeightNumb;
 
 setUnitSize();
@@ -27,10 +40,9 @@ function setUnitSize(){
     screenSize = '800';
   }
   
-  halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize' + screenSize );
-  halfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd' + screenSize );
-  halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight' + screenSize);
-
+  halfCircleSize = eval('HalfCircleSize'+screenSize)
+  halfCircleSizeEnd = eval('HalfCircleSizeEnd'+screenSize)
+  halfBarHeight = eval('HalfBarHeight'+screenSize)
 
   halfCircleSizeNumb = parseFloat(halfCircleSize);
   halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
@@ -77,15 +89,15 @@ export default function Skills(id,skillListTL){
   this.createSkillSet();
 }
 Skills.prototype.createSkillSet = function(){
-  let skillMain = document.createElement('li');
+  let skillPack = document.createElement('li');
   // let gridLine = document.createElement('div');
   let n = 4;
   
   
   
-  skillMain.classList.add('skillMain');
+  skillPack.classList.add('skillPack');
   // gridLine.classList.add('gridLine');
-  ISU.SKILL_CONTENTS.appendChild(skillMain);
+  ISU.SKILL_CONTENTS.appendChild(skillPack);
   // SKILL_CONTENTS.appendChild(gridLine);
   ISU.SKILL_CONTENTS.style.display = 'none';
 
@@ -130,9 +142,9 @@ Skills.prototype.createSkillSet = function(){
             <g filter="url(#filter)">
               <rect class="bar" width="calc(${halfCircleSize} + ${halfCircleSizeEnd})" height="calc(${halfBarHeight}*2)" x="${halfCircleSize}" y="${ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb)}" fill="url(#${skill}Color)"></rect>
               <circle class="barHead1" cx="${halfCircleSize}" cy="${halfCircleSize}" r="${halfCircleSize}" fill="${RANDOM_COLOR[n%10]}"></circle>
-              <circle class="barHead2" cx="${halfCircleSize}" cy="${halfCircleSize}" r="${halfCircleSize}" fill="${RANDOM_COLOR[n%10]}"></circle>
+              <circle class="barHead2" cx="${HalfCircleSize800}" cy="${HalfCircleSize800}" r="${HalfCircleSize800}" fill="${RANDOM_COLOR[n%10]}"></circle>
               <circle class="barTail1" cx="calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd})" cy="${halfCircleSize}" r="${halfCircleSizeEnd}" fill="${RANDOM_COLOR[(n + 1) %10]}"></circle>
-              <circle class="barTail2" cx="calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd})" cy="${halfCircleSize}" r="${halfCircleSizeEnd}" fill="${RANDOM_COLOR[(n + 1) %10]}"></circle>
+              <circle class="barTail2" cx="calc(${HalfCircleSize800} * 2 + ${HalfCircleSizeEnd800})" cy="${HalfCircleSize800}" r="${HalfCircleSizeEnd800}" fill="${RANDOM_COLOR[(n + 1) %10]}"></circle>
             </g>
             <text class="percent" transform="matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb*2 + halfCircleSizeEndNumb)},${ISU.remToPx(halfCircleSizeNumb)})" text-anchor="middle" alignment-baseline="middle">${skillList[skill]['width']+'%'}</text>
           </svg>
@@ -155,7 +167,7 @@ Skills.prototype.createSkillSet = function(){
     
       n += 1;
       
-      skillMain.innerHTML += group;
+      skillPack.innerHTML += group;
     };
 
   skillListTL.forEach((tl)=>{
@@ -228,7 +240,6 @@ SkillsTL.prototype.setDefaultValues = function(){
   this.barTail1 = ISU.select(`#${this.id} .barTail1`);
   this.barTail2 = ISU.select(`#${this.id} .barTail2`)
   this.percent = ISU.select(`#${this.id} .percent`);
-  this.skillShadow = ISU.select(`#${this.id} .skillShadow`);
   this.skillInfo = ISU.select(`#${this.id} .skillInfo`);
   this.skillInfoBG = ISU.selectAll(`#${this.id} .skillInfoBG`);
   this.skillInfoText = ISU.selectAll(`#${this.id} .skillInfoText`);
@@ -260,8 +271,18 @@ SkillsTL.prototype.setWidths = function(){
 
 SkillsTL.prototype.getCallGraphTL = function(){
   this.setWidths();
+  setUnitSize();
 
-  
+  this.bar.style.height = `calc(${halfBarHeight}*2)`;
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'r', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
+  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
+  this.callGraphTL.clear();
   this.callGraphTL
     .fromTo(this.bar,{
         width: ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb)
@@ -272,21 +293,13 @@ SkillsTL.prototype.getCallGraphTL = function(){
       },0
     )
     .fromTo(this.barTail1,{
-        cx: this.barTail_startPosition_cx
+        attr: {cx: this.barTail_startPosition_cx}
       },{
-        cx: this.barCircleEachEnd,
+        attr: {cx: this.barCircleEachEnd},
         duration: ISU.transitionValue['skillTLDuration'],
         ease: ISU.transitionValue['skillTLEase']
       },0
     )
-    // .fromTo(this.barTail2,{
-    //         cx: this.barTail_startPosition_cx
-    //     },{
-    //         cx: this.barCircleEachEnd,
-    //         duration: ISU.transitionValue['skillTLDuration'],
-    //         ease: ISU.transitionValue['skillTLEase']
-    //     },0
-    // )
     .fromTo(this.percent,{
         attr:{transform:`matrix(1,0,0,1,${this.barTail_startPosition_cx},${ISU.remToPx(halfCircleSizeNumb)})`}
       },{
@@ -295,14 +308,6 @@ SkillsTL.prototype.getCallGraphTL = function(){
         ease: ISU.transitionValue['skillTLEase']
       },0
     )
-    // .to(this.skillShadow,
-    //     {
-    //         width: this.barCircleEachEnd,
-    //         duration: ISU.transitionValue['skillTLDuration'],
-    //         ease: ISU.transitionValue['skillTLEase']
-    //     },
-    //     0
-    // )
   this.callGraphTL.play();
     // this.playCallGraphTL();
 }
@@ -313,6 +318,17 @@ SkillsTL.prototype.setWidths800 = function(){
 }
 SkillsTL.prototype.getCallGraphTL800 = function(){
   this.setWidths800();
+  setUnitSize();
+
+
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'r', halfCircleSize);
+  this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
+  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
 
   this.callGraphTL800.clear();
   this.callGraphTL800
@@ -360,7 +376,7 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
     )
     .to(this.barHead2,
       {
-        cy: ISU.remToPx(halfCircleSizeNumb*2),
+        attr: {cy: ISU.remToPx(halfCircleSizeNumb*2)},
         duration: ISU.transitionValue['skillTLDuration800'],
         ease: ISU.transitionValue['skillTLEase800']
       },
@@ -370,20 +386,20 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
 
     .fromTo(this.barTail1,
         {
-          cx: this.barTail_startPosition_cx
+          attr: {cx: this.barTail_startPosition_cx}
         },{
-            cx: this.barFullWidth,
-            duration: ISU.transitionValue['skillTLDuration800'],
-            ease: ISU.transitionValue['skillTLEase800']
+          attr: {cx: this.barFullWidth},
+          duration: ISU.transitionValue['skillTLDuration800'],
+          ease: ISU.transitionValue['skillTLEase800']
         },0
     )
     .fromTo(this.barTail2,
       {
-        cx: this.barTail_startPosition_cx,
-        cy: ISU.remToPx(halfCircleSizeNumb*1)
+        attr:{cx: this.barTail_startPosition_cx,
+              cy: ISU.remToPx(halfCircleSizeNumb*1)}
       },{
-        cx: this.barFullWidth,
-        cy: ISU.remToPx(halfCircleSizeNumb*2),
+        attr:{cx: this.barFullWidth,
+              cy: ISU.remToPx(halfCircleSizeNumb*2)},
         duration: ISU.transitionValue['skillTLDuration800'],
         ease: ISU.transitionValue['skillTLEase800']
       },0
@@ -394,7 +410,7 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
       {
           attr:{transform:`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb)})`},
       },{
-          attr:{transform:`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb *2.3)})`},
+          attr:{transform:`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb * 2.35)})`},
           duration: ISU.transitionValue['skillTLDuration800'],
           ease: ISU.transitionValue['skillTLEase800']
       },0
@@ -448,7 +464,6 @@ SkillsTL.prototype.hoveroverOn = function(){
     // this.setWidths();
     this.getExpandGraph();
     this.expandGraphTL.play();
-//         select(`#${this.id} .skillShadow`).classList.add('barShadowAni');
   }
 }
 
@@ -456,7 +471,6 @@ SkillsTL.prototype.hoveroverOff = function(){
   if(innerWidth > 800){
 //         this.reverseExpandGraphTL();
     this.expandGraphTL.reverse();
-//         select(`#${this.id} .skillShadow`).classList.remove('barShadowAni');
   }
 }
 
@@ -533,9 +547,9 @@ SkillsTL.prototype.getExpandGraph = function(){
       },0
     )
     .fromTo(this.barTail1,{
-        cx: this.barCircleEachEnd,
+        attr:{cx: this.barCircleEachEnd},
       },{
-        cx: this.barFullWidth,
+        attr:{cx: this.barFullWidth},
         duration:1,
         ease: "bounce.out"
       },0
@@ -554,31 +568,6 @@ SkillsTL.prototype.getExpandGraph = function(){
         0
     )
 
-        
-
-//----check this later
-//         .to(
-//             `#${this.id} .skillShadow`,
-//             {
-//                 scaleY:2.5,
-//                 duration:1,
-//                 transformOrigin:"center center",
-//                 ease: "elastic.out(1, 0.3)"
-//             },
-//             0
-//         )
-//         .fromTo(
-//             `#${this.id} .skillShadow`,
-//             {
-//                 width: this.barCircleEachEnd
-//             },
-//             {
-//                 width: this.barFullWidth,
-//                 duration:1,
-//                 ease: "bounce.out"
-//             },
-//             0
-//         )
 
 
     .to(this.skillInfoBG,
@@ -617,7 +606,6 @@ SkillsTL.prototype.updateResize = function(){
 
   this.elem.style.height =  '';
 
-
   
   if(innerWidth > 800){
     this.bar.style.width = this.barEachWidth;
@@ -630,6 +618,7 @@ SkillsTL.prototype.updateResize = function(){
   }
   this.bar.setAttributeNS(null,'x',halfCircleSize);
 
+  
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
@@ -642,15 +631,16 @@ SkillsTL.prototype.updateResize = function(){
 
 
   if(innerWidth > 800){
-    this.barTail1.style.cx = this.barCircleEachEnd;
+    console.log('barCircleEachEnd',this.barCircleEachEnd)
+    this.barTail1.setAttributeNS(null,'cx',this.barCircleEachEnd);
   }else{
-    this.barTail1.style.cx = this.barFullWidth;
+    this.barTail1.setAttributeNS(null,'cx',this.barFullWidth);
   }
   this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
   this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
 
   if(innerWidth <= 800){
-    this.barTail2.style.cx = this.barFullWidth;
+    this.barTail2.setAttributeNS(null,'cx', this.barFullWidth);
     this.barTail2.setAttributeNS(null, 'cy', ISU.remToPx(halfCircleSizeNumb*2));
     this.barTail2.setAttributeNS(null,'r', halfCircleSizeEnd);
   }
@@ -667,7 +657,7 @@ SkillsTL.prototype.updateResize = function(){
   if(innerWidth > 800){
     this.percent.setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`);
   }else{
-    this.percent.setAttributeNS(null, 'transform',`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb *2.3)})`);
+    this.percent.setAttributeNS(null, 'transform',`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb * 2.35)})`);
   }
 
 

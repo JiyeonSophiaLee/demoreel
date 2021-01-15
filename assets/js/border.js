@@ -8,24 +8,22 @@ const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transition
 
 
 
-//set border size---------
-// SetDefaultRectSize(ISU.allElems);
 
 export function SetDefaultRectSize(elem, menuExpanded=false){
 
   if(innerWidth >= 1400){
-      ISU.select(`#${elem.id} .rects`).style.width = 'var(--rectSize1400)';
-      ISU.select(`#${elem.id} .rects`).style.height = 'var(--rectSize1400)';
+      ISU.select(`#${elem.id} .rectPack`).style.width = 'var(--rectSize1400)';
+      ISU.select(`#${elem.id} .rectPack`).style.height = 'var(--rectSize1400)';
   }else if(innerWidth > 800){
-      ISU.select(`#${elem.id} .rects`).style.width = 'var(--rectSize)';
-      ISU.select(`#${elem.id} .rects`).style.height = 'var(--rectSize)';
+      ISU.select(`#${elem.id} .rectPack`).style.width = 'var(--rectSize)';
+      ISU.select(`#${elem.id} .rectPack`).style.height = 'var(--rectSize)';
   }else{
     if(menuExpanded == false){
-      ISU.select(`#${elem.id} .rects`).style.width = 'var(--rectSize800)';
-      ISU.select(`#${elem.id} .rects`).style.height = 'var(--rectSize800)';
+      ISU.select(`#${elem.id} .rectPack`).style.width = 'var(--rectSize800)';
+      ISU.select(`#${elem.id} .rectPack`).style.height = 'var(--rectSize800)';
     }else{
-      ISU.select(`#${elem.id} .rects`).style.width = 'var(--rectSmallerSize)';
-      ISU.select(`#${elem.id} .rects`).style.height = 'var(--rectSmallerSize)';
+      ISU.select(`#${elem.id} .rectPack`).style.width = 'var(--rectSmallerSize)';
+      ISU.select(`#${elem.id} .rectPack`).style.height = 'var(--rectSmallerSize)';
     }
   }
 }
@@ -38,7 +36,6 @@ const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 
 let requestAni = null;
 let f = 0;
-// let fSmaller = 0;
 let dir = 1;
 let NF = ISU.transitionValue['duration'] * 63;
 
@@ -104,7 +101,7 @@ export default function Rect(id) {
       ease: "Sine.inOut"
     },0)
 
-  //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.rects.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
+  //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
   this.extraSVGspace = this.radius * 5 ;
 
 
@@ -176,17 +173,21 @@ Rect.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
 
     if(innerWidth <= 800){
       this.restElems.forEach((elem)=>{
-        ISU.select(`#${elem.id} .rects`).classList.add('menutransition');
-        ISU.select(`#${elem.id} .rects svg rect`).classList.add('menutransition');
+        ISU.select(`#${elem.id} .rectPack`).classList.add('menutransition');
+        ISU.select(`#${elem.id} .rectPack svg`).classList.add('menutransition');
+        ISU.select(`#${elem.id} .rectPack svg rect`).classList.add('menutransition');
 
         SetDefaultRectSize(elem,menuExpanded);
                 
-        ISU.select(`#${elem.id} .rects svg rect`).style.width = 'var(--rectSmallerSize)';
-        ISU.select(`#${elem.id} .rects svg rect`).style.height = 'var(--rectSmallerSize)';
+        ISU.select(`#${elem.id} .rectPack svg`).style.width = `calc(var(--rectSmallerSize) + ${this.extraSVGspace}px`;
+        ISU.select(`#${elem.id} .rectPack svg`).style.height = `calc(var(--rectSmallerSize) + ${this.extraSVGspace}px`;
+        ISU.select(`#${elem.id} .rectPack svg rect`).style.width = 'var(--rectSmallerSize)';
+        ISU.select(`#${elem.id} .rectPack svg rect`).style.height = 'var(--rectSmallerSize)';
 
         setTimeout(() => {
-          ISU.select(`#${elem.id} .rects`).classList.remove('menutransition');
-          ISU.select(`#${elem.id} .rects svg rect`).classList.remove('menutransition');
+          ISU.select(`#${elem.id} .rectPack`).classList.remove('menutransition');
+          ISU.select(`#${elem.id} .rectPack svg`).classList.remove('menutransition');
+          ISU.select(`#${elem.id} .rectPack svg rect`).classList.remove('menutransition');
         }, ISU.transitionValue['duration'] * 1000);
       })
     }
@@ -213,14 +214,14 @@ Rect.prototype.expandMenuElseIf = function(demoVideoHeight, biggeredElem, menuEx
 
     //-----------------------------------------------------------------------------------------------
 
-    ISU.select(`#${biggeredElem.id} .rects`).classList.add("menutransition");
-    ISU.select(`#${biggeredElem.id} .rects`).style.width = this.smallMenuSize + 'px';
-    ISU.select(`#${biggeredElem.id} .rects`).style.height = this.smallMenuSize + 'px';
+    ISU.select(`#${biggeredElem.id} .rectPack`).classList.add("menutransition");
+    ISU.select(`#${biggeredElem.id} .rectPack`).style.width = this.smallMenuSize + 'px';
+    ISU.select(`#${biggeredElem.id} .rectPack`).style.height = this.smallMenuSize + 'px';
 
   
     setTimeout(() => {
       biggeredElem.firstElementChild.classList.remove("menutransition");
-      ISU.select(`#${biggeredElem.id} .rects`).classList.remove("menutransition");
+      ISU.select(`#${biggeredElem.id} .rectPack`).classList.remove("menutransition");
     }, ISU.transitionValue['duration'] * 1000);
 
     resolve();
@@ -250,17 +251,19 @@ Rect.prototype.expandMenuElse = function() {
     if(innerWidth<800){
 
       this.restElems.forEach((elem)=>{
-        ISU.select(`#${elem.id} .rects`).classList.add('menutransition');
-        ISU.select(`#${elem.id} .rects svg rect`).classList.add('menutransition');
+        ISU.select(`#${elem.id} .rectPack`).classList.add('menutransition');
+        ISU.select(`#${elem.id} .rectPack svg rect`).classList.add('menutransition');
 
-        SetDefaultRectSize(elem)
+        SetDefaultRectSize(elem);
           
-        ISU.select(`#${elem.id} .rects svg rect`).style.width = 'var(--rectSize800)';
-        ISU.select(`#${elem.id} .rects svg rect`).style.height = 'var(--rectSize800)';
+        ISU.select(`#${elem.id} .rectPack svg`).style.width = `calc(var(--rectSize800) + ${this.extraSVGspace}px`;
+        ISU.select(`#${elem.id} .rectPack svg`).style.height = `calc(var(--rectSize800) + ${this.extraSVGspace}px`;
+        ISU.select(`#${elem.id} .rectPack svg rect`).style.width = 'var(--rectSize800)';
+        ISU.select(`#${elem.id} .rectPack svg rect`).style.height = 'var(--rectSize800)';
 
         setTimeout(() => {
-          ISU.select(`#${elem.id} .rects`).classList.remove('menutransition');
-          ISU.select(`#${elem.id} .rects svg rect`).classList.remove('menutransition');
+          ISU.select(`#${elem.id} .rectPack`).classList.remove('menutransition');
+          ISU.select(`#${elem.id} .rectPack svg rect`).classList.remove('menutransition');
         }, ISU.transitionValue['duration'] * 1000);
       });
     }
@@ -270,9 +273,8 @@ Rect.prototype.expandMenuElse = function() {
 
 };
 Rect.prototype.setUpdateValues = function(){
-  console.log(Math.abs((window.innerWidth - window.innerHeight )) * 0.01 + 25)
   this.borderWavyPath = Math.abs((window.innerWidth - window.innerHeight )) * 0.01 + 25;
-  this.radius = window.innerWidth > 800 ? 9 : 5;
+  this.radius = window.innerWidth > 800 ? ( window.innerWidth > 1400 ? 9 : 7 ) : 5;
 }
 
 
@@ -366,8 +368,6 @@ Rect.prototype.symetryEachMenuTransform = function(){
     elem.classList.add("menutransition");
     elem.style.width = '';
     elem.style.height = '';
-    // elem.style.width = ISU.transitionValue['symetryEachMenu'] + '%';
-    // elem.style.height = ISU.transitionValue['symetryEachMenu'] + '%';
     
     if (elem == this.elem) {
       elem.firstElementChild.classList.add("menutransition");
@@ -412,23 +412,20 @@ Rect.prototype.getExpandMenuSize = function(demoVideoHeight) {
     if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
       this.getExpandMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-      // console.log('window.innerHeight: ',window.innerHeight)
-      // console.log('ISU.LOGO__.clientHeight: ',ISU.LOGO__.clientHeight)
-      // console.log(']demoVideoHeight: ',]demoVideoHeight)
-      // console.log('this.menuPaddingHeight: ',this.menuPaddingHeight)
-      // console.log('ISU.transitionValue[unSymetryEachMenu] / 100: ',ISU.transitionValue['unSymetryEachMenu'] / 100)
-      // console.log('this.liPaddingHeight: ',this.liPaddingHeight)
     }else{
       this.getExpandMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
       this.getExpandMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
-      // console.log('MASTER.clientHeight',ISU.MASTER.clientHeight,'MASTER.offsetHeight: ',ISU.MASTER.offsetHeight, 'MASTER.offsetHeight - LOGO__.clientHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight: ',ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight -demoVideoHeight, 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight: ' ,ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight, '(MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100): ', (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100), 'MASTER.offsetHeight - LOGO__.clientHeight - demoVideoHeight - this.botMenuPaddingHeight) * (transitionValue[unSymetryEachMenu] / 100) - this.liPaddingHeight: ',(ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight)
     }
   }
 
 }
 
 
-//---- create rectangle rect ------------------------------------------------------------------
+
+
+
+
+//------------ create rectangle rect ------------//
 //-----------------------------------------------------------------------------------------------
 
 Rect.prototype.createRect = function(){
@@ -493,11 +490,8 @@ Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
           this.rect.style.width =  this.getExpandMenuSizeWidth;
           this.rect.style.height = this.getExpandMenuSizeHeight;
         }
+        resolve();
 
-
-          resolve();
-
-  
       }
     }
     runAnimRect.call(this);
@@ -506,63 +500,27 @@ Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
 }
 
 
-// Rect.prototype.stopAni = function() {
-//   cancelAnimationFrame(requestAni);
-//   requestAni = null;
-// }
 
 
-// Rect.prototype.smallerRestElemRects = function(menuExpanded){
-
-//   this.restElems.forEach((elem)=>{
-//     document.getElementById(`${elem.id}Rect`).parentElement.parentElement.classList.add('menutransition');
-//     document.getElementById(`${elem.id}Rect`).parentElement.classList.add('menutransition');
-//     document.getElementById(`${elem.id}Rect`).classList.add('menutransition');
-//   });
-
-//   //Using 'SetDefaultRectSize', not prototype, takes argument 'this.extraSVGspace' to all Rect[menu] element, which can have different 'this.extraSVGspace'.
-//   //it might cause problem, but in this case, it does not matter because all Rect[menu] element have same extraSVGsapce value.
-//   SetDefaultRectSize(this.restElems, menuExpanded, this.extraSVGspace);
-  
-
- 
-//   setTimeout(() => {
-//     this.restElems.forEach((elem)=>{
-//       document.getElementById(`${elem.id}Rect`).classList.remove('menutransition');
-//       document.getElementById(`${elem.id}Rect`).parentElement.classList.remove('menutransition');
-//       document.getElementById(`${elem.id}Rect`).parentElement.parentElement.classList.remove('menutransition');
-//     });
-//   }, ISU.transitionValue['duration'] * 1000);
-// }
-
-// Rect.prototype.smallerRestElemRectsElseIf = function(){
-
-//     document.querySelector(`#${biggeredElem.id} .rects`).style.width = transitionValue['RectSmallerSize'];
-//     document.querySelector(`#${biggeredElem.id} .rects`).style.height = transitionValue['RectSmallerSize'];
 
 
-//     setTimeout(() => {
-//     }, transitionValue['duration'] * 1000);
 
-// }
-
-//---- create Rect ----------------------------------------------------------------------------
+//------------ create Rect ------------//
 //-----------------------------------------------------------------------------------------------
 
 
 Rect.prototype.getDataPoints = function() {
-  // let w = this.w + this.rects.radius * 2;
-  // let h = this.h + this.rects.radius * 2;
+  // let w = this.w + this.radius * 2;
+  // let h = this.h + this.radius * 2;
   // let w = this.w ;
   // let h = this.h ;
   let w = this.getExpandMenuSizeWidth ;
   let h = this.getExpandMenuSizeHeight ;
 
-  // this.x = this.rects.x - this.rects.radius;
-  // this.y = this.rects.y - this.rects.radius ;
+  // this.x = this.x - this.radius;
+  // this.y = this.y - this.radius ;
   let x = this.x;
   let y = this.y;
-  console.log('W',w)
 
   let points1 = [];
   let points2 = [];
@@ -613,8 +571,8 @@ Rect.prototype.getDataPoints = function() {
 
   let positions = getPositions.call(this);
   
-  points1 = getMutipliedPoints(this, positions, 0);
-  points2 = getMutipliedPoints(this, positions, 1);
+  points1 = getMutipliedPoints(this.multiply, positions, 0);
+  points2 = getMutipliedPoints(this.multiply, positions, 1);
 
   //--- get points for tween ---------------------------------------------------------------------------------
 
@@ -626,8 +584,8 @@ Rect.prototype.getDataPoints = function() {
 
   let positionsTween = getPositions.call(this);
 
-  pointsTween1 = getMutipliedPoints(this, positionsTween, 0);
-  pointsTween2 = getMutipliedPoints(this, positionsTween, 1);
+  pointsTween1 = getMutipliedPoints(this.multiply, positionsTween, 0);
+  pointsTween2 = getMutipliedPoints(this.multiply, positionsTween, 1);
   
   return {
     points1: points1,
@@ -636,8 +594,8 @@ Rect.prototype.getDataPoints = function() {
     pointsTween2: pointsTween2
   }
 
-  function getMutipliedPoints(self, positions, plusNum) {
-    let slice = self.multiply + plusNum;
+  function getMutipliedPoints(multiply, positions, plusNum) {
+    let slice = multiply + plusNum;
     let slicedLength = [];
 
     Object.values(positions).forEach((value, i, arr) => {
@@ -668,41 +626,12 @@ Rect.prototype.getDataPoints = function() {
 
 };
 
-Rect.prototype.updateResize = function(biggerElem,menuExpanded) {
-  
-  this.setUpdateValues();
-  // this.radius = innerWidth > 800 ? 7 : 4;
-  // this.strokeWidth = innerWidth > 800 ? 8 : 5;
-  
-  if(menuExpanded && this.elem == biggerElem){
-    if(innerWidth <= 800 && this.wavyAnimTLRunning){
-      this.wavyAnimTL.pause(0);
-      document.getElementById(this.id + 'RectWavy1').setAttribute('d', '');
-      document.getElementById(this.id + 'RectWavy2').setAttribute('d', '');
-    }else{
-      this.getExpandMenuSize();
-      this.createWavyAnimation();
-    }
-  }
-  
-
-  if(this.elem != biggerElem){
-    SetDefaultRectSize(this.elem,menuExpanded);
-  }
-
-  let width = this.svgCanvas.parentElement.clientWidth;
-  let height = this.svgCanvas.parentElement.clientHeight;
-
-  this.svgCanvas.style.width = width + this.extraSVGspace + 'px'
-  this.svgCanvas.style.height = height + this.extraSVGspace + 'px'
-  this.rect.style.width = width + 'px';
-  this.rect.style.height = height + 'px';
-
-};
 
 
-// //---- create Wavy Animation --------------------------------------------------------------------
+
+//------------ create Wavy Animation ------------//
 // //-----------------------------------------------------------------------------------------------
+
 
 
 Rect.prototype.createWavyAnimation = function() {
@@ -729,8 +658,7 @@ Rect.prototype.createWavyAnimation = function() {
   
       this.pointsTween1 = this.dataPoints.pointsTween1;
       this.pointsTween2 = this.dataPoints.pointsTween2;
-  
-  
+      
   
       for (let i = 0; i < this.points1.length; i++) {
         let duration = random(this.speed[0], this.speed[1]);
@@ -823,16 +751,16 @@ Rect.prototype.createWavyAnimation = function() {
   
       console.log('done wavy animation')
         
-    }
+    // }
   
     
-      // }
+      }
     resolve();
   })
 };
 
 Rect.prototype.stopWavyAnim = function() {
-  console.log('stopWavyAnimTl is working',this.elem.id)
+  console.log('stopWavyAnimTl is working')
   if(window.innerWidth > 800){
     this.wavyAnimTL.pause(0);
     this.wavyAnimTLRunning = false;
@@ -844,13 +772,11 @@ Rect.prototype.stopWavyAnim = function() {
 }
 
 
-
-// //---- create Wavy Animation --------------------------------------------------------------------
-// //-----------------------------------------------------------------------------------------------
+//------------ event function ------------//
 
 Rect.prototype.hoveroverOn = function(biggerElem) {
   if(this.elem != biggerElem){
-    // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.add('rectCoverWhite');
+    // document.querySelector(`#${this.elem.id} .rectCover`).classList.add('rectCoverWhite');
 
     this.neonOnTL.play();
     document.querySelector(`#${this.id} .neon1`).classList.add(`${this.id}Neon1`);
@@ -860,7 +786,7 @@ Rect.prototype.hoveroverOn = function(biggerElem) {
 
 Rect.prototype.hoveroverOff = function(biggerElem) {
   if(this.elem != biggerElem){
-    // document.querySelector(`#${this.rects.elem.id} .rectCover`).classList.remove('rectCoverWhite');
+    // document.querySelector(`#${this.elem.id} .rectCover`).classList.remove('rectCoverWhite');
 
     
     this.neonOnTL.reverse();
@@ -870,41 +796,40 @@ Rect.prototype.hoveroverOff = function(biggerElem) {
 };
 
 
-
-//------------------extra function-----------------------
-
-
-
-
-
-
-//---- get rgb color -------- 
-// function getRGB(id){
-//   let getRgb1= document.getElementById(`${id}RectColor`).firstElementChild.attributes[1].value;
-//   let getRgb2= document.getElementById(`${id}RectColor`).lastElementChild.attributes[1].value;
-//   let rgb = [];
-//   let rgb1=[];
-//   let rgb2=[]
-
-//   getRgb1.replace(/(\d[\d\.]*)/g, function( x ) { var n = Number(x); if (x == n) { rgb1.push(x); }  })
-//   getRgb2.replace(/(\d[\d\.]*)/g, function( x ) { var n = Number(x); if (x == n) { rgb2.push(x); }  })
-
-//   rgb.push(rgb1);
-//   rgb.push(rgb2);
+Rect.prototype.updateResize = function(biggerElem,menuExpanded,demoVideoHeight) {
   
-//   return rgb;
-// }
+  this.setUpdateValues();
+  
+  if(menuExpanded && this.elem == biggerElem){
+    if(innerWidth <= 800 && this.wavyAnimTLRunning){
+      this.wavyAnimTL.pause(0);
+      document.getElementById(this.id + 'RectWavy1').setAttribute('d', '');
+      document.getElementById(this.id + 'RectWavy2').setAttribute('d', '');
+    }else{
+      this.getExpandMenuSize(demoVideoHeight);
+      this.createWavyAnimation();
+    }
+  }
+  
+
+  if(this.elem != biggerElem){
+    SetDefaultRectSize(this.elem,menuExpanded);
+  }
 
 
+  let width, height;
+  if(menuExpanded && this.elem == biggerElem){
+    this.getExpandMenuSize(demoVideoHeight);
+    width = this.getExpandMenuSizeWidth;
+    height = this.getExpandMenuSizeHeight;
+  }else{
+    width = this.svgCanvas.parentElement.clientWidth;
+    height = this.svgCanvas.parentElement.clientHeight;
+  }
 
+  this.svgCanvas.style.width = width + this.extraSVGspace + 'px'
+  this.svgCanvas.style.height = height + this.extraSVGspace + 'px'
+  this.rect.style.width = width + 'px';
+  this.rect.style.height = height + 'px';
 
-// let workBorder = new border('work');
-// let skillBorder = new border('skill');
-// let paintBorder = new border('paint');
-// let infoBorder = new border('info');
-
-// let runWorkBorder = new Border('work');
-// let runSkillBorder = new Border('skill');
-// let runPaintBorder = new Border('paint');
-// let runInfoBorder = new Border('info');
-
+};

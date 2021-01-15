@@ -129,21 +129,4 @@ UtilityController.prototype.expandMenuElse = function(){
       ISU.select(`#${this.elem.id} .neon2`).style.display = 'initial';
     }, ISU.transitionValue['duration'] * 1000);
   
-//   resolve()  
-// })style.css
 }
-
-// utilityController.prototype.deleteMenuText = function(){
-//   // document.querySelector(`#${this.elem.id} .text`).style.visibility = 'hidden'
-  
-// }
-
-// utilityController.prototype.updateSize = function(){
-  
-
-// }
-
-// let workutilityController = new utilityController('work');
-// let skillutilityController = new utilityController('skill');
-// let paintutilityController = new utilityController('paint');
-// let infoutilityController = new utilityController('info');

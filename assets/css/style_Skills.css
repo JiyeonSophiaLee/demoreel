@@ -1,21 +1,71 @@
+/** If you have any questions, email me.
+/**
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ * 3.0 - Each Skills (class = '_skill')
+ *   3.1 Skill Icon Image
+ *   3.2 Skill Graph (SVG Graph)
+ *     3.2.1 Skill Graph Percent
+ *   3.3 Skill Info
+ *     3.3.1 _Skill Info (children of Skill Info)
+ * ----------------------------------------------------------------------------
+ */ 
+
+
+
+ 
+/**
+ * 1.0 Basic Structure
+ * ----------------------------------------------------------------------------
+ */
+
+
 :root{
-    --halfCircleSize :1.8rem;
-    --halfCircleSizeEnd :1.5rem;
-    --halfBarHeight :0.45rem;
+  --halfCircleSize :1.8rem;
+  --halfCircleSizeEnd :1.5rem;
+  --halfBarHeight :0.45rem;
 
-    --halfCircleSize1400 :2rem;
-    --halfCircleSizeEnd1400 :1.7rem;
-    --halfBarHeight1400 :0.5rem;
+  --halfCircleSize1400 :2rem;
+  --halfCircleSizeEnd1400 :1.7rem;
+  --halfBarHeight1400 :0.5rem;
 
-    --halfCircleSize800 :1.8rem;
-    --halfCircleSizeEnd800 :1.6rem;
-    --halfBarHeight800 :0.4rem;
+  --halfCircleSize800 :1.8rem;
+  --halfCircleSizeEnd800 :1.6rem;
+  --halfBarHeight800 :0.4rem;
 }
 
 
 
-#skill .skillMain ._skill {
-    /* width: 96%; */
+
+/**
+ * 2.0 Font
+ * ----------------------------------------------------------------------------
+ */
+
+
+
+#skill{
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+}
+  @media (min-width:1100px){
+    #skill{
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+    }
+  }
+
+    
+
+
+/**
+ * 3.0 Each Skills (class = '_skill')
+ * ----------------------------------------------------------------------------
+ */
+
+#skill .skillPack ._skill {
     height: calc(var(--halfCircleSize)*2);
     background: rgba(30,30,30, 0.8);
     padding: 0.5rem;
@@ -26,327 +76,250 @@
     position: relative;
 }
     @media (max-width:800px){
-        #skill .skillMain ._skill {
+        #skill .skillPack ._skill {
             height: calc(var(--halfCircleSize800)*3);
         }
     }
     @media (min-width:1400px){
-        #skill .skillMain ._skill {
+        #skill .skillPack ._skill {
             height: calc(var(--halfCircleSize1400)*2);
         }
     }
-#skill .skillMain ._skill ._skillChild{
+ #skill .skillPack ._skill ._skillChild{
     height: 100%;
     width: 95%;
     display: flex;
     position: relative;
 }
-#skill .skillMain ._skill ._skillChild .skillImage{
-    position: absolute;
-    /* display: flex;
-    align-items: center; */
+
+
+
+
+/**
+ * 3.1 Skill Icon Image
+ * --------------------------------------
+ */
+
+
+
+
+#skill .skillPack ._skill ._skillChild .skillImage{
+  position: absolute;
 }
-#skill .skillMain ._skill ._skillChild .skillImage {
-    height: calc(var(--halfCircleSize)*2);
-    width: calc(var(--halfCircleSize)*2);
-        
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#skill .skillPack ._skill ._skillChild .skillImage {
+  height: calc(var(--halfCircleSize)*2);
+  width: calc(var(--halfCircleSize)*2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillImage{
-            height: calc(var(--halfCircleSize800)*2);
-            width: calc(var(--halfCircleSize800)*2);
-        }
+  @media (max-width:800px){
+    #skill .skillPack ._skill ._skillChild .skillImage{
+      height: calc(var(--halfCircleSize800)*2);
+      width: calc(var(--halfCircleSize800)*2);
     }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .skillImage {
-            height: calc(var(--halfCircleSize1400)*2);
-            width: calc(var(--halfCircleSize1400)*2);
-        }
+  }
+  @media (min-width:1400px){
+    #skill .skillPack ._skill ._skillChild .skillImage {
+      height: calc(var(--halfCircleSize1400)*2);
+      width: calc(var(--halfCircleSize1400)*2);
     }
-#skill .skillMain ._skill ._skillChild .skillImage > div {
+  }
+  #skill .skillPack ._skill ._skillChild .skillImage > div {
     width: 85%;
     height: 85%;
-    
     display: flex;  
     justify-content: center;
     align-items: center;
     background: rgb(30,30,30);
     border-radius: 2rem;
-}
+  }
     @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillImage > div {
-            width: 80%;
-            height: 80%;
-        }
+      #skill .skillPack ._skill ._skillChild .skillImage > div {
+        width: 83%;
+        height: 83%;
+      }
     }
-#skill .skillMain ._skill ._skillChild .skillImage > div  p{
-    display: none;
-}
-#skill .skillMain ._skill ._skillChild .skillImage > div  img{
-    height: 60%;
-    width: 60%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* z-index: 2; */
-}
-
-
-
-
-
-#skill .skillMain ._skill ._skillChild .skillShadowParent{
-    position: absolute;
-    height: calc(var(--halfCircleSize)*2);
-    width: inherit;
-    display: flex;
-    align-items: center;
-    z-index: -1;
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillShadowParent{
-            height: calc(var(--halfCircleSize800)*2);
-        }
+    #skill .skillPack ._skill ._skillChild .skillImage > div  p{
+        display: none;
     }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .skillShadowParent{
-            height: calc(var(--halfCircleSize1400)*2);
-        }
-    }
-#skill .skillMain ._skill ._skillChild .skillShadow{
-    position: relative;
-    height:calc(var(--halfBarHeight) * 2);
-    border-radius: var(--halfCircleSize);
-    left:var(--halfBarHeight);
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillShadow{
-            border-radius: var(--halfCircleSize800);
-        }
-    }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .skillShadow{
-            border-radius: var(--halfCircleSize1400);
-        }
+    #skill .skillPack ._skill ._skillChild .skillImage > div  img{
+        height: 60%;
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 
 
 
-#skill .skillMain ._skill ._skillChild .skillGraph{
-    width: 100%;
-    height: 100%;
-    /* z-index: 1; */
-}
-#skill .skillMain ._skill ._skillChild .skillGraph .barBG{
-    /* position: absolute; */
-    fill:#000000;
-    opacity: 0.6;
-    /* height: calc(var(--halfBarHeight) * 3); */
-    /* width: 100%; */
-    /* height: calc(var(--halfBarHeight)*2 ); */
-}
-/* #skill .skillMain ._skill ._skillChild .skillGraph .bar{
-    height: calc(var(--halfBarHeight) * 2);
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillGraph .bar{
-            height:calc(var(--halfCircleSize)*2 + var(--halfBarHeight)*2);
-        }
-    } */
+/**
+ * 3.2 Skill Graph (SVG Graph)
+ * --------------------------------------
+ */
 
-#skill .skillMain ._skill ._skillChild .skillGraph .barHead2,.barTail2{
-    /* height: calc(var(--halfCircleSize)*2); */
-    display: none;
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillGraph .barHead2,.barTail2{
-            display: initial;
-        }
+
+    #skill .skillPack ._skill ._skillChild .skillGraph{
+      width: 100%;
+      height: 100%;
     }
-
-/* #skill .skillMain ._skill ._skillChild .skillGraph circle{
-    width:3rem;
-} */
-
-#skill .skillMain ._skill ._skillChild .percent{
-    font-size: 1.3rem;
-    fill: white;
-    text-shadow:2px 2px 3px rgb(30,30,30);
-    /* text-shadow:
-    0 0.3px 1.8px rgba(30,30,30, 0.214),
-    0 1.8px 9.2px rgba(30,30,30, 0.4),
-    0 2.8px 14.2px rgba(30,30,30, 0.6),
-    0 3.7px 19px rgba(30,30,30, 0.8)
-  ; */
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .percent{     
-            font-size: 1.1rem;
-        }
+    #skill .skillPack ._skill ._skillChild .skillGraph .barBG{
+      fill:#000000;
+      opacity: 0.6;
     }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .percent{
-            font-size: 1.5rem;
-        }
+    #skill .skillPack ._skill ._skillChild .skillGraph .barHead2,.barTail2{
+      display: none;
     }
+      @media (max-width:800px){
+        #skill .skillPack ._skill ._skillChild .skillGraph .barHead2,.barTail2{
+          display: initial;
+        }
+      }
+      
+      
+      
+/**
+ * 3.2.1 Skill Graph Percent
+ * -------------------
+ */
+      
+      
+      #skill .skillPack ._skill ._skillChild .skillGraph .percent{
+        font-size: 1.5rem;
+        fill: white;
+        text-shadow:2px 2px 3px rgb(30,30,30);
+      }
+        @media (max-width:800px){
+          #skill .skillPack ._skill ._skillChild .skillGraph .percent{     
+            font-size: 1.3rem;
+          }
+        }
+        @media (min-width:1400px){
+          #skill .skillPack ._skill ._skillChild .skillGraph .percent{
+            font-size: 1.7rem;
+          }
+        }
 
 
 
+/**
+ * 3.3 Skill Info
+ * --------------------------------------
+ */
 
-#skill .skillMain ._skill ._skillChild .skillInfo{
-    position: absolute;
-    /* height: calc(var(--halfCircleSize800)*3); */
-    height: 100%;
-    font-size: 1.3rem;
-    color: black;
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-    @media (max-width: 600px){
-        #skill .skillMain ._skill ._skillChild .skillInfo{
-            font-size: 1rem;
-            /* height: calc(var(--halfCircleSize800)*3); */
-        }
+    #skill .skillPack ._skill ._skillChild .skillInfo{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      font-size: 1.3rem;
+      color: black;
+      display: flex;
+      align-items: center;
     }
-    @media (min-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillInfo{
-            font-size: 0.95rem;
-            /* height: calc(var(--halfCircleSize)*2); */
+      @media (max-width: 600px){
+        #skill .skillPack ._skill ._skillChild .skillInfo{
+          font-size: 1rem;
         }
-    }
-    @media (min-width:950px){
-        #skill .skillMain ._skill ._skillChild .skillInfo{
-            font-size: 1.25rem;
-            /* height: calc(var(--halfCircleSize)*2); */
+      }
+      @media (min-width:800px){
+        #skill .skillPack ._skill ._skillChild .skillInfo{
+          font-size: 0.95rem;
         }
-    }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .skillInfo{
-            font-size: 1.4rem;
-            /* height: calc(var(--halfCircleSize1400)*2); */
+      }
+      @media (min-width:950px){
+        #skill .skillPack ._skill ._skillChild .skillInfo{
+          font-size: 1.25rem;
         }
-    }
+      }
+      @media (min-width:1400px){
+        #skill .skillPack ._skill ._skillChild .skillInfo{
+          font-size: 1.4rem;
+        }
+      }
 
-#skill .skillMain ._skill ._skillChild .skillInfo > div{
-    display: flex;
-    align-items: center;
-    position: relative;
-    left: calc(var(--halfCircleSize)*2);
-    width: calc(100% - var(--halfCircleSize)*2 - var(--halfCircleSizeEnd)*2);
-}
-    @media (max-width:800px){
-        #skill .skillMain ._skill ._skillChild .skillInfo > div {
+      #skill .skillPack ._skill ._skillChild .skillInfo > div{
+        display: flex;
+        align-items: center;
+        position: relative;
+        left: calc(var(--halfCircleSize)*2);
+        width: calc(100% - var(--halfCircleSize)*2 - var(--halfCircleSizeEnd)*2);
+      }
+        @media (max-width:800px){
+          #skill .skillPack ._skill ._skillChild .skillInfo > div {
             left: calc(var(--halfCircleSize800)*2);
             width: calc(100% - var(--halfCircleSize800)*2);
+          }
         }
-    }
-    @media (max-width:630px){
-        #skill .skillMain ._skill ._skillChild .skillInfo > div {
+        @media (max-width:630px){
+          #skill .skillPack ._skill ._skillChild .skillInfo > div {
             flex-wrap: wrap;
+          }
         }
-    }
-    @media (min-width:1400px){
-        #skill .skillMain ._skill ._skillChild .skillInfo > div {
+        @media (min-width:1400px){
+          #skill .skillPack ._skill ._skillChild .skillInfo > div {
             left: calc(var(--halfCircleSize1400)*2);
             width: calc(100% - var(--halfCircleSize1400)*2 - var(--halfCircleSizeEnd1400)*2);
+          }
         }
-    }
-    
-    #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
-        display:flex;
-        margin:auto;
-    }
-        @media (max-width:800px){
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
-                flex-wrap:wrap;
-            }
-        }
-        #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo{
-            display: flex;
-            position: relative;
-        }
+          
+          #skill .skillPack ._skill ._skillChild .skillInfo > div > div{
+            display:flex;
+            margin:auto;
+          }
             @media (max-width:800px){
-                #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo{
-                    flex-basis: 100%;
-                }
+              #skill .skillPack ._skill ._skillChild .skillInfo > div > div{
+                flex-wrap:wrap;
+              }
             }
-            
-                @media (max-width:800px){
-                    #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo .skillInfoText{
-                        margin: auto;
-                    }
-                }
 
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo div:first-child{
+
+
+/**
+ * 3.3.1 _Skill Info (children of Skill Info)
+ * -------------------
+ */
+
+              #skill .skillPack ._skill ._skillChild .skillInfo > div > div ._skillInfo{
+                display: flex;
                 position: relative;
-                opacity: 0;
-            }
-                /* @media (max-width:600px){
-                    #skill .skillMain ._skill ._skillChild .skillInfo > div > div{
-                        text-align: end;
+              }
+                  @media (max-width:800px){
+                    #skill .skillPack ._skill ._skillChild .skillInfo > div > div ._skillInfo{
+                      flex-basis: 100%;
                     }
-                } */
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div ._skillInfo div:last-child{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                /* transform-origin: left; */
-                transform: scaleY(0);
-            }
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Name {
-                margin-left: auto;
-                margin-right:0.7rem;
-            }
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Date {
-                margin-right: auto;
-            }
+                  }
+                  @media (max-width:800px){
+                    #skill .skillPack ._skill ._skillChild .skillInfo > div > div ._skillInfo .skillInfoText{
+                      margin: auto;
+                    }
+                  }
+
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div ._skillInfo div:first-child{
+                    position: relative;
+                    opacity: 0;
+                  }
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div ._skillInfo div:last-child{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    transform: scaleY(0);
+                  }
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div .skillInfo_Name {
+                    margin-left: auto;
+                    margin-right:0.7rem;
+                  }
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div .skillInfo_Date {
+                    margin-right: auto;
+                  }
+
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div .skillInfoBG{
+                    border-radius: 0.3rem;
+                  }
+                  #skill .skillPack ._skill ._skillChild .skillInfo > div > div .skillInfo_Name .skillInfoName{
+                    font-weight:700;
+                  }
 
 
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfoBG{
-                border-radius: 0.3rem;
-            }
-
-            
-
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Name .skillInfoName{
-                font-weight:700;
-            }
-            #skill .skillMain ._skill ._skillChild .skillInfo > div > div .skillInfo_Date .skillInfoDate{
-                /* font-size: 1.4rem; */
-            }
 
 
-
-
-
-
-
-.barShadowAni{
-    box-shadow:
-    0 0px 2.1px rgb(225, 225, 0),
-    0 0px 3.5px rgb(225, 225, 0),
-    5px 0px 5.1px rgb(225, 225, 0),
-    -5px 0px 7.1px rgb(225, 225, 0),
-    10px 0px 9.6px rgb(225, 225, 0),
-    -10px 0px 13.6px rgb(225, 225, 0),
-    15px 0px 17.2px rgb(225, 225, 0),
-    -15px 0px 19.7px rgb(225, 225, 0),
-    20px 0px 32.2px rgb(225, 225, 0),
-    -20px 0px 57.7px rgb(225, 225, 0),
-    0 0px 77px rgb(225, 225, 0);
-  
-    animation:animate 4s linear infinite;
-}
-@keyframes animate{
-    0%{
-      filter:hue-rotate(0)
-    }
-    100%{
-      filter:hue-rotate(360deg)
-    }
-  }

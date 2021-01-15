@@ -1,8 +1,153 @@
+/** If you have any questions, email me.
+/**
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ *   2.1 - Top Font
+ * 3.0 - Top
+ *   3.1 My Piction
+ *   3.1 Me
+ * 4.0 - Line
+ * 5.0 - Bot
+ *   5.1 - Head
+ *   5.2 - Bodies
+ * ----------------------------------------------------------------------------
+ */ 
+
+
+
+
+/**
+ * 1.0 Basic Structure
+ * ----------------------------------------------------------------------------
+ */
+
 
 #info .contents{
   background:rgba(30,30,30,0.8);
+  color:white;
   display: none;
 }
+
+
+
+/**
+ * 2.0 Font
+ * ----------------------------------------------------------------------------
+ */
+
+  #info{
+    font-family: 'Darker Grotesque', sans-serif;
+  }
+
+
+/**
+ * 2.1 Top Font
+ * --------------------------------------
+ */
+
+  #info .top .me .myName .name:nth-child(1){
+    font-family: 'theboldfont';
+    font-size: 6vw;
+    line-height: 6vw;
+  }
+    @media (max-width:800px){
+      #info .top .me .myName .name:nth-child(1){
+          font-size: 3.2rem;
+          line-height: 3.2rem;
+      }
+    }
+  #info .top .me .myName .name:nth-child(2){
+    font-family: 'theboldfont';
+    font-size: 5vw;
+    line-height: 5vw;
+    color: transparent;
+    -webkit-text-stroke: 1px white;
+  }
+    @media (max-width:800px){
+      #info .top .me .myName .name:nth-child(2){
+          font-size: 3rem;
+          line-height: 3rem;
+      }
+    }
+    @media (min-width:1400px){
+      #info .top .me .myName .name:nth-child(2){
+        font-size: 4.5vw;
+        line-height: 4.5vw;
+      }
+    }
+  #info .top .me .position{
+    font-size: 2vw;
+    font-weight: 500;
+    color: tomato;
+  }
+    @media (max-width:800px){
+      #info .top .me .position{
+        font-size: 1.3rem;
+        line-height: 1.3rem;
+      }
+    }
+
+
+/**
+ * 2.2 Bot Font
+ * --------------------------------------
+ */
+
+
+    #info .bot .heads{
+      font-size: 2.5rem;
+      /* line-height: 2.5rem; */
+      font-weight: 500;
+    }
+      @media (min-width:1400px){
+        #info .bot .heads{
+          font-size: 3.5rem;
+          line-height: 3.5rem;
+        }
+      }
+    #info .bot .bodies{
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+      @media (min-width:1400px){
+        #info .bot .bodis{
+          font-size: 1.7rem;
+          line-height: 1.7rem;
+        }
+      }
+
+    #info .bot .bodies .school .schoolName{
+      font-size: 1.7rem;
+      line-height: 1.7rem;
+      font-weight: bold;
+    }
+      @media (min-width:1400px){
+        #info .bot .bodies .school .schoolName{
+          font-size: 2rem;
+          line-height: 2rem;
+        }
+      }
+
+    #info .bot .bodies .school .country, .date{
+      font-size: 1.1rem;
+    }
+      @media (min-width:1400px){
+        #info .bot .bodies .school .country, .date{
+          font-size: 1.3rem;
+        }
+      }
+
+
+
+
+/**
+ * 3.0 Top
+ * ----------------------------------------------------------------------------
+ */
+
+
+
 
   #info .top{
     padding: 3%;
@@ -14,15 +159,18 @@
       }
     }
 
+    
+/**
+ * 3.1 My Piction
+ * -------------------------------------
+ */
+
+
     #info .top #myPic{
-      width: 40%;
+      width: 50%;
       margin: auto;
       position: relative;
       display: grid;
-      /* display: flex;
-      justify-content: center;
-      align-content: center; */
-      /* margin: 1vw 0; */
     }
       @media (min-width:1100px){
         #info .top #myPic{
@@ -50,7 +198,7 @@
           100%{
             border-radius: 35% 47% 49% 21%/ 31% 20% 69% 53%;
           }
-        }
+        } 
       #info .top #myPic .bg{
         position: absolute;
         top: 0;
@@ -80,6 +228,13 @@
           }
         }
 
+
+/**
+ * 3.1 Me
+ * -------------------------------------
+ */
+
+ 
     #info .top .me {
       text-align: center;
       display: flex;
@@ -88,23 +243,13 @@
       flex-wrap: wrap;
       padding-top: 2vw;
     }
-      #info .top .me .myName {
-        width: 100%;
-      }
-      /* #info .top .me .myName img{
-          width: 90%;
-      } */
-      /* #info .top .me .myName .name:first-child{
-          font-size: 4.8rem;
-      }
-      #info .top .me .myName .name:nth-child(2){
-          font-size: 4rem;
-          align-self: flex-end;
-          color:crimson;
-      } */
-      #info .top .me .position{
-        text-align: center;
-      }
+
+
+
+/**
+ * 4.0 Line
+ * ----------------------------------------------------------------------------
+ */
 
   #info .line{
     width: 26%;
@@ -118,25 +263,41 @@
       }
     }
 
+
+
+    
+/**
+ * 5.0 Bot
+ * ----------------------------------------------------------------------------
+ */
+
+
   #info .bot{
     padding:3%;
   }
 
     #info .bot div{
-      padding-bottom: 20%;
+      padding-bottom: 15%;
     }
 
       @media (min-width:1100px){
         #info .bot > div{
           display: grid;
-          grid-template-columns: 0.35fr 0.65fr;
-          grid-gap: 4vw;
+          grid-template-columns: 0.4fr 0.60fr;
+          /* grid-gap: 4vw; */
         }
       }
 
+
+
+/**
+ * 5.1 Head
+ * -------------------------------------
+ */
+
     #info .bot .heads{
       text-align: center;
-      padding-bottom: 7%;
+      margin: 10%;
     }
       #info .bot .heads::after{
         content: '';
@@ -153,38 +314,39 @@
           }
         }
 
-    #info .bot .bodies .school{
-      margin-bottom: 13%;
+
+/**
+ * 5.2 Bodies
+ * -------------------------------------
+ */
+    #info .bot .bodies{
+      align-self: center;
     }
+      #info .bot .bodies .school{
+        /* margin-bottom: 13%; */
+      }
 
-      #info .bot #education .heads{
-        overflow-wrap: anywhere;
-      }
-      #info .bot #contact .bodies{
-        width:fit-content;
-      }
-        #info .bot #contact .bodies .address{
-          display: flex;
-          /* align-items: center; */
-          margin: 0.7rem 0;
-          background: rgb(30,30,30);
-          border: solid rgba(255,255,255, 0.6) 2px;
-          border-radius: 0.5rem;
-          /* overflow-wrap:anywhere; */
+        #info .bot #education .heads{
+          overflow-wrap: anywhere;
         }
-          #info .bot #contact .bodies .address *{
-            display: inline;
-            align-self:center;
-            padding: 0.4rem;
+        #info .bot #contact .bodies{
+          width:fit-content;
+        }
+          #info .bot #contact .bodies .address{
+            display: flex;
+            margin: 0.7rem 0;
+            background: rgb(30,30,30);
+            border: solid rgba(255,255,255, 0.6) 2px;
+            border-radius: 0.5rem;
           }
+            #info .bot #contact .bodies .address *{
+              /* display: inline; */
+              /* align-self:center; */
+              padding: 0.4rem;
+            }
 
-          #info .bot #contact .bodies .address a{
-            color: white;
-            text-decoration: none;
-            overflow-wrap:anywhere;
-          }
-
-
-              /* #info .bot #extraContainer{
-                  font-size: 1rem;
-              } */
+            #info .bot #contact .bodies .address a{
+              color: white;
+              text-decoration: none;
+              /* overflow-wrap:anywhere; */
+            }

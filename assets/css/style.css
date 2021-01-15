@@ -1,3 +1,28 @@
+/** If you have any questions, email me.
+/** 
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ * 3.0 - Master
+ * 4.0 Demo and Menu
+ *   4.1 - Demo
+ *     4.1.1 - Logo
+ *     4.1.2 - DemoVideo
+ *   4.2 - Menu
+ *     4.2.1 - LI
+ *     4.2.2 - Rect
+ *     4.2.3 - SVG
+ *     4.2.4 - Contents
+ * ----------------------------------------------------------------------------
+ */
+
+
+ 
+/**
+ * 1.0 Basic Structure
+ * ----------------------------------------------------------------------------
+ */
+
 @font-face{
   font-family: 'GathaSans';
   src: url(../fonts/GathaSans.ttf);
@@ -6,10 +31,6 @@
   font-family: 'theboldfont';
   src: url(../fonts/theboldfont.ttf);
 }
-/* @font-face{
-  font-family: 'REVOLUTION';
-  src: url(../fonts/REVOLUTION.ttf);
-} */
 
 *{
   margin: 0;
@@ -21,14 +42,10 @@ canvas{
   display: block;
 }
 :root{
-  --backgroundColor:rgba(20, 20, 20, 1);
-  /* --nameMaxMediaQuery:45vw;
-  --nameContainerHeight:27%; */
+  --backgroundColor:rgba(30, 30, 30, 1);
   --demoVideoWidth:67%;
   --demoVideoWidthMediaQuery:80%;
   --masterMinHeight:610px;
-  /* --topHeight:6.3vw;
-  --topHeight1100:80px; */
   --subMenuNeonDuration:1.5s;
   --masterMaxWidth : 1400px;
   --masterMinWidth : 25rem;
@@ -40,303 +57,71 @@ canvas{
 
   --LiScrollbarWidth: 8px;
 }
-/* @media (max-width:800px){
-  :root{
-    --rectSize: 7rem;
-  }
-}
-@media (min-width:1400px){
-  :root{
-    --rectSize: 8.7rem;
-  }
-} */
-
-
 
 html,body{
   width: 100%;
   height: 100%;
-  /* overflow-y: scroll; */
 }
 body{
   background: var(--backgroundColor);
   font-family: "fontello";
-  /* padding: 1rem; */
 }
 
 
-/*   Fonts   */
-/* #master{
-  font-family: 'Text Me One', sans-serif;
-} */
-#loaderContainer{
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  flex-direction: column;
-}
-#loader {
-  /* font-family: Arial, Helvetica, sans-serif; */
-  /* font-size: 48px; */
-  font-family: 'theboldfont';
-  font-size: 6rem;
-}
-/* #skill .contents{
-  font-family: 'Quicksand', sans-serif;
-}
 
-#info .contents{
-  font-family: 'Quicksand', sans-serif;
-} */
+ 
+/**
+ * 2.0 Font
+ * ----------------------------------------------------------------------------
+ */
 
-#menu li .rects{
+#menu li .rectPack{
   font-family: 'Text Me One', sans-serif;
   font-size:2vw;
+  color:white;
 }
   @media (max-width:800px){
-    #menu li .rects{
+    #menu li .rectPack{
       font-size: 1.5rem;
     }
   }
   @media (min-width:1400px){
-    #menu li .rects{
+    #menu li .rectPack{
       font-size: 1.8rem;
     }
   }
 
-#menu li .contents{
-  font-family: 'Darker Grotesque', sans-serif;
-  font-size: 1.4rem;
-  line-height: 1.5rem;
-}
-  @media (min-width:1100px){
-    #menu li .contents{
-      font-size: 1.6rem;
-      line-height: 1.8rem;
-    }
-  }
-
-#info .top .me .myName .name:first-child{
-  font-family: 'theboldfont';
-  font-size: 6vw;
-  line-height: 6vw;
-  /* letter-spacing: 0.2vw; */
-}
-  @media (max-width:800px){
-    #info .top .me .myName .name:first-child{
-        font-size: 3.2rem;
-        line-height: 3.2rem;
-    }
-  }
-#info .top .me .myName .name:nth-child(2){
-  font-family: 'theboldfont';
-  font-size: 5vw;
-  line-height: 5vw;
-  color: transparent;
-  -webkit-text-stroke: 1px white;
-  /* letter-spacing: 0.2vw; */
-}
-  @media (max-width:800px){
-    #info .top .me .myName .name:nth-child(2){
-        font-size: 3rem;
-        line-height: 3rem;
-    }
-  }
-  @media (min-width:1100px){
-    #info .top .me .myName .name:nth-child(2){
-      font-size: 4.5vw;
-      line-height: 4.5vw;
-    }
-  }
-#info .top .me .position{
-  font-size: 2vw;
-  font-weight: 500;
-  color: tomato;
-}
-  /* @media (min-width:1400px){
-      #info .title .titleName .position{
-          font-size: 1.3rem;
-      }
-  } */
-
-
-  #info .bot .heads{
-    font-size: 2.3rem;
-    font-weight: 500;
-  }
-    @media (min-width:1100px){
-      #info .bot .heads{
-        font-size: 3rem;
-        line-height: 3rem;
-      }
-    }
-
-
-  #info .bot .bodies .school .schoolName{
-    font-size: 1.7rem;
-    line-height: 1.7rem;
-    font-weight: bold;
-  }
-    @media (min-width:1100px){
-      #info .bot .bodies .school .schoolName{
-        font-size: 2rem;
-        line-height: 2rem;
-      }
-    }
-
-  #info .bot .bodies .school .country, .date{
-    font-size: 1.1rem;
-  }
-    @media (min-width:1100px){
-      #info .bot .bodies .school .country, .date{
-        font-size: 1.3rem;
-      }
-    }
-
-    /* #info #contentsGroup #contactContainer .address .icon{
-      font-size: 2.1rem;
-  }
-      @media (min-width:1400px){
-          #info #contentsGroup #contactContainer .address .icon{
-              font-size: 2.5rem;
-          }
-      }
-  #info #contentsGroup #contactContainer .address a{
-    font-size: 1.1rem;
-  }
-    @media (min-width:1400px){
-      #info #contentsGroup #contactContainer .address a{
-          font-size: 1.3rem;
-      }
-    } */
 
 
 
-/* -------Loader---------- */
-#loaderContainer{
-  position: absolute;
-  top: 0;
-  left: 0;  
-  width: 100%;
-  height: 100%;
-  background:var(--backgroundColor);
-  opacity: 0.9;
-  display: flex;
-  justify-content: center;
-  z-index: 3;
-}
-  #loader {
-    align-self: center;
-    color: #FFF;
-    position: relative;
-    /* letter-spacing: 4px; */
-    letter-spacing: 0.3rem;
-  }
-  #loader::before {
-    content: '';
-    position: absolute;
-    /* right: 70px;
-    bottom: 10px;
-    height: 28px;
-    width: 5.15px; */
-    right: 9.6rem;
-    bottom: 1.3rem;
-    height: 2.3rem;
-    width: 1.1rem;
-    background: currentColor;
-  }
-  #loader::after {
-    content: '';
-    position: absolute;
-    /* width: 8px;
-    height: 8px;
-    left: 125px;
-    top: 2px; */
-    width: 1.1rem;
-    height: 1.1rem;
-    left: 16.5rem;
-    top: 2.1rem;
-    border-radius: 50%;
-    background: red;
-    animation: loaderAnim 1s ease-in infinite;
-  }
-  @keyframes loaderAnim {
-    0% {
-      transform: translateY(8px) scaleY(1) scaleX(1.25);
-    }
-    25%, 75% {
-      transform: translateY(-5px) scaleY(1.2) scaleX(1);
-    }
-    50% {
-      transform: translateY(-10px) scaleY(1) scaleX(1);
-    }
-    100% {
-      transform: translateY(8px) scaleY(0.8) scaleX(0.8);
-    }
-  }
-
-
-
-/* -------Three JS---------- */
-  #threejsBlocker{
-    background:var(--backgroundColor);
-    position:fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-  }
-  #threeJSCanvas{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -3;
-  }
-  #threeJSVignette{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;
-    height:100%;
-    z-index: -2;
-  }
-  /* #threeJSCanvas canvas{
-    height:100%;
-  } */
-
-
-
-
-
-
-/* -------main body---------- */
+/**
+ * 3.0 Master
+ * ----------------------------------------------------------------------------
+ */
   #master{
     width: 100%;
     height: 100%;
     min-width: var(--masterMinWidth);
-    max-width: 1400px;
+    max-width: var(--masterMaxWidth);
     min-height: var(--masterMinHeight);
-    /* text-align: center; */
     margin: auto;
-    color:white;
     box-sizing: border-box;
     display:flex;
-    /* display:grid; */
-    /* grid-template-rows: auto 1fr; */
-    /* overflow-x: hidden; */
   }
   @media (max-width:800px){
     #master{
       display: grid;
-      /* height: auto; */
       grid-template-rows:auto 1fr;
     }
   }
 
 
 
-    
+
+/**
+ * 4.0 Demo and Menu
+ * ----------------------------------------------------------------------------
+ */    
 
     #demo, #menu{
       width:50%;
@@ -348,17 +133,20 @@ body{
       }
     
       
-      
+ 
+/**
+ * 4.1 Demo
+ * --------------------------------------
+ */      
 
 
       
-    #demo{
+     #demo{
       position: relative;
-      /* text-align: center; */
       display: grid;
       grid-template-rows: 1fr auto 1fr;
       padding: 2% 0;
-      height: 100%;
+      /* height: 100%; */
     }
     
     @media (max-width:800px){
@@ -368,11 +156,19 @@ body{
         padding: 0%;
       }
     }
+
+
+
+/**
+ * 4.1.1 - Logo
+ * ------------------
+ */      
+
       #demo #logo{
-        position: relative;
+        position: relative; 
         align-self: end;
         justify-self: center;
-        z-index: 0;
+        /* z-index: 0; */
         padding-bottom: 10%;
         width: 60%;
         cursor: pointer;
@@ -380,24 +176,13 @@ body{
         @media (max-width:800px){
           #demo #logo{
             width: 50%;
-            margin: auto;
+            /* margin: auto; */
             padding: 1rem 0;
           }
         }
         #demo #logoHeighter{
           display: initial;
         } 
-        /* @media (max-height:950px){
-          #demo #logo{
-            padding-bottom: 6vh;
-            height: 100%;
-          }
-        } */
-          @media (max-height:800px){
-            #demo #logoHeighter{
-              display: none;
-            }
-          }
           @media (max-width:800px){
             #demo #logoHeighter{
               display: none;
@@ -407,18 +192,17 @@ body{
         #demo #logoWider{
           display: none;
         }
-          @media (max-height:800px){
-            #demo #logoWider{
-              display: initial;
-            }
-          }
           @media (max-width:800px){
             #demo #logoWider{
               display: initial;
             }
           }
 
-      #demo #demoVideo{
+/**
+ * 4.1.2 - DemoVideo
+ * ------------------
+ */  
+        #demo #demoVideo{
           width: var(--demoVideoWidth);
           /* height: 100%; */
           margin: auto;
@@ -500,6 +284,13 @@ body{
 
 
 
+
+
+
+/**
+ * 4.2 Menu
+ * --------------------------------------
+ */      
        
 
 
@@ -517,18 +308,12 @@ body{
             padding: 1rem;
           }
         }
-        /* @media (max-width:800px){
-          #menu{
-            padding: 10px;
-          }
-        }
-        @media (min-width:1400px){
-          #menu{
-            padding: 30px;
-          }
-        } */
 
 
+/**
+ * 4.2.1 - LI
+ * ------------------
+ */  
 
           #menu > li{
             width:50%;
@@ -538,7 +323,6 @@ body{
             list-style:none;
             height:50%;
             position: relative;
-            /* min-height: 10rem; */
           }
           @media (max-width:800px){
             #menu > li{
@@ -547,89 +331,101 @@ body{
           }
           @media (min-width:1400px){
             #menu > li{
-              padding :10px;
+              padding :0.8rem;
             }
           }
 
 
 
-          #menu > li .rects{
-            /* width: var(--bordersSize);
-            height: var(--bordersSize); */
+
+
+
+/**
+ * 4.2.2 - RectPack
+ * ------------------
+ */  
+
+
+          #menu #work .rectPack{
+            margin-left: auto;
+            align-self: flex-end;
+          }
+          #menu #skill .rectPack{
+            align-self:flex-end;
+          }
+          #menu #paint .rectPack{
+            margin-left: auto;
+            align-self: flex-start;
+          }
+
+
+
+            
+          #menu > li .rectPack{
             display:grid;
             text-align: center ;
             position: relative;
             align-items: center;
-            z-index: 2;
-          }
+            /* z-index: 2; */
+          } 
 
-
-          #menu > li .rects .text{
+          #menu > li .rectPack .text{
             position: relative;
           }
 
-          #menu > li .rects .neon{
+          #menu > li .rectPack .neon{
             width: inherit;
             height: inherit;
             border-radius: inherit;
             position: absolute;
+            top:0;
+            left:0;
           }
-          /* #menu > li .rects:hover{
-            border-radius: 10px;
-            box-shadow:
-            0 0px 1px rgba(255, 255, 255, 0.404),
-            0 0px 3.4px rgba(255, 255, 255, 0.596),
-            0 0px 15px rgba(255, 255, 255, 1),
-            inset 0 0px 1px rgba(255, 255, 255, 0.404),
-            inset 0 0px 3.4px rgba(255, 255, 255, 0.596),
-            inset 0 0px 15px rgba(255, 255, 255, 1);
-          
-          } */
-            #menu > li .rects svg{
+
+
+/**
+ * 4.2.3 - SVG
+ * ------------------
+ */ 
+            #menu > li .rectPack svg{
               position: absolute;
             }
             
-              #menu > li .rects svg rect{
+              #menu > li .rectPack svg rect{
                 stroke-width: 0.5vw;
               }
               @media (max-width:800px){
-                #menu > li .rects svg rect{
+                #menu > li .rectPack svg rect{
                   stroke-width: 0.3rem;
                 }
               }
               @media (min-width:1400px){
-                #menu > li .rects svg rect{
-                  stroke-width: 7px;
+                #menu > li .rectPack svg rect{
+                  stroke-width: 0.5rem;
                 }
               }
-              #menu > li .rects svg .wavyPath{
+              #menu > li .rectPack svg .wavyPath{
                 stroke-width: 1vw;
               }
               @media (max-width:800px){
-                #menu > li .rects svg .wavyPath{
+                #menu > li .rectPack svg .wavyPath{
                   stroke-width: 0.5rem;
                 }
               }
               @media (min-width:1400px){
-                #menu > li .rects svg .wavyPath{
-                  stroke-width: 10px;
+                #menu > li .rectPack svg .wavyPath{
+                  stroke-width: 0.7rem;
                 }
               }
     
 
             
-            #menu #work{
-              justify-content: flex-end;
-            }
-
-            #menu #work .rects{
-              align-self: flex-end;
-              /* transition-duration: var(--subMenuNeonDuration);
-              transition: box-shadow ease-in-out; */
-            }
 
           
-
+/**
+ * 4.2.4 - Contents
+ * ------------------
+ */ 
           
             #menu li .contents{
               position: absolute;
@@ -640,8 +436,6 @@ body{
               overflow-y: auto;
               overflow-x: hidden;
               padding: 0.4rem 1rem 0.4rem 0.4rem;
-              /* display: none; */
-              /* z-index: 3; */
             }
               @media (max-width:800px){
                 #menu li .contents{
@@ -663,42 +457,14 @@ body{
               }
 
 
-          #menu #skill{
-            justify-content: flex-start;
-          }
-            #menu #skill .rects{
-              align-self:flex-end;
-              border:none;
-            }
 
-
-          #menu #paint{
-            justify-content: flex-end;
-            
-          }
-            #menu #paint .rects{
-              align-self: flex-start;
-              border:none;
-            }
-
-
-          #menu #info{
-            justify-content: flex-start;
-            
-          }
-          #menu #info .rects{
-              align-self: flex-start;
-              border:none;
-            }
 #stats{
   position: absolute;
 }
 
 
-
 /* additional css for js */
 .menutransition{
-  /* transition: width 1s cubic-bezier(.59,.01,.72,1.04), height 1s  cubic-bezier(.59,.01,.72,1.04), flex 1s  cubic-bezier(.59,.01,.72,1.04), max-width 1s  cubic-bezier(.59,.01,.72,1.04); */
   transition: width 1s ease-in-out, height 1s ease-in-out, flex 1s ease-in-out, max-width 1s ease-in-out;
 }
 .loaderFadeOutTrans{
@@ -709,21 +475,6 @@ body{
 .blurSVG{
   filter:blur(3px);
 }
-
-
-/* .fontMinSOPHIA{
-  font-size: 6vw !important;
-} */
-
-
-/* 
-.borderCover{
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-.borderCoverWhite{
-  opacity: 1 !important;
-} */
 
 
 

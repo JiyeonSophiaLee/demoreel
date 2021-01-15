@@ -1,4 +1,5 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
+// import astronautGLTF from '/assets/THREE_js/astronaut_v06.gltf';
 
 function SetProperty(path,name,extension,main,sub,artstation=null){
   this.path = path;

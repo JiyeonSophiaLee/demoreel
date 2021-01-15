@@ -4,75 +4,54 @@ const loaderN = 60;
 const LOADER_CONTAINDER = document.getElementById('loaderContainer');
 const LOADER__ = document.getElementById('loader');
 
-// let loaderOpacity = 1;
-// let loaderOpacityDivide = loaderOpacity / loaderN;
 
-if(innerHeight < body.scrollHeight){
-    LOADER_CONTAINDER.style.height = body.scrollHeight +'px';
-}else{
-    LOADER_CONTAINDER.style.height = '';
-}
+//------------ css style ------------//
+
+let lighterVersion = document.createElement('div');
+let lighterVersion_child = document.createElement('a');
 
 
-let lighterContainer = document.createElement('div');
-let lighterAtop = document.createElement('a');
-let lighterAbot = document.createElement('a');
+LOADER_CONTAINDER.style.display = 'flex';
+LOADER_CONTAINDER.style.flexWrap = 'wrap';
+LOADER_CONTAINDER.style.alignContent = 'center';
+LOADER_CONTAINDER.style.flexDirection = 'column';
+
+LOADER__.style.fontFamily = 'theboldfont';
+LOADER__.style.fontSize = '6rem';
+
+lighterVersion.style.fontFamily = 'Darker Grotesque';
+lighterVersion.style.fontSize = '1.6rem';
+lighterVersion.style.textAlign = 'center';
+lighterVersion.style.background = 'rgb(10 10 10)';
+// lighterVersion.style.border = '3px double rgb(100 50 10)';
+lighterVersion.style.borderRadius = '0.3rem';
+lighterVersion.style.padding = '0.5rem 1.5rem';
+lighterVersion.style.margin = '1rem';
+lighterVersion.style.alignSelf = 'center';
+
+lighterVersion_child.innerHTML = 'This is lighter version <br> This does not contain THREE JS';
+lighterVersion_child.setAttribute('target','_black');
+lighterVersion_child.setAttribute('href','demoLighter.html');
+lighterVersion_child.style.color = 'BurlyWood';
+lighterVersion_child.style.textDecoration = 'none';
+lighterVersion_child.style.display = 'block';
+
+lighterVersion.appendChild(lighterVersion_child);
+LOADER_CONTAINDER.appendChild(lighterVersion);
 
 
-lighterContainer.style.fontFamily = 'Darker Grotesque';
-lighterContainer.style.fontSize = '1.6rem';
-lighterContainer.style.textAlign = 'center';
-lighterContainer.style.background = 'rgb(10 10 10)';
-// lighterContainer.style.border = '3px double rgb(100 50 10)';
-lighterContainer.style.borderRadius = '0.3rem';
-lighterContainer.style.padding = '0.5rem 1.5rem';
-lighterContainer.style.margin = '1rem';
-lighterContainer.style.alignSelf = 'center';
-
-lighterAtop.innerHTML = 'This is lighter version <br> This does not contain THREE JS';
-lighterAtop.setAttribute('target','_black');
-lighterAtop.setAttribute('href','demoLigherVersion.html');
-lighterAtop.style.color = 'BurlyWood';
-lighterAtop.style.textDecoration = 'none';
-lighterAtop.style.display = 'block';
-
-// lighterAbot.innerHTML = 'This does not contain THREE JS';
-// lighterAbot.setAttribute('target','_black');
-// lighterAbot.setAttribute('href','demoLigherVersion.html');
-// lighterAbot.style.color = 'BurlyWood';
-// lighterAbot.style.textDecoration = 'none';
-
-
-
-
-lighterContainer.appendChild(lighterAtop);
-// lighterContainer.appendChild(lighterAbot);
-LOADER_CONTAINDER.appendChild(lighterContainer);
 
 
 
 window.onload = function(){
-    loaderAnim();
+  loaderAnim();
 }
 function loaderAnim(){
-    // loaderF += 1;
-    // if(loaderF==loaderN-1){
-        // LOADER__.classList.add('loaderFadeOutTrans');
-        LOADER_CONTAINDER.classList.add('loaderFadeOutTrans');
-        
-    //     // LOADER_CONTAINDER.firstElementChild.classList.remove('loaderAnimEnd');
+  LOADER__.classList.add('loaderFadeOutTrans');
 
+  setTimeout(() => {
+    LOADER_CONTAINDER.style.display = 'none';
+  }, 1200);
 
-
-        setTimeout(() => {
-            LOADER_CONTAINDER.style.display = 'none';
-        }, 950);
-
-
-    //     cancelAnimationFrame(loaderRequestAni);
-    //     loaderRequestAni=null;
-    //     return;
-    // }
-    // loaderRequestAni = requestAnimationFrame(loaderAnim);
 }
 
