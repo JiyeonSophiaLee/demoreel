@@ -4,8 +4,8 @@ import {GLTFLoader} from '/assets/THREE_js/script/GLTFLoader.js';
 // import {RoughnessMipmapper} from '/assets/THREE_js/script/RoughnessMipmapper.js';
 // import {OrbitControls} from '/assets/THREE_js/script/OrbitControls.js';
 // import Stats from '/assets/THREE_js/script/stats.module.js';
-import {GUI} from '/assets/THREE_js/script/dat.gui.module.js'
-import astronautGLTF from '/assets/THREE_js/astronaut_v06.gltf';
+// import {GUI} from '/assets/THREE_js/script/dat.gui.module.js'
+// import astronautGLTF from '/assets/THREE_js/astronaut_v06.gltf';
 
 
 const threeJSCanvas = document.getElementById('threeJSCanvas');
@@ -109,10 +109,9 @@ function Astronaut() {
   // use of RoughnessMipmapper is optional
   // var roughnessMipmapper = new RoughnessMipmapper( renderer );
 
- console.log('loading0');
-  //let loader = new GLTFLoader().setPath( '/assets/THREE_js/' );
-  let loader = new GLTFLoader();
-  loader.load( astronautGLTF, function ( gltf ) {
+
+  let loader = new GLTFLoader().setPath( '/assets/THREE_js/' );
+  loader.load( 'astronaut_v06.gltf', function ( gltf ) {
     model = gltf.scene;
     scene.add(model);
 
