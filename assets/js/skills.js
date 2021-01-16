@@ -1,356 +1,235 @@
-const SKILL_CONTENTS = document.querySelector(`#skill .contents`);
-let halfCircleSize;
-let halfCircleSizeEnd;
-let halfBarHeight;
+import * as ISU from '/assets/js/InitialSetUp.js';
 
+const HalfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
+const HalfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
+const HalfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
+
+const HalfCircleSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize1400');
+const HalfCircleSizeEnd1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd1400');
+const HalfBarHeight1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight1400');
+
+const HalfCircleSize800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize800');
+const HalfCircleSizeEnd800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd800');
+const HalfBarHeight800 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight800');
+
+let halfCircleSize;
 let halfCircleSizeNumb;
+
+let halfCircleSizeEnd;
 let halfCircleSizeEndNumb;
+
+let halfBarHeight;
 let halfBarHeightNumb;
 
 setUnitSize();
 
-const UNIT = halfCircleSize.replace(/[0-9]/g, '');
-
-
-let select = s => document.querySelector(s);
-let selectAll = s => document.querySelectorAll(s);
-let rootFontSize = 16;
-let pxToRem = (px)=> px/rootFontSize; 
-let remToPx = (rem)=> rem * rootFontSize; 
+const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize').replace(/[0-9]/g, '');
 
 
 
 
 function setUnitSize(){
+  let screenSize;
 
-    if(innerWidth >= 1400){
-        halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize1400');
-        halfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd1400');
-        halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight1400');
+  if(innerWidth >= 1400){
+    screenSize = '1400';
+    
+  }else if(innerWidth > 800){
+    screenSize = '';
+  }else{
+    screenSize = '800';
+  }
+  
+  halfCircleSize = eval('HalfCircleSize'+screenSize)
+  halfCircleSizeEnd = eval('HalfCircleSizeEnd'+screenSize)
+  halfBarHeight = eval('HalfBarHeight'+screenSize)
 
-
-        halfCircleSizeNumb = parseFloat(halfCircleSize);
-        halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
-        halfBarHeightNumb = parseFloat(halfBarHeight);
-
-
-    }else if(innerWidth > 800){
-        halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
-        halfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
-        halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
-
-
-        halfCircleSizeNumb = parseFloat(halfCircleSize);
-        halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
-        halfBarHeightNumb = parseFloat(halfBarHeight);
-
-
-    }else{
-        halfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize800');
-        halfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd800');
-        halfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight800');
-
-
-        halfCircleSizeNumb = parseFloat(halfCircleSize);
-        halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
-        halfBarHeightNumb = parseFloat(halfBarHeight);
-    }
+  halfCircleSizeNumb = parseFloat(halfCircleSize);
+  halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
+  halfBarHeightNumb = parseFloat(halfBarHeight);
+  
 }
 
 
-const skills = {
-    'Maya':{ 'name':'Maya', 'width':80, 'color': ['#92c6cc', '#106768'], 'date': 'from 2007'},
-    'Vray':{ 'name':'Vray', 'width':82, 'color':['#fba547', '#8fb6e2'], 'date': 'from 2014'},
-    'Arnold':{ 'name':'Arnold', 'width':85, 'color':['#8dc9d2', '#1f6571'], 'date': 'from 2017'},
-    'Zbrush':{ 'name':'Zbrush', 'width':60, 'color': ['#464646', '#242424'], 'date': 'from 2015'},
-    'Houdini':{ 'name':'Houdini', 'width':15, 'color': ['#fece5f', '#f05023'], 'date': 'from 2018'},
-    'MarvelousDesigner':{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
-    'SubstancePainter':{ 'name':`Substance Painter`, 'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
-    'SubstanceDesigner':{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
-    'Mari':{ 'name': 'Mari','width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
-    'Mudbox':{ 'name':'Mudbox', 'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
-    'Photoshop':{ 'name':'Photoshop', 'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
-    'threeDCoat':{ 'name':`3D Coat`, 'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
-    'RezomUV':{ 'name':`Rezom UV`, 'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'from 2014'},
-    'AfterEffects':{ 'name':`After Effects`, 'width':60, 'color': ['#c88fff', '#312963'], 'date': 'from 2018'},
-    'Nuke':{ 'name':'Nuke', 'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'from 2011'},
-    'Python':{ 'name':'Python', 'width':30, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'},
-    'HTML':{ 'name':'HTML', 'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'from 2019'},
-    'Javascript':{ 'name':'Javascript', 'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
-    'CSS3':{ 'name':'CSS3', 'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
+const skillList = {
+  'Maya'              :{ 'name':'Maya',               'width':80, 'color': ['#92c6cc', '#106768'], 'date': 'from 2007'},
+  'Vray'              :{ 'name':'Vray',               'width':82, 'color': ['#fba547', '#8fb6e2'], 'date': 'from 2014'},
+  'Arnold'            :{ 'name':'Arnold',             'width':85, 'color': ['#8dc9d2', '#1f6571'], 'date': 'from 2017'},
+  'Zbrush'            :{ 'name':'Zbrush',             'width':60, 'color': ['#464646', '#242424'], 'date': 'from 2015'},
+  'Houdini'           :{ 'name':'Houdini',            'width':15, 'color': ['#fece5f', '#f05023'], 'date': 'from 2018'},
+  'MarvelousDesigner' :{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
+  'SubstancePainter'  :{ 'name':`Substance Painter`,  'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
+  'SubstanceDesigner' :{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
+  'Mari'              :{ 'name': 'Mari',              'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
+  'Mudbox'            :{ 'name':'Mudbox',             'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
+  'Photoshop'         :{ 'name':'Photoshop',          'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
+  'threeDCoat'        :{ 'name':`3D Coat`,            'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
+  'RezomUV'           :{ 'name':`Rezom UV`,           'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'from 2014'},
+  'AfterEffects'      :{ 'name':`After Effects`,      'width':60, 'color': ['#c88fff', '#312963'], 'date': 'from 2018'},
+  'Nuke'              :{ 'name':'Nuke',               'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'from 2011'},
+  'Python'            :{ 'name':'Python',             'width':30, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'},
+  'HTML'              :{ 'name':'HTML',               'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'from 2019'},
+  'Javascript'        :{ 'name':'Javascript',         'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'CSS3'              :{ 'name':'CSS3',               'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
 }
-const skillsPath = 'assets/images/icons/';
+const SkillsTLPath = 'assets/images/icons/';
 const colorOffset = ['10%','90%'];
 // const RANDOM_COLOR = ['#628ba7','#dadbe0','#b1b4e1','#8f9ca0','#001f44','#fe9ac3','#fde6c7','#ffaeaa','#fe5f7c','#ffb582','#30d9e7','#00bcad','#00a295','#007bc8','#006ebe'];
 const RANDOM_COLOR = ['#dc6c6c','#dc6cae','#dc6cc8','#816cdc','#6ca1dc','#6cdccb','#6cdc6f','#b1dc6c','#dccd6c','#dc9e6c'];
 
 
-createSkillBar();
-window.addEventListener('resize', skillsUpdate);
+// createSkillSet();
+// window.addEventListener('resize', SkillsTLUpdate);
 
+export default function Skills(id,skillListTL){
+  this.id = id;
+  this.skillListTL = skillListTL;
 
+ 
+  this.createSkillSet();
+}
+Skills.prototype.createSkillSet = function(){
+  let skillPack = document.createElement('li');
+  // let gridLine = document.createElement('div');
+  let n = 4;
+  
+  
+  
+  skillPack.classList.add('skillPack');
+  // gridLine.classList.add('gridLine');
+  ISU.SKILL_CONTENTS.appendChild(skillPack);
+  // SKILL_CONTENTS.appendChild(gridLine);
+  ISU.SKILL_CONTENTS.style.display = 'none';
 
-
-
-
-function createSkillBar(){
-    let skillGroup = document.createElement('li');
-    // let gridLine = document.createElement('div');
-    let n = 4;
-
-
-
-    skillGroup.classList.add('skillGroup');
-    // gridLine.classList.add('gridLine');
-    SKILL_CONTENTS.appendChild(skillGroup);
-    // SKILL_CONTENTS.appendChild(gridLine);
-    SKILL_CONTENTS.style.display = 'none';
-
-
-    for(skill in skills){
-
-
-        let group = document.createElement('div');
-        let skillImage = document.createElement('div');
-        let nameContainer = document.createElement('div')
-        let p = document.createElement('p');
-        let img = document.createElement('img');
-        let nameSize = document.createElement('div');
-        let text = document.createTextNode(skills[skill]['name']);
-        let skillShadowParent = document.createElement('div');
-        let skillShadow = document.createElement('div');
-        let skillContainer = document.createElement('div');
-        let canvas = document.createElementNS(SVG_NAMESPACE_URI,'svg');
-        let defs = document.createElementNS(SVG_NAMESPACE_URI,'defs');
-        let gradient = document.createElementNS(SVG_NAMESPACE_URI,'linearGradient');
-        let filter = document.createElementNS(SVG_NAMESPACE_URI,'filter');
-        let feGaussianBlur = document.createElementNS(SVG_NAMESPACE_URI,'feGaussianBlur');
-        let feColorMatrix = document.createElementNS(SVG_NAMESPACE_URI,'feColorMatrix');
-        let g = document.createElementNS(SVG_NAMESPACE_URI,'g');
-        let rect = document.createElementNS(SVG_NAMESPACE_URI,'rect');
-        let barBG = document.createElementNS(SVG_NAMESPACE_URI,'rect');
-        let barStart = document.createElementNS(SVG_NAMESPACE_URI,'circle');
-        let barStart1 = document.createElementNS(SVG_NAMESPACE_URI,'circle');
-        let barEnd = document.createElementNS(SVG_NAMESPACE_URI,'circle');
-        let barEnd1 = document.createElementNS(SVG_NAMESPACE_URI,'circle');
-        let percent = document.createElementNS(SVG_NAMESPACE_URI,'text');
-        let percentText = document.createTextNode(skills[skill]['width']+'%');
-
-        let skillInfo = document.createElement('div');
-        let skillInfoGroup = document.createElement('div');
-        let skillInfoGroupParent = document.createElement('div');
-        let skillInfoNameContainer = document.createElement('div');
-        let skillInfoName = document.createElement('div');
-        let skillInfoNameText = document.createTextNode(skills[skill]['name']);
-        let skillinfoNameBG = document.createElement('div');
-
-        let skillInfoDateContainer = document.createElement('div');
-        let skillInfoDate = document.createElement('div');
-        let skillInfoDateText = document.createTextNode(skills[skill]['date']);
-        let skillinfoDateBG = document.createElement('div');
-
-
-
-
-
-
-
-        group.classList.add('skillGraph')
-        group.id = skill;
-        skillImage.classList.add('skillImage');
-        skillShadowParent.classList.add('skillShadowParent');
-        skillShadow.classList.add('skillShadow');
-        nameContainer.classList.add('nameContainer');
-        nameSize.classList.add('nameSize');
-        skillContainer.classList.add('skillContainer');
-        canvas.classList.add('skillBar');
-        rect.classList.add('bar');
-        barStart.classList.add('barStart');
-        barStart1.classList.add('barStart1');
-        barEnd.classList.add('barEnd');
-        barEnd1.classList.add('barEnd1');
-        barBG.classList.add('barBG');
-        percent.classList.add('percent');
-        skillInfo.classList.add('skillInfo');
-        skillinfoNameBG.classList.add('skillinfoNameBG');
-        skillinfoNameBG.classList.add('skillInfoBG');
-        skillInfoName.classList.add('skillInfoName');
-        skillInfoName.classList.add('skillInfoText');
-        skillinfoDateBG.classList.add('skillinfoDateBG');
-        skillinfoDateBG.classList.add('skillInfoBG');
-        skillInfoDate.classList.add('skillInfoDate');
-        skillInfoDate.classList.add('skillInfoText');
-        skillInfoNameContainer.classList.add('skillInfoNameContainer');
-        skillInfoDateContainer.classList.add('skillInfoDateContainer')
-        skillInfoNameContainer.classList.add('skillInfoContainer');
-        skillInfoDateContainer.classList.add('skillInfoContainer')
-
-
-
-        //------- set svg-----------
-
-        // skills[skill]['color'].forEach((color,i)=>{
-        //     let stop = document.createElementNS(SVG_NAMESPACE_URI,'stop');
-        //     stop.setAttribute('offset', colorOffset[i]);
-        //     stop.setAttribute('stop-color', color);
-        //     gradient.appendChild(stop);
-        // });
-
-        // pickRadomColor.forEach((color,i)=>{
-        //     let stop = document.createElementNS(SVG_NAMESPACE_URI,'stop');
-        //     stop.setAttribute('offset', colorOffset[i]);
-        //     stop.setAttribute('stop-color', color);
-        //     gradient.appendChild(stop);
-        // });
-        skills[skill]['color'].forEach((color,i)=>{
-            let stop = document.createElementNS(SVG_NAMESPACE_URI,'stop');
-            stop.setAttribute('offset', colorOffset[i]);
-            stop.setAttribute('stop-color', RANDOM_COLOR[(n + i)%10]);
-            gradient.appendChild(stop);
-        });
-
-        gradient.id = (`${skill}Color`);
-        gradient.setAttribute('x1','0%');
-        gradient.setAttribute('x2','100%');
-        gradient.setAttribute('y1','0%');
-        gradient.setAttribute('y1','0%');
-
-        feGaussianBlur.setAttribute('in','SourceGraphic');
-        feGaussianBlur.setAttribute('stdDeviation','7');
-        feGaussianBlur.setAttribute('result','blur');
-        feColorMatrix.setAttribute('in','blur');
-        feColorMatrix.setAttribute('mode','matrix');
-        feColorMatrix.setAttribute('values','1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9');
-        feColorMatrix.setAttribute('result','cm');
-
-        filter.id = 'filter';
-    //----------------------------------------
-        
-
-        rect.setAttributeNS(null,'width',`calc(${halfCircleSize} + ${halfCircleSizeEnd})`);
-        rect.setAttributeNS(null,'height',`calc(${halfBarHeight}*2)`);
-        rect.setAttributeNS(null,'x',halfCircleSize);
-        rect.setAttributeNS(null,'y',remToPx(halfCircleSizeNumb - halfBarHeightNumb));
-        // rect.setAttributeNS(null,'transform',`translate(0,${-remToPx(halfBarHeightNumb)})`);
-        rect.setAttributeNS(null,'fill', `url(#${skill}Color)`);
-
-
-        barBG.style.width = '100%';
-        barBG.style.height = `calc(${halfBarHeight} * 3)`;
-        barBG.setAttributeNS(null,'x',0);
-        barBG.setAttributeNS(null,'y',`calc( ${halfCircleSize} - ${halfBarHeight} * 1.5 )`);
-        barBG.setAttributeNS(null,'rx',halfBarHeight);
-        barBG.setAttributeNS(null,'ry',halfBarHeight);
-
-   
-        barStart.setAttributeNS(null,'cx',halfCircleSize);
-        barStart.setAttributeNS(null,'cy',halfCircleSize);
-        barStart.setAttributeNS(null,'r', halfCircleSize);
-        barStart.setAttributeNS(null,'fill', RANDOM_COLOR[n%10]);
-        
-        barStart1.setAttributeNS(null,'cx',halfCircleSize);
-        barStart1.setAttributeNS(null,'cy',halfCircleSize);
-        barStart1.setAttributeNS(null,'r', halfCircleSize);
-        barStart1.setAttributeNS(null,'fill', RANDOM_COLOR[n%10]);
-
-
-        barEnd.setAttributeNS(null,'cx',`calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd})`);
-        barEnd.setAttributeNS(null,'cy',halfCircleSize);
-        barEnd.setAttributeNS(null,'r', halfCircleSizeEnd);
-        barEnd.setAttributeNS(null,'fill', RANDOM_COLOR[(n + 1) %10]);
-
-        barEnd1.setAttributeNS(null,'cx',`calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd})`);
-        barEnd1.setAttributeNS(null,'cy',halfCircleSize);
-        barEnd1.setAttributeNS(null,'r', halfCircleSizeEnd);
-        barEnd1.setAttributeNS(null,'fill', RANDOM_COLOR[(n + 1) %10]);
-
-        percent.setAttribute('transform',`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb*2 + halfCircleSizeEndNumb)},${remToPx(halfCircleSizeNumb)})`);
-        percent.setAttribute('text-anchor','middle');
-        percent.setAttribute('alignment-baseline','middle');
-
-        
-        g.setAttribute('filter','url(#filter)');
-        //--------------------------------
-        
-
-        img.src = skillsPath + `${skills[skill]['name'].replace(/\s/g, '')}` + '.png';
-        skillShadow.style.width = `calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd} * 2 - ${halfBarHeight} * 2)`;
-        skillinfoNameBG.style.background = RANDOM_COLOR[n%10];
-        skillinfoDateBG.style.background = RANDOM_COLOR[(n+1)%10];
-        
-
-        p.appendChild(text);
-        nameContainer.appendChild(p);
-        nameContainer.appendChild(img);
-        nameSize.appendChild(nameContainer);
-        skillImage.appendChild(nameSize);
-
-        
-        filter.appendChild(feGaussianBlur);
-        filter.appendChild(feColorMatrix);
-        defs.appendChild(filter);
-        defs.appendChild(gradient);
-        percent.appendChild(percentText);
-        g.appendChild(rect);
-        g.appendChild(barStart);
-        g.appendChild(barStart1);
-        g.appendChild(barEnd);
-        g.appendChild(barEnd1);
-        canvas.appendChild(defs);
-        canvas.appendChild(barBG);
-        canvas.appendChild(g);
-        canvas.appendChild(percent);
-        skillContainer.appendChild(skillImage);
-        skillShadowParent.appendChild(skillShadow);
-        skillContainer.appendChild(skillShadowParent);
-        skillContainer.appendChild(canvas);
-
-        skillInfoName.appendChild(skillInfoNameText);
-        skillInfoNameContainer.appendChild(skillInfoName);
-        skillInfoNameContainer.appendChild(skillinfoNameBG);
-        
-        skillInfoDate.appendChild(skillInfoDateText);
-        skillInfoDateContainer.appendChild(skillInfoDate);
-        skillInfoDateContainer.appendChild(skillinfoDateBG);
-        
-        skillInfoGroup.appendChild(skillInfoNameContainer);
-        skillInfoGroup.appendChild(skillInfoDateContainer);
-        skillInfoGroupParent.appendChild(skillInfoGroup);
-        skillInfo.appendChild(skillInfoGroupParent);
-        skillContainer.appendChild(skillInfo);
-
-        
-
-        group.appendChild(skillContainer);
-        skillGroup.appendChild(group);
-
-
+  
+  for(let skill in skillList){
+    function getStops(){
+      let stops =' ';
       
+      skillList[skill]['color'].forEach((color,i)=>{
+        let offset = `offset="${colorOffset[i]}"`;
+        let stopColor = `stop-color="${RANDOM_COLOR[(n + i)%10]}"`;
+        let stop = `<stop ${offset} ${stopColor}></stop>`;
 
+        stops += stop;
+      });
+      return stops;
+    }
+    let stops = getStops();
+    
+    
+    let group =
+      `<div id="${skill}" class="_skill">
+        <div class="_skillChild">
+          <div class="skillImage">
+            <div>
+                <p>${skillList[skill]['name']}</p>
+                <img src="${SkillsTLPath + `${skillList[skill]['name'].replace(/\s/g, '')}` + '.png'}"></img>
 
-        n += 1;
+            </div>
+          </div>
+          <svg class="skillGraph">
+            <defs> 
+              <filter id="filter">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="cm"></feColorMatrix>
+              </filter>
+              <linearGradient id="${skill}Color" x1="0%" x2="100%" y1="0%" y2="0%">
+                ${stops}
+              </linearGradient>
+            </defs>
+            <rect class="barBG" width="100%" height="calc(${halfBarHeight}* 3)" x="0" y="calc(${halfCircleSize} - ${halfBarHeight} * 1.5 )" rx="${halfBarHeight}" ry="${halfBarHeight}"></rect>
+            <g filter="url(#filter)">
+              <rect class="bar" width="calc(${halfCircleSize} + ${halfCircleSizeEnd})" height="calc(${halfBarHeight}*2)" x="${halfCircleSize}" y="${ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb)}" fill="url(#${skill}Color)"></rect>
+              <circle class="barHead1" cx="${halfCircleSize}" cy="${halfCircleSize}" r="${halfCircleSize}" fill="${RANDOM_COLOR[n%10]}"></circle>
+              <circle class="barHead2" cx="${HalfCircleSize800}" cy="${HalfCircleSize800}" r="${HalfCircleSize800}" fill="${RANDOM_COLOR[n%10]}"></circle>
+              <circle class="barTail1" cx="calc(${halfCircleSize} * 2 + ${halfCircleSizeEnd})" cy="${halfCircleSize}" r="${halfCircleSizeEnd}" fill="${RANDOM_COLOR[(n + 1) %10]}"></circle>
+              <circle class="barTail2" cx="calc(${HalfCircleSize800} * 2 + ${HalfCircleSizeEnd800})" cy="${HalfCircleSize800}" r="${HalfCircleSizeEnd800}" fill="${RANDOM_COLOR[(n + 1) %10]}"></circle>
+            </g>
+            <text class="percent" transform="matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb*2 + halfCircleSizeEndNumb)},${ISU.remToPx(halfCircleSizeNumb)})" text-anchor="middle" alignment-baseline="middle">${skillList[skill]['width']+'%'}</text>
+          </svg>
+          <div class="skillInfo">
+            <div>
+              <div>
+                <div class="skillInfo_Name _skillInfo">
+                  <div class="skillInfoName skillInfoText">${skillList[skill]['name']}</div>
+                  <div class="skillinfoNameBG skillInfoBG" style="background:${RANDOM_COLOR[n%10]}"></div>
+                </div>
+                <div class="skillInfo_Date _skillInfo">
+                  <div class="skillInfoDate skillInfoText">${skillList[skill]['date']}</div>
+                  <div class="skillinfoDateBG skillInfoBG" style="background:${RANDOM_COLOR[(n+1)%10]}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    
+      n += 1;
+      
+      skillPack.innerHTML += group;
     };
+
+  skillListTL.forEach((tl)=>{
+    tl.setDefaultValues()
+  })
 }
 
-function getSkillTL(id){
-    this.id = id;
-    this.elem = select(`#${id}`);
-    this.bar = select(`#${this.id} .bar`);
-    this.barEnd = select(`#${this.id} .barEnd`);
-    this.percent = select(`#${this.id} .percent`);
+Skills.prototype.callSkills = function(){
+  ISU.SKILL_CONTENTS.style.display = 'initial';
 
-    this.callGraphTL = gsap.timeline({paused:true});
-    this.expandGraphTL = gsap.timeline({paused:true});
-    this.callGraphTL800 = gsap.timeline({paused:true});
+  if(innerWidth > 800){
+    skillListTL.forEach((tl)=>{
+      tl.getCallGraphTL();          
+    })
+  }else{
+    skillListTL.forEach((tl)=>{
+      tl.getCallGraphTL800();           
+    })
+  }
+}
+Skills.prototype.stopSkills = function(){
+  ISU.SKILL_CONTENTS.style.display = 'none';
+  
+  if(window.innerWidth > 800){
+    skillListTL.forEach((tl)=>{
+        tl.callGraphTL.reverse();
+    })
+  }else{
+    skillListTL.forEach((tl)=>{
+      tl.callGraphTL800.reverse();
+    })
+  }
+
+}
+Skills.prototype.updateResize = function(){
+  // if(biggerElem == ISU.SKILL){
+    skillListTL.forEach((tl)=>{
+        tl.updateResize();
+    });
+  // }
+}
+
+function SkillsTL(id){
+  this.id = id;
+  this.elem = document.getElementById(id)
+
+  this.barTail_startPosition_cx = ISU.remToPx(halfCircleSizeNumb)*2 + ISU.remToPx(halfCircleSizeEndNumb);
 
 
+  this.callGraphTL = gsap.timeline({paused:true});
+  this.callGraphTL800 = gsap.timeline({paused:true});
+  this.expandGraphTL = gsap.timeline({paused:true});
+  
+
+  // this.createSkillBars()
 
 
-    this.hoveroverOnHandler = this.hoveroverOn.bind(this);
-    this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+  // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
+  // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
 
-    this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
-    this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+  // this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
+  // this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
 
 }
 SkillsTL.prototype.setDefaultValues = function(){
@@ -359,17 +238,15 @@ SkillsTL.prototype.setDefaultValues = function(){
   this.barHead1 = ISU.select(`#${this.id} .barHead1`);
   this.barHead2 = ISU.select(`#${this.id} .barHead2`);
   this.barTail1 = ISU.select(`#${this.id} .barTail1`);
-  this.barTail2 = ISU.select(`#${this.id} .barTail2`);
+  this.barTail2 = ISU.select(`#${this.id} .barTail2`)
   this.percent = ISU.select(`#${this.id} .percent`);
-  this.skillShadow = ISU.select(`#${this.id} .skillShadow`);
   this.skillInfo = ISU.select(`#${this.id} .skillInfo`);
-  this.skillInfoBG = ISU.select(`#${this.id} .skillInfoBG`);
-  this.skillInfoText = ISU.select(`#${this.id} .skillInfoText`);
+  this.skillInfoBG = ISU.selectAll(`#${this.id} .skillInfoBG`);
+  this.skillInfoText = ISU.selectAll(`#${this.id} .skillInfoText`);
   this.skillColor1 = [ISU.select(`#${this.id}Color stop:nth-child(1)`)];
   this.skillColor2 = [ISU.select(`#${this.id}Color stop:nth-child(2)`)];
   this.skillColor1.push(window.getComputedStyle(this.skillColor1[0]).stopColor)
   this.skillColor2.push(window.getComputedStyle(this.skillColor2[0]).stopColor)
-
 
 
   this.hoveroverOnHandler = this.hoveroverOn.bind(this);
@@ -383,245 +260,285 @@ SkillsTL.prototype.setDefaultValues = function(){
 }
 
 
-getSkillTL.prototype.setBarWidth = function(){
-    let barClientWidth = select(`#skill .bar`).parentElement.parentElement.clientWidth;
-    this.barWidth = (barClientWidth - ( remToPx(halfCircleSizeNumb) * 2 + remToPx(halfCircleSizeEndNumb))) * skills[this.id]['width'] / 100 + remToPx(halfCircleSizeNumb);
-    this.barCircleEnd = this.barWidth + remToPx(halfCircleSizeNumb);
-    this.idParentWidth = select(`#${this.id}`).firstElementChild.clientWidth - remToPx(halfCircleSizeEndNumb);
-    
-    // console.log(this.id, this.barWidth, this.barCircleEnd)
+
+SkillsTL.prototype.setWidths = function(){
+  let svgWidth = ISU.select(`#skill .contents svg`).clientWidth;
+  
+  this.barEachWidth = (svgWidth - ( ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100 + ISU.remToPx(halfCircleSizeNumb);
+  this.barCircleEachEnd = this.barEachWidth + ISU.remToPx(halfCircleSizeNumb);
+  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
 }
 
-getSkillTL.prototype.getCallGraphTL = function(){
+SkillsTL.prototype.getCallGraphTL = function(){
+  this.setWidths();
+  setUnitSize();
 
-    this.setBarWidth();
+  this.bar.style.height = `calc(${halfBarHeight}*2)`;
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'r', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
+  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
+  this.callGraphTL.clear();
+  this.callGraphTL
+    .fromTo(this.bar,{
+        width: ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb)
+      },{
+        width: this.barEachWidth,
+        duration: ISU.transitionValue['skillTLDuration'],
+        ease: ISU.transitionValue['skillTLEase']
+      },0
+    )
+    .fromTo(this.barTail1,{
+        attr: {cx: this.barTail_startPosition_cx}
+      },{
+        attr: {cx: this.barCircleEachEnd},
+        duration: ISU.transitionValue['skillTLDuration'],
+        ease: ISU.transitionValue['skillTLEase']
+      },0
+    )
+    .fromTo(this.percent,{
+        attr:{transform:`matrix(1,0,0,1,${this.barTail_startPosition_cx},${ISU.remToPx(halfCircleSizeNumb)})`}
+      },{
+        attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
+        duration: ISU.transitionValue['skillTLDuration'],
+        ease: ISU.transitionValue['skillTLEase']
+      },0
+    )
+  this.callGraphTL.play();
+    // this.playCallGraphTL();
+}
+
+SkillsTL.prototype.setWidths800 = function(){
+  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
     
-   console.log(remToPx(halfCircleSizeNumb)*2)
-   console.log(remToPx(halfCircleSizeEndNumb))
-    this.callGraphTL
-        .fromTo(this.bar,{
-                width: remToPx(halfCircleSizeNumb) + remToPx(halfCircleSizeEndNumb)
-            },{
-                width: this.barWidth,
-                duration: 2.5,
-                ease: "power2.inOut"
-            },
-            0
-        )
-        .fromTo(this.barEnd,{
-                cx: remToPx(halfCircleSizeNumb)*2 + remToPx(halfCircleSizeEndNumb)
-            },
-            {
-                cx: this.barCircleEnd,
-                duration: 2.5,
-                ease: "power2.inOut"
-            },
-            0
-        )
-        .fromTo(`#${this.id} .barEnd1`,{
-                cx: remToPx(halfCircleSizeNumb)*2 + remToPx(halfCircleSizeEndNumb)
-            },
-            {
-                cx: this.barCircleEnd,
-                duration: 2.5,
-                ease: "power2.inOut"
-            },
-            0
-        )
-        .fromTo(this.percent,{
-                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb*2 + halfCircleSizeEndNumb)},${remToPx(halfCircleSizeNumb)})`}
-            },{
-                attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
-                duration: 2.5,
-                ease: "power2.inOut"   
-            },
-            0
-        )
-        .to(`#${this.id} .skillShadow`,
-            {
-                width: this.barCircleEnd,
-                duration: 2.5,
-                ease: "power2.inOut"   
-            },
-            0
-        )
 }
-getSkillTL.prototype.playCallGraphTL = function(){
-    this.callGraphTL.play();
+SkillsTL.prototype.getCallGraphTL800 = function(){
+  this.setWidths800();
+  setUnitSize();
+
+
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'r', halfCircleSize);
+  this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
+  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
+
+  this.callGraphTL800.clear();
+  this.callGraphTL800
+    .to(this.elem,
+      {
+        height: ISU.remToPx(halfCircleSizeNumb*3),
+        duration: ISU.transitionValue['skillTLDuration800'],
+        ease: ISU.transitionValue['skillTLEase800']
+      },0
+    )
+    .fromTo(this.bar,{
+        height: ISU.remToPx(halfCircleSizeNumb)
+      },{
+        height: ISU.remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2),
+        duration: ISU.transitionValue['skillTLDuration800'],
+        ease: ISU.transitionValue['skillTLEase800']
+      },0
+    )
+    .to(this.bar,
+      {   
+        attr: {y:ISU.remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb)},
+        width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+        duration: ISU.transitionValue['skillTLDuration800'],
+        // transformOrigin:"center center",
+        ease: ISU.transitionValue['skillTLEase800']
+      },0
+    )
+
+    .to(this.barHead1,
+      {
+        scale:0.95,
+        // transformOrigin:"center center", 
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+      },0
+    )
+    .to(this.barHead1,
+      {
+        scale:1,
+        // transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+      },
+      0.5
+    )
+    .to(this.barHead2,
+      {
+        attr: {cy: ISU.remToPx(halfCircleSizeNumb*2)},
+        duration: ISU.transitionValue['skillTLDuration800'],
+        ease: ISU.transitionValue['skillTLEase800']
+      },
+      0
+    )
+
+
+    .fromTo(this.barTail1,
+        {
+          attr: {cx: this.barTail_startPosition_cx}
+        },{
+          attr: {cx: this.barFullWidth},
+          duration: ISU.transitionValue['skillTLDuration800'],
+          ease: ISU.transitionValue['skillTLEase800']
+        },0
+    )
+    .fromTo(this.barTail2,
+      {
+        attr:{cx: this.barTail_startPosition_cx,
+              cy: ISU.remToPx(halfCircleSizeNumb*1)}
+      },{
+        attr:{cx: this.barFullWidth,
+              cy: ISU.remToPx(halfCircleSizeNumb*2)},
+        duration: ISU.transitionValue['skillTLDuration800'],
+        ease: ISU.transitionValue['skillTLEase800']
+      },0
+    )
+
+    
+    .fromTo(this.percent,
+      {
+          attr:{transform:`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb)})`},
+      },{
+          attr:{transform:`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb * 2.35)})`},
+          duration: ISU.transitionValue['skillTLDuration800'],
+          ease: ISU.transitionValue['skillTLEase800']
+      },0
+    )
+
+//------------this is needed to check it later----------------
+    // // .to(this.skillInfo,
+    // //     {
+    // //         height: ISU.remToPx(halfCircleSizeNumb) * 3,
+    // //         duration:0.3,
+    // //         ease:"power2.inOut"
+    // //     },
+    // //     0
+    // // )
+    // .to(this.skillInfoBG,
+    // {
+    //   background: 'rgb(254,246,222)',
+    //   scaleY:1,
+    //   duration:0.3,
+    //   ease: ISU.transitionValue['skillTLEase'],
+    //   stagger: 0.3,
+    // },0
+    // )
+    // .to(this.skillInfoBG,
+    //   {
+    //     background: 'rgb(254,246,222)',
+    //     scaleY:0,
+    //     duration:0.3,
+    //     ease: ISU.transitionValue['skillTLEase'],
+    //     stagger: 0.3,
+    //   },0.3
+    // )
+    .to(this.skillInfoText,
+      {
+        opacity:1,
+        duration:0.1,
+        stagger: 0.3,
+      },0.3
+    )
+
+
+  this.callGraphTL800.play();
 }
-getSkillTL.prototype.playCallGraphTL800 = function(){
-    this.callGraphTL800.play();
-}
-getSkillTL.prototype.playExpandGraphTL = function(){
+
+
+
+
+SkillsTL.prototype.hoveroverOn = function(){
+  if(innerWidth > 800){
+//         this.playExpandGraphTL();
+    // this.setWidths();
+    this.getExpandGraph();
     this.expandGraphTL.play();
+  }
 }
 
-
-getSkillTL.prototype.reverseCallGraphTL = function(){
-    this.callGraphTL.reverse();
-}
-getSkillTL.prototype.reverseCallGraphTL800 = function(){
-    this.callGraphTL800.reverse();
-}
-getSkillTL.prototype.reverseExpandGraphTL = function(){
+SkillsTL.prototype.hoveroverOff = function(){
+  if(innerWidth > 800){
+//         this.reverseExpandGraphTL();
     this.expandGraphTL.reverse();
+  }
 }
 
+SkillsTL.prototype.getExpandGraph = function(){
+  this.setWidths();
+
+  this.expandGraphTL.clear();
+  this.expandGraphTL
+    .fromTo(this.skillColor1[0],{
+        stopColor: this.skillColor1[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
+    .fromTo(this.skillColor2[0],{
+        stopColor: this.skillColor2[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
 
 
-
-getSkillTL.prototype.hoveroverOn = function(){
-    if(innerWidth > 800){
-        this.getExpandGraph();
-        this.playExpandGraphTL();
-    
-        select(`#${this.id} .skillShadow`).classList.add('barShadowAni');
-    }
-}
-
-getSkillTL.prototype.hoveroverOff = function(){
-    if(innerWidth > 800){
-        this.reverseExpandGraphTL();
-
-        select(`#${this.id} .skillShadow`).classList.remove('barShadowAni');
-    }
-}
-
-getSkillTL.prototype.getExpandGraph = function(){
+    .to(this.bar,{   
+        scaleY:2.3,
+        duration:1,
+        transformOrigin:"center center",
+        ease: "elastic.out(1, 0.3)"
+      },0
+    )
+    .fromTo(this.bar,{
+        width: this.barEachWidth
+      },{   
+        width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
 
 
-    this.setBarWidth();
+    .to(this.barHead1,
+      {
+        attr:{fill:'#ffffff'},
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
+    .to(this.barHead1,
+      {
+        scale:0.95,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+      },
+      0
+    )
+    .to(this.barHead1,
+      {
+        scale:1,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+    }, 0.5
+    )
 
-    this.expandGraphTL
-        .to(
-            `#${this.id}Color stop:nth-child(1)`,
-            {
-                stopColor:'#ffffff',
-                duration:1
-            },
-            0
-        )
-        .to(
-            `#${this.id}Color stop:nth-child(2)`,
-            {
-                stopColor:'#ffffff',
-                duration:1
-            },
-            0
-        )
-        
-
-
-
-
-        .to(
-            `#${this.id} .bar`,
-            {   
-                scaleY:2.3,
-                duration:1,
-                transformOrigin:"center center",
-                ease: "elastic.out(1, 0.3)"
-            },0
-        )
-        .fromTo(
-            `#${this.id} .bar`,
-            {
-                width: this.barWidth
-            },
-            {   
-                width: this.idParentWidth - remToPx(halfCircleSizeEndNumb),
-                duration:1,
-                ease: "bounce.out"
-            },0
-        )
-
-
-
-
-
-        .to(
-            `#${this.id} .barStart`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
-        .to(
-            `#${this.id} .barStart`,
-            {
-                scale:0.95,
-                transformOrigin:"center center",
-                duration:0.5,
-                ease: "elastic.out(1, 0.3)"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .barStart`,
-            {
-                scale:1,
-                transformOrigin:"center center",
-                duration:0.5,
-                ease: "elastic.out(1, 0.3)"
-            },
-            0.5
-        )
-
-        .to(
-            `#${this.id} .barStart1`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
-
-
-
-
-
-        .to(
-            `#${this.id} .barEnd`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
-        .fromTo(
-            `#${this.id} .barEnd`,
-            {
-                cx: this.barCircleEnd,
-            },
-            {
-                cx: this.idParentWidth,
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
-        .to(
-            `#${this.id} .barEnd1`,
-            {
-                attr:{fill:'#ffffff'},
-                duration:1
-            },
-            0
-        )
-        .fromTo(
-            `#${this.id} .barEnd1`,
-            {
-                cx: this.barCircleEnd,
-            },
-            {
-                cx: this.idParentWidth,
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
 
     .to(this.barTail1,
       {
@@ -630,459 +547,168 @@ getSkillTL.prototype.getExpandGraph = function(){
       },0
     )
     .fromTo(this.barTail1,{
-        cx: this.barCircleEachEnd,
+        attr:{cx: this.barCircleEachEnd},
       },{
-        cx: this.barFullWidth,
+        attr:{cx: this.barFullWidth},
         duration:1,
         ease: "bounce.out"
       },0
     )
 
-   
-        .fromTo(
-            `#${this.id} .percent`,
-            {
-                attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
-            },
-            {
-                attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
         
-
-
-        .to(
-            `#${this.id} .skillShadow`,
-            {
-                scaleY:2.5,
-                duration:1,
-                transformOrigin:"center center",
-                ease: "elastic.out(1, 0.3)"
-            },
-            0
-        )
-        .fromTo(
-            `#${this.id} .skillShadow`,
-            {
-                width: this.barCircleEnd
-            },
-            {
-                width: this.idParentWidth,
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
-
-        .to(
-            `#${this.id} .skillInfoBG`,
-            {
-                scaleY:1,
-                duration:0.3,
-                stagger: 0.3,
-                ease:"power2.inOut"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .skillInfoBG`,
-            {
-                scaleY:0,
-                duration:0.3,
-                stagger: 0.3,
-                ease:"power2.inOut"
-            },
-            0.3
-        )
-        
-        .to(
-            `#${this.id} .skillInfoText`,
-            {
-                opacity:1,
-                duration:0.1,
-                stagger: 0.3,
-            },
-            0.3
-        )
-}
-
-getSkillTL.prototype.getCallGraphTL800 = function(){
+    .fromTo(this.percent,
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
+        },
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${ISU.remToPx(halfCircleSizeNumb)})`},
+            duration:1,
+            ease: "bounce.out"
+        },
+        0
+    )
 
 
 
-    this.setBarWidth();
+    .to(this.skillInfoBG,
+      {
+        scaleY:1,
+        duration:0.3,
+        stagger: 0.3,
+        ease:"power2.inOut"
+      },0
+    )
+    .to(this.skillInfoBG,
+      {
+        scaleY:0,
+        duration:0.3,
+        stagger: 0.3,
+        ease:"power2.inOut"
+      },0.3
+    )
+    .to(this.skillInfoText,
+      {
+        opacity:1,
+        duration:0.1,
+        stagger: 0.3,
+      },0.3
+   )
 
-    this.callGraphTL800
-        .to(
-            `#${this.id} .bar`,
-            {   
-                attr: {y:remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb)},
-                height: remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2),
-                duration:1,
-                transformOrigin:"center center",
-                ease: "bounce.out"
-            },0
-        )
-        .fromTo(
-            `#${this.id} .bar`,
-            {
-                width: this.barWidth
-            },
-            {   
-                width: this.idParentWidth - remToPx(halfCircleSizeEndNumb),
-                duration:1,
-                ease: "bounce.out"
-            },0
-        )
-
-
-
-
-
-
-        .to(
-            `#${this.id} .barStart`,
-            {
-                scale:0.95,
-                transformOrigin:"center center",
-                duration:0.5,
-                ease: "elastic.out(1, 0.3)"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .barStart`,
-            {
-                scale:1,
-                transformOrigin:"center center",
-                duration:0.5,
-                ease: "elastic.out(1, 0.3)"
-            },
-            0.5
-        )
-
-        .to(
-            `#${this.id}`,
-            {
-                height: remToPx(halfCircleSizeNumb*3),
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .barStart1`,
-            {
-                cy: remToPx(halfCircleSizeNumb*2),
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
-
-
-
-
-        .fromTo(
-            `#${this.id} .barEnd`,
-            {
-                cx: this.barCircleEnd
-            },
-            {
-                cx: this.idParentWidth,
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
-
-
-
-        .fromTo(
-            `#${this.id} .barEnd1`,
-            {
-                cx: this.barCircleEnd,
-                cy: remToPx(halfCircleSizeNumb*1)
-            },
-            {
-                cx: this.idParentWidth,
-                cy: remToPx(halfCircleSizeNumb*2),
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-
-
-
-        
-        .fromTo(
-            `#${this.id} .percent`,
-            {
-                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb)})`},
-            },
-            {
-                attr:{transform:`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb *2.3)})`},
-                duration:1,
-                ease: "bounce.out"
-            },
-            0
-        )
-        // .fromTo(
-        //     `#${this.id} .percent`,
-        //     {
-        //         attr:{transform:`matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`},
-        //     },
-        //     {
-        //         attr:{transform:`matrix(1,0,0,1,${this.idParentWidth},${remToPx(halfCircleSizeNumb)})`},
-        //         duration:1,
-        //         ease: "bounce.out"
-        //     },
-        //     0
-        // )
-
-
-
-
-
-        .to(
-            `#${this.id} .skillInfo`,
-            {
-                height: remToPx(halfCircleSizeNumb) * 3,
-                duration:0.3,
-                ease:"power2.inOut"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .skillInfoBG`,
-            {
-                scaleY:1,
-                duration:0.3,
-                ease:"power2.inOut"
-            },
-            0
-        )
-        .to(
-            `#${this.id} .skillInfoBG`,
-            {
-                scaleY:0,
-                duration:0.3,
-                ease:"power2.inOut"
-            },
-            0.3
-        )
-        
-        .to(
-            `#${this.id} .skillInfoText`,
-            {
-                opacity:1,
-                duration:0.1,
-                stagger: 0.3,
-            },
-            0.3
-        )
 }
 
 
 
 
-getSkillTL.prototype.skillUpdate = function(){
-    setUnitSize()
-    this.setBarWidth();
 
+SkillsTL.prototype.updateResize = function(){
+  setUnitSize();
+  this.setWidths();
 
-    if(innerWidth > 800){
-        select(`#${this.id}`).style.height =  '';
-    }else{
-        // console.log('else',select(`#${this.id}`),remToPx(halfCircleSizeNumb*3))
-        select(`#${this.id}`).style.height =  remToPx(halfCircleSizeNumb*3) +'px';
-    }
-
-
-
-
-    select(`#${this.id} .barStart`).setAttributeNS(null,'cx',halfCircleSize);
-    select(`#${this.id} .barStart`).setAttributeNS(null,'cy',halfCircleSize);
-    select(`#${this.id} .barStart`).setAttributeNS(null,'r', halfCircleSize);
-
-
-
-
-    select(`#${this.id} .barStart1`).style.cx = halfCircleSize;
-    if(innerWidth > 800){
-        select(`#${this.id} .barStart1`).style.cy = halfCircleSize;
-    }else{
-        select(`#${this.id} .barStart1`).style.cy = remToPx(halfCircleSizeNumb*2);
-    }
-    select(`#${this.id} .barStart1`).setAttributeNS(null,'r', halfCircleSize);
-
-
-    
-
-
-
-
-
-    if(innerWidth > 800){
-        select(`#${this.id} .barEnd`).style.cx = this.barCircleEnd;
-    }else{
-        select(`#${this.id} .barEnd`).style.cx = this.idParentWidth;
-    }
-    select(`#${this.id} .barEnd`).style.cy = halfCircleSize;
-    select(`#${this.id} .barEnd`).setAttributeNS(null,'r',halfCircleSizeEnd);
-
-
-
-
-    if(innerWidth > 800){
-        select(`#${this.id} .barEnd1`).style.cx = this.barCircleEnd;
-        select(`#${this.id} .barEnd1`).style.cy = halfCircleSize;
-    }else{
-        select(`#${this.id} .barEnd1`).style.cx = this.idParentWidth;
-        select(`#${this.id} .barEnd1`).style.cy = remToPx(halfCircleSizeNumb*2);
-    }
-    select(`#${this.id} .barEnd1`).setAttributeNS(null,'r',halfCircleSizeEnd);
-
+  this.elem.style.height =  '';
 
   
-    if(innerWidth > 800){
-        select(`#${this.id} .bar`).style.width = this.barWidth;
-        select(`#${this.id} .bar`).setAttributeNS(null,'y',remToPx(halfCircleSizeNumb - halfBarHeightNumb));
-        select(`#${this.id} .bar`).style.height = `calc(${halfBarHeight}*2)`;
-    }else{
-        select(`#${this.id} .bar`).style.width = this.idParentWidth - remToPx(halfCircleSizeEndNumb);
-        select(`#${this.id} .bar`).setAttributeNS(null,'y',remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb));
-        select(`#${this.id} .bar`).style.height = remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2);
-    }
-    select(`#${this.id} .bar`).setAttributeNS(null,'x',halfCircleSize);
+  if(innerWidth > 800){
+    this.bar.style.width = this.barEachWidth;
+    this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+    this.bar.style.height = `calc(${halfBarHeight}*2)`;
+  }else{
+    this.bar.style.width = this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb);
+    this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb));
+    this.bar.style.height = ISU.remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2);
+  }
+  this.bar.setAttributeNS(null,'x',halfCircleSize);
+
+  
+  this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
+  this.barHead1.setAttributeNS(null,'r', halfCircleSize);
+
+  if(innerWidth > 800){
+    this.barHead2.setAttributeNS(null,'cx',halfCircleSize);
+    this.barHead2.setAttributeNS(null,'cy',ISU.remToPx(halfCircleSizeNumb*2));
+    this.barHead2.setAttributeNS(null,'r', halfCircleSize);
+  }
+
+
+  if(innerWidth > 800){
+    console.log('barCircleEachEnd',this.barCircleEachEnd)
+    this.barTail1.setAttributeNS(null,'cx',this.barCircleEachEnd);
+  }else{
+    this.barTail1.setAttributeNS(null,'cx',this.barFullWidth);
+  }
+  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
+  if(innerWidth <= 800){
+    this.barTail2.setAttributeNS(null,'cx', this.barFullWidth);
+    this.barTail2.setAttributeNS(null, 'cy', ISU.remToPx(halfCircleSizeNumb*2));
+    this.barTail2.setAttributeNS(null,'r', halfCircleSizeEnd);
+  }
 
 
 
-    select(`#${this.id} .barBG`).style.height = `calc(${halfBarHeight} * 3)`;
-    select(`#${this.id} .barBG`).setAttributeNS(null,'y',`calc( ${halfCircleSize} - ${halfBarHeight} * 1.5 )`);
+
+
+//------check this later----------//
+    // select(`#${this.id} .barBG`).style.height = `calc(${halfBarHeight} * 3)`;
+    // select(`#${this.id} .barBG`).setAttributeNS(null,'y',`calc( ${halfCircleSize} - ${halfBarHeight} * 1.5 )`);
     
+        
+  if(innerWidth > 800){
+    this.percent.setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`);
+  }else{
+    this.percent.setAttributeNS(null, 'transform',`matrix(1,0,0,1,${ISU.remToPx(halfCircleSizeNumb)},${ISU.remToPx(halfCircleSizeNumb * 2.35)})`);
+  }
 
 
+
+  if(innerWidth > 800){
+    this.skillInfoText.forEach(text=>{
+      text.style.opacity = 0;
+    })
+  }else{
+    this.skillInfoText.forEach(text=>{
+      text.style.opacity = 1;
+    })
+  }
+
+
+
+//     // selectAll(`#${this.id} .skillInfoBG`).forEach(bg=>{
+//     //     bg.style.transform = scaleY(0);
+//     // })
+
+
+
+
+  this.callGraphTL.clear();
+  this.callGraphTL800.clear();
     
-
-    if(innerWidth > 800){
-        select(`#${this.id} .percent`).setAttributeNS(null,'transform', `matrix(1,0,0,1,${this.barCircleEnd},${remToPx(halfCircleSizeNumb)})`);
-    }else{
-        select(`#${this.id} .percent`).setAttributeNS(null, 'transform',`matrix(1,0,0,1,${remToPx(halfCircleSizeNumb)},${remToPx(halfCircleSizeNumb *2.3)})`);
-    }
-
-
-    if(innerWidth > 800){
-        selectAll(`#${this.id} .skillInfoText`).forEach(text=>{
-            text.style.opacity = 0;
-        })
-    }else{
-        selectAll(`#${this.id} .skillInfoText`).forEach(text=>{
-            text.style.opacity = 1;
-        })
-    }
-
-
-
-    // selectAll(`#${this.id} .skillInfoBG`).forEach(bg=>{
-    //     bg.style.transform = scaleY(0);
-    // })
-
-
-
-
-
-    if (this.expandGraphTL){
-        this.expandGraphTL.clear();
-    }
-    if(this.expandGraphTL800){
-        this.expandGraphTL800.clear();
-    }
-    if(this.callGraphTL){
-        this.callGraphTL.clear();    
-    }
-    
-}
-
-
-function callSkillsContents(elem){
-    if(elem ===SKILL){
-        SKILL_CONTENTS.style.display = 'initial';
-      
-        if(innerWidth > 800){
-            TLarray.forEach((tl)=>{
-                tl.getCallGraphTL();
-                tl.playCallGraphTL();            
-            })
-        }else{
-            TLarray.forEach((tl)=>{
-                tl.getCallGraphTL800();
-                tl.playCallGraphTL800();            
-            })
-        }
-    }   
-}
-
-
-function stopSkillsContents(){
-    SKILL_CONTENTS.style.display = 'none';
-    
-    if(innerWidth > 800){
-        TLarray.forEach((tl)=>{
-            tl.reverseCallGraphTL();
-        })
-    }else{
-        TLarray.forEach((tl)=>{
-            tl.reverseCallGraphTL800();
-        })
-    }
-
 }
 
 
 
 
-function skillsUpdate(){
-    // if(biggerElem == SKILL){
-        // setBarWidth
-        setUnitSize();
-        // console.log('half circle size',halfCircleSize)
-
-        TLarray.forEach((tl)=>{
-            tl.skillUpdate();
-        })
-
-    // }
-}
 
 
+const MayaTL = new SkillsTL('Maya');
+const VrayTL = new SkillsTL('Vray');
+const ArnoldTL = new SkillsTL('Arnold');
+const ZbrushTL = new SkillsTL('Zbrush');
+const HoudiniTL = new SkillsTL('Houdini');
+const MarvelousDesignerTL = new SkillsTL('MarvelousDesigner');
+const SubstancePainterTL = new SkillsTL('SubstancePainter');
+const SubstanceDesignerTL = new SkillsTL('SubstanceDesigner');
+const MariTL = new SkillsTL('Mari')
+const MudboxTL = new SkillsTL('Mudbox');
+const PhotoshopTL = new SkillsTL('Photoshop');
+const threeDCoatTL = new SkillsTL('threeDCoat');
+const RezomUVTL = new SkillsTL('RezomUV');
+const AfterEffectsTL = new SkillsTL('AfterEffects');
+const NukeTL = new SkillsTL('Nuke');
+const PythonTL = new SkillsTL('Python');
+const HTMLTL = new SkillsTL('HTML');
+const JavascriptTL = new SkillsTL('Javascript');
+const CSS3TL = new SkillsTL('CSS3');
 
-const MayaTL = new getSkillTL('Maya');
-const VrayTL = new getSkillTL('Vray');
-const ArnoldTL = new getSkillTL('Arnold');
-const ZbrushTL = new getSkillTL('Zbrush');
-const HoudiniTL = new getSkillTL('Houdini');
-const MarvelousDesignerTL = new getSkillTL('MarvelousDesigner');
-const SubstancePainterTL = new getSkillTL('SubstancePainter');
-const SubstanceDesignerTL = new getSkillTL('SubstanceDesigner');
-const MariTL = new getSkillTL('Mari')
-const MudboxTL = new getSkillTL('Mudbox');
-const PhotoshopTL = new getSkillTL('Photoshop');
-const threeDCoatTL = new getSkillTL('threeDCoat');
-const RezomUVTL = new getSkillTL('RezomUV');
-const AfterEffectsTL = new getSkillTL('AfterEffects');
-const NukeTL = new getSkillTL('Nuke');
-const PythonTL = new getSkillTL('Python');
-const HTMLTL = new getSkillTL('HTML');
-const JavascriptTL = new getSkillTL('Javascript');
-const CSS3TL = new getSkillTL('CSS3');
-
-const TLarray = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,CSS3TL]
+export const skillListTL = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,CSS3TL]

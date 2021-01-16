@@ -4,7 +4,7 @@ import UtilityController from '/assets/js/utilityController.js';
 import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
 import Skills, {skillListTL} from '/assets/js/skills.js';
 import Info from '/assets/js/info.js';
-import {callAstronaut, pauseAstronaut} from '/assets/js/three.js';
+// import {callAstronaut, pauseAstronaut} from '/assets/js/three.js';
 import 'regenerator-runtime/runtime'
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
@@ -162,8 +162,8 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight), callAstronaut(this.elem,biggeredElem)]);
-        // const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
+        // const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight), callAstronaut(this.elem,biggeredElem)]);
+        const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
         const animRect = await this.Rect.animRect(menuExpanded);
         const wavyAnim = await this.Rect.createWavyAnimation();
         const stopFuncs = await Promise.all([this.callFuncs(), this.addEventCB()]);
@@ -185,8 +185,8 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs(), callAstronaut(this.elem,biggeredElem)]);
-        // const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs()]);
+        // const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs(), callAstronaut(this.elem,biggeredElem)]);
+        const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs()]);
         const stopWavyAnim = await biggeredController.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
         const wavyAnim = await this.Rect.createWavyAnimation();
@@ -207,8 +207,8 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs(), pauseAstronaut()]);
-        // const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
+        // const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs(), pauseAstronaut()]);
+        const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
         const stopWavyAnim = await this.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
         const stopFuncs = await Promise.all([this.addEventCB()]);
