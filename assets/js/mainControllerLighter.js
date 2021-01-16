@@ -4,8 +4,6 @@ import UtilityController from '/assets/js/utilityController.js';
 import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
 import Skills, {skillListTL} from '/assets/js/skills.js';
 import Info from '/assets/js/info.js';
-// import {callAstronaut, pauseAstronaut} from '/assets/js/three.js';
-import 'regenerator-runtime/runtime'
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -25,9 +23,9 @@ ISU.allElems.forEach((elem)=>{
   SetDefaultRectSize(elem)
 });
 
-let demoVideoHeight;
-getDemoVideHeight(menuExpanded);
+let demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
 ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
+
 
 
 const LOGOcallClickEvent = function(){
@@ -157,12 +155,12 @@ MenuController.prototype.expandMenu = function(){
     biggerElem = this.elem;
     
     //----calculate demo height in order to give the same result to all functions------------------------
-    getDemoVideHeight(menuExpanded);
+    getDemoVideHeight();
+    
     
 
     async function callPromise(){
       try{
-        // const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight), callAstronaut(this.elem,biggeredElem)]);
         const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
         const animRect = await this.Rect.animRect(menuExpanded);
         const wavyAnim = await this.Rect.createWavyAnimation();
@@ -181,11 +179,10 @@ MenuController.prototype.expandMenu = function(){
     biggeredController = eval(biggeredElem.id+'MenuController');
 
     //----calculate demo height in order to give the same result to all functions------------------------
-    getDemoVideHeight(menuExpanded);
+    getDemoVideHeight();
 
     async function callPromise(){
       try{
-        // const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs(), callAstronaut(this.elem,biggeredElem)]);
         const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs()]);
         const stopWavyAnim = await biggeredController.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
@@ -207,10 +204,10 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
-        // const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs(), pauseAstronaut()]);
         const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
         const stopWavyAnim = await this.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
+        // const wavyAnim = await this.Rect.createWavyAnimation();
         const stopFuncs = await Promise.all([this.addEventCB()]);
       }catch(e){
         console.log('error');
@@ -222,7 +219,17 @@ MenuController.prototype.expandMenu = function(){
 
 
   }
-
+  function getDemoVideHeight(){
+    if(window.innerWidth > 800){
+      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+    }else{
+      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }else{
+        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }
+    };
+  };
 }
 
 
@@ -230,12 +237,8 @@ MenuController.prototype.expandMenu = function(){
 
 
 MenuController.prototype.updateResize = function(){
-  getDemoVideHeight(menuExpanded);
-  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
 
-
-
-  this.Rect.updateResize(biggerElem,menuExpanded,demoVideoHeight);
+  this.Rect.updateResize(biggerElem,menuExpanded);
   if(biggerElem != null){
     if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
       this.Thumbnails.updateResize();
@@ -245,7 +248,8 @@ MenuController.prototype.updateResize = function(){
     }   
   }
 
-
+  demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
+  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
   
   if(innerWidth > 800){
     ISU.MENU__.style.height = '100%';
@@ -280,33 +284,6 @@ MenuController.prototype.hoveroverOn = function(){
 MenuController.prototype.hoveroverOff = function(){
   this.Rect.hoveroverOff(biggerElem);
 }
-
-
-
-//----------------get Demo Video Height----------------//
-function getDemoVideHeight(menuExpanded){
-  if(window.innerWidth > 800){
-    if(menuExpanded){
-      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-    }else{
-      demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
-    }
-  }else{
-    if(menuExpanded){
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }
-    }else{
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-        demoVideoHeight = (window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }
-    }
-  };
-};
 
 
 let workMenuController = new MenuController('work', workThumbnails);

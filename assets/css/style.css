@@ -50,14 +50,13 @@ canvas{
   --masterMaxWidth : 1400px;
   --masterMinWidth : 25rem;
 
-  --borderSize:10vw;
-  --borderSmallSize:5rem;
-  --borderSize800: 7rem;
-  --borderSize1400: 8.7rem;
+  --rectSize:10vw;
+  --rectSmallerSize:5rem;
+  --rectSize800: 7rem;
+  --rectSize1400: 8.7rem;
 
   --LiScrollbarWidth: 8px;
 }
-
 
 html,body{
   width: 100%;
@@ -70,7 +69,6 @@ body{
 
 
 
-
  
 /**
  * 2.0 Font
@@ -78,7 +76,6 @@ body{
  */
 
 #menu li .rectPack{
-
   font-family: 'Text Me One', sans-serif;
   font-size:2vw;
   color:white;
@@ -96,11 +93,11 @@ body{
 
 
 
+
 /**
  * 3.0 Master
  * ----------------------------------------------------------------------------
  */
-
   #master{
     width: 100%;
     height: 100%;
@@ -151,7 +148,6 @@ body{
       padding: 2% 0;
       /* height: 100%; */
     }
-
     
     @media (max-width:800px){
       #demo{
@@ -343,6 +339,7 @@ body{
 
 
 
+
 /**
  * 4.2.2 - RectPack
  * ------------------
@@ -365,7 +362,6 @@ body{
 
             
           #menu > li .rectPack{
-
             display:grid;
             text-align: center ;
             position: relative;
@@ -378,7 +374,6 @@ body{
           }
 
           #menu > li .rectPack .neon{
-
             width: inherit;
             height: inherit;
             border-radius: inherit;
@@ -401,12 +396,10 @@ body{
               }
               @media (max-width:800px){
                 #menu > li .rectPack svg rect{
-
                   stroke-width: 0.3rem;
                 }
               }
               @media (min-width:1400px){
-
                 #menu > li .rectPack svg rect{
                   stroke-width: 0.5rem;
                 }
@@ -422,25 +415,13 @@ body{
               @media (min-width:1400px){
                 #menu > li .rectPack svg .wavyPath{
                   stroke-width: 0.7rem;
-
                 }
               }
     
 
-            #menu > li .borders .text{
-              position: relative;
-            }
+            
 
-            #menu #work{
-              justify-content: flex-end;
-            }
-
-            #menu #work .borders{
-              align-self: flex-end;
-              /* transition-duration: var(--subMenuNeonDuration);
-              transition: box-shadow ease-in-out; */
-            }
-
+          
 /**
  * 4.2.4 - Contents
  * ------------------
@@ -491,9 +472,9 @@ body{
   opacity: 0;
   transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
-/* .blurSVG{
+.blurSVG{
   filter:blur(3px);
-} */
+}
 
 
 

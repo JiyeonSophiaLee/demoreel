@@ -46,14 +46,12 @@ Astronaut();
 function Astronaut() {
 
     
-
   renderer = new THREE.WebGLRenderer( { antialias: false} );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.outputEncoding = THREE.sRGBEncoding;
-
     // renderer.domElement.style.width = renderer.domElement.width*0.8 +'px';
     // renderer.domElement.style.height = renderer.domElement.height*0.8 +'px';
   renderer.shadowMap.enabled = true;
@@ -66,9 +64,8 @@ function Astronaut() {
   camera.lookAt(new THREE.Vector3(0, 1, 0));
 
     
-
+  
 //   // scene.add(new THREE.AxesHelper(5));
-
 
 
   sky0 = getSky(16,'/assets/images/hdr/space_00.jpg');
@@ -265,7 +262,6 @@ function Astronaut() {
    
     
 }
-
 function animate(){
   requestAniThreeJS = requestAnimationFrame(animate);
 
@@ -404,7 +400,6 @@ function stopAllActions(){
 //     var geometry = new THREE.PlaneGeometry(size, size);
 
 //     // var textureLoader = new THREE.TextureLoader();
-
 
 // 	var material = new THREE.MeshPhongMaterial( { color: 0xffffff } );
 // 	var mesh = new THREE.Mesh(
