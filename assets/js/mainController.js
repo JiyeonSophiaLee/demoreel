@@ -5,7 +5,7 @@ import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails
 import Skills, {skillListTL} from '/assets/js/skills.js';
 import Info from '/assets/js/info.js';
 import {callAstronaut, pauseAstronaut} from '/assets/js/three.js';
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -107,7 +107,6 @@ MenuController.prototype.callFuncs = function(){
     this.Skills.callSkills();
   }
   if(typeof this.Info =='object' && this.id == biggerElem.id){
-    console.log('-------this.elem-------', this.elem)
     this.Info.callInfo();
   }
   
