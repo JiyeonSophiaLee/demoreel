@@ -1,3 +1,4 @@
+console.log('unilityController.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import gsap from '/assets/scripts/gsap-core.js';
 import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
