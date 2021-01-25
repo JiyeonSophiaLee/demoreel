@@ -1,4 +1,45 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
+import _Maya from  '/assets/images/icons/Maya.png';
+import _Vray from  '/assets/images/icons/Vray.png';
+import _Arnold from  '/assets/images/icons/Arnold.png';
+import _Zbrush from  '/assets/images/icons/Zbrush.png';
+import _Houdini from  '/assets/images/icons/Houdini.png';
+import _MarvelousDesigner from  '/assets/images/icons/MarvelousDesigner.png';
+import _SubstancePainter from  '/assets/images/icons/SubstancePainter.png';
+import _SubstanceDesigner from  '/assets/images/icons/SubstanceDesigner.png';
+import _Mari from  '/assets/images/icons/Mari.png';
+import _Mudbox from  '/assets/images/icons/Mudbox.png';
+import _Photoshop from  '/assets/images/icons/Photoshop.png';
+import _threeDCoat from  '/assets/images/icons/threeDCoat.png';
+import _RezomUV from  '/assets/images/icons/RezomUV.png';
+import _AfterEffects from  '/assets/images/icons/AfterEffects.png';
+import _Nuke from  '/assets/images/icons/Nuke.png';
+import _Python from  '/assets/images/icons/Python.png';
+import _HTML from  '/assets/images/icons/HTML.png';
+import _Javascript from  '/assets/images/icons/Javascript.png';
+import _CSS3 from  '/assets/images/icons/CSS3.png';
+
+
+const Maya = _Maya;
+const Vray = _Vray;
+const Arnold = _Arnold;
+const Zbrush = _Zbrush;
+const Houdini = _Houdini;
+const MarvelousDesigner = _MarvelousDesigner;
+const SubstancePainter = _SubstancePainter;
+const SubstanceDesigner = _SubstanceDesigner;
+const Mudbox = _Mudbox;
+const Mari = _Mari;
+const Photoshop = _Photoshop;
+const threeDCoat = _threeDCoat;
+const RezomUV = _RezomUV;
+const AfterEffects = _AfterEffects;
+const Nuke = _Nuke;
+const Python = _Python;
+const HTML = _HTML;
+const Javascript = _Javascript;
+const CSS3 = _CSS3;
+
 
 const HalfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
 const HalfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
@@ -60,7 +101,7 @@ const skillList = {
   'MarvelousDesigner' :{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
   'SubstancePainter'  :{ 'name':`Substance Painter`,  'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
   'SubstanceDesigner' :{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
-  'Mari'              :{ 'name': 'Mari',              'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
+  'Mari'              :{ 'name':'Mari',              'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
   'Mudbox'            :{ 'name':'Mudbox',             'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
   'Photoshop'         :{ 'name':'Photoshop',          'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
   'threeDCoat'        :{ 'name':`3D Coat`,            'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
@@ -72,7 +113,7 @@ const skillList = {
   'Javascript'        :{ 'name':'Javascript',         'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
   'CSS3'              :{ 'name':'CSS3',               'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
 }
-const SkillsTLPath = 'assets/images/icons/';
+// const SkillsTLPath = 'assets/images/icons/';
 const colorOffset = ['10%','90%'];
 // const RANDOM_COLOR = ['#628ba7','#dadbe0','#b1b4e1','#8f9ca0','#001f44','#fe9ac3','#fde6c7','#ffaeaa','#fe5f7c','#ffb582','#30d9e7','#00bcad','#00a295','#007bc8','#006ebe'];
 const RANDOM_COLOR = ['#dc6c6c','#dc6cae','#dc6cc8','#816cdc','#6ca1dc','#6cdccb','#6cdc6f','#b1dc6c','#dccd6c','#dc9e6c'];
@@ -101,7 +142,7 @@ Skills.prototype.createSkillSet = function(){
   // SKILL_CONTENTS.appendChild(gridLine);
   ISU.SKILL_CONTENTS.style.display = 'none';
 
-  
+
   for(let skill in skillList){
     function getStops(){
       let stops =' ';
@@ -124,7 +165,7 @@ Skills.prototype.createSkillSet = function(){
           <div class="skillImage">
             <div>
                 <p>${skillList[skill]['name']}</p>
-                <img src="${SkillsTLPath + `${skillList[skill]['name'].replace(/\s/g, '')}` + '.png'}"></img>
+                <img src="${eval(skill)}"></img>
 
             </div>
           </div>
@@ -631,7 +672,6 @@ SkillsTL.prototype.updateResize = function(){
 
 
   if(innerWidth > 800){
-    console.log('barCircleEachEnd',this.barCircleEachEnd)
     this.barTail1.setAttributeNS(null,'cx',this.barCircleEachEnd);
   }else{
     this.barTail1.setAttributeNS(null,'cx',this.barFullWidth);

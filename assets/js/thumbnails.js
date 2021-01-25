@@ -1,34 +1,33 @@
 import * as ISU from '/assets/js/InitialSetUp.js';
-// import astronautGLTF from '/assets/THREE_js/astronaut_v06.gltf';
+import * as THI from '/assets/js/thumbnail_Images.js';
 
-function SetProperty(path,name,extension,main,sub,artstation=null){
-  this.path = path;
-  this.name = name;
-  this.extension = extension;
+
+
+function SetProperty(array,main,artstation=null){
+  this.array = array;
   this.main = main;
-  this.sub = sub;
   this.artstation = artstation;
 }
 
 //------------work thumbnails------------//
 
-const table      = new SetProperty('assets/images/projects/table_scene_thumbnails/'     , 'table_scene_thumbnails'     , '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07'],       'https://www.artstation.com/artwork/Q2roZ');
-const chandelier = new SetProperty('assets/images/projects/chandelier_scene_thumbnails/', 'chandelier_scene_thumbnails', '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07'],       'https://www.artstation.com/artwork/Q2roZ');
-const sunrise    = new SetProperty('assets/images/projects/sunrise_scene_thumbnails/'   , 'sunrise_scene_thumbnails'   , '.jpg' , '_02', ['_01','_03','_04','_05'],                   'https://www.artstation.com/artwork/lVYmZO');
-const woman      = new SetProperty('assets/images/projects/woman_scene_thumbnails/'     , 'woman_scene_thumbnails'     , '.jpg' , '_03', ['_01','_02','_04','_05','_06','_07','_08'], 'https://www.artstation.com/artwork/xzJvV1');
-const wishingBox = new SetProperty('assets/images/projects/wishingBox_thumbnails/'      , 'wishingBox_thumbnails'      , '.jpg' , '_03', ['_01','_02','_04','_05','_06']);
-const giant      = new SetProperty('assets/images/projects/giant_thumbnails/'           , 'giant_thumbnails'           , '.jpg' , '_01', ['_02','_03','_04','_05','_06','_07']);
+const table      = new SetProperty(THI.table_scene      , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const chandelier = new SetProperty(THI.chandelier_scene , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const sunrise    = new SetProperty(THI.sunrise_scene    , 1 , 'https://www.artstation.com/artwork/lVYmZO');
+const woman      = new SetProperty(THI.woman_scene      , 2 , 'https://www.artstation.com/artwork/xzJvV1');
+const wishingBox = new SetProperty(THI.wishingBox       , 2 );
+const giant      = new SetProperty(THI.giant            , 0 );
 
 export const workThumbnails = [table, chandelier, sunrise, woman, wishingBox, giant];
 
 //------------paint thumbnails------------//
 
-const paint01 = new SetProperty('assets/images/paintings/painting01/', 'painting01', '.jpg', '_01', []                       , 'https://www.artstation.com/artwork/KD3eR');
-const paint02 = new SetProperty('assets/images/paintings/painting02/', 'painting02', '.jpg', '_01', ['_02','_03','_04','_05'], 'https://www.artstation.com/artwork/Km68B');
-const paint03 = new SetProperty('assets/images/paintings/painting03/', 'painting03', '.jpg', '_01', ['_02','_03','_04','_05']);
-const paint04 = new SetProperty('assets/images/paintings/painting04/', 'painting04', '.jpg', '_01', ['_02','_03','_04','_05']);
-const paint05 = new SetProperty('assets/images/paintings/painting05/', 'painting05', '.jpg', '_01', ['_02']);
-const paint06 = new SetProperty('assets/images/paintings/painting06/', 'painting06', '.jpg', '_01', ['_02','_03','_04','_05']);
+const paint01 = new SetProperty(THI.painting01 , 0 , 'https://www.artstation.com/artwork/KD3eR');
+const paint02 = new SetProperty(THI.painting02 , 0 , 'https://www.artstation.com/artwork/Km68B');
+const paint03 = new SetProperty(THI.painting03 , 0 );
+const paint04 = new SetProperty(THI.painting04 , 0 );
+const paint05 = new SetProperty(THI.painting05 , 0 );
+const paint06 = new SetProperty(THI.painting06 , 0 );
 
 export const paintThumbnails = [paint01, paint02, paint03, paint04, paint05, paint06]
 
@@ -100,6 +99,9 @@ Thumbnails.prototype.createThumbnails = function(){
   // })
   // console.log('this.id: ', this.id)
   // console.log('this.projects: ',this.projects)
+
+
+
   this.projects.forEach(project=>{
     let alinedImgs = this.createAlinedImages(project);
 
@@ -163,7 +165,7 @@ Thumbnails.prototype.createAlinedImages = function(project){
   let imgs = [];
 
   let img = document.createElement('img');
-  img.src = project.path + project.name + project.main + project.extension;
+  img.src = project.array[project.main]; 
   img.classList.add('mainContent');
   img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
@@ -179,30 +181,34 @@ Thumbnails.prototype.createAlinedImages = function(project){
     imgs.push(a);
 
   }else{
+
     imgs.push(img);
+    
   };
 
-  project.sub.forEach(sub=>{
-    let img = document.createElement('img');
-    img.src = project.path + project.name + sub + project.extension;
-    img.classList.add('subContent');
-    img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-    if(project.artstation !=null){
+  project.array.forEach((array, i)=>{
+    if( i != project.main){
+      let img = document.createElement('img');
+      img.src = project.array[i];
+      img.classList.add('subContent');
+      img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-        let a = document.createElement('a');
-        a.href= project.artstation;
-        a.setAttribute('target','_blank');
-        
-        a.classList.add('a');
+      if(project.artstation !=null){
 
-        a.appendChild(img);
-        imgs.push(a);
+          let a = document.createElement('a');
+          a.href= project.artstation;
+          a.setAttribute('target','_blank');
+          
+          a.classList.add('a');
 
-    }else{
-        imgs.push(img);
-    };
+          a.appendChild(img);
+          imgs.push(a);
 
+      }else{
+          imgs.push(img);
+      };
+    }
   });
   return imgs
 };
@@ -212,7 +218,6 @@ Thumbnails.prototype.createAlinedImages = function(project){
 
 
 Thumbnails.prototype.updateResize = function(){
-  console.log('grsrg')
   // if(biggerElem === this.elem){
   //   // if(innerWidth < 1400){
   //   //   document.querySelector(`#${biggerElem.id} .contents .groupedImages`).style.display = 'initial';
