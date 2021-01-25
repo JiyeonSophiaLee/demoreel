@@ -31,7 +31,7 @@ lighterVersion.style.alignSelf = 'center';
 
 lighterVersion_child.innerHTML = 'This is lighter version <br> This does not contain THREE JS';
 lighterVersion_child.setAttribute('target','_black');
-lighterVersion_child.setAttribute('href','demoLighter.html');
+lighterVersion_child.setAttribute('href','lighter.html');
 lighterVersion_child.style.color = 'BurlyWood';
 lighterVersion_child.style.textDecoration = 'none';
 lighterVersion_child.style.display = 'block';

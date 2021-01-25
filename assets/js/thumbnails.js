@@ -40,16 +40,8 @@ export const paintThumbnails = [paint01, paint02, paint03, paint04, paint05, pai
 export default function Thumbnails(id,projects){
   this.id = id;
   this.projects = projects;
-  // // this.path = projects.reduce((prev,cur)=>{ prev.push(cur.path); return prev},[]);
-  // // this.name = projects.reduce((prev,cur)=>{ prev.push(cur.name); return prev},[]);
-  // // this.extension = projects.reduce((prev,cur)=>{ prev.push(cur.extension); return prev},[]);
-  // // this.main = projects.reduce((prev,cur)=>{ prev.push(cur.main); return prev},[]);
-  // // this.sub = projects.reduce((prev,cur)=>{ prev.push(cur.sub); return prev},[]);
-  // // this.artstation = projects.reduce((prev,cur)=>{ prev.push(cur.artstation); return prev},[]);
 
   this.createThumbnails();
-
-
 }
 
 
