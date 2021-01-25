@@ -4,6 +4,7 @@ import UtilityController from '/assets/js/utilityController.js';
 import Thumbnails, {workThumbnails, paintThumbnails} from '/assets/js/thumbnails.js';
 import Skills, {skillListTL} from '/assets/js/skills.js';
 import Info from '/assets/js/info.js';
+import 'regenerator-runtime/runtime';
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -23,9 +24,9 @@ ISU.allElems.forEach((elem)=>{
   SetDefaultRectSize(elem)
 });
 
-let demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
+let demoVideoHeight;
+getDemoVideHeight(menuExpanded);
 ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
-
 
 
 const LOGOcallClickEvent = function(){
@@ -37,7 +38,6 @@ const LOGOcallClickEvent = function(){
     eval(biggerElem.id + 'MenuController').expandMenu();
   }
 }
-
 
 
 
@@ -66,6 +66,7 @@ function MenuController(id, hasThumbnail=false, hasSkills=false, hasInfo = false
     this.expandMenu();
   }
   
+
   
   
  
@@ -89,7 +90,6 @@ MenuController.prototype.Thumbnails = (id,hasThumbnail)=> new Thumbnails(id,hasT
 MenuController.prototype.Skills = (id,hasSkills)=>new Skills(id,hasSkills);
 MenuController.prototype.Info = (id)=>new Info(id);
 
-
 //--Event Listenr functions----------
 MenuController.prototype.addEventCB = function(){
   console.log('add')
@@ -105,7 +105,6 @@ MenuController.prototype.callFuncs = function(){
     this.Skills.callSkills();
   }
   if(typeof this.Info =='object' && this.id == biggerElem.id){
-    console.log('-------this.elem-------', this.elem)
     this.Info.callInfo();
   }
   
@@ -155,9 +154,8 @@ MenuController.prototype.expandMenu = function(){
     biggerElem = this.elem;
     
     //----calculate demo height in order to give the same result to all functions------------------------
-    getDemoVideHeight();
-    
-    
+    getDemoVideHeight(menuExpanded);
+
 
     async function callPromise(){
       try{
@@ -179,7 +177,7 @@ MenuController.prototype.expandMenu = function(){
     biggeredController = eval(biggeredElem.id+'MenuController');
 
     //----calculate demo height in order to give the same result to all functions------------------------
-    getDemoVideHeight();
+    getDemoVideHeight(menuExpanded);
 
     async function callPromise(){
       try{
@@ -207,7 +205,6 @@ MenuController.prototype.expandMenu = function(){
         const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
         const stopWavyAnim = await this.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
-        // const wavyAnim = await this.Rect.createWavyAnimation();
         const stopFuncs = await Promise.all([this.addEventCB()]);
       }catch(e){
         console.log('error');
@@ -219,17 +216,7 @@ MenuController.prototype.expandMenu = function(){
 
 
   }
-  function getDemoVideHeight(){
-    if(window.innerWidth > 800){
-      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-    }else{
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }
-    };
-  };
+
 }
 
 
@@ -237,8 +224,12 @@ MenuController.prototype.expandMenu = function(){
 
 
 MenuController.prototype.updateResize = function(){
+  getDemoVideHeight(menuExpanded);
+  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
 
-  this.Rect.updateResize(biggerElem,menuExpanded);
+
+
+  this.Rect.updateResize(biggerElem,menuExpanded,demoVideoHeight);
   if(biggerElem != null){
     if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
       this.Thumbnails.updateResize();
@@ -248,8 +239,7 @@ MenuController.prototype.updateResize = function(){
     }   
   }
 
-  demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
-  ISU.DEMO_VIDEO.style.height = demoVideoHeight +'px';
+
   
   if(innerWidth > 800){
     ISU.MENU__.style.height = '100%';
@@ -284,6 +274,33 @@ MenuController.prototype.hoveroverOn = function(){
 MenuController.prototype.hoveroverOff = function(){
   this.Rect.hoveroverOff(biggerElem);
 }
+
+
+
+//----------------get Demo Video Height----------------//
+function getDemoVideHeight(menuExpanded){
+  if(window.innerWidth > 800){
+    if(menuExpanded){
+      demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
+    }else{
+      demoVideoHeight = parseFloat(window.getComputedStyle(ISU.DEMO_VIDEO).width) * (9/16);
+    }
+  }else{
+    if(menuExpanded){
+      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+        demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }else{
+        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }
+    }else{
+      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+        demoVideoHeight = (window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }else{
+        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }
+    }
+  };
+};
 
 
 let workMenuController = new MenuController('work', workThumbnails);
