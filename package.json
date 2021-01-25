@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "pug": "^3.0.0"
+  },
+  "dependencies": {
+    "regenerator-runtime": "^0.13.7"
+  }
+}
