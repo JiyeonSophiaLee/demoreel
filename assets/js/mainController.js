@@ -1,3 +1,4 @@
+console.log('mainController.js is working')
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';

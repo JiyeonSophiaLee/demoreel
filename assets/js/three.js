@@ -1,3 +1,4 @@
+console.log('three.js is working');
 import * as THREE from '/assets/THREE_js/script/three.module.js';
 import {GLTFLoader} from '/assets/THREE_js/script/GLTFLoader.js';
 // import {RGBELoader} from '/assets/THREE_js/script/RGBELoader.js';

@@ -1,6 +1,6 @@
+console.log('thumbnail.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import * as THI from '/assets/js/thumbnail_Images.js';
-
 
 
 function SetProperty(array,main,artstation=null){

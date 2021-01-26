@@ -8,11 +8,11 @@
 	<meta name="keywords" content="3D Artist,Fonted Engeener,3d,maya,javscript,demo">
 	<meta name="auto" content="Sophia Jiyeon Lee">
 	<title>Sophia Jiyeon Personal Demo Website</title>
-	<link rel="stylesheet" href="./style.26fff926.css">
-	<link rel="stylesheet" href="./style_Thumbnails.d3c7e6af.css">
-	<link rel="stylesheet" href="./style_Skills.26a765cb.css">
-	<link rel="stylesheet" href="./style_Info.d4919656.css">
-	<link rel="stylesheet" href="./fontello.826f0000.css">
+	<link rel="stylesheet" href="style.4fa82327.css">
+	<link rel="stylesheet" href="style_Thumbnails.d3c7e6af.css">
+	<link rel="stylesheet" href="style_Skills.26a765cb.css">
+	<link rel="stylesheet" href="style_Info.d4919656.css">
+	<link rel="stylesheet" href="fontello.e04c6b02.css">
 	<link href="https://fonts.googleapis.com/css?family=Text+Me+One&amp;display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&amp;display=swap" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
@@ -22,8 +22,8 @@
 	<div id="master">
 		<section id="demo">
 			<header id="logo">
-				<img id="logoHeighter" src="./logo_heighter.5de9c70b.svg" alt="Sophia Logo">
-				<img id="logoWider" src="./logo_wider.9090bc9f.svg" alt="Sophia Logo">
+				<img id="logoHeighter" src="logo_heighter.5de9c70b.svg" alt="Sophia Logo">
+				<img id="logoWider" src="logo_wider.9090bc9f.svg" alt="Sophia Logo">
 			</header>
 			<header id="demoVideo">
 				<iframe src="https://player.vimeo.com/video/374348394?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
@@ -38,7 +38,19 @@
 					<div class="neon neon1"></div>
 					<div class="neon neon2"></div>
 					<svg>
-						<rect/>
+						<defs>
+                            <linearGradient id="workRectColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%" stop-color="rgb(220, 51, 35)"></stop>
+                                <stop offset="90%" stop-color="rgb(212, 116, 43)"></stop>
+                            </linearGradient>
+                            <linearGradient id="SVGIvory" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%" stop-color="ivory"></stop>
+                                <stop offset="90%" stop-color="ivory"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path class="wavyPath" id="workRectWavy1" fill="none" stroke="#ff3b29"></path>
+                        <path class="wavyPath" id="workRectWavy2" fill="none" stroke="#ff8c34"></path>
+                        <rect id="workRect"></rect>
 					</svg>
 				</div>
 				<div class="contents"></div>
@@ -49,7 +61,15 @@
 					<div class="neon neon1"></div>
 					<div class="neon neon2"></div>
 					<svg>
-						<rect/>
+						<defs>
+                            <linearGradient id="skillRectColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%" stop-color="rgb(168, 63, 209)"></stop>
+                                <stop offset="90%" stop-color="rgb(192, 49, 91)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path class="wavyPath" id="skillRectWavy1" fill="none" stroke="#cd4dff"></path>
+                        <path class="wavyPath" id="skillRectWavy2" fill="none" stroke="#ff4179"></path>
+                        <rect id="skillRect"></rect>
 					</svg>
 				</div>
 				<div class="contents"></div>
@@ -60,7 +80,15 @@
 					<div class="neon neon1"></div>
 					<div class="neon neon2"></div>
 					<svg>
-						<rect/>
+						<defs>
+                            <linearGradient id="paintRectColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%" stop-color="rgb(225, 149, 46)"></stop>
+                                <stop offset="90%" stop-color="rgb(48, 171, 152)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path class="wavyPath" id="paintRectWavy1" fill="none" stroke="#ffa934"></path>
+                        <path class="wavyPath" id="paintRectWavy2" fill="none" stroke="#30ab98"></path>
+                        <rect id="paintRect"></rect>
 					</svg>
 				</div>
 				<div class="contents"></div>
@@ -71,14 +99,22 @@
 					<div class="neon neon1"></div>
 					<div class="neon neon2"></div>
 					<svg>
-						<rect/>
+						<defs>
+                            <linearGradient id="infoRectColor" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="10%" stop-color="rgb(200, 86, 177)"></stop>
+                                <stop offset="90%" stop-color="rgb(75, 173, 209)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path class="wavyPath" id="infoRectWavy1" fill="none" stroke="#ff6ee2"></path>
+                        <path class="wavyPath" id="infoRectWavy2" fill="none" stroke="#5cd3ff"></path>
+                        <rect id="infoRect"></rect>
 					</svg>
 				</div>
 				<div class="contents">
 					<div class="top">
 						<div id="myPic">
 							<div class="bg"></div>
-							<img src="./myPic.df6846e5.jpg" alt="Sophia's picture">
+							<img src="myPic.df6846e5.jpg" alt="Sophia's picture">
 						</div>
 						<main class="me">
 							<div class="myName">
@@ -136,6 +172,6 @@
 		</section>
 	</div>
 </body>
-<script type="module" src="./mainControllerLighter.57bf3824.js"></script>
+<script type="module" src="mainControllerLighter.4d6f03ec.js"></script>
 
 </html>

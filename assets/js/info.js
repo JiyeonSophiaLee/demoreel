@@ -1,4 +1,6 @@
+console.log('info.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
+
 
 
 export default function Info(id){

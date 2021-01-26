@@ -1,3 +1,4 @@
+console.log('skills.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import _Maya from  '/assets/images/icons/Maya.png';
 import _Vray from  '/assets/images/icons/Vray.png';
@@ -113,7 +114,7 @@ const skillList = {
   'Javascript'        :{ 'name':'Javascript',         'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
   'CSS3'              :{ 'name':'CSS3',               'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
 }
-// const SkillsTLPath = 'assets/images/icons/';
+// const SkillsTLPath = '/assets/images/icons/';
 const colorOffset = ['10%','90%'];
 // const RANDOM_COLOR = ['#628ba7','#dadbe0','#b1b4e1','#8f9ca0','#001f44','#fe9ac3','#fde6c7','#ffaeaa','#fe5f7c','#ffb582','#30d9e7','#00bcad','#00a295','#007bc8','#006ebe'];
 const RANDOM_COLOR = ['#dc6c6c','#dc6cae','#dc6cc8','#816cdc','#6ca1dc','#6cdccb','#6cdc6f','#b1dc6c','#dccd6c','#dc9e6c'];

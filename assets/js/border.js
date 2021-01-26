@@ -1,8 +1,10 @@
+console.log('border.js is working')
 import * as ISU from '/assets/js/InitialSetUp.js';
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
 // import { CSSRulePlugin } from "/assets/scripts/CSSRulePlugin.js";
 // gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
+
 
 const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transitionValue['duration'],ease: "power1.inOut"})
 
