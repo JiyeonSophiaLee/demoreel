@@ -8,9 +8,9 @@ import Info from '/assets/js/info.js';
 import {callAstronaut, pauseAstronaut} from '/assets/js/three.js';
 import 'regenerator-runtime/runtime';
 //------gsap------//
-// import gsap from './assets/scripts/gsap-core.js';
-// import { CSSPlugin } from "./assets/scripts/CSSPlugin.js";
-// import { CSSRulePlugin } from "./assets/scripts/CSSRulePlugin.js";
+// import gsap from '/assets/scripts/gsap-core.js';
+// import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
+// import { CSSRulePlugin } from "/assets/scripts/CSSRulePlugin.js";
 // gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
 // let test = new Thumbnails(workThumbnails)
 
