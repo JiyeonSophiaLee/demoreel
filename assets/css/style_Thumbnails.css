@@ -62,8 +62,9 @@
   .alinedImagesChild img{
     border-radius: 20px;
     padding: 0.1vw;
-    width:100%;
-    height:100%;
+    width:-webkit-fill-available;
+    height:-webkit-fill-available;
+    object-fit: cover;
   }
   @media (min-width:2500px){
     .alinedImagesChild img{
