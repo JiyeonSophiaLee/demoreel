@@ -51,7 +51,7 @@ Astronaut();
 function Astronaut() {
 
     
-  renderer = new THREE.WebGLRenderer( { antialias: false} );
+  renderer = new THREE.WebGLRenderer( { antialias: false, powerPreference:"high-performance"} );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
