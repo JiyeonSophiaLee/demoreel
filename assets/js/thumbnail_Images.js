@@ -49,34 +49,34 @@ import woman_scene_08 from  '/assets/images/projects/woman_scene_thumbnails/woma
 
 
 
-import painting01_01 from  '/assets/images/paintings/painting01/painting01_01.jpg';
+import painting01_01 from  '/assets/images/paintings/painting01_thumbnails/painting01_thumbnails_01.jpg';
 
-import painting02_01 from  '/assets/images/paintings/painting02/painting02_01.jpg';
-import painting02_02 from  '/assets/images/paintings/painting02/painting02_02.jpg';
-import painting02_03 from  '/assets/images/paintings/painting02/painting02_03.jpg';
-import painting02_04 from  '/assets/images/paintings/painting02/painting02_04.jpg';
-import painting02_05 from  '/assets/images/paintings/painting02/painting02_05.jpg';
+import painting02_01 from  '/assets/images/paintings/painting02_thumbnails/painting02_thumbnails_01.jpg';
+import painting02_02 from  '/assets/images/paintings/painting02_thumbnails/painting02_thumbnails_02.jpg';
+import painting02_03 from  '/assets/images/paintings/painting02_thumbnails/painting02_thumbnails_03.jpg';
+import painting02_04 from  '/assets/images/paintings/painting02_thumbnails/painting02_thumbnails_04.jpg';
+import painting02_05 from  '/assets/images/paintings/painting02_thumbnails/painting02_thumbnails_05.jpg';
 
-import painting03_01 from  '/assets/images/paintings/painting03/painting03_01.jpg';
-import painting03_02 from  '/assets/images/paintings/painting03/painting03_02.jpg';
-import painting03_03 from  '/assets/images/paintings/painting03/painting03_03.jpg';
-import painting03_04 from  '/assets/images/paintings/painting03/painting03_04.jpg';
-import painting03_05 from  '/assets/images/paintings/painting03/painting03_05.jpg';
+import painting03_01 from  '/assets/images/paintings/painting03_thumbnails/painting03_thumbnails_01.jpg';
+import painting03_02 from  '/assets/images/paintings/painting03_thumbnails/painting03_thumbnails_02.jpg';
+import painting03_03 from  '/assets/images/paintings/painting03_thumbnails/painting03_thumbnails_03.jpg';
+import painting03_04 from  '/assets/images/paintings/painting03_thumbnails/painting03_thumbnails_04.jpg';
+import painting03_05 from  '/assets/images/paintings/painting03_thumbnails/painting03_thumbnails_05.jpg';
 
-import painting04_01 from  '/assets/images/paintings/painting04/painting04_01.jpg';
-import painting04_02 from  '/assets/images/paintings/painting04/painting04_02.jpg';
-import painting04_03 from  '/assets/images/paintings/painting04/painting04_03.jpg';
-import painting04_04 from  '/assets/images/paintings/painting04/painting04_04.jpg';
-import painting04_05 from  '/assets/images/paintings/painting04/painting04_05.jpg';
+import painting04_01 from  '/assets/images/paintings/painting04_thumbnails/painting04_thumbnails_01.jpg';
+import painting04_02 from  '/assets/images/paintings/painting04_thumbnails/painting04_thumbnails_02.jpg';
+import painting04_03 from  '/assets/images/paintings/painting04_thumbnails/painting04_thumbnails_03.jpg';
+import painting04_04 from  '/assets/images/paintings/painting04_thumbnails/painting04_thumbnails_04.jpg';
+import painting04_05 from  '/assets/images/paintings/painting04_thumbnails/painting04_thumbnails_05.jpg';
 
-import painting05_01 from  '/assets/images/paintings/painting05/painting05_01.jpg';
-import painting05_02 from  '/assets/images/paintings/painting05/painting05_02.jpg';
+import painting05_01 from  '/assets/images/paintings/painting05_thumbnails/painting05_thumbnails_01.jpg';
+import painting05_02 from  '/assets/images/paintings/painting05_thumbnails/painting05_thumbnails_02.jpg';
 
-import painting06_01 from  '/assets/images/paintings/painting06/painting06_01.jpg';
-import painting06_02 from  '/assets/images/paintings/painting06/painting06_02.jpg';
-import painting06_03 from  '/assets/images/paintings/painting06/painting06_03.jpg';
-import painting06_04 from  '/assets/images/paintings/painting06/painting06_04.jpg';
-import painting06_05 from  '/assets/images/paintings/painting06/painting06_05.jpg';
+import painting06_01 from  '/assets/images/paintings/painting06_thumbnails/painting06_thumbnails_01.jpg';
+import painting06_02 from  '/assets/images/paintings/painting06_thumbnails/painting06_thumbnails_02.jpg';
+import painting06_03 from  '/assets/images/paintings/painting06_thumbnails/painting06_thumbnails_03.jpg';
+import painting06_04 from  '/assets/images/paintings/painting06_thumbnails/painting06_thumbnails_04.jpg';
+import painting06_05 from  '/assets/images/paintings/painting06_thumbnails/painting06_thumbnails_05.jpg';
 
 
 const chandelier_scene = [chandelier_scene_01, chandelier_scene_02, chandelier_scene_03, chandelier_scene_04, chandelier_scene_05, chandelier_scene_06, chandelier_scene_07];
