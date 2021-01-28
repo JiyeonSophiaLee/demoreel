@@ -5,8 +5,8 @@ import {GLTFLoader} from '/assets/THREE_js/script/GLTFLoader.js';
 // import {RoughnessMipmapper} from '/assets/THREE_js/script/RoughnessMipmapper.js';
 // import {OrbitControls} from '/assets/THREE_js/script/OrbitControls.js';
 // import Stats from '/assets/THREE_js/script/stats.module.js';
-import {GUI} from '/assets/THREE_js/script/dat.gui.module.js'
-import astronautGLTF from '/assets/THREE_js/astronaut_v06.gltf';
+// import {GUI} from '/assets/THREE_js/script/dat.gui.module.js'
+import astronautGLTF from '/assets/THREE_js/astronaut_v07.gltf';
 import _sky00 from '/assets/images/hdr/space_00.jpg';
 import _sky01 from '/assets/images/hdr/space_01.jpg';
 import _sky02 from '/assets/images/hdr/space_02.jpg';
@@ -51,7 +51,7 @@ Astronaut();
 function Astronaut() {
 
     
-  renderer = new THREE.WebGLRenderer( { antialias: false} );
+  renderer = new THREE.WebGLRenderer( { antialias: false, powerPreference:"high-performance"} );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -61,10 +61,11 @@ function Astronaut() {
     // renderer.domElement.style.height = renderer.domElement.height*0.8 +'px';
   renderer.shadowMap.enabled = true;
   threeJSCanvas.appendChild( renderer.domElement );
+  renderer.physicallyCorrectLights;
   // renderer.setClearColor ('#1e1e1e', 1)
 
     
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.25, 100 );
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 30 );
   camera.position.set(0,0,5);
   camera.lookAt(new THREE.Vector3(0, 1, 0));
 

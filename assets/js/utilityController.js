@@ -54,7 +54,7 @@ UtilityController.prototype.expandMenuElseIf = function(biggeredElem){
   console.log('unitiycontroller expandMenuElseIf is working+')
   // return new Promise((resolve, reject)=>{
     ISU.select(`#${biggeredElem.id} .text`).style.visibility = 'visible'
-    ISU.select(`#${biggeredElem.id} .contents`).style.zIndex = '0';
+    ISU.select(`#${biggeredElem.id} .contents`).style.zIndex = '-1';
     
     // ISU.select(`#${this.id} .neon1`).style.display = 'none';
     // ISU.select(`#${this.id} .neon2`).style.display = 'none';
