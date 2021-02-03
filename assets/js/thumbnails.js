@@ -1,7 +1,6 @@
 console.log('thumbnail.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
-import * as THI from '/assets/js/thumbnail_Images.js';
-
+import * as THI from '/assets/js/thumbnail_LoadingImages.js';
 
 function SetProperty(array,main,artstation=null){
   this.array = array;
@@ -11,14 +10,15 @@ function SetProperty(array,main,artstation=null){
 
 //------------work thumbnails------------//
 
-const table      = new SetProperty(THI.table_scene      , 0 , 'https://www.artstation.com/artwork/Q2roZ');
-const chandelier = new SetProperty(THI.chandelier_scene , 0 , 'https://www.artstation.com/artwork/Q2roZ');
-const sunrise    = new SetProperty(THI.sunrise_scene    , 1 , 'https://www.artstation.com/artwork/lVYmZO');
-const woman      = new SetProperty(THI.woman_scene      , 2 , 'https://www.artstation.com/artwork/xzJvV1');
-const wishingBox = new SetProperty(THI.wishingBox       , 2 );
-const giant      = new SetProperty(THI.giant            , 0 );
+const astronautRigging = new SetProperty('https://youtu.be/NH--5uqu4Zg', 0 , 'https://youtu.be/NH--5uqu4Zg')
+const table            = new SetProperty(THI.table_scene               , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const chandelier       = new SetProperty(THI.chandelier_scene          , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const sunrise          = new SetProperty(THI.sunrise_scene             , 1 , 'https://www.artstation.com/artwork/lVYmZO');
+const woman            = new SetProperty(THI.woman_scene               , 2 , 'https://www.artstation.com/artwork/xzJvV1');
+const wishingBox       = new SetProperty(THI.wishingBox                , 2 );
+const giant            = new SetProperty(THI.giant                     , 0 );
 
-export const workThumbnails = [table, chandelier, sunrise, woman, wishingBox, giant];
+export const workThumbnails = [astronautRigging, table, chandelier, sunrise, woman, wishingBox, giant];
 
 //------------paint thumbnails------------//
 
@@ -102,64 +102,69 @@ Thumbnails.prototype.createThumbnails = function(){
     })
   })
 }
-Thumbnails.prototype.createGroupedImages = function(project){
-    let div = document.createElement('div');
-    let img = document.createElement('img');
+// Thumbnails.prototype.createGroupedImages = function(project){
+//     let div = document.createElement('div');
+//     let img = document.createElement('img');
 
-    img.src = project.path + project.name + project.main + project.extension;
-    img.addEventListener('click',(e)=>{ e.stopPropagation() });
+//     img.src = project.path + project.name + project.main + project.extension;
+//     img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-    div.classList.add('projects');
-    img.classList.add('mainContent');
+//     div.classList.add('projects');
+//     img.classList.add('mainContent');
 
 
-    if(project.artstation !=null){
-        let a = document.createElement('a');
-        a.href= project.artstation;
-        a.setAttribute('target','_blank');
+//     if(project.artstation !=null){
+//         let a = document.createElement('a');
+//         a.href= project.artstation;
+//         a.setAttribute('target','_blank');
 
-        a.classList.add('a');
-        a.classList.add('mainContent');
+//         a.classList.add('a');
+//         a.classList.add('mainContent');
 
-        a.appendChild(img);
-        div.appendChild(a);
+//         a.appendChild(img);
+//         div.appendChild(a);
 
-    }else{
-        div.appendChild(img);
-    }
+//     }else{
+//         div.appendChild(img);
+//     }
 
-    project.sub.forEach(sub => {
-        let img = document.createElement('img');
-        img.src = project.path + project.name + sub + project.extension;
-        img.addEventListener('click',(e)=>{ e.stopPropagation() });
+//     project.sub.forEach(sub => {
+//         let img = document.createElement('img');
+//         img.src = project.path + project.name + sub + project.extension;
+//         img.addEventListener('click',(e)=>{ e.stopPropagation() });
 
-        img.classList.add('subContent');
+//         img.classList.add('subContent');
 
-        if(this.artstation !=null){
+//         if(this.artstation !=null){
 
-            let a = document.createElement('a');
-            a.href= project.artstation;
-            a.setAttribute('target','_blank');
+//             let a = document.createElement('a');
+//             a.href= project.artstation;
+//             a.setAttribute('target','_blank');
             
-            a.classList.add('a');
+//             a.classList.add('a');
 
-            a.appendChild(img)
-            div.appendChild(a);
+//             a.appendChild(img)
+//             div.appendChild(a);
     
-        }else{
-            div.appendChild(img);
-        }
-    });
+//         }else{
+//             div.appendChild(img);
+//         }
+//     });
     
-    return div;
-};
+//     return div;
+// };
 Thumbnails.prototype.createAlinedImages = function(project){
-  let imgs = [];
+  let files = [];
+  let file;
 
-  let img = document.createElement('img');
-  img.src = project.array[project.main]; 
-  img.classList.add('mainContent');
-  img.addEventListener('click',(e)=>{ e.stopPropagation() });
+  if (typeof project.array[project.main] == 'object'){
+    file = document.createElement('img');
+  }else{
+    file = document.createElement('div');
+  }
+    file.src = project.array[project.main]; 
+    file.classList.add('mainContent');
+    file.addEventListener('click',(e)=>{ e.stopPropagation() });
 
   if(project.artstation !=null){
     let a = document.createElement('a');
@@ -169,40 +174,43 @@ Thumbnails.prototype.createAlinedImages = function(project){
     a.classList.add('a');
     a.classList.add('mainContent');
 
-    a.appendChild(img);
-    imgs.push(a);
+    a.appendChild(file);
+    files.push(a);
 
   }else{
 
-    imgs.push(img);
+    files.push(file);
     
   };
 
-
-  project.array.forEach((array, i)=>{
-    if( i != project.main){
-      let img = document.createElement('img');
-      img.src = project.array[i];
-      img.classList.add('subContent');
-      img.addEventListener('click',(e)=>{ e.stopPropagation() });
-
-      if(project.artstation !=null){
-
-          let a = document.createElement('a');
-          a.href= project.artstation;
-          a.setAttribute('target','_blank');
-          
-          a.classList.add('a');
-
-          a.appendChild(img);
-          imgs.push(a);
-
-      }else{
-          imgs.push(img);
-      };
-    }
-  });
-  return imgs
+  if(typeof project.array == 'object'){
+    project.array.forEach((array, i)=>{
+      if( i != project.main){
+        console.log(typeof array)
+      //   let img = document.createElement('img');
+      //   img.src = project.array[i];
+      //   img.classList.add('subContent');
+      //   img.addEventListener('click',(e)=>{ e.stopPropagation() });
+  
+      //   if(project.artstation !=null){
+  
+      //       let a = document.createElement('a');
+      //       a.href= project.artstation;
+      //       a.setAttribute('target','_blank');
+            
+      //       a.classList.add('a');
+  
+      //       a.appendChild(img);
+      //       files.push(a);
+  
+      //   }else{
+      //       files.push(img);
+      //   };
+      }
+    });
+  }
+  
+  return files
 };
 
 
