@@ -317,7 +317,7 @@ function getDemoVideHeight(menuExpanded){
 function switchLogos(){
   if(window.innerWidth > 800){
     if(window.innerWidth > window.innerHeight){
-      if((ISU.DEMO__.clientHeight/3) < (ISU.LOGO__.clientWidth*3/4)){
+      if((ISU.DEMO__.clientHeight/3) < (ISU.LOGO__.clientWidth*4/6)){
         console.log('IF?');
         ISU.LOGO_HEIGHER.style.display = 'none';
         ISU.LOGO_WIDER.style.display = 'initial';
