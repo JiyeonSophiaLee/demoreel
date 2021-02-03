@@ -172,7 +172,7 @@ Skills.prototype.createSkillSet = function(){
           </div>
           <svg class="skillGraph">
             <defs> 
-              <filter id="filter">
+              <filter id="filter" color-interpolation-filters="sRGB">
                 <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"></feGaussianBlur>
                 <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="cm"></feColorMatrix>
               </filter>

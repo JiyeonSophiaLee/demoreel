@@ -180,23 +180,24 @@ body{
             padding: 1rem 0;
           }
         }
-        #demo #logoHeighter{
+        #demo #logoHeigher{
           display: initial;
         } 
-          @media (max-width:800px){
-            #demo #logoHeighter{
+          /* @media (max-width:800px){
+            #demo #logoHeigher{
               display: none;
             }
-          }
+          } */
+
 
         #demo #logoWider{
-          display: none;
+          display: initial;
         }
-          @media (max-width:800px){
+          /* @media (min-width:800px){
             #demo #logoWider{
-              display: initial;
+              display: none;
             }
-          }
+          } */
 
 /**
  * 4.1.2 - DemoVideo

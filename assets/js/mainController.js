@@ -22,9 +22,12 @@ let biggeredElem = null;
 let biggeredController =null;
 
 
+
 ISU.allElems.forEach((elem)=>{
   SetDefaultRectSize(elem)
 });
+
+switchLogos();
 
 let demoVideoHeight;
 getDemoVideHeight(menuExpanded);
@@ -235,6 +238,8 @@ MenuController.prototype.updateResize = function(){
 
 
 
+  switchLogos();
+
   this.Rect.updateResize(biggerElem,menuExpanded,demoVideoHeight);
   if(biggerElem != null){
     if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
@@ -244,7 +249,6 @@ MenuController.prototype.updateResize = function(){
       this.Skills.updateResize();
     }   
   }
-
 
   
   if(innerWidth > 800){
@@ -307,6 +311,31 @@ function getDemoVideHeight(menuExpanded){
     }
   };
 };
+
+//----------------general function----------------//
+
+function switchLogos(){
+  if(window.innerWidth > 800){
+    if(window.innerWidth > window.innerHeight){
+      if((ISU.DEMO__.clientHeight/3) < (ISU.LOGO__.clientWidth*4/6)){
+        console.log('IF?');
+        ISU.LOGO_HEIGHER.style.display = 'none';
+        ISU.LOGO_WIDER.style.display = 'initial';
+      }else{
+        console.log('ELSE');
+        ISU.LOGO_HEIGHER.style.display = 'initial';
+        ISU.LOGO_WIDER.style.display = 'none';
+      }
+    }else{
+      ISU.LOGO_HEIGHER.style.display = 'initial';
+      ISU.LOGO_WIDER.style.display = 'none';
+    }
+  }else{
+    ISU.LOGO_HEIGHER.style.display = 'none';
+    ISU.LOGO_WIDER.style.display = 'initial';
+  }
+
+}
 
 
 let workMenuController = new MenuController('work', workThumbnails);

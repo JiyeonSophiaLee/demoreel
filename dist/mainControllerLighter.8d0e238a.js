@@ -124,13 +124,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getRestElems = getRestElems;
-exports.transitionValue = exports.remToPx = exports.pxToRem = exports.rootFontSize = exports.selectAll = exports.select = exports.allElems = exports.INFO_CONTENTS = exports.SKILL_CONTENTS = exports.THREEJS_BlOCKER = exports.TITLE_NAME = exports.DEMO_VIDEO_BG_CSS_ANIM = exports.INFO = exports.PAINT = exports.SKILL = exports.WORK = exports.MENU__ = exports.DEMO_SVG = exports.DEMO_VIDEO = exports.DEMO__ = exports.LOGO_WIDER = exports.LOGO_HEIGHTER = exports.LOGO__ = exports.MASTER = void 0;
+exports.transitionValue = exports.remToPx = exports.pxToRem = exports.rootFontSize = exports.selectAll = exports.select = exports.allElems = exports.INFO_CONTENTS = exports.SKILL_CONTENTS = exports.THREEJS_BlOCKER = exports.TITLE_NAME = exports.DEMO_VIDEO_BG_CSS_ANIM = exports.INFO = exports.PAINT = exports.SKILL = exports.WORK = exports.MENU__ = exports.DEMO_SVG = exports.DEMO_VIDEO = exports.DEMO__ = exports.LOGO_WIDER = exports.LOGO_HEIGHER = exports.LOGO__ = exports.MASTER = void 0;
 var MASTER = document.getElementById('master');
 exports.MASTER = MASTER;
 var LOGO__ = document.getElementById('logo');
 exports.LOGO__ = LOGO__;
-var LOGO_HEIGHTER = document.getElementById('logoHeighter');
-exports.LOGO_HEIGHTER = LOGO_HEIGHTER;
+var LOGO_HEIGHER = document.getElementById('logoHeigher');
+exports.LOGO_HEIGHER = LOGO_HEIGHER;
 var LOGO_WIDER = document.getElementById('logoWider');
 exports.LOGO_WIDER = LOGO_WIDER;
 var DEMO__ = document.getElementById('demo');
@@ -7262,7 +7262,7 @@ Skills.prototype.createSkillSet = function () {
     }
 
     var stops = getStops();
-    var group = "<div id=\"".concat(skill, "\" class=\"_skill\">\n        <div class=\"_skillChild\">\n          <div class=\"skillImage\">\n            <div>\n                <p>").concat(skillList[skill]['name'], "</p>\n                <img src=\"").concat(eval(skill), "\"></img>\n\n            </div>\n          </div>\n          <svg class=\"skillGraph\">\n            <defs> \n              <filter id=\"filter\">\n                <feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"7\" result=\"blur\"></feGaussianBlur>\n                <feColorMatrix in=\"blur\" mode=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9\" result=\"cm\"></feColorMatrix>\n              </filter>\n              <linearGradient id=\"").concat(skill, "Color\" x1=\"0%\" x2=\"100%\" y1=\"0%\" y2=\"0%\">\n                ").concat(stops, "\n              </linearGradient>\n            </defs>\n            <rect class=\"barBG\" width=\"100%\" height=\"calc(").concat(halfBarHeight, "* 3)\" x=\"0\" y=\"calc(").concat(halfCircleSize, " - ").concat(halfBarHeight, " * 1.5 )\" rx=\"").concat(halfBarHeight, "\" ry=\"").concat(halfBarHeight, "\"></rect>\n            <g filter=\"url(#filter)\">\n              <rect class=\"bar\" width=\"calc(").concat(halfCircleSize, " + ").concat(halfCircleSizeEnd, ")\" height=\"calc(").concat(halfBarHeight, "*2)\" x=\"").concat(halfCircleSize, "\" y=\"").concat(ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb), "\" fill=\"url(#").concat(skill, "Color)\"></rect>\n              <circle class=\"barHead1\" cx=\"").concat(halfCircleSize, "\" cy=\"").concat(halfCircleSize, "\" r=\"").concat(halfCircleSize, "\" fill=\"").concat(RANDOM_COLOR[n % 10], "\"></circle>\n              <circle class=\"barHead2\" cx=\"").concat(HalfCircleSize800, "\" cy=\"").concat(HalfCircleSize800, "\" r=\"").concat(HalfCircleSize800, "\" fill=\"").concat(RANDOM_COLOR[n % 10], "\"></circle>\n              <circle class=\"barTail1\" cx=\"calc(").concat(halfCircleSize, " * 2 + ").concat(halfCircleSizeEnd, ")\" cy=\"").concat(halfCircleSize, "\" r=\"").concat(halfCircleSizeEnd, "\" fill=\"").concat(RANDOM_COLOR[(n + 1) % 10], "\"></circle>\n              <circle class=\"barTail2\" cx=\"calc(").concat(HalfCircleSize800, " * 2 + ").concat(HalfCircleSizeEnd800, ")\" cy=\"").concat(HalfCircleSize800, "\" r=\"").concat(HalfCircleSizeEnd800, "\" fill=\"").concat(RANDOM_COLOR[(n + 1) % 10], "\"></circle>\n            </g>\n            <text class=\"percent\" transform=\"matrix(1,0,0,1,").concat(ISU.remToPx(halfCircleSizeNumb * 2 + halfCircleSizeEndNumb), ",").concat(ISU.remToPx(halfCircleSizeNumb), ")\" text-anchor=\"middle\" alignment-baseline=\"middle\">").concat(skillList[skill]['width'] + '%', "</text>\n          </svg>\n          <div class=\"skillInfo\">\n            <div>\n              <div>\n                <div class=\"skillInfo_Name _skillInfo\">\n                  <div class=\"skillInfoName skillInfoText\">").concat(skillList[skill]['name'], "</div>\n                  <div class=\"skillinfoNameBG skillInfoBG\" style=\"background:").concat(RANDOM_COLOR[n % 10], "\"></div>\n                </div>\n                <div class=\"skillInfo_Date _skillInfo\">\n                  <div class=\"skillInfoDate skillInfoText\">").concat(skillList[skill]['date'], "</div>\n                  <div class=\"skillinfoDateBG skillInfoBG\" style=\"background:").concat(RANDOM_COLOR[(n + 1) % 10], "\"></div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>");
+    var group = "<div id=\"".concat(skill, "\" class=\"_skill\">\n        <div class=\"_skillChild\">\n          <div class=\"skillImage\">\n            <div>\n                <p>").concat(skillList[skill]['name'], "</p>\n                <img src=\"").concat(eval(skill), "\"></img>\n\n            </div>\n          </div>\n          <svg class=\"skillGraph\">\n            <defs> \n              <filter id=\"filter\" color-interpolation-filters=\"sRGB\">\n                <feGaussianBlur in=\"SourceGraphic\" stdDeviation=\"7\" result=\"blur\"></feGaussianBlur>\n                <feColorMatrix in=\"blur\" mode=\"matrix\" values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9\" result=\"cm\"></feColorMatrix>\n              </filter>\n              <linearGradient id=\"").concat(skill, "Color\" x1=\"0%\" x2=\"100%\" y1=\"0%\" y2=\"0%\">\n                ").concat(stops, "\n              </linearGradient>\n            </defs>\n            <rect class=\"barBG\" width=\"100%\" height=\"calc(").concat(halfBarHeight, "* 3)\" x=\"0\" y=\"calc(").concat(halfCircleSize, " - ").concat(halfBarHeight, " * 1.5 )\" rx=\"").concat(halfBarHeight, "\" ry=\"").concat(halfBarHeight, "\"></rect>\n            <g filter=\"url(#filter)\">\n              <rect class=\"bar\" width=\"calc(").concat(halfCircleSize, " + ").concat(halfCircleSizeEnd, ")\" height=\"calc(").concat(halfBarHeight, "*2)\" x=\"").concat(halfCircleSize, "\" y=\"").concat(ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb), "\" fill=\"url(#").concat(skill, "Color)\"></rect>\n              <circle class=\"barHead1\" cx=\"").concat(halfCircleSize, "\" cy=\"").concat(halfCircleSize, "\" r=\"").concat(halfCircleSize, "\" fill=\"").concat(RANDOM_COLOR[n % 10], "\"></circle>\n              <circle class=\"barHead2\" cx=\"").concat(HalfCircleSize800, "\" cy=\"").concat(HalfCircleSize800, "\" r=\"").concat(HalfCircleSize800, "\" fill=\"").concat(RANDOM_COLOR[n % 10], "\"></circle>\n              <circle class=\"barTail1\" cx=\"calc(").concat(halfCircleSize, " * 2 + ").concat(halfCircleSizeEnd, ")\" cy=\"").concat(halfCircleSize, "\" r=\"").concat(halfCircleSizeEnd, "\" fill=\"").concat(RANDOM_COLOR[(n + 1) % 10], "\"></circle>\n              <circle class=\"barTail2\" cx=\"calc(").concat(HalfCircleSize800, " * 2 + ").concat(HalfCircleSizeEnd800, ")\" cy=\"").concat(HalfCircleSize800, "\" r=\"").concat(HalfCircleSizeEnd800, "\" fill=\"").concat(RANDOM_COLOR[(n + 1) % 10], "\"></circle>\n            </g>\n            <text class=\"percent\" transform=\"matrix(1,0,0,1,").concat(ISU.remToPx(halfCircleSizeNumb * 2 + halfCircleSizeEndNumb), ",").concat(ISU.remToPx(halfCircleSizeNumb), ")\" text-anchor=\"middle\" alignment-baseline=\"middle\">").concat(skillList[skill]['width'] + '%', "</text>\n          </svg>\n          <div class=\"skillInfo\">\n            <div>\n              <div>\n                <div class=\"skillInfo_Name _skillInfo\">\n                  <div class=\"skillInfoName skillInfoText\">").concat(skillList[skill]['name'], "</div>\n                  <div class=\"skillinfoNameBG skillInfoBG\" style=\"background:").concat(RANDOM_COLOR[n % 10], "\"></div>\n                </div>\n                <div class=\"skillInfo_Date _skillInfo\">\n                  <div class=\"skillInfoDate skillInfoText\">").concat(skillList[skill]['date'], "</div>\n                  <div class=\"skillinfoDateBG skillInfoBG\" style=\"background:").concat(RANDOM_COLOR[(n + 1) % 10], "\"></div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>");
     n += 1;
     skillPack.innerHTML += group;
   };
@@ -8525,7 +8525,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-console.log('mainControllerLight.js is working');
+console.log('mainController.js is working');
 //------gsap------//
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -8539,6 +8539,7 @@ var biggeredController = null;
 ISU.allElems.forEach(function (elem) {
   (0, _border.SetDefaultRectSize)(elem);
 });
+switchLogos();
 var demoVideoHeight;
 getDemoVideHeight(menuExpanded);
 ISU.DEMO_VIDEO.style.height = demoVideoHeight + 'px';
@@ -8877,6 +8878,7 @@ MenuController.prototype.expandMenu = function () {
 MenuController.prototype.updateResize = function () {
   getDemoVideHeight(menuExpanded);
   ISU.DEMO_VIDEO.style.height = demoVideoHeight + 'px';
+  switchLogos();
   this.Rect.updateResize(biggerElem, menuExpanded, demoVideoHeight);
 
   if (biggerElem != null) {
@@ -8945,7 +8947,28 @@ function getDemoVideHeight(menuExpanded) {
   ;
 }
 
-;
+; //----------------general function----------------//
+
+function switchLogos() {
+  if (window.innerWidth > 800) {
+    if (window.innerWidth > window.innerHeight) {
+      if (ISU.DEMO__.clientHeight / 3 < ISU.LOGO__.clientWidth * 4 / 6) {
+        ISU.LOGO_HEIGHER.style.display = 'none';
+        ISU.LOGO_WIDER.style.display = 'initial';
+      } else {
+        ISU.LOGO_HEIGHER.style.display = 'initial';
+        ISU.LOGO_WIDER.style.display = 'none';
+      }
+    } else {
+      ISU.LOGO_HEIGHER.style.display = 'initial';
+      ISU.LOGO_WIDER.style.display = 'none';
+    }
+  } else {
+    ISU.LOGO_HEIGHER.style.display = 'none';
+    ISU.LOGO_WIDER.style.display = 'initial';
+  }
+}
+
 var workMenuController = new MenuController('work', _thumbnails.workThumbnails);
 var skillMenuController = new MenuController('skill', false, _skills.skillListTL);
 var paintMenuController = new MenuController('paint', _thumbnails.paintThumbnails);
