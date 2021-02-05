@@ -19,6 +19,8 @@ import _Python from  '/assets/images/icons/Python.png';
 import _HTML from  '/assets/images/icons/HTML.png';
 import _Javascript from  '/assets/images/icons/Javascript.png';
 import _CSS3 from  '/assets/images/icons/CSS3.png';
+import _ThreeJS from  '/assets/images/icons/ThreeJS.png';
+import _GreenSock from  '/assets/images/icons/GreenSock.png';
 
 
 const Maya = _Maya;
@@ -39,6 +41,8 @@ const Nuke = _Nuke;
 const Python = _Python;
 const HTML = _HTML;
 const Javascript = _Javascript;
+const ThreeJS = _ThreeJS;
+const GreenSock = _GreenSock;
 const CSS3 = _CSS3;
 
 
@@ -102,17 +106,19 @@ const skillList = {
   'MarvelousDesigner' :{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
   'SubstancePainter'  :{ 'name':`Substance Painter`,  'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
   'SubstanceDesigner' :{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
-  'Mari'              :{ 'name':'Mari',              'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
+  'Mari'              :{ 'name':'Mari',               'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
   'Mudbox'            :{ 'name':'Mudbox',             'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
   'Photoshop'         :{ 'name':'Photoshop',          'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
   'threeDCoat'        :{ 'name':`3D Coat`,            'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
   'RezomUV'           :{ 'name':`Rezom UV`,           'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'from 2014'},
   'AfterEffects'      :{ 'name':`After Effects`,      'width':60, 'color': ['#c88fff', '#312963'], 'date': 'from 2018'},
   'Nuke'              :{ 'name':'Nuke',               'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'from 2011'},
-  'Python'            :{ 'name':'Python',             'width':30, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'},
   'HTML'              :{ 'name':'HTML',               'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'from 2019'},
-  'Javascript'        :{ 'name':'Javascript',         'width':50, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
-  'CSS3'              :{ 'name':'CSS3',               'width':50, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'}
+  'CSS3'              :{ 'name':'CSS3',               'width':80, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'},
+  'Javascript'        :{ 'name':'Javascript',         'width':70, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'ThreeJS'           :{ 'name':'ThreeJS',            'width':75, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'GreenSock'         :{ 'name':'Green Sock',         'width':75, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'Python'            :{ 'name':'Python',             'width':45, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'}
 }
 // const SkillsTLPath = '/assets/images/icons/';
 const colorOffset = ['10%','90%'];
@@ -217,6 +223,10 @@ Skills.prototype.createSkillSet = function(){
   })
 }
 
+
+
+//---------Even Listener--------------//
+
 Skills.prototype.callSkills = function(){
   ISU.SKILL_CONTENTS.style.display = 'initial';
 
@@ -251,6 +261,15 @@ Skills.prototype.updateResize = function(){
     });
   // }
 }
+
+
+
+
+
+
+//-----------------------------------------------//
+//-------------------Skills TL-------------------//
+
 
 function SkillsTL(id){
   this.id = id;
@@ -305,22 +324,23 @@ SkillsTL.prototype.setDefaultValues = function(){
 
 SkillsTL.prototype.setWidths = function(){
   let svgWidth = ISU.select(`#skill .contents svg`).clientWidth;
-  
-  this.barEachWidth = (svgWidth - ( ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100 + ISU.remToPx(halfCircleSizeNumb);
+
+  this.barEachWidth = (svgWidth - ( ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100;
   this.barCircleEachEnd = this.barEachWidth + ISU.remToPx(halfCircleSizeNumb);
-  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
+  this.barFullWidth = svgWidth - ISU.remToPx(halfCircleSizeEndNumb);
 }
 
 SkillsTL.prototype.getCallGraphTL = function(){
   this.setWidths();
   setUnitSize();
+  console.log('ID=>',this.id)
 
   this.bar.style.height = `calc(${halfBarHeight}*2)`;
   this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
-  this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
+  // this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
   this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
   this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
 
@@ -337,7 +357,7 @@ SkillsTL.prototype.getCallGraphTL = function(){
     .fromTo(this.barTail1,{
         attr: {cx: this.barTail_startPosition_cx}
       },{
-        attr: {cx: this.barCircleEachEnd},
+        attr:  {cx: this.barCircleEachEnd},
         duration: ISU.transitionValue['skillTLDuration'],
         ease: ISU.transitionValue['skillTLEase']
       },0
@@ -355,9 +375,9 @@ SkillsTL.prototype.getCallGraphTL = function(){
 }
 
 SkillsTL.prototype.setWidths800 = function(){
-  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
-    
+  this.barFullWidth = ISU.select(`#skill .contents svg`).clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
 }
+
 SkillsTL.prototype.getCallGraphTL800 = function(){
   this.setWidths800();
   setUnitSize();
@@ -367,15 +387,16 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
-  this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
-  this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
-  this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+  // this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
+  // this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  // this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
 
 
   this.callGraphTL800.clear();
   this.callGraphTL800
-    .to(this.elem,
-      {
+    .fromTo(this.elem,{
+      height: ISU.remToPx(halfCircleSizeNumb*2)
+      },{
         height: ISU.remToPx(halfCircleSizeNumb*3),
         duration: ISU.transitionValue['skillTLDuration800'],
         ease: ISU.transitionValue['skillTLEase800']
@@ -392,7 +413,7 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
     .to(this.bar,
       {   
         attr: {y:ISU.remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb)},
-        width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+        width: this.barFullWidth - ISU.remToPx(halfCircleSizeNumb),
         duration: ISU.transitionValue['skillTLDuration800'],
         // transformOrigin:"center center",
         ease: ISU.transitionValue['skillTLEase800']
@@ -416,8 +437,9 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
       },
       0.5
     )
-    .to(this.barHead2,
-      {
+    .fromTo(this.barHead2,{
+        attr: {cy: ISU.remToPx(halfCircleSizeNumb)},
+      },{
         attr: {cy: ISU.remToPx(halfCircleSizeNumb*2)},
         duration: ISU.transitionValue['skillTLDuration800'],
         ease: ISU.transitionValue['skillTLEase800']
@@ -498,28 +520,10 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
 }
 
 
-
-
-SkillsTL.prototype.hoveroverOn = function(){
-  if(innerWidth > 800){
-//         this.playExpandGraphTL();
-    // this.setWidths();
-    this.getExpandGraph();
-    this.expandGraphTL.play();
-  }
-}
-
-SkillsTL.prototype.hoveroverOff = function(){
-  if(innerWidth > 800){
-//         this.reverseExpandGraphTL();
-    this.expandGraphTL.reverse();
-  }
-}
-
 SkillsTL.prototype.getExpandGraph = function(){
   this.setWidths();
 
-  this.expandGraphTL.clear();
+  // this.expandGraphTL.clear();
   this.expandGraphTL
     .fromTo(this.skillColor1[0],{
         stopColor: this.skillColor1[1]
@@ -641,6 +645,36 @@ SkillsTL.prototype.getExpandGraph = function(){
 
 
 
+//---------Hover Over--------------//
+
+
+
+
+SkillsTL.prototype.hoveroverOn = function(){
+  if(innerWidth > 800){
+//         this.playExpandGraphTL();
+    // this.setWidths();
+    this.getExpandGraph();
+    this.expandGraphTL.play();
+  }
+}
+
+SkillsTL.prototype.hoveroverOff = function(){
+  if(innerWidth > 800){
+//         this.reverseExpandGraphTL();
+    this.expandGraphTL.reverse();
+    // this.expandGraphTL.clear();
+  }
+}
+
+
+
+
+//---------updateResize--------------//
+
+
+
+
 
 SkillsTL.prototype.updateResize = function(){
   setUnitSize();
@@ -722,12 +756,144 @@ SkillsTL.prototype.updateResize = function(){
 
 
 
-  this.callGraphTL.clear();
-  this.callGraphTL800.clear();
+SkillsTL.prototype.getExpandGraph = function(){
+  this.setWidths();
+
+  // this.expandGraphTL.clear();
+  this.expandGraphTL
+    .fromTo(this.skillColor1[0],{
+        stopColor: this.skillColor1[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
+    .fromTo(this.skillColor2[0],{
+        stopColor: this.skillColor2[1]
+      },{
+        stopColor:'#ffffff',
+        duration:1,
+        ease:"power1.out"
+      },0
+    )
+
+
+    .to(this.bar,{   
+        scaleY:2.3,
+        duration:1,
+        transformOrigin:"center center",
+        ease: "elastic.out(1, 0.3)"
+      },0
+    )
+    .fromTo(this.bar,{
+        width: this.barEachWidth
+      },{   
+        width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
+
+
+    .to(this.barHead1,
+      {
+        attr:{fill:'#ffffff'},
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
+    .to(this.barHead1,
+      {
+        scale:0.95,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+      },
+      0
+    )
+    .to(this.barHead1,
+      {
+        scale:1,
+        transformOrigin:"center center",
+        duration:0.5,
+        ease: "elastic.out(1, 0.3)"
+    }, 0.5
+    )
+
+
+    .to(this.barTail1,
+      {
+        attr:{fill:'#ffffff'},
+        duration:1
+      },0
+    )
+    .fromTo(this.barTail1,{
+        attr:{cx: this.barCircleEachEnd},
+      },{
+        attr:{cx: this.barFullWidth},
+        duration:1,
+        ease: "bounce.out"
+      },0
+    )
+
+        
+    .fromTo(this.percent,
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
+        },
+        {
+            attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${ISU.remToPx(halfCircleSizeNumb)})`},
+            duration:1,
+            ease: "bounce.out"
+        },
+        0
+    )
+
+
+
+    .to(this.skillInfoBG,
+      {
+        scaleY:1,
+        duration:0.3,
+        stagger: 0.3,
+        ease:"power2.inOut"
+      },0
+    )
+    .to(this.skillInfoBG,
+      {
+        scaleY:0,
+        duration:0.3,
+        stagger: 0.3,
+        ease:"power2.inOut"
+      },0.3
+    )
+    .to(this.skillInfoText,
+      {
+        opacity:1,
+        duration:0.1,
+        stagger: 0.3,
+      },0.3
+   )
+
+}
+
+
+  // this.callGraphTL.clear();
+  // this.callGraphTL800.clear();
+  if(this.expandGraphTL){
+    this.expandGraphTL.clear();
+  }
+  if(this.expandGraphTL800){
+    this.expandGraphTL800.clear();
+  }
     
 }
 
 
+
+
+//------------------------------------//
 
 
 
@@ -750,6 +916,8 @@ const NukeTL = new SkillsTL('Nuke');
 const PythonTL = new SkillsTL('Python');
 const HTMLTL = new SkillsTL('HTML');
 const JavascriptTL = new SkillsTL('Javascript');
+const ThreeJSTL = new SkillsTL('ThreeJS');
+const GreenSockTL = new SkillsTL('GreenSock');
 const CSS3TL = new SkillsTL('CSS3');
 
-export const skillListTL = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,CSS3TL]
+export const skillListTL = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,ThreeJSTL,GreenSockTL,CSS3TL]

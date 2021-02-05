@@ -117,11 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-<<<<<<< HEAD
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-=======
 })({"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -153,11 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-<<<<<<< HEAD
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-=======
 },{}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -192,20 +184,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-<<<<<<< HEAD
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"assets/css/fontello.css":[function(require,module,exports) {
-=======
 },{"./bundle-url":"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js"}],"assets/css/fontello.css":[function(require,module,exports) {
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-<<<<<<< HEAD
-},{"./../font/fontello.eot":[["fontello.5ba468ce.eot","assets/font/fontello.eot"],"assets/font/fontello.eot"],"./../font/fontello.woff2":[["fontello.50cd5947.woff2","assets/font/fontello.woff2"],"assets/font/fontello.woff2"],"./../font/fontello.woff":[["fontello.871433a6.woff","assets/font/fontello.woff"],"assets/font/fontello.woff"],"./../font/fontello.ttf":[["fontello.8c712a45.ttf","assets/font/fontello.ttf"],"assets/font/fontello.ttf"],"./../font/fontello.svg":[["fontello.caa62654.svg","assets/font/fontello.svg"],"assets/font/fontello.svg"],"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
-=======
 },{"./..\\font\\fontello.eot":[["fontello.5ba468ce.eot","assets/font/fontello.eot"],"assets/font/fontello.eot"],"./..\\font\\fontello.woff2":[["fontello.50cd5947.woff2","assets/font/fontello.woff2"],"assets/font/fontello.woff2"],"./..\\font\\fontello.woff":[["fontello.871433a6.woff","assets/font/fontello.woff"],"assets/font/fontello.woff"],"./..\\font\\fontello.ttf":[["fontello.8c712a45.ttf","assets/font/fontello.ttf"],"assets/font/fontello.ttf"],"./..\\font\\fontello.svg":[["fontello.caa62654.svg","assets/font/fontello.svg"],"assets/font/fontello.svg"],"_css_loader":"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js"}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -233,11 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63093" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5853" + '/');
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2742" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -413,9 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-<<<<<<< HEAD
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-=======
 },{}]},{},["C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
->>>>>>> f5bb5b16807eb1ce95ff03bb51e9c73708cf0783
 //# sourceMappingURL=/fontello.91542d3c.js.map

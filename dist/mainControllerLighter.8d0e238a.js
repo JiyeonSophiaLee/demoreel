@@ -778,6 +778,59 @@ Rect.prototype.createWavyAnimation = function () {
 
   return new Promise(function (resolve, reject) {
     if (window.innerWidth > 800) {
+      // document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath );
+      // document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath + this.strokeWidthUnit);
+      var update = function update(self) {
+        document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 1));
+        document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 1));
+      };
+
+      var tweenCardinal = function tweenCardinal(data, closed, tension) {
+        if (data.length < 1) return "M0 0";
+        if (tension == null) tension = 1;
+        var size = data.length - (closed ? 0 : 1);
+        var path = "M" + data[0].x + " " + data[0].y + " C";
+
+        for (var i = 0; i < size; i++) {
+          var p0, p1, p2, p3;
+
+          if (closed) {
+            p0 = data[(i - 1 + size) % size];
+            p1 = data[i];
+            p2 = data[(i + 1) % size];
+            p3 = data[(i + 2) % size];
+          } else {
+            p0 = i == 0 ? data[0] : data[i - 1];
+            p1 = data[i];
+            p2 = data[i + 1];
+            p3 = i == size - 1 ? p2 : data[i + 2];
+          }
+
+          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+        }
+
+        return closed ? path + "z" : path;
+      };
+
+      var random = function random(min, max) {
+        if (max == null) {
+          max = min;
+          min = 0;
+        }
+
+        if (min > max) {
+          var tmp = min;
+          min = max;
+          max = tmp;
+        }
+
+        return min + (max - min) * Math.random();
+      };
+
       console.log('createWavyAnimation is working'); // let dataPoints, points1, points2, pointsTween1, pointsTween2;
 
       if (!_this8.wavyAnimTL) {
@@ -817,63 +870,9 @@ Rect.prototype.createWavyAnimation = function () {
         _this8.wavyAnimTL.add(tween1, -random(duration));
 
         _this8.wavyAnimTL.add(tween2, -random(duration));
-      } // document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath );
-      // document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath + this.strokeWidthUnit);
-
-
-      function update(self) {
-        document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 1));
-        document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 1));
       }
 
       _this8.wavyAnimTLRunning = true;
-
-      function tweenCardinal(data, closed, tension) {
-        if (data.length < 1) return "M0 0";
-        if (tension == null) tension = 1;
-        var size = data.length - (closed ? 0 : 1);
-        var path = "M" + data[0].x + " " + data[0].y + " C";
-
-        for (var i = 0; i < size; i++) {
-          var p0, p1, p2, p3;
-
-          if (closed) {
-            p0 = data[(i - 1 + size) % size];
-            p1 = data[i];
-            p2 = data[(i + 1) % size];
-            p3 = data[(i + 2) % size];
-          } else {
-            p0 = i == 0 ? data[0] : data[i - 1];
-            p1 = data[i];
-            p2 = data[i + 1];
-            p3 = i == size - 1 ? p2 : data[i + 2];
-          }
-
-          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-        }
-
-        return closed ? path + "z" : path;
-      }
-
-      function random(min, max) {
-        if (max == null) {
-          max = min;
-          min = 0;
-        }
-
-        if (min > max) {
-          var tmp = min;
-          min = max;
-          max = tmp;
-        }
-
-        return min + (max - min) * Math.random();
-      }
-
       console.log('done wavy animation'); // }
     }
 
@@ -6777,19 +6776,47 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 console.log('thumbnail.js is working');
+//------------Youtube API------------//
+var tag = document.createElement('script');
+tag.src = "//www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var players = ['astronaut'];
+
+function onYouTubePlayerAPIReady() {
+  player = new YT.Player('video', {
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  players.forEach(function (player) {
+    var playButton = document.getElementById(player).firstElementChild;
+    playButton.addEventListener("mouseover", function () {
+      player.playVideo();
+    });
+    var pauseButton = document.getElementById(player).firstElementChild;
+    pauseButton.addEventListener("mouseout", function () {
+      player.pauseVideo();
+    });
+  });
+} //------------SetProperty------------//
+
 
 function SetProperty(array, main) {
   var artstation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   this.array = array;
   this.main = main;
   this.artstation = artstation;
-} //------------work thumbnails------------//
+} //------------videos------------//
 
 
-var astronautRigging = new SetProperty('https://youtu.be/NH--5uqu4Zg', 0, 'https://youtu.be/NH--5uqu4Zg');
+var astronautArray = ["<iframe id='astronaut' width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/NH--5uqu4Zg\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"]; //------------work thumbnails------------//
+
+var astronautRigging = new SetProperty(astronautArray, 0, 'https://youtu.be/NH--5uqu4Zg');
 var table = new SetProperty(THI.table_scene, 0, 'https://www.artstation.com/artwork/Q2roZ');
 var chandelier = new SetProperty(THI.chandelier_scene, 0, 'https://www.artstation.com/artwork/Q2roZ');
 var sunrise = new SetProperty(THI.sunrise_scene, 1, 'https://www.artstation.com/artwork/lVYmZO');
@@ -6901,13 +6928,14 @@ Thumbnails.prototype.createAlinedImages = function (project) {
   var files = [];
   var file;
 
-  if (_typeof(project.array[project.main]) == 'object') {
-    file = document.createElement('img');
-  } else {
+  if (project.array[project.main].slice(1, 7) == 'iframe') {
     file = document.createElement('div');
+    file.innerHTML = project.array[project.main];
+  } else {
+    file = document.createElement('img');
+    file.src = project.array[project.main];
   }
 
-  file.src = project.array[project.main];
   file.classList.add('mainContent');
   file.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -6926,28 +6954,43 @@ Thumbnails.prototype.createAlinedImages = function (project) {
   }
 
   ;
+  project.array.forEach(function (address, i) {
+    if (i != project.main) {
+      var _file;
 
-  if (_typeof(project.array) == 'object') {
-    project.array.forEach(function (array, i) {
-      if (i != project.main) {
-        console.log(_typeof(array)); //   let img = document.createElement('img');
-        //   img.src = project.array[i];
-        //   img.classList.add('subContent');
-        //   img.addEventListener('click',(e)=>{ e.stopPropagation() });
-        //   if(project.artstation !=null){
-        //       let a = document.createElement('a');
-        //       a.href= project.artstation;
-        //       a.setAttribute('target','_blank');
-        //       a.classList.add('a');
-        //       a.appendChild(img);
-        //       files.push(a);
-        //   }else{
-        //       files.push(img);
-        //   };
+      if (project.array[project.main].slice(1, 7) == 'iframe') {
+        _file = document.createElement('div');
+        _file.innerHTML = address;
+      } else {
+        _file = document.createElement('img');
+        _file.src = project.array[i];
       }
-    });
-  }
 
+      _file.classList.add('subContent');
+
+      _file.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+
+      if (project.artstation != null) {
+        var _a = document.createElement('a');
+
+        _a.href = project.artstation;
+
+        _a.setAttribute('target', '_blank');
+
+        _a.classList.add('a');
+
+        _a.appendChild(_file);
+
+        files.push(_file);
+      } else {
+        files.push(_file);
+      }
+
+      ;
+    }
+  });
   return files;
 };
 
@@ -6999,6 +7042,10 @@ module.exports = "/HTML.beea1ca5.png";
 module.exports = "/Javascript.3f111f1e.png";
 },{}],"assets/images/icons/CSS3.png":[function(require,module,exports) {
 module.exports = "/CSS3.039c5a6a.png";
+},{}],"assets/images/icons/ThreeJS.png":[function(require,module,exports) {
+module.exports = "/ThreeJS.c459c836.png";
+},{}],"assets/images/icons/GreenSock.png":[function(require,module,exports) {
+module.exports = "/GreenSock.ac2ced68.png";
 },{}],"assets/js/skills.js":[function(require,module,exports) {
 "use strict";
 
@@ -7048,6 +7095,10 @@ var _Javascript2 = _interopRequireDefault(require("/assets/images/icons/Javascri
 
 var _CSS = _interopRequireDefault(require("/assets/images/icons/CSS3.png"));
 
+var _ThreeJS2 = _interopRequireDefault(require("/assets/images/icons/ThreeJS.png"));
+
+var _GreenSock2 = _interopRequireDefault(require("/assets/images/icons/GreenSock.png"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -7073,6 +7124,8 @@ var Nuke = _Nuke2.default;
 var Python = _Python2.default;
 var HTML = _HTML2.default;
 var Javascript = _Javascript2.default;
+var ThreeJS = _ThreeJS2.default;
+var GreenSock = _GreenSock2.default;
 var CSS3 = _CSS.default;
 var HalfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
 var HalfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
@@ -7202,28 +7255,40 @@ var skillList = {
     'color': ['#f9b41a', '#000000'],
     'date': 'from 2011'
   },
-  'Python': {
-    'name': 'Python',
-    'width': 30,
-    'color': ['#3774a8', ' #ffd647'],
-    'date': 'from 2019'
-  },
   'HTML': {
     'name': 'HTML',
     'width': 95,
     'color': ['#d1382b', '#e93e30'],
     'date': 'from 2019'
   },
+  'CSS3': {
+    'name': 'CSS3',
+    'width': 80,
+    'color': ['#29a5d1', '#208db8'],
+    'date': 'from 2019'
+  },
   'Javascript': {
     'name': 'Javascript',
-    'width': 50,
+    'width': 70,
     'color': ['#efd93b', '#f5e695'],
     'date': 'from 2019'
   },
-  'CSS3': {
-    'name': 'CSS3',
-    'width': 50,
-    'color': ['#29a5d1', '#208db8'],
+  'ThreeJS': {
+    'name': 'ThreeJS',
+    'width': 75,
+    'color': ['#efd93b', '#f5e695'],
+    'date': 'from 2019'
+  },
+  'GreenSock': {
+    'name': 'Green Sock',
+    'width': 75,
+    'color': ['#efd93b', '#f5e695'],
+    'date': 'from 2019'
+  },
+  'Python': {
+    'name': 'Python',
+    'width': 45,
+    'color': ['#3774a8', ' #ffd647'],
     'date': 'from 2019'
   }
 }; // const SkillsTLPath = '/assets/images/icons/';
@@ -7275,7 +7340,8 @@ Skills.prototype.createSkillSet = function () {
   skillListTL.forEach(function (tl) {
     tl.setDefaultValues();
   });
-};
+}; //---------Even Listener--------------//
+
 
 Skills.prototype.callSkills = function () {
   ISU.SKILL_CONTENTS.style.display = 'initial';
@@ -7310,7 +7376,9 @@ Skills.prototype.updateResize = function () {
   skillListTL.forEach(function (tl) {
     tl.updateResize();
   }); // }
-};
+}; //-----------------------------------------------//
+//-------------------Skills TL-------------------//
+
 
 function SkillsTL(id) {
   this.id = id;
@@ -7355,20 +7423,21 @@ SkillsTL.prototype.setDefaultValues = function () {
 
 SkillsTL.prototype.setWidths = function () {
   var svgWidth = ISU.select("#skill .contents svg").clientWidth;
-  this.barEachWidth = (svgWidth - (ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100 + ISU.remToPx(halfCircleSizeNumb);
+  this.barEachWidth = (svgWidth - (ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100;
   this.barCircleEachEnd = this.barEachWidth + ISU.remToPx(halfCircleSizeNumb);
-  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
+  this.barFullWidth = svgWidth - ISU.remToPx(halfCircleSizeEndNumb);
 };
 
 SkillsTL.prototype.getCallGraphTL = function () {
   this.setWidths();
   setUnitSize();
+  console.log('ID=>', this.id);
   this.bar.style.height = "calc(".concat(halfBarHeight, "*2)");
   this.bar.setAttributeNS(null, 'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
   this.barHead1.setAttributeNS(null, 'cx', halfCircleSize);
   this.barHead1.setAttributeNS(null, 'cy', halfCircleSize);
-  this.barHead1.setAttributeNS(null, 'r', halfCircleSize);
-  this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
+  this.barHead1.setAttributeNS(null, 'r', halfCircleSize); // this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
+
   this.barTail1.setAttributeNS(null, 'cy', halfCircleSize);
   this.barTail1.setAttributeNS(null, 'r', halfCircleSizeEnd);
   this.callGraphTL.clear();
@@ -7403,7 +7472,7 @@ SkillsTL.prototype.getCallGraphTL = function () {
 };
 
 SkillsTL.prototype.setWidths800 = function () {
-  this.barFullWidth = this.elem.firstElementChild.clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
+  this.barFullWidth = ISU.select("#skill .contents svg").clientWidth - ISU.remToPx(halfCircleSizeEndNumb);
 };
 
 SkillsTL.prototype.getCallGraphTL800 = function () {
@@ -7412,12 +7481,14 @@ SkillsTL.prototype.getCallGraphTL800 = function () {
   this.bar.setAttributeNS(null, 'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
   this.barHead1.setAttributeNS(null, 'cx', halfCircleSize);
   this.barHead1.setAttributeNS(null, 'cy', halfCircleSize);
-  this.barHead1.setAttributeNS(null, 'r', halfCircleSize);
-  this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
-  this.barTail1.setAttributeNS(null, 'cy', halfCircleSize);
-  this.barTail1.setAttributeNS(null, 'r', halfCircleSizeEnd);
+  this.barHead1.setAttributeNS(null, 'r', halfCircleSize); // this.barTail1.setAttributeNS(null, 'cx', this.barFullWidth);
+  // this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
+  // this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
   this.callGraphTL800.clear();
-  this.callGraphTL800.to(this.elem, {
+  this.callGraphTL800.fromTo(this.elem, {
+    height: ISU.remToPx(halfCircleSizeNumb * 2)
+  }, {
     height: ISU.remToPx(halfCircleSizeNumb * 3),
     duration: ISU.transitionValue['skillTLDuration800'],
     ease: ISU.transitionValue['skillTLEase800']
@@ -7431,7 +7502,7 @@ SkillsTL.prototype.getCallGraphTL800 = function () {
     attr: {
       y: ISU.remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb)
     },
-    width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+    width: this.barFullWidth - ISU.remToPx(halfCircleSizeNumb),
     duration: ISU.transitionValue['skillTLDuration800'],
     // transformOrigin:"center center",
     ease: ISU.transitionValue['skillTLEase800']
@@ -7445,7 +7516,11 @@ SkillsTL.prototype.getCallGraphTL800 = function () {
     // transformOrigin:"center center",
     duration: 0.5,
     ease: "elastic.out(1, 0.3)"
-  }, 0.5).to(this.barHead2, {
+  }, 0.5).fromTo(this.barHead2, {
+    attr: {
+      cy: ISU.remToPx(halfCircleSizeNumb)
+    }
+  }, {
     attr: {
       cy: ISU.remToPx(halfCircleSizeNumb * 2)
     },
@@ -7518,25 +7593,9 @@ SkillsTL.prototype.getCallGraphTL800 = function () {
   this.callGraphTL800.play();
 };
 
-SkillsTL.prototype.hoveroverOn = function () {
-  if (innerWidth > 800) {
-    //         this.playExpandGraphTL();
-    // this.setWidths();
-    this.getExpandGraph();
-    this.expandGraphTL.play();
-  }
-};
-
-SkillsTL.prototype.hoveroverOff = function () {
-  if (innerWidth > 800) {
-    //         this.reverseExpandGraphTL();
-    this.expandGraphTL.reverse();
-  }
-};
-
 SkillsTL.prototype.getExpandGraph = function () {
-  this.setWidths();
-  this.expandGraphTL.clear();
+  this.setWidths(); // this.expandGraphTL.clear();
+
   this.expandGraphTL.fromTo(this.skillColor1[0], {
     stopColor: this.skillColor1[1]
   }, {
@@ -7616,7 +7675,25 @@ SkillsTL.prototype.getExpandGraph = function () {
     duration: 0.1,
     stagger: 0.3
   }, 0.3);
+}; //---------Hover Over--------------//
+
+
+SkillsTL.prototype.hoveroverOn = function () {
+  if (innerWidth > 800) {
+    //         this.playExpandGraphTL();
+    // this.setWidths();
+    this.getExpandGraph();
+    this.expandGraphTL.play();
+  }
 };
+
+SkillsTL.prototype.hoveroverOff = function () {
+  if (innerWidth > 800) {
+    //         this.reverseExpandGraphTL();
+    this.expandGraphTL.reverse(); // this.expandGraphTL.clear();
+  }
+}; //---------updateResize--------------//
+
 
 SkillsTL.prototype.updateResize = function () {
   setUnitSize();
@@ -7681,9 +7758,101 @@ SkillsTL.prototype.updateResize = function () {
   //     // })
 
 
-  this.callGraphTL.clear();
-  this.callGraphTL800.clear();
-};
+  SkillsTL.prototype.getExpandGraph = function () {
+    this.setWidths(); // this.expandGraphTL.clear();
+
+    this.expandGraphTL.fromTo(this.skillColor1[0], {
+      stopColor: this.skillColor1[1]
+    }, {
+      stopColor: '#ffffff',
+      duration: 1,
+      ease: "power1.out"
+    }, 0).fromTo(this.skillColor2[0], {
+      stopColor: this.skillColor2[1]
+    }, {
+      stopColor: '#ffffff',
+      duration: 1,
+      ease: "power1.out"
+    }, 0).to(this.bar, {
+      scaleY: 2.3,
+      duration: 1,
+      transformOrigin: "center center",
+      ease: "elastic.out(1, 0.3)"
+    }, 0).fromTo(this.bar, {
+      width: this.barEachWidth
+    }, {
+      width: this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb),
+      duration: 1,
+      ease: "bounce.out"
+    }, 0).to(this.barHead1, {
+      attr: {
+        fill: '#ffffff'
+      },
+      duration: 1,
+      ease: "bounce.out"
+    }, 0).to(this.barHead1, {
+      scale: 0.95,
+      transformOrigin: "center center",
+      duration: 0.5,
+      ease: "elastic.out(1, 0.3)"
+    }, 0).to(this.barHead1, {
+      scale: 1,
+      transformOrigin: "center center",
+      duration: 0.5,
+      ease: "elastic.out(1, 0.3)"
+    }, 0.5).to(this.barTail1, {
+      attr: {
+        fill: '#ffffff'
+      },
+      duration: 1
+    }, 0).fromTo(this.barTail1, {
+      attr: {
+        cx: this.barCircleEachEnd
+      }
+    }, {
+      attr: {
+        cx: this.barFullWidth
+      },
+      duration: 1,
+      ease: "bounce.out"
+    }, 0).fromTo(this.percent, {
+      attr: {
+        transform: "matrix(1,0,0,1,".concat(this.barCircleEachEnd, ",").concat(ISU.remToPx(halfCircleSizeNumb), ")")
+      }
+    }, {
+      attr: {
+        transform: "matrix(1,0,0,1,".concat(this.barFullWidth, ",").concat(ISU.remToPx(halfCircleSizeNumb), ")")
+      },
+      duration: 1,
+      ease: "bounce.out"
+    }, 0).to(this.skillInfoBG, {
+      scaleY: 1,
+      duration: 0.3,
+      stagger: 0.3,
+      ease: "power2.inOut"
+    }, 0).to(this.skillInfoBG, {
+      scaleY: 0,
+      duration: 0.3,
+      stagger: 0.3,
+      ease: "power2.inOut"
+    }, 0.3).to(this.skillInfoText, {
+      opacity: 1,
+      duration: 0.1,
+      stagger: 0.3
+    }, 0.3);
+  }; // this.callGraphTL.clear();
+  // this.callGraphTL800.clear();
+
+
+  if (this.expandGraphTL) {
+    this.expandGraphTL.clear();
+  }
+
+  if (this.expandGraphTL800) {
+    this.expandGraphTL800.clear();
+  }
+}; //------------------------------------//
+
 
 var MayaTL = new SkillsTL('Maya');
 var VrayTL = new SkillsTL('Vray');
@@ -7703,10 +7872,12 @@ var NukeTL = new SkillsTL('Nuke');
 var PythonTL = new SkillsTL('Python');
 var HTMLTL = new SkillsTL('HTML');
 var JavascriptTL = new SkillsTL('Javascript');
+var ThreeJSTL = new SkillsTL('ThreeJS');
+var GreenSockTL = new SkillsTL('GreenSock');
 var CSS3TL = new SkillsTL('CSS3');
-var skillListTL = [MayaTL, VrayTL, ArnoldTL, ZbrushTL, HoudiniTL, MarvelousDesignerTL, SubstancePainterTL, SubstanceDesignerTL, MariTL, MudboxTL, PhotoshopTL, threeDCoatTL, RezomUVTL, AfterEffectsTL, NukeTL, PythonTL, HTMLTL, JavascriptTL, CSS3TL];
+var skillListTL = [MayaTL, VrayTL, ArnoldTL, ZbrushTL, HoudiniTL, MarvelousDesignerTL, SubstancePainterTL, SubstanceDesignerTL, MariTL, MudboxTL, PhotoshopTL, threeDCoatTL, RezomUVTL, AfterEffectsTL, NukeTL, PythonTL, HTMLTL, JavascriptTL, ThreeJSTL, GreenSockTL, CSS3TL];
 exports.skillListTL = skillListTL;
-},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/images/icons/Maya.png":"assets/images/icons/Maya.png","/assets/images/icons/Vray.png":"assets/images/icons/Vray.png","/assets/images/icons/Arnold.png":"assets/images/icons/Arnold.png","/assets/images/icons/Zbrush.png":"assets/images/icons/Zbrush.png","/assets/images/icons/Houdini.png":"assets/images/icons/Houdini.png","/assets/images/icons/MarvelousDesigner.png":"assets/images/icons/MarvelousDesigner.png","/assets/images/icons/SubstancePainter.png":"assets/images/icons/SubstancePainter.png","/assets/images/icons/SubstanceDesigner.png":"assets/images/icons/SubstanceDesigner.png","/assets/images/icons/Mari.png":"assets/images/icons/Mari.png","/assets/images/icons/Mudbox.png":"assets/images/icons/Mudbox.png","/assets/images/icons/Photoshop.png":"assets/images/icons/Photoshop.png","/assets/images/icons/threeDCoat.png":"assets/images/icons/threeDCoat.png","/assets/images/icons/RezomUV.png":"assets/images/icons/RezomUV.png","/assets/images/icons/AfterEffects.png":"assets/images/icons/AfterEffects.png","/assets/images/icons/Nuke.png":"assets/images/icons/Nuke.png","/assets/images/icons/Python.png":"assets/images/icons/Python.png","/assets/images/icons/HTML.png":"assets/images/icons/HTML.png","/assets/images/icons/Javascript.png":"assets/images/icons/Javascript.png","/assets/images/icons/CSS3.png":"assets/images/icons/CSS3.png"}],"assets/js/info.js":[function(require,module,exports) {
+},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/images/icons/Maya.png":"assets/images/icons/Maya.png","/assets/images/icons/Vray.png":"assets/images/icons/Vray.png","/assets/images/icons/Arnold.png":"assets/images/icons/Arnold.png","/assets/images/icons/Zbrush.png":"assets/images/icons/Zbrush.png","/assets/images/icons/Houdini.png":"assets/images/icons/Houdini.png","/assets/images/icons/MarvelousDesigner.png":"assets/images/icons/MarvelousDesigner.png","/assets/images/icons/SubstancePainter.png":"assets/images/icons/SubstancePainter.png","/assets/images/icons/SubstanceDesigner.png":"assets/images/icons/SubstanceDesigner.png","/assets/images/icons/Mari.png":"assets/images/icons/Mari.png","/assets/images/icons/Mudbox.png":"assets/images/icons/Mudbox.png","/assets/images/icons/Photoshop.png":"assets/images/icons/Photoshop.png","/assets/images/icons/threeDCoat.png":"assets/images/icons/threeDCoat.png","/assets/images/icons/RezomUV.png":"assets/images/icons/RezomUV.png","/assets/images/icons/AfterEffects.png":"assets/images/icons/AfterEffects.png","/assets/images/icons/Nuke.png":"assets/images/icons/Nuke.png","/assets/images/icons/Python.png":"assets/images/icons/Python.png","/assets/images/icons/HTML.png":"assets/images/icons/HTML.png","/assets/images/icons/Javascript.png":"assets/images/icons/Javascript.png","/assets/images/icons/CSS3.png":"assets/images/icons/CSS3.png","/assets/images/icons/ThreeJS.png":"assets/images/icons/ThreeJS.png","/assets/images/icons/GreenSock.png":"assets/images/icons/GreenSock.png"}],"assets/js/info.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8680,17 +8851,8 @@ MenuController.prototype.elemEventListener = function (elems, listener, handler)
 
 MenuController.prototype.expandMenu = function () {
   if (menuExpanded == false) {
-    menuExpanded = true;
-    biggerElem = this.elem; //----calculate demo height in order to give the same result to all functions------------------------
-
-    getDemoVideHeight(menuExpanded);
-
-    function callPromise() {
-      return _callPromise.apply(this, arguments);
-    }
-
-    function _callPromise() {
-      _callPromise = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var callPromise = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var all, animRect, wavyAnim, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -8737,23 +8899,20 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee, this, [[0, 15]]);
       }));
-      return _callPromise.apply(this, arguments);
-    }
 
-    callPromise.call(this);
-  } else if (biggerElem != this.elem) {
-    biggeredElem = biggerElem;
-    biggerElem = this.elem;
-    biggeredController = eval(biggeredElem.id + 'MenuController'); //----calculate demo height in order to give the same result to all functions------------------------
+      return function callPromise() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    menuExpanded = true;
+    biggerElem = this.elem; //----calculate demo height in order to give the same result to all functions------------------------
 
     getDemoVideHeight(menuExpanded);
-
-    function callPromise() {
-      return _callPromise2.apply(this, arguments);
-    }
-
-    function _callPromise2() {
-      _callPromise2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    callPromise.call(this);
+  } else if (biggerElem != this.elem) {
+    var _callPromise = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var all, stopWavyAnim, animRect, wavyAnim, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -8805,22 +8964,22 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee2, this, [[0, 18]]);
       }));
-      return _callPromise2.apply(this, arguments);
-    }
 
-    callPromise.call(this);
+      return function _callPromise() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    biggeredElem = biggerElem;
+    biggerElem = this.elem;
+    biggeredController = eval(biggeredElem.id + 'MenuController'); //----calculate demo height in order to give the same result to all functions------------------------
+
+    getDemoVideHeight(menuExpanded);
+
+    _callPromise.call(this);
   } else {
-    menuExpanded = false;
-    biggerElem = null;
-    biggeredElem = null;
-    biggeredController = eval(this.id + 'MenuController');
-
-    function callPromise() {
-      return _callPromise3.apply(this, arguments);
-    }
-
-    function _callPromise3() {
-      _callPromise3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var _callPromise2 = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
         var all, stopWavyAnim, animRect, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
@@ -8867,10 +9026,18 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee3, this, [[0, 15]]);
       }));
-      return _callPromise3.apply(this, arguments);
-    }
 
-    callPromise.call(this);
+      return function _callPromise2() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    menuExpanded = false;
+    biggerElem = null;
+    biggeredElem = null;
+    biggeredController = eval(this.id + 'MenuController');
+
+    _callPromise2.call(this);
   }
 }; //---------updateResize--------------//
 
@@ -8973,7 +9140,7 @@ var workMenuController = new MenuController('work', _thumbnails.workThumbnails);
 var skillMenuController = new MenuController('skill', false, _skills.skillListTL);
 var paintMenuController = new MenuController('paint', _thumbnails.paintThumbnails);
 var infoMenuController = new MenuController('info', false, false, true);
-},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/js/border.js":"assets/js/border.js","/assets/js/utilityController.js":"assets/js/utilityController.js","/assets/js/thumbnails.js":"assets/js/thumbnails.js","/assets/js/skills.js":"assets/js/skills.js","/assets/js/info.js":"assets/js/info.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/js/border.js":"assets/js/border.js","/assets/js/utilityController.js":"assets/js/utilityController.js","/assets/js/thumbnails.js":"assets/js/thumbnails.js","/assets/js/skills.js":"assets/js/skills.js","/assets/js/info.js":"assets/js/info.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -9001,7 +9168,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63093" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2742" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -9177,5 +9344,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","assets/js/mainControllerLighter.js"], null)
+},{}]},{},["C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js","assets/js/mainControllerLighter.js"], null)
 //# sourceMappingURL=/mainControllerLighter.8d0e238a.js.map

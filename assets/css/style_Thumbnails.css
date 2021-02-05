@@ -26,7 +26,7 @@
     grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
   }
 }
-.projects img{
+.projects img,iframe{
   border-radius: 1vw;
 }
 
@@ -70,5 +70,20 @@
     .alinedImagesChild img{
       padding: 3px;
     }
+  }
+    
+  .alinedImagesChild div{
+    position: relative;
+    border-radius: 20px;
+    padding: 0.1vw;
+    object-fit: cover;
+    padding: 28.125% 0; 
+  }
+  .alinedImagesChild div iframe{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
   }
 

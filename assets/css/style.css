@@ -347,41 +347,42 @@ body{
  */  
 
 
-          #menu #work .rectPack{
-            margin-left: auto;
-            align-self: flex-end;
-          }
-          #menu #skill .rectPack{
-            align-self:flex-end;
-          }
-          #menu #paint .rectPack{
-            margin-left: auto;
-            align-self: flex-start;
-          }
+
+            #menu #work .rectPack{
+              margin-left: auto;
+              align-self: flex-end;
+            }
+            #menu #skill .rectPack{
+              align-self:flex-end;
+            }
+            #menu #paint .rectPack{
+              margin-left: auto;
+              align-self: flex-start;
+            }
 
 
 
-            
-          #menu > li .rectPack{
-            display:grid;
-            text-align: center ;
-            position: relative;
-            align-items: center;
-            /* z-index: 2; */
-          } 
+              
+            #menu > li .rectPack{
+              display:grid;
+              text-align: center ;
+              position: relative;
+              align-items: center;
+              /* z-index: 2; */
+            } 
 
-          #menu > li .rectPack .text{
-            position: relative;
-          }
+            #menu > li .rectPack .text{
+              position: relative;
+            }
 
-          #menu > li .rectPack .neon{
-            width: inherit;
-            height: inherit;
-            border-radius: inherit;
-            position: absolute;
-            top:0;
-            left:0;
-          }
+            #menu > li .rectPack .neon{
+              width: inherit;
+              height: inherit;
+              border-radius: inherit;
+              position: absolute;
+              top:0;
+              left:0;
+            }
 
 
 /**
@@ -437,6 +438,7 @@ body{
               overflow-y: auto;
               overflow-x: hidden;
               padding: 0.4rem;
+              z-index: -1;
             }
               @media (max-width:800px){
                 #menu li .contents{

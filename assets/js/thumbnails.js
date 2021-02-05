@@ -2,21 +2,62 @@ console.log('thumbnail.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import * as THI from '/assets/js/thumbnail_LoadingImages.js';
 
+
+
+//------------Youtube API------------//
+
+var tag = document.createElement('script');
+tag.src = "//www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var players=['astronaut'];
+
+
+function onYouTubePlayerAPIReady() {
+  player = new YT.Player('video', {
+    events: {
+      'onReady': onPlayerReady
+    }
+  });
+}
+function onPlayerReady(event) {
+
+  players.forEach((player)=>{
+    var playButton = document.getElementById(player).firstElementChild;
+    playButton.addEventListener("mouseover", function() {
+      player.playVideo();
+    });
+    
+    var pauseButton = document.getElementById(player).firstElementChild;
+    pauseButton.addEventListener("mouseout", function() {
+      player.pauseVideo();
+    });
+  })
+  
+  
+}
+
+//------------SetProperty------------//
+
+
 function SetProperty(array,main,artstation=null){
   this.array = array;
   this.main = main;
   this.artstation = artstation;
 }
+//------------videos------------//
+
+const astronautArray = [`<iframe id='astronaut' width="560" height="315" src="https://www.youtube.com/embed/NH--5uqu4Zg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`]
 
 //------------work thumbnails------------//
 
-const astronautRigging = new SetProperty('https://youtu.be/NH--5uqu4Zg', 0 , 'https://youtu.be/NH--5uqu4Zg')
-const table            = new SetProperty(THI.table_scene               , 0 , 'https://www.artstation.com/artwork/Q2roZ');
-const chandelier       = new SetProperty(THI.chandelier_scene          , 0 , 'https://www.artstation.com/artwork/Q2roZ');
-const sunrise          = new SetProperty(THI.sunrise_scene             , 1 , 'https://www.artstation.com/artwork/lVYmZO');
-const woman            = new SetProperty(THI.woman_scene               , 2 , 'https://www.artstation.com/artwork/xzJvV1');
-const wishingBox       = new SetProperty(THI.wishingBox                , 2 );
-const giant            = new SetProperty(THI.giant                     , 0 );
+const astronautRigging = new SetProperty(astronautArray       , 0 , 'https://youtu.be/NH--5uqu4Zg')
+const table            = new SetProperty(THI.table_scene      , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const chandelier       = new SetProperty(THI.chandelier_scene , 0 , 'https://www.artstation.com/artwork/Q2roZ');
+const sunrise          = new SetProperty(THI.sunrise_scene    , 1 , 'https://www.artstation.com/artwork/lVYmZO');
+const woman            = new SetProperty(THI.woman_scene      , 2 , 'https://www.artstation.com/artwork/xzJvV1');
+const wishingBox       = new SetProperty(THI.wishingBox       , 2 );
+const giant            = new SetProperty(THI.giant            , 0 );
 
 export const workThumbnails = [astronautRigging, table, chandelier, sunrise, woman, wishingBox, giant];
 
@@ -157,12 +198,13 @@ Thumbnails.prototype.createAlinedImages = function(project){
   let files = [];
   let file;
 
-  if (typeof project.array[project.main] == 'object'){
-    file = document.createElement('img');
-  }else{
+  if (project.array[project.main].slice(1,7) == 'iframe'){
     file = document.createElement('div');
-  }
+    file.innerHTML = project.array[project.main];
+  }else{
+    file = document.createElement('img');
     file.src = project.array[project.main]; 
+  }
     file.classList.add('mainContent');
     file.addEventListener('click',(e)=>{ e.stopPropagation() });
 
@@ -183,32 +225,40 @@ Thumbnails.prototype.createAlinedImages = function(project){
     
   };
 
-  if(typeof project.array == 'object'){
-    project.array.forEach((array, i)=>{
-      if( i != project.main){
-        console.log(typeof array)
-      //   let img = document.createElement('img');
-      //   img.src = project.array[i];
-      //   img.classList.add('subContent');
-      //   img.addEventListener('click',(e)=>{ e.stopPropagation() });
-  
-      //   if(project.artstation !=null){
-  
-      //       let a = document.createElement('a');
-      //       a.href= project.artstation;
-      //       a.setAttribute('target','_blank');
+
+
+  project.array.forEach((address, i)=>{
+    if( i != project.main){
+      let file;
+
+        if(project.array[project.main].slice(1,7) == 'iframe'){
+          file = document.createElement('div');
+          file.innerHTML = address;
+        }else{
+          file = document.createElement('img');
+          file.src = project.array[i];
+        }
+        file.classList.add('subContent');
+        file.addEventListener('click',(e)=>{ e.stopPropagation() });
+
+        if(project.artstation !=null){
+
+            let a = document.createElement('a');
+            a.href= project.artstation;
+            a.setAttribute('target','_blank');
             
-      //       a.classList.add('a');
-  
-      //       a.appendChild(img);
-      //       files.push(a);
-  
-      //   }else{
-      //       files.push(img);
-      //   };
-      }
-    });
-  }
+            a.classList.add('a');
+
+            a.appendChild(file);
+            files.push(file);
+
+        }else{
+            files.push(file);
+        };
+      
+    }
+  });
+
   
   return files
 };
