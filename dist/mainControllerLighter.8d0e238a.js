@@ -6777,35 +6777,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 console.log('thumbnail.js is working');
-//------------Youtube API------------//
-var tag = document.createElement('script');
-tag.src = "//www.youtube.com/player_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var players = ['astronaut'];
 
-function onYouTubePlayerAPIReady() {
-  player = new YT.Player('video', {
-    events: {
-      'onReady': onPlayerReady
-    }
-  });
-}
-
-function onPlayerReady(event) {
-  players.forEach(function (player) {
-    var playButton = document.getElementById(player).firstElementChild;
-    playButton.addEventListener("mouseover", function () {
-      player.playVideo();
-    });
-    var pauseButton = document.getElementById(player).firstElementChild;
-    pauseButton.addEventListener("mouseout", function () {
-      player.pauseVideo();
-    });
-  });
-} //------------SetProperty------------//
-
-
+//------------SetProperty------------//
 function SetProperty(array, main) {
   var artstation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   this.array = array;
@@ -6814,7 +6787,7 @@ function SetProperty(array, main) {
 } //------------videos------------//
 
 
-var astronautArray = ["<iframe id='astronaut' width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/NH--5uqu4Zg\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"]; //------------work thumbnails------------//
+var astronautArray = ["<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/NH--5uqu4Zg\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"]; //------------work thumbnails------------//
 
 var astronautRigging = new SetProperty(astronautArray, 0, 'https://youtu.be/NH--5uqu4Zg');
 var table = new SetProperty(THI.table_scene, 0, 'https://www.artstation.com/artwork/Q2roZ');
@@ -9168,7 +9141,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2742" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8799" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

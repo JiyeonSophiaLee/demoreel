@@ -4,38 +4,7 @@ import * as THI from '/assets/js/thumbnail_LoadingImages.js';
 
 
 
-//------------Youtube API------------//
 
-var tag = document.createElement('script');
-tag.src = "//www.youtube.com/player_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var players=['astronaut'];
-
-
-function onYouTubePlayerAPIReady() {
-  player = new YT.Player('video', {
-    events: {
-      'onReady': onPlayerReady
-    }
-  });
-}
-function onPlayerReady(event) {
-
-  players.forEach((player)=>{
-    var playButton = document.getElementById(player).firstElementChild;
-    playButton.addEventListener("mouseover", function() {
-      player.playVideo();
-    });
-    
-    var pauseButton = document.getElementById(player).firstElementChild;
-    pauseButton.addEventListener("mouseout", function() {
-      player.pauseVideo();
-    });
-  })
-  
-  
-}
 
 //------------SetProperty------------//
 
@@ -47,7 +16,7 @@ function SetProperty(array,main,artstation=null){
 }
 //------------videos------------//
 
-const astronautArray = [`<iframe id='astronaut' width="560" height="315" src="https://www.youtube.com/embed/NH--5uqu4Zg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`]
+const astronautArray = [`<iframe width="560" height="315" src="https://www.youtube.com/embed/NH--5uqu4Zg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`]
 
 //------------work thumbnails------------//
 
