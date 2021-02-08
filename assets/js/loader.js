@@ -11,13 +11,13 @@ let lighterVersion = document.createElement('div');
 let lighterVersion_child = document.createElement('a');
 
 
-LOADER_CONTAINDER.style.display = 'flex';
-LOADER_CONTAINDER.style.flexWrap = 'wrap';
-LOADER_CONTAINDER.style.alignContent = 'center';
-LOADER_CONTAINDER.style.flexDirection = 'column';
+// LOADER_CONTAINDER.style.display = 'flex';
+// LOADER_CONTAINDER.style.flexWrap = 'wrap';
+// LOADER_CONTAINDER.style.alignContent = 'center';
+// LOADER_CONTAINDER.style.flexDirection = 'column';
 
-LOADER__.style.fontFamily = 'theboldfont';
-LOADER__.style.fontSize = '6rem';
+// LOADER__.style.fontFamily = 'theboldfont';
+// LOADER__.style.fontSize = '6rem';
 
 lighterVersion.style.fontFamily = 'Darker Grotesque';
 lighterVersion.style.fontSize = '1.6rem';

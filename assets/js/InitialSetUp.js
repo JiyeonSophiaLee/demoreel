@@ -1,6 +1,6 @@
 const MASTER = document.getElementById('master');
 const LOGO__ = document.getElementById('logo');
-const LOGO_HEIGHTER = document.getElementById('logoHeighter');
+const LOGO_HEIGHER = document.getElementById('logoHeigher');
 const LOGO_WIDER = document.getElementById('logoWider');
 const DEMO__ = document.getElementById('demo');
 const DEMO_VIDEO = document.getElementById('demoVideo');
@@ -21,7 +21,7 @@ const allElems = [WORK,PAINT,SKILL,INFO];
 export {
   MASTER,
   LOGO__,
-  LOGO_HEIGHTER,
+  LOGO_HEIGHER,
   LOGO_WIDER,
   DEMO__,
   DEMO_VIDEO,

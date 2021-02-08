@@ -1,4 +1,4 @@
-console.log('mainControllerLight.js is working');
+// console.log('mainController.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';
@@ -21,9 +21,12 @@ let biggeredElem = null;
 let biggeredController =null;
 
 
+
 ISU.allElems.forEach((elem)=>{
   SetDefaultRectSize(elem)
 });
+
+switchLogos();
 
 let demoVideoHeight;
 getDemoVideHeight(menuExpanded);
@@ -39,6 +42,7 @@ const LOGOcallClickEvent = function(){
     eval(biggerElem.id + 'MenuController').expandMenu();
   }
 }
+
 
 
 
@@ -67,7 +71,6 @@ function MenuController(id, hasThumbnail=false, hasSkills=false, hasInfo = false
     this.expandMenu();
   }
   
-
   
   
  
@@ -90,6 +93,7 @@ MenuController.prototype.UtilityController = (id)=>new UtilityController(id);
 MenuController.prototype.Thumbnails = (id,hasThumbnail)=> new Thumbnails(id,hasThumbnail);
 MenuController.prototype.Skills = (id,hasSkills)=>new Skills(id,hasSkills);
 MenuController.prototype.Info = (id)=>new Info(id);
+
 
 //--Event Listenr functions----------
 MenuController.prototype.addEventCB = function(){
@@ -156,10 +160,11 @@ MenuController.prototype.expandMenu = function(){
     
     //----calculate demo height in order to give the same result to all functions------------------------
     getDemoVideHeight(menuExpanded);
-
+    
 
     async function callPromise(){
       try{
+        // const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight), callAstronaut(this.elem,biggeredElem)]);
         const all = await Promise.all([this.Rect.expandMenuIf(demoVideoHeight,menuExpanded), this.UtilityController.expandMenuIf(demoVideoHeight)]);
         const animRect = await this.Rect.animRect(menuExpanded);
         const wavyAnim = await this.Rect.createWavyAnimation();
@@ -182,6 +187,7 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
+        // const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs(), callAstronaut(this.elem,biggeredElem)]);
         const all = await Promise.all([this.Rect.expandMenuElseIf(demoVideoHeight,biggeredElem,menuExpanded), this.UtilityController.expandMenuElseIf(biggeredElem), this.stopFuncs()]);
         const stopWavyAnim = await biggeredController.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
@@ -203,6 +209,7 @@ MenuController.prototype.expandMenu = function(){
 
     async function callPromise(){
       try{
+        // const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs(), pauseAstronaut()]);
         const all = await Promise.all([this.Rect.expandMenuElse(), this.UtilityController.expandMenuElse(), this.stopFuncs()]);
         const stopWavyAnim = await this.Rect.stopWavyAnim();
         const animRect = await this.Rect.animRect(menuExpanded, biggeredElem);
@@ -230,6 +237,8 @@ MenuController.prototype.updateResize = function(){
 
 
 
+  switchLogos();
+
   this.Rect.updateResize(biggerElem,menuExpanded,demoVideoHeight);
   if(biggerElem != null){
     if(typeof this.Thumbnails =='object' && this.id == biggerElem.id){
@@ -239,7 +248,6 @@ MenuController.prototype.updateResize = function(){
       this.Skills.updateResize();
     }   
   }
-
 
   
   if(innerWidth > 800){
@@ -302,6 +310,29 @@ function getDemoVideHeight(menuExpanded){
     }
   };
 };
+
+//----------------general function----------------//
+
+function switchLogos(){
+  if(window.innerWidth > 800){
+    if(window.innerWidth > window.innerHeight){
+      if((ISU.DEMO__.clientHeight/3) < (ISU.LOGO__.clientWidth*4/6)){
+        ISU.LOGO_HEIGHER.style.display = 'none';
+        ISU.LOGO_WIDER.style.display = 'initial';
+      }else{
+        ISU.LOGO_HEIGHER.style.display = 'initial';
+        ISU.LOGO_WIDER.style.display = 'none';
+      }
+    }else{
+      ISU.LOGO_HEIGHER.style.display = 'initial';
+      ISU.LOGO_WIDER.style.display = 'none';
+    }
+  }else{
+    ISU.LOGO_HEIGHER.style.display = 'none';
+    ISU.LOGO_WIDER.style.display = 'initial';
+  }
+
+}
 
 
 let workMenuController = new MenuController('work', workThumbnails);

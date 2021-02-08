@@ -1,4 +1,4 @@
-console.log('unilityController.js is working');
+// console.log('unilityController.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import gsap from '/assets/scripts/gsap-core.js';
 import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -51,7 +51,6 @@ UtilityController.prototype.expandMenuIf = function(demoVideoHeight){
 
 
 UtilityController.prototype.expandMenuElseIf = function(biggeredElem){
-  console.log('unitiycontroller expandMenuElseIf is working+')
   // return new Promise((resolve, reject)=>{
     ISU.select(`#${biggeredElem.id} .text`).style.visibility = 'visible'
     ISU.select(`#${biggeredElem.id} .contents`).style.zIndex = '-1';
@@ -81,7 +80,6 @@ UtilityController.prototype.expandMenuElseIf = function(biggeredElem){
 UtilityController.prototype.expandMenuElse = function(){
 //   return new Promise((resolve, reject)=>{
  
-  console.log('utilitiy else is working');
 
   ISU.select(`#${this.elem.id} .contents`).style.zIndex = '0';
   ISU.select(`#${this.elem.id} .neon1`).style.display = 'none';
