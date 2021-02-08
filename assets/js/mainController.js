@@ -1,4 +1,4 @@
-console.log('mainController.js is working')
+// console.log('mainController.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import Rect, {SetDefaultRectSize}from '/assets/js/border.js';
 import UtilityController from '/assets/js/utilityController.js';
@@ -318,11 +318,9 @@ function switchLogos(){
   if(window.innerWidth > 800){
     if(window.innerWidth > window.innerHeight){
       if((ISU.DEMO__.clientHeight/3) < (ISU.LOGO__.clientWidth*4/6)){
-        console.log('IF?');
         ISU.LOGO_HEIGHER.style.display = 'none';
         ISU.LOGO_WIDER.style.display = 'initial';
       }else{
-        console.log('ELSE');
         ISU.LOGO_HEIGHER.style.display = 'initial';
         ISU.LOGO_WIDER.style.display = 'none';
       }

@@ -1,4 +1,4 @@
-console.log('info.js is working');
+// console.log('info.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 
 

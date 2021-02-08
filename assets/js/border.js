@@ -1,4 +1,4 @@
-console.log('border.js is working')
+// console.log('border.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 // import gsap from '/assets/scripts/gsap-core.js';
 // import { CSSPlugin } from "/assets/scripts/CSSPlugin.js";
@@ -460,7 +460,6 @@ Rect.prototype.createRect = function(){
 }
 Rect.prototype.animRect = function( menuExpanded, biggeredElem=null) {
   return new Promise((resolve,reject)=>{
-    console.log('animRect is working')
     
     function runAnimRect(){
       f += dir;

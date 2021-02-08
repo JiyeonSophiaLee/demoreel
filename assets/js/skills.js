@@ -1,4 +1,4 @@
-console.log('skills.js is working');
+// console.log('skills.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import _Maya from  '/assets/images/icons/Maya.png';
 import _Vray from  '/assets/images/icons/Vray.png';
@@ -325,6 +325,8 @@ SkillsTL.prototype.setDefaultValues = function(){
 SkillsTL.prototype.setWidths = function(){
   let svgWidth = ISU.select(`#skill .contents svg`).clientWidth;
 
+
+  // console.log(skillList[this.id])
   this.barEachWidth = (svgWidth - ( ISU.remToPx(halfCircleSizeNumb) + ISU.remToPx(halfCircleSizeEndNumb))) * skillList[this.id]['width'] / 100;
   this.barCircleEachEnd = this.barEachWidth + ISU.remToPx(halfCircleSizeNumb);
   this.barFullWidth = svgWidth - ISU.remToPx(halfCircleSizeEndNumb);
@@ -333,10 +335,9 @@ SkillsTL.prototype.setWidths = function(){
 SkillsTL.prototype.getCallGraphTL = function(){
   this.setWidths();
   setUnitSize();
-  console.log('ID=>',this.id)
-
+  
   this.bar.style.height = `calc(${halfBarHeight}*2)`;
-  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb)+'px');
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
@@ -383,7 +384,7 @@ SkillsTL.prototype.getCallGraphTL800 = function(){
   setUnitSize();
 
 
-  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb)+'px');
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
@@ -684,13 +685,13 @@ SkillsTL.prototype.updateResize = function(){
 
   
   if(innerWidth > 800){
-    this.bar.style.width = this.barEachWidth;
+    this.bar.style.width = this.barEachWidth +'px';
     this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb));
     this.bar.style.height = `calc(${halfBarHeight}*2)`;
   }else{
-    this.bar.style.width = this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb);
+    this.bar.style.width = this.barFullWidth - ISU.remToPx(halfCircleSizeEndNumb) + 'px';
     this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb * 0.5 - halfBarHeightNumb));
-    this.bar.style.height = ISU.remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2);
+    this.bar.style.height = ISU.remToPx(halfCircleSizeNumb*2 + halfBarHeightNumb*2) + 'px';
   }
   this.bar.setAttributeNS(null,'x',halfCircleSize);
 
@@ -879,14 +880,18 @@ SkillsTL.prototype.getExpandGraph = function(){
 }
 
 
-  // this.callGraphTL.clear();
-  // this.callGraphTL800.clear();
+  if(!this.callGraphTL){
+    this.callGraphTL.clear();
+  };
+  if(!this.callGraphTL800){
+    this.callGraphTL800.clear();
+  };
   if(this.expandGraphTL){
     this.expandGraphTL.clear();
-  }
+  };
   if(this.expandGraphTL800){
     this.expandGraphTL800.clear();
-  }
+  };
     
 }
 

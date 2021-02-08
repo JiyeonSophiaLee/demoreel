@@ -1,4 +1,4 @@
-console.log('thumbnail.js is working');
+// console.log('thumbnail.js is working');
 import * as ISU from '/assets/js/InitialSetUp.js';
 import * as THI from '/assets/js/thumbnail_LoadingImages.js';
 

@@ -1,4 +1,4 @@
-console.log('thumbnail_images.js is working')
+// console.log('thumbnail_images.js is working');
 import chandelier_scene_01 from  '/assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_01.jpg';
 import chandelier_scene_02 from  '/assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_02.jpg';
 import chandelier_scene_03 from  '/assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_03.jpg';
