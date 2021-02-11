@@ -23,6 +23,7 @@ import _ThreeJS from  '/assets/images/icons/ThreeJS.png';
 import _GreenSock from  '/assets/images/icons/GreenSock.png';
 
 
+
 const Maya = _Maya;
 const Vray = _Vray;
 const Arnold = _Arnold;
@@ -67,9 +68,17 @@ let halfCircleSizeEndNumb;
 let halfBarHeight;
 let halfBarHeightNumb;
 
+const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize').replace(/[0-9]/g, '');
+
+
+
+
+
+
+
 setUnitSize();
 
-const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize').replace(/[0-9]/g, '');
+
 
 
 
@@ -267,8 +276,22 @@ Skills.prototype.updateResize = function(){
 
 
 
+
+
+
+
+
+
+
+
+
 //-----------------------------------------------//
 //-------------------Skills TL-------------------//
+
+
+
+
+
 
 
 function SkillsTL(id){
@@ -283,19 +306,18 @@ function SkillsTL(id){
   this.expandGraphTL = gsap.timeline({paused:true});
   
 
+  this.clickOn = false;
+
   // this.createSkillBars()
 
 
-  // this.hoveroverOnHandler = this.hoveroverOn.bind(this);
-  // this.hoveroverOffHandler = this.hoveroverOff.bind(this);
-
-  // this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
-  // this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
-
 }
+
+
 SkillsTL.prototype.setDefaultValues = function(){
   this.elem = document.getElementById(this.id);
   this.bar = ISU.select(`#${this.id} .bar`);
+  this.barBG = ISU.select(`#${this.id} .barBG`);
   this.barHead1 = ISU.select(`#${this.id} .barHead1`);
   this.barHead2 = ISU.select(`#${this.id} .barHead2`);
   this.barTail1 = ISU.select(`#${this.id} .barTail1`);
@@ -312,9 +334,12 @@ SkillsTL.prototype.setDefaultValues = function(){
 
   this.hoveroverOnHandler = this.hoveroverOn.bind(this);
   this.hoveroverOffHandler = this.hoveroverOff.bind(this);
+  this.clickHandler = this.click.bind(this);
+  
 
   this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
   this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+  this.elem.addEventListener('click',this.clickHandler);
 
   // this.setWidths();
   // this.getExpandGraph();
@@ -337,13 +362,16 @@ SkillsTL.prototype.getCallGraphTL = function(){
   setUnitSize();
   
   this.bar.style.height = `calc(${halfBarHeight}*2)`;
-  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb)+'px');
+  this.bar.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb) +'px');
+  this.barBG.setAttributeNS(null,'height', ISU.remToPx(halfBarHeightNumb * 3 )+'px');
+  this.barBG.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb *1.5 ) +'px');
   this.barHead1.setAttributeNS(null,'cx',halfCircleSize);
   this.barHead1.setAttributeNS(null,'cy',halfCircleSize);
   this.barHead1.setAttributeNS(null,'r', halfCircleSize);
   // this.barTail1.setAttributeNS(null,'cx', this.barFullWidth);
   this.barTail1.setAttributeNS(null,'cy', halfCircleSize);
   this.barTail1.setAttributeNS(null,'r', halfCircleSizeEnd);
+
 
   this.callGraphTL.clear();
   this.callGraphTL
@@ -531,7 +559,7 @@ SkillsTL.prototype.getExpandGraph = function(){
       },{
         stopColor:'#ffffff',
         duration:1,
-        ease:"power1.out"
+        ease:"power2.inOut"
       },0
     )
     .fromTo(this.skillColor2[0],{
@@ -539,7 +567,7 @@ SkillsTL.prototype.getExpandGraph = function(){
       },{
         stopColor:'#ffffff',
         duration:1,
-        ease:"power1.out"
+        ease:"power2.inOut"
       },0
     )
 
@@ -561,11 +589,12 @@ SkillsTL.prototype.getExpandGraph = function(){
     )
 
 
-    .to(this.barHead1,
-      {
+    .fromTo(this.barHead1,{
+        attr:{fill:this.skillColor1[1]}
+      },{
         attr:{fill:'#ffffff'},
         duration:1,
-        ease: "bounce.out"
+        ease: "power2.inOut"
       },0
     )
     .to(this.barHead1,
@@ -587,10 +616,12 @@ SkillsTL.prototype.getExpandGraph = function(){
     )
 
 
-    .to(this.barTail1,
-      {
+    .fromTo(this.barTail1,{
+       attr:{fill:this.skillColor2[1]}
+      },{
         attr:{fill:'#ffffff'},
-        duration:1
+        duration:1,
+        ease: "power2.inOut"
       },0
     )
     .fromTo(this.barTail1,{
@@ -604,15 +635,14 @@ SkillsTL.prototype.getExpandGraph = function(){
 
         
     .fromTo(this.percent,
-        {
-            attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
-        },
-        {
-            attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${ISU.remToPx(halfCircleSizeNumb)})`},
-            duration:1,
-            ease: "bounce.out"
-        },
-        0
+      {
+        attr:{transform:`matrix(1,0,0,1,${this.barCircleEachEnd},${ISU.remToPx(halfCircleSizeNumb)})`},
+      },{
+        attr:{transform:`matrix(1,0,0,1,${this.barFullWidth},${ISU.remToPx(halfCircleSizeNumb)})`},
+        duration:1,
+        ease: "bounce.out"
+      },
+      0
     )
 
 
@@ -646,6 +676,28 @@ SkillsTL.prototype.getExpandGraph = function(){
 
 
 
+//---------Click Event--------------//
+
+SkillsTL.prototype.click = function(){
+
+  this.elem.parentElement.addEventListener('click',(e)=>{ e.stopPropagation() });
+
+  if(innerWidth > 800){
+
+    if(this.clickOn != true){
+      this.clickOn = true;
+
+      this.getExpandGraph();
+      this.expandGraphTL.play();
+    }else{
+      this.clickOn = false;
+
+      this.expandGraphTL.reverse();
+    }
+  }
+
+}
+
 //---------Hover Over--------------//
 
 
@@ -653,18 +705,22 @@ SkillsTL.prototype.getExpandGraph = function(){
 
 SkillsTL.prototype.hoveroverOn = function(){
   if(innerWidth > 800){
-//         this.playExpandGraphTL();
-    // this.setWidths();
-    this.getExpandGraph();
-    this.expandGraphTL.play();
+
+    if(this.clickOn != true){
+      this.clickOn = true;
+      
+      this.getExpandGraph();
+      this.expandGraphTL.play();
+    }
   }
 }
 
 SkillsTL.prototype.hoveroverOff = function(){
   if(innerWidth > 800){
-//         this.reverseExpandGraphTL();
+    this.clickOn = false;
+
     this.expandGraphTL.reverse();
-    // this.expandGraphTL.clear();
+
   }
 }
 
@@ -726,8 +782,8 @@ SkillsTL.prototype.updateResize = function(){
 
 
 //------check this later----------//
-    // select(`#${this.id} .barBG`).style.height = `calc(${halfBarHeight} * 3)`;
-    // select(`#${this.id} .barBG`).setAttributeNS(null,'y',`calc( ${halfCircleSize} - ${halfBarHeight} * 1.5 )`);
+  this.barBG.setAttributeNS(null,'height', ISU.remToPx(halfBarHeightNumb * 3 )+'px');
+  this.barBG.setAttributeNS(null,'y', ISU.remToPx(halfCircleSizeNumb - halfBarHeightNumb * 1.5 ) +'px');
     
         
   if(innerWidth > 800){

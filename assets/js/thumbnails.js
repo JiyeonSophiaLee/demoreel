@@ -20,7 +20,7 @@ const astronautArray = [`<iframe width="560" height="315" src="https://www.youtu
 
 //------------work thumbnails------------//
 
-const astronautRigging = new SetProperty(astronautArray       , 0 , 'https://youtu.be/NH--5uqu4Zg')
+const astronautRigging = new SetProperty(astronautArray       , 0 );
 const table            = new SetProperty(THI.table_scene      , 0 , 'https://www.artstation.com/artwork/Q2roZ');
 const chandelier       = new SetProperty(THI.chandelier_scene , 0 , 'https://www.artstation.com/artwork/Q2roZ');
 const sunrise          = new SetProperty(THI.sunrise_scene    , 1 , 'https://www.artstation.com/artwork/lVYmZO');
@@ -174,8 +174,9 @@ Thumbnails.prototype.createAlinedImages = function(project){
     file = document.createElement('img');
     file.src = project.array[project.main]; 
   }
-    file.classList.add('mainContent');
+    file.classList.add('content');
     file.addEventListener('click',(e)=>{ e.stopPropagation() });
+
 
   if(project.artstation !=null){
     let a = document.createElement('a');
@@ -187,11 +188,11 @@ Thumbnails.prototype.createAlinedImages = function(project){
 
     a.appendChild(file);
     files.push(a);
-
+  
   }else{
 
+    file.classList.add('mainContent');
     files.push(file);
-    
   };
 
 
@@ -207,6 +208,7 @@ Thumbnails.prototype.createAlinedImages = function(project){
           file = document.createElement('img');
           file.src = project.array[i];
         }
+        file.classList.add('content');
         file.classList.add('subContent');
         file.addEventListener('click',(e)=>{ e.stopPropagation() });
 
