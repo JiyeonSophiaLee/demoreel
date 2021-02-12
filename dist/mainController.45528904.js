@@ -7405,7 +7405,7 @@ SkillsTL.prototype.setDefaultValues = function () {
   this.clickHandler = this.click.bind(this);
   this.elem.addEventListener('mouseenter', this.hoveroverOnHandler);
   this.elem.addEventListener('mouseleave', this.hoveroverOffHandler);
-  this.elem.addEventListener('click', this.clickHandler); // this.setWidths();
+  this.elem.onclick = this.clickHandler; // this.setWidths();
   // this.getExpandGraph();
 };
 
@@ -48406,7 +48406,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1316" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1702" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
