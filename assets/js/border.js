@@ -6,7 +6,8 @@ import * as ISU from '/assets/js/InitialSetUp.js';
 // gsap.registerPlugin(CSSPlugin, CSSRulePlugin);
 
 
-const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transitionValue['duration'],ease: "power1.inOut"})
+const demoMenuTransformTL = gsap.timeline({paused:true, duration: ISU.transitionValue['duration'],ease: "power1.inOut"});
+demoMenuTransformTL.isRun = false;
 
 
 
@@ -141,12 +142,13 @@ export default function Rect(id) {
 
 
 
-
 // -------------------- expand Menu  --------------------//
 
 Rect.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
   return new Promise((resolve,reject)=>{
     // this.demoVideoHeight = demoVideoHeight;
+    
+   
     
     if(innerWidth > 800){
       demoMenuTransformTL.clear();
@@ -167,6 +169,8 @@ Rect.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
         )
 
         demoMenuTransformTL.play();
+        demoMenuTransformTL.isRun = true;
+        
     }
     this.unSymetryEachMenuTransform(demoVideoHeight);
 
@@ -236,7 +240,28 @@ Rect.prototype.expandMenuElseIf = function(demoVideoHeight, biggeredElem, menuEx
 Rect.prototype.expandMenuElse = function() {
   return new Promise((resolve,reject)=>{
     if(innerWidth > 800){
-      demoMenuTransformTL.reverse();
+      
+      if(demoMenuTransformTL.isRun == true){
+        console.log('------If expandMenu--------')
+        demoMenuTransformTL.reverse();
+        demoMenuTransformTL.isRun = false;
+      }else{
+        console.log('---------Else expandMenu---------',ISU.DEMO__)
+        gsap.to(
+          ISU.MASTER,{
+            maxWidth: ISU.transitionValue['masterMaxWidth'],
+            duration: ISU.transitionValue['duration'],
+            ease: "power1.inOut"
+          }
+        )
+        gsap.to(
+          ISU.DEMO__,{
+            width: ISU.transitionValue['symetryDemoMenu'] + '%',
+            duration: ISU.transitionValue['duration'],
+            ease: "power1.inOut"
+          }
+        )
+      }
     }
     this.symetryEachMenuTransform();
     
