@@ -704,24 +704,24 @@ SkillsTL.prototype.click = function(){
 
 
 SkillsTL.prototype.hoveroverOn = function(){
-  // if(innerWidth > 800){
+  if(innerWidth > 800){
 
-  //   if(this.clickOn != true){
-  //     this.clickOn = true;
+    if(this.clickOn != true){
+      this.clickOn = true;
       
-  //     this.getExpandGraph();
-  //     this.expandGraphTL.play();
-  //   }
-  // }
+      this.getExpandGraph();
+      this.expandGraphTL.play();
+    }
+  }
 }
 
 SkillsTL.prototype.hoveroverOff = function(){
-  // if(innerWidth > 800){
-  //   this.clickOn = false;
+  if(innerWidth > 800){
+    this.clickOn = false;
 
-  //   this.expandGraphTL.reverse();
+    this.expandGraphTL.reverse();
 
-  // }
+  }
 }
 
 
