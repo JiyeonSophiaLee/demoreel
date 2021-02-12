@@ -339,7 +339,7 @@ SkillsTL.prototype.setDefaultValues = function(){
 
   this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
   this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
-  this.elem.addEventListener('click',this.clickHandler);
+  this.elem.onclick = this.clickHandler;
 
   // this.setWidths();
   // this.getExpandGraph();
