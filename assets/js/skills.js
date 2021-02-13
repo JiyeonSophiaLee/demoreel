@@ -72,7 +72,26 @@ const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--half
 
 
 
-
+let hasTouchScreen = false;
+if ("maxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.maxTouchPoints > 0;
+} else if ("msMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.msMaxTouchPoints > 0;
+} else {
+    let mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+    if (mQ && mQ.media === "(pointer:coarse)") {
+        hasTouchScreen = !!mQ.matches;
+    } else if ('orientation' in window) {
+        hasTouchScreen = true; // deprecated, but good fallback
+    } else {
+        // Only as a last resort, fall back to user agent sniffing
+        let UA = navigator.userAgent;
+        hasTouchScreen = (
+            /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+            /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+        );
+    }
+}
 
 
 
@@ -337,9 +356,13 @@ SkillsTL.prototype.setDefaultValues = function(){
   this.clickHandler = this.click.bind(this);
   
 
-  this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
-  this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
-  this.elem.firstElementChild.onclick = this.clickHandler;
+  if(!hasTouchScreen){
+    this.elem.addEventListener('mouseenter',this.hoveroverOnHandler);
+    this.elem.addEventListener('mouseleave',this.hoveroverOffHandler);
+  }else{
+    this.elem.addEventListener('click',this.clickHandler);
+  }
+    
 
   // this.setWidths();
   // this.getExpandGraph();
@@ -706,18 +729,18 @@ SkillsTL.prototype.click = function(){
 SkillsTL.prototype.hoveroverOn = function(){
   if(innerWidth > 800){
 
-    if(this.clickOn != true){
-      this.clickOn = true;
+    // if(this.clickOn != true){
+    //   this.clickOn = true;
       
       this.getExpandGraph();
       this.expandGraphTL.play();
-    }
+    // }
   }
 }
 
 SkillsTL.prototype.hoveroverOff = function(){
   if(innerWidth > 800){
-    this.clickOn = false;
+    // this.clickOn = false;
 
     this.expandGraphTL.reverse();
 
