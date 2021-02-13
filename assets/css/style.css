@@ -45,7 +45,7 @@ canvas{
   --backgroundColor:rgba(30, 30, 30, 1);
   --demoVideoWidth:67%;
   --demoVideoWidthMediaQuery:80%;
-  --masterMinHeight:610px;
+  --masterMinHeight:700px;
   --subMenuNeonDuration:1.5s;
   --masterMaxWidth : 1400px;
   --masterMinWidth : 25rem;
