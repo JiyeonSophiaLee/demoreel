@@ -1,4 +1,5 @@
 // console.log('three.js is working');
+import * as ISU from '/assets/js/InitialSetUp.js';
 import * as THREE from '/assets/THREE_js/script/three.module.js';
 import {GLTFLoader} from '/assets/THREE_js/script/GLTFLoader.js';
 // import {RGBELoader} from '/assets/THREE_js/script/RGBELoader.js';
@@ -53,7 +54,8 @@ function Astronaut() {
     
   renderer = new THREE.WebGLRenderer( { antialias: false, powerPreference:"high-performance"} );
   renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  // renderer.setSize( window.innerWidth, window.innerHeight );
+  setRendererSize();
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.outputEncoding = THREE.sRGBEncoding;
@@ -66,6 +68,7 @@ function Astronaut() {
 
     
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 30 );
+  setCameraAspect();
   camera.position.set(0,0,5);
   camera.lookAt(new THREE.Vector3(0, 1, 0));
 
@@ -279,7 +282,31 @@ function animate(){
   renderer.render( scene, camera);
 }
 
+//-----------set camera and renderer for minHeight and minWidth -------------//
 
+function setRendererSize(){
+  if(window.innerWidth > ISU.transitionValue['masterMinWidth'] && window.innerHeight > ISU.transitionValue['masterMinHeight']){
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }else if(window.innerWidth > ISU.transitionValue['masterMinWidth'] && window.innerHeight <= ISU.transitionValue['masterMinHeight']){
+    renderer.setSize( document.body.clientWidth, ISU.transitionValue['masterMinHeight'] );
+  }else{
+    renderer.setSize( ISU.transitionValue['masterMinWidth'], document.body.clientHeight );
+  }
+}
+
+function setCameraAspect(){
+  if(window.innerWidth > ISU.transitionValue['masterMinWidth'] && window.innerHeight > ISU.transitionValue['masterMinHeight']){
+    camera.aspect = window.innerWidth / window.innerHeight ;
+  }else if(window.innerWidth > ISU.transitionValue['masterMinWidth'] && window.innerHeight <= ISU.transitionValue['masterMinHeight']){
+    camera.aspect = window.innerWidth / ISU.transitionValue['masterMinHeight'];
+  }else{
+    camera.aspect = ISU.transitionValue['masterMinWidth'] / window.innerHeight;
+  }
+  
+}
+
+
+//-----------------------------------//
 function getSky(size,path){
   let skyGeo = new THREE.SphereGeometry(size, 100,100);
   let skyMesh = new THREE.MeshBasicMaterial( {map:new THREE.TextureLoader().load(path), side:0} );
@@ -319,9 +346,10 @@ function updateCameraMouse(){
 }
 
 function onWindowResize() {
-  renderer.setSize( window.innerWidth, window.innerHeight );
-
-  camera.aspect = window.innerWidth / window.innerHeight;
+  // renderer.setSize( window.innerWidth, window.innerHeight );
+  setRendererSize();
+  // camera.aspect = window.innerWidth / window.innerHeight;
+  setCameraAspect();
   camera.updateProjectionMatrix();
 
   animate();
