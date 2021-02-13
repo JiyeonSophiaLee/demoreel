@@ -67,6 +67,7 @@ function getTransitionValue() {
   this.duration = 1;
   this.symetryEachMenu = 50;
   this.unSymetryEachMenu = 75;
+  this.masterMinHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMinHeight'));
   this.masterMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth'));
   this.masterMinWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMinWidth'));
   this.symetryDemoVideoWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidth'));
