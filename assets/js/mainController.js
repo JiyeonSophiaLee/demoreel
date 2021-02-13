@@ -297,16 +297,16 @@ function getDemoVideHeight(menuExpanded){
     }
   }else{
     if(menuExpanded){
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+      if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+        demoVideoHeight = (ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }
     }else{
-      if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
+      if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }else{
-        demoVideoHeight = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+        demoVideoHeight = (ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }
     }
   };

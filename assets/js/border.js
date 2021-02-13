@@ -440,17 +440,29 @@ Rect.prototype.getExpandMenuSize = function(demoVideoHeight) {
       this.getExpandMenuSizeHeight = ((ISU.transitionValue['masterMinHeight'] - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
     }
   }else{
-    if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-      this.getExpandMenuSizeWidth =(document.body.clientWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+     //-------------this is width----------------//
+    if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
+      //-------------this is for scroll bar width----------------//
+      if(window.innerHeight > ISU.transitionValue['masterMinHeight']){
+        this.getExpandMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      }else{
+        this.getExpandMenuSizeWidth =(document.body.clientWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      }//-------------this is for scroll bar width----------------//
+
     }else{
-      this.getExpandMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
+      this.getExpandMenuSizeWidth =(ISU.transitionValue['masterMinWidth'] - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
     }
+    //-------------this is height----------------//
     if(window.innerHeight > ISU.transitionValue['masterMinHeight']){
-      this.getExpandMenuSizeHeight = (document.body.clientHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      //-------------this is for scroll bar height----------------//
+      if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
+        this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      }else{
+        this.getExpandMenuSizeHeight = (document.body.clientHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      }
     }else{
       this.getExpandMenuSizeHeight = (ISU.transitionValue['masterMinHeight'] - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
     }
-
   }
 
 }
@@ -830,7 +842,9 @@ Rect.prototype.hoveroverOff = function(biggerElem) {
 };
 
 
+
 Rect.prototype.updateResize = function(biggerElem,menuExpanded,demoVideoHeight) {
+  
   
   this.setUpdateValues();
   
