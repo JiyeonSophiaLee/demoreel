@@ -433,16 +433,24 @@ Rect.prototype.getExpandMenuSize = function(demoVideoHeight) {
   this.getPadding();
   
   if(window.innerWidth > 800){
-    this.getExpandMenuSizeWidth = ((window.innerWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100)) - this.liPaddingWidth;
-    this.getExpandMenuSizeHeight = ((window.innerHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
+    this.getExpandMenuSizeWidth = ((document.body.clientWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100)) - this.liPaddingWidth;
+    if(window.innerHeight > ISU.transitionValue['masterMinHeight']){
+      this.getExpandMenuSizeHeight = ((document.body.clientHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
+    }else{
+      this.getExpandMenuSizeHeight = ((ISU.transitionValue['masterMinHeight'] - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100))- this.liPaddingHeight;
+    }
   }else{
     if(window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])){
-      this.getExpandMenuSizeWidth =(window.innerWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-      this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+      this.getExpandMenuSizeWidth =(document.body.clientWidth - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
     }else{
       this.getExpandMenuSizeWidth =(ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth ) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth ;
-      this.getExpandMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
     }
+    if(window.innerHeight > ISU.transitionValue['masterMinHeight']){
+      this.getExpandMenuSizeHeight = (document.body.clientHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+    }else{
+      this.getExpandMenuSizeHeight = (ISU.transitionValue['masterMinHeight'] - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight ;
+    }
+
   }
 
 }
