@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,12 +184,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js"}],"assets/css/fontello.css":[function(require,module,exports) {
+},{"./bundle-url":"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js"}],"assets/css/fontello.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./..\\font\\fontello.eot":[["fontello.5ba468ce.eot","assets/font/fontello.eot"],"assets/font/fontello.eot"],"./..\\font\\fontello.woff2":[["fontello.50cd5947.woff2","assets/font/fontello.woff2"],"assets/font/fontello.woff2"],"./..\\font\\fontello.woff":[["fontello.871433a6.woff","assets/font/fontello.woff"],"assets/font/fontello.woff"],"./..\\font\\fontello.ttf":[["fontello.8c712a45.ttf","assets/font/fontello.ttf"],"assets/font/fontello.ttf"],"./..\\font\\fontello.svg":[["fontello.caa62654.svg","assets/font/fontello.svg"],"assets/font/fontello.svg"],"_css_loader":"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js"}],"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./..\\font\\fontello.eot":[["fontello.5ba468ce.eot","assets/font/fontello.eot"],"assets/font/fontello.eot"],"./..\\font\\fontello.woff2":[["fontello.50cd5947.woff2","assets/font/fontello.woff2"],"assets/font/fontello.woff2"],"./..\\font\\fontello.woff":[["fontello.871433a6.woff","assets/font/fontello.woff"],"assets/font/fontello.woff"],"./..\\font\\fontello.ttf":[["fontello.8c712a45.ttf","assets/font/fontello.ttf"],"assets/font/fontello.ttf"],"./..\\font\\fontello.svg":[["fontello.caa62654.svg","assets/font/fontello.svg"],"assets/font/fontello.svg"],"_css_loader":"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js"}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1221" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2238" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -393,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=fontello.91542d3c.js.map
+},{}]},{},["C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/fontello.91542d3c.js.map

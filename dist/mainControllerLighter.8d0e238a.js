@@ -194,6 +194,7 @@ function getTransitionValue() {
   this.duration = 1;
   this.symetryEachMenu = 50;
   this.unSymetryEachMenu = 75;
+  this.masterMinHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMinHeight'));
   this.masterMaxWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMaxWidth'));
   this.masterMinWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--masterMinWidth'));
   this.symetryDemoVideoWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--demoVideoWidth'));
@@ -226,28 +227,7 @@ function getRestElems(elem) {
   return restElems;
 }
 
-var transitionValue = new getTransitionValue(); // let hasTouchScreen = false;
-// if ("maxTouchPoints" in navigator) {
-//     hasTouchScreen = navigator.maxTouchPoints > 0;
-// } else if ("msMaxTouchPoints" in navigator) {
-//     hasTouchScreen = navigator.msMaxTouchPoints > 0;
-// } else {
-//     let mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-//     if (mQ && mQ.media === "(pointer:coarse)") {
-//         hasTouchScreen = !!mQ.matches;
-//     } else if ('orientation' in window) {
-//         hasTouchScreen = true; // deprecated, but good fallback
-//     } else {
-//         // Only as a last resort, fall back to user agent sniffing
-//         let UA = navigator.userAgent;
-//         hasTouchScreen = (
-//             /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-//             /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
-//         );
-//     }
-// }
-// export const touchScreen = hasTouchScreen;
-
+var transitionValue = new getTransitionValue();
 exports.transitionValue = transitionValue;
 },{}],"assets/js/border.js":[function(require,module,exports) {
 "use strict";
@@ -622,15 +602,37 @@ Rect.prototype.getExpandMenuSize = function (demoVideoHeight) {
   this.getPadding();
 
   if (window.innerWidth > 800) {
-    this.getExpandMenuSizeWidth = (window.innerWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
-    this.getExpandMenuSizeHeight = (window.innerHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
-  } else {
-    if (window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])) {
-      this.getExpandMenuSizeWidth = (window.innerWidth - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
-      this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
+    this.getExpandMenuSizeWidth = (document.body.clientWidth * (ISU.transitionValue['unSymetryDemoMenu'] / 100) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
+
+    if (window.innerHeight > ISU.transitionValue['masterMinHeight']) {
+      this.getExpandMenuSizeHeight = (document.body.clientHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
     } else {
-      this.getExpandMenuSizeWidth = (ISU.remToPx(ISU.transitionValue['masterMinWidth']) - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
-      this.getExpandMenuSizeHeight = (ISU.MASTER.offsetHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
+      this.getExpandMenuSizeHeight = (ISU.transitionValue['masterMinHeight'] - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
+    }
+  } else {
+    //-------------this is width----------------//
+    if (window.innerWidth > ISU.transitionValue['masterMinWidth']) {
+      //-------------this is for scroll bar width----------------//
+      if (window.innerHeight > ISU.transitionValue['masterMinHeight']) {
+        this.getExpandMenuSizeWidth = (window.innerWidth - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
+      } else {
+        this.getExpandMenuSizeWidth = (document.body.clientWidth - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
+      } //-------------this is for scroll bar width----------------//
+
+    } else {
+      this.getExpandMenuSizeWidth = (ISU.transitionValue['masterMinWidth'] - this.menuPaddingWidth) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingWidth;
+    } //-------------this is height----------------//
+
+
+    if (window.innerHeight > ISU.transitionValue['masterMinHeight']) {
+      //-------------this is for scroll bar height----------------//
+      if (window.innerWidth > ISU.transitionValue['masterMinWidth']) {
+        this.getExpandMenuSizeHeight = (window.innerHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
+      } else {
+        this.getExpandMenuSizeHeight = (document.body.clientHeight - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
+      }
+    } else {
+      this.getExpandMenuSizeHeight = (ISU.transitionValue['masterMinHeight'] - ISU.LOGO__.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (ISU.transitionValue['unSymetryEachMenu'] / 100) - this.liPaddingHeight;
     }
   }
 }; //------------ create rectangle rect ------------//
@@ -815,6 +817,59 @@ Rect.prototype.createWavyAnimation = function () {
 
   return new Promise(function (resolve, reject) {
     if (window.innerWidth > 800) {
+      // document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath );
+      // document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath + this.strokeWidthUnit);
+      var update = function update(self) {
+        document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 1));
+        document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 1));
+      };
+
+      var tweenCardinal = function tweenCardinal(data, closed, tension) {
+        if (data.length < 1) return "M0 0";
+        if (tension == null) tension = 1;
+        var size = data.length - (closed ? 0 : 1);
+        var path = "M" + data[0].x + " " + data[0].y + " C";
+
+        for (var i = 0; i < size; i++) {
+          var p0, p1, p2, p3;
+
+          if (closed) {
+            p0 = data[(i - 1 + size) % size];
+            p1 = data[i];
+            p2 = data[(i + 1) % size];
+            p3 = data[(i + 2) % size];
+          } else {
+            p0 = i == 0 ? data[0] : data[i - 1];
+            p1 = data[i];
+            p2 = data[i + 1];
+            p3 = i == size - 1 ? p2 : data[i + 2];
+          }
+
+          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+        }
+
+        return closed ? path + "z" : path;
+      };
+
+      var random = function random(min, max) {
+        if (max == null) {
+          max = min;
+          min = 0;
+        }
+
+        if (min > max) {
+          var tmp = min;
+          min = max;
+          max = tmp;
+        }
+
+        return min + (max - min) * Math.random();
+      };
+
       console.log('createWavyAnimation is working'); // let dataPoints, points1, points2, pointsTween1, pointsTween2;
 
       if (!_this8.wavyAnimTL) {
@@ -854,63 +909,9 @@ Rect.prototype.createWavyAnimation = function () {
         _this8.wavyAnimTL.add(tween1, -random(duration));
 
         _this8.wavyAnimTL.add(tween2, -random(duration));
-      } // document.getElementById(this.id + 'RectWavy1').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath );
-      // document.getElementById(this.id + 'RectWavy2').setAttributeNS(null, 'stroke-width', this.strokeWidthWavyPath + this.strokeWidthUnit);
-
-
-      function update(self) {
-        document.getElementById(self.id + 'RectWavy1').setAttribute('d', tweenCardinal(self.points1, true, 1));
-        document.getElementById(self.id + 'RectWavy2').setAttribute('d', tweenCardinal(self.points2, true, 1));
       }
 
       _this8.wavyAnimTLRunning = true;
-
-      function tweenCardinal(data, closed, tension) {
-        if (data.length < 1) return "M0 0";
-        if (tension == null) tension = 1;
-        var size = data.length - (closed ? 0 : 1);
-        var path = "M" + data[0].x + " " + data[0].y + " C";
-
-        for (var i = 0; i < size; i++) {
-          var p0, p1, p2, p3;
-
-          if (closed) {
-            p0 = data[(i - 1 + size) % size];
-            p1 = data[i];
-            p2 = data[(i + 1) % size];
-            p3 = data[(i + 2) % size];
-          } else {
-            p0 = i == 0 ? data[0] : data[i - 1];
-            p1 = data[i];
-            p2 = data[i + 1];
-            p3 = i == size - 1 ? p2 : data[i + 2];
-          }
-
-          var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
-          var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
-          var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
-          var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
-          path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
-        }
-
-        return closed ? path + "z" : path;
-      }
-
-      function random(min, max) {
-        if (max == null) {
-          max = min;
-          min = 0;
-        }
-
-        if (min > max) {
-          var tmp = min;
-          min = max;
-          max = tmp;
-        }
-
-        return min + (max - min) * Math.random();
-      }
-
       console.log('done wavy animation'); // }
     }
 
@@ -6508,131 +6509,131 @@ UtilityController.prototype.expandMenuElse = function () {
   }, ISU.transitionValue['duration'] * 1000);
 };
 },{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/scripts/gsap-core.js":"assets/scripts/gsap-core.js","/assets/scripts/CSSPlugin.js":"assets/scripts/CSSPlugin.js","/assets/scripts/CSSRulePlugin.js":"assets/scripts/CSSRulePlugin.js"}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_01.359f4e11.jpg";
+module.exports = "/chandelier_scene_thumbnails_01.359f4e11.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_02.341a2ddc.jpg";
+module.exports = "/chandelier_scene_thumbnails_02.341a2ddc.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_03.080b881e.jpg";
+module.exports = "/chandelier_scene_thumbnails_03.080b881e.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_04.617bf212.jpg";
+module.exports = "/chandelier_scene_thumbnails_04.617bf212.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_05.5fea4d07.jpg";
+module.exports = "/chandelier_scene_thumbnails_05.5fea4d07.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_06.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_06.f87bb5d1.jpg";
+module.exports = "/chandelier_scene_thumbnails_06.f87bb5d1.jpg";
 },{}],"assets/images/projects/chandelier_scene_thumbnails/chandelier_scene_thumbnails_07.jpg":[function(require,module,exports) {
-module.exports = "chandelier_scene_thumbnails_07.fee3f356.jpg";
+module.exports = "/chandelier_scene_thumbnails_07.fee3f356.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_01.1a684e14.jpg";
+module.exports = "/giant_thumbnails_01.1a684e14.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_02.4ef35c74.jpg";
+module.exports = "/giant_thumbnails_02.4ef35c74.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_03.7337f058.jpg";
+module.exports = "/giant_thumbnails_03.7337f058.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_04.ccbbaa4b.jpg";
+module.exports = "/giant_thumbnails_04.ccbbaa4b.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_05.030721bc.jpg";
+module.exports = "/giant_thumbnails_05.030721bc.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_06.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_06.c75dba7f.jpg";
+module.exports = "/giant_thumbnails_06.c75dba7f.jpg";
 },{}],"assets/images/projects/giant_thumbnails/giant_thumbnails_07.jpg":[function(require,module,exports) {
-module.exports = "giant_thumbnails_07.85a436f1.jpg";
+module.exports = "/giant_thumbnails_07.85a436f1.jpg";
 },{}],"assets/images/projects/sunrise_scene_thumbnails/sunrise_scene_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "sunrise_scene_thumbnails_01.2e856f33.jpg";
+module.exports = "/sunrise_scene_thumbnails_01.2e856f33.jpg";
 },{}],"assets/images/projects/sunrise_scene_thumbnails/sunrise_scene_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "sunrise_scene_thumbnails_02.a053a9ed.jpg";
+module.exports = "/sunrise_scene_thumbnails_02.a053a9ed.jpg";
 },{}],"assets/images/projects/sunrise_scene_thumbnails/sunrise_scene_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "sunrise_scene_thumbnails_03.e24ddde8.jpg";
+module.exports = "/sunrise_scene_thumbnails_03.e24ddde8.jpg";
 },{}],"assets/images/projects/sunrise_scene_thumbnails/sunrise_scene_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "sunrise_scene_thumbnails_04.fb09eef3.jpg";
+module.exports = "/sunrise_scene_thumbnails_04.fb09eef3.jpg";
 },{}],"assets/images/projects/sunrise_scene_thumbnails/sunrise_scene_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "sunrise_scene_thumbnails_05.2099c567.jpg";
+module.exports = "/sunrise_scene_thumbnails_05.2099c567.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_01.46284318.jpg";
+module.exports = "/table_scene_thumbnails_01.46284318.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_02.e57746b9.jpg";
+module.exports = "/table_scene_thumbnails_02.e57746b9.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_03.ddda034f.jpg";
+module.exports = "/table_scene_thumbnails_03.ddda034f.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_04.2c207752.jpg";
+module.exports = "/table_scene_thumbnails_04.2c207752.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_05.ab52302c.jpg";
+module.exports = "/table_scene_thumbnails_05.ab52302c.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_06.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_06.06227341.jpg";
+module.exports = "/table_scene_thumbnails_06.06227341.jpg";
 },{}],"assets/images/projects/table_scene_thumbnails/table_scene_thumbnails_07.jpg":[function(require,module,exports) {
-module.exports = "table_scene_thumbnails_07.a24d1770.jpg";
+module.exports = "/table_scene_thumbnails_07.a24d1770.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_01.c9b3c601.jpg";
+module.exports = "/wishingBox_thumbnails_01.c9b3c601.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_02.ce8fdc2d.jpg";
+module.exports = "/wishingBox_thumbnails_02.ce8fdc2d.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_03.dd912421.jpg";
+module.exports = "/wishingBox_thumbnails_03.dd912421.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_04.1e769e0b.jpg";
+module.exports = "/wishingBox_thumbnails_04.1e769e0b.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_05.6f1375f1.jpg";
+module.exports = "/wishingBox_thumbnails_05.6f1375f1.jpg";
 },{}],"assets/images/projects/wishingBox_thumbnails/wishingBox_thumbnails_06.jpg":[function(require,module,exports) {
-module.exports = "wishingBox_thumbnails_06.0ea8fb43.jpg";
+module.exports = "/wishingBox_thumbnails_06.0ea8fb43.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_01.e1b5318b.jpg";
+module.exports = "/woman_scene_thumbnails_01.e1b5318b.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_02.98c664ca.jpg";
+module.exports = "/woman_scene_thumbnails_02.98c664ca.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_03.64d51d0a.jpg";
+module.exports = "/woman_scene_thumbnails_03.64d51d0a.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_04.76572136.jpg";
+module.exports = "/woman_scene_thumbnails_04.76572136.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_05.8906e596.jpg";
+module.exports = "/woman_scene_thumbnails_05.8906e596.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_06.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_06.1e96e26c.jpg";
+module.exports = "/woman_scene_thumbnails_06.1e96e26c.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_07.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_07.a487d482.jpg";
+module.exports = "/woman_scene_thumbnails_07.a487d482.jpg";
 },{}],"assets/images/projects/woman_scene_thumbnails/woman_scene_thumbnails_08.jpg":[function(require,module,exports) {
-module.exports = "woman_scene_thumbnails_08.c0e0e723.jpg";
+module.exports = "/woman_scene_thumbnails_08.c0e0e723.jpg";
 },{}],"assets/images/paintings/painting01_thumbnails/painting01_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting01_thumbnails_01.4d88d075.jpg";
+module.exports = "/painting01_thumbnails_01.4d88d075.jpg";
 },{}],"assets/images/paintings/painting02_thumbnails/painting02_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting02_thumbnails_01.ef2999be.jpg";
+module.exports = "/painting02_thumbnails_01.ef2999be.jpg";
 },{}],"assets/images/paintings/painting02_thumbnails/painting02_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "painting02_thumbnails_02.8a792a05.jpg";
+module.exports = "/painting02_thumbnails_02.8a792a05.jpg";
 },{}],"assets/images/paintings/painting02_thumbnails/painting02_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "painting02_thumbnails_03.801a56cc.jpg";
+module.exports = "/painting02_thumbnails_03.801a56cc.jpg";
 },{}],"assets/images/paintings/painting02_thumbnails/painting02_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "painting02_thumbnails_04.0e2263c5.jpg";
+module.exports = "/painting02_thumbnails_04.0e2263c5.jpg";
 },{}],"assets/images/paintings/painting02_thumbnails/painting02_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "painting02_thumbnails_05.e309fe01.jpg";
+module.exports = "/painting02_thumbnails_05.e309fe01.jpg";
 },{}],"assets/images/paintings/painting03_thumbnails/painting03_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting03_thumbnails_01.15b850d1.jpg";
+module.exports = "/painting03_thumbnails_01.15b850d1.jpg";
 },{}],"assets/images/paintings/painting03_thumbnails/painting03_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "painting03_thumbnails_02.f8eb373f.jpg";
+module.exports = "/painting03_thumbnails_02.f8eb373f.jpg";
 },{}],"assets/images/paintings/painting03_thumbnails/painting03_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "painting03_thumbnails_03.13bc70c8.jpg";
+module.exports = "/painting03_thumbnails_03.13bc70c8.jpg";
 },{}],"assets/images/paintings/painting03_thumbnails/painting03_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "painting03_thumbnails_04.79111fef.jpg";
+module.exports = "/painting03_thumbnails_04.79111fef.jpg";
 },{}],"assets/images/paintings/painting03_thumbnails/painting03_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "painting03_thumbnails_05.3da74236.jpg";
+module.exports = "/painting03_thumbnails_05.3da74236.jpg";
 },{}],"assets/images/paintings/painting04_thumbnails/painting04_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting04_thumbnails_01.12eee08e.jpg";
+module.exports = "/painting04_thumbnails_01.12eee08e.jpg";
 },{}],"assets/images/paintings/painting04_thumbnails/painting04_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "painting04_thumbnails_02.cab0c7b2.jpg";
+module.exports = "/painting04_thumbnails_02.cab0c7b2.jpg";
 },{}],"assets/images/paintings/painting04_thumbnails/painting04_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "painting04_thumbnails_03.3e07e771.jpg";
+module.exports = "/painting04_thumbnails_03.3e07e771.jpg";
 },{}],"assets/images/paintings/painting04_thumbnails/painting04_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "painting04_thumbnails_04.c077cc35.jpg";
+module.exports = "/painting04_thumbnails_04.c077cc35.jpg";
 },{}],"assets/images/paintings/painting04_thumbnails/painting04_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "painting04_thumbnails_05.34f2bbd0.jpg";
+module.exports = "/painting04_thumbnails_05.34f2bbd0.jpg";
 },{}],"assets/images/paintings/painting05_thumbnails/painting05_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting05_thumbnails_01.70f4b6af.jpg";
+module.exports = "/painting05_thumbnails_01.70f4b6af.jpg";
 },{}],"assets/images/paintings/painting05_thumbnails/painting05_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "painting05_thumbnails_02.9876e889.jpg";
+module.exports = "/painting05_thumbnails_02.9876e889.jpg";
 },{}],"assets/images/paintings/painting06_thumbnails/painting06_thumbnails_01.jpg":[function(require,module,exports) {
-module.exports = "painting06_thumbnails_01.4f4c8246.jpg";
+module.exports = "/painting06_thumbnails_01.4f4c8246.jpg";
 },{}],"assets/images/paintings/painting06_thumbnails/painting06_thumbnails_02.jpg":[function(require,module,exports) {
-module.exports = "painting06_thumbnails_02.d8fcff55.jpg";
+module.exports = "/painting06_thumbnails_02.d8fcff55.jpg";
 },{}],"assets/images/paintings/painting06_thumbnails/painting06_thumbnails_03.jpg":[function(require,module,exports) {
-module.exports = "painting06_thumbnails_03.a44fd201.jpg";
+module.exports = "/painting06_thumbnails_03.a44fd201.jpg";
 },{}],"assets/images/paintings/painting06_thumbnails/painting06_thumbnails_04.jpg":[function(require,module,exports) {
-module.exports = "painting06_thumbnails_04.9451b5ca.jpg";
+module.exports = "/painting06_thumbnails_04.9451b5ca.jpg";
 },{}],"assets/images/paintings/painting06_thumbnails/painting06_thumbnails_05.jpg":[function(require,module,exports) {
-module.exports = "painting06_thumbnails_05.bd71764d.jpg";
+module.exports = "/painting06_thumbnails_05.bd71764d.jpg";
 },{}],"assets/js/thumbnail_LoadingImages.js":[function(require,module,exports) {
 "use strict";
 
@@ -6943,7 +6944,6 @@ Thumbnails.prototype.createAlinedImages = function (project) {
     file.src = project.array[project.main];
   }
 
-  file.classList.add('content');
   file.addEventListener('click', function (e) {
     e.stopPropagation();
   });
@@ -6952,31 +6952,31 @@ Thumbnails.prototype.createAlinedImages = function (project) {
     var a = document.createElement('a');
     a.href = project.artstation;
     a.setAttribute('target', '_blank');
-    a.classList.add('a');
     a.classList.add('mainContent');
+    a.classList.add('content');
     a.appendChild(file);
     files.push(a);
   } else {
+    // let div = document.createElement('div');
     file.classList.add('mainContent');
+    file.classList.add('content'); // div.appendChild(file)
+    // files.push(div);
+
     files.push(file);
   }
 
   ;
-  project.array.forEach(function (address, i) {
+  project.array.forEach(function (array, i) {
     if (i != project.main) {
       var _file;
 
       if (project.array[project.main].slice(1, 7) == 'iframe') {
         _file = document.createElement('div');
-        _file.innerHTML = address;
+        _file.innerHTML = array;
       } else {
         _file = document.createElement('img');
         _file.src = project.array[i];
       }
-
-      _file.classList.add('content');
-
-      _file.classList.add('subContent');
 
       _file.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -6989,12 +6989,22 @@ Thumbnails.prototype.createAlinedImages = function (project) {
 
         _a.setAttribute('target', '_blank');
 
-        _a.classList.add('a');
+        _a.classList.add('subContent');
+
+        _a.classList.add('content');
 
         _a.appendChild(_file);
 
-        files.push(_file);
+        files.push(_a);
+        console.log(_a, _file);
       } else {
+        // let div = document.createElement('div');
+        _file.classList.add('subContent');
+
+        _file.classList.add('content'); // div.appendChild(file)
+        // files.push(div);
+
+
         files.push(_file);
       }
 
@@ -7015,47 +7025,47 @@ Thumbnails.prototype.updateResize = function () {// if(biggerElem === this.elem)
   // }
 };
 },{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/js/thumbnail_LoadingImages.js":"assets/js/thumbnail_LoadingImages.js"}],"assets/images/icons/Maya.png":[function(require,module,exports) {
-module.exports = "Maya.e774d778.png";
+module.exports = "/Maya.e774d778.png";
 },{}],"assets/images/icons/Vray.png":[function(require,module,exports) {
-module.exports = "Vray.b687af92.png";
+module.exports = "/Vray.b687af92.png";
 },{}],"assets/images/icons/Arnold.png":[function(require,module,exports) {
-module.exports = "Arnold.af4c68e8.png";
+module.exports = "/Arnold.af4c68e8.png";
 },{}],"assets/images/icons/Zbrush.png":[function(require,module,exports) {
-module.exports = "Zbrush.2cab6d69.png";
+module.exports = "/Zbrush.2cab6d69.png";
 },{}],"assets/images/icons/Houdini.png":[function(require,module,exports) {
-module.exports = "Houdini.80764e9a.png";
+module.exports = "/Houdini.80764e9a.png";
 },{}],"assets/images/icons/MarvelousDesigner.png":[function(require,module,exports) {
-module.exports = "MarvelousDesigner.ff704c06.png";
+module.exports = "/MarvelousDesigner.ff704c06.png";
 },{}],"assets/images/icons/SubstancePainter.png":[function(require,module,exports) {
-module.exports = "SubstancePainter.c1eb635f.png";
+module.exports = "/SubstancePainter.c1eb635f.png";
 },{}],"assets/images/icons/SubstanceDesigner.png":[function(require,module,exports) {
-module.exports = "SubstanceDesigner.b856ec2c.png";
+module.exports = "/SubstanceDesigner.b856ec2c.png";
 },{}],"assets/images/icons/Mari.png":[function(require,module,exports) {
-module.exports = "Mari.73390b61.png";
+module.exports = "/Mari.73390b61.png";
 },{}],"assets/images/icons/Mudbox.png":[function(require,module,exports) {
-module.exports = "Mudbox.07ed88c3.png";
+module.exports = "/Mudbox.07ed88c3.png";
 },{}],"assets/images/icons/Photoshop.png":[function(require,module,exports) {
-module.exports = "Photoshop.d63a17fd.png";
+module.exports = "/Photoshop.d63a17fd.png";
 },{}],"assets/images/icons/threeDCoat.png":[function(require,module,exports) {
-module.exports = "threeDCoat.665d4589.png";
+module.exports = "/threeDCoat.665d4589.png";
 },{}],"assets/images/icons/RezomUV.png":[function(require,module,exports) {
-module.exports = "RezomUV.75390db6.png";
+module.exports = "/RezomUV.75390db6.png";
 },{}],"assets/images/icons/AfterEffects.png":[function(require,module,exports) {
-module.exports = "AfterEffects.c6aa1cd6.png";
+module.exports = "/AfterEffects.c6aa1cd6.png";
 },{}],"assets/images/icons/Nuke.png":[function(require,module,exports) {
-module.exports = "Nuke.d958d307.png";
+module.exports = "/Nuke.d958d307.png";
 },{}],"assets/images/icons/Python.png":[function(require,module,exports) {
-module.exports = "Python.e7e94e9a.png";
+module.exports = "/Python.e7e94e9a.png";
 },{}],"assets/images/icons/HTML.png":[function(require,module,exports) {
-module.exports = "HTML.beea1ca5.png";
+module.exports = "/HTML.beea1ca5.png";
 },{}],"assets/images/icons/Javascript.png":[function(require,module,exports) {
-module.exports = "Javascript.3f111f1e.png";
+module.exports = "/Javascript.3f111f1e.png";
 },{}],"assets/images/icons/CSS3.png":[function(require,module,exports) {
-module.exports = "CSS3.039c5a6a.png";
+module.exports = "/CSS3.039c5a6a.png";
 },{}],"assets/images/icons/ThreeJS.png":[function(require,module,exports) {
-module.exports = "ThreeJS.c459c836.png";
+module.exports = "/ThreeJS.c459c836.png";
 },{}],"assets/images/icons/GreenSock.png":[function(require,module,exports) {
-module.exports = "GreenSock.ac2ced68.png";
+module.exports = "/GreenSock.ac2ced68.png";
 },{}],"assets/js/skills.js":[function(require,module,exports) {
 "use strict";
 
@@ -8928,17 +8938,8 @@ MenuController.prototype.elemEventListener = function (elems, listener, handler)
 
 MenuController.prototype.expandMenu = function () {
   if (menuExpanded == false) {
-    menuExpanded = true;
-    biggerElem = this.elem; //----calculate demo height in order to give the same result to all functions------------------------
-
-    getDemoVideHeight(menuExpanded);
-
-    function callPromise() {
-      return _callPromise.apply(this, arguments);
-    }
-
-    function _callPromise() {
-      _callPromise = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var callPromise = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         var all, animRect, wavyAnim, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -8985,23 +8986,20 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee, this, [[0, 15]]);
       }));
-      return _callPromise.apply(this, arguments);
-    }
 
-    callPromise.call(this);
-  } else if (biggerElem != this.elem) {
-    biggeredElem = biggerElem;
-    biggerElem = this.elem;
-    biggeredController = eval(biggeredElem.id + 'MenuController'); //----calculate demo height in order to give the same result to all functions------------------------
+      return function callPromise() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    menuExpanded = true;
+    biggerElem = this.elem; //----calculate demo height in order to give the same result to all functions------------------------
 
     getDemoVideHeight(menuExpanded);
-
-    function callPromise() {
-      return _callPromise2.apply(this, arguments);
-    }
-
-    function _callPromise2() {
-      _callPromise2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    callPromise.call(this);
+  } else if (biggerElem != this.elem) {
+    var _callPromise = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var all, stopWavyAnim, animRect, wavyAnim, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -9053,22 +9051,22 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee2, this, [[0, 18]]);
       }));
-      return _callPromise2.apply(this, arguments);
-    }
 
-    callPromise.call(this);
+      return function _callPromise() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    biggeredElem = biggerElem;
+    biggerElem = this.elem;
+    biggeredController = eval(biggeredElem.id + 'MenuController'); //----calculate demo height in order to give the same result to all functions------------------------
+
+    getDemoVideHeight(menuExpanded);
+
+    _callPromise.call(this);
   } else {
-    menuExpanded = false;
-    biggerElem = null;
-    biggeredElem = null;
-    biggeredController = eval(this.id + 'MenuController');
-
-    function callPromise() {
-      return _callPromise3.apply(this, arguments);
-    }
-
-    function _callPromise3() {
-      _callPromise3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var _callPromise2 = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
         var all, stopWavyAnim, animRect, stopFuncs, addEvent;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
@@ -9115,10 +9113,18 @@ MenuController.prototype.expandMenu = function () {
           }
         }, _callee3, this, [[0, 15]]);
       }));
-      return _callPromise3.apply(this, arguments);
-    }
 
-    callPromise.call(this);
+      return function _callPromise2() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    menuExpanded = false;
+    biggerElem = null;
+    biggeredElem = null;
+    biggeredController = eval(this.id + 'MenuController');
+
+    _callPromise2.call(this);
   }
 }; //---------updateResize--------------//
 
@@ -9178,16 +9184,16 @@ function getDemoVideHeight(menuExpanded) {
     }
   } else {
     if (menuExpanded) {
-      if (window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])) {
+      if (window.innerWidth > ISU.transitionValue['masterMinWidth']) {
         demoVideoHeight = window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
       } else {
-        demoVideoHeight = ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
+        demoVideoHeight = ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
       }
     } else {
-      if (window.innerWidth > ISU.remToPx(ISU.transitionValue['masterMinWidth'])) {
+      if (window.innerWidth > ISU.transitionValue['masterMinWidth']) {
         demoVideoHeight = window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
       } else {
-        demoVideoHeight = ISU.remToPx(ISU.transitionValue['masterMinWidth']) * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
+        demoVideoHeight = ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] / 100 * (9 / 16);
       }
     }
   }
@@ -9221,7 +9227,7 @@ var workMenuController = new MenuController('work', _thumbnails.workThumbnails);
 var skillMenuController = new MenuController('skill', false, _skills.skillListTL);
 var paintMenuController = new MenuController('paint', _thumbnails.paintThumbnails);
 var infoMenuController = new MenuController('info', false, false, true);
-},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/js/border.js":"assets/js/border.js","/assets/js/utilityController.js":"assets/js/utilityController.js","/assets/js/thumbnails.js":"assets/js/thumbnails.js","/assets/js/skills.js":"assets/js/skills.js","/assets/js/info.js":"assets/js/info.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"/assets/js/InitialSetUp.js":"assets/js/InitialSetUp.js","/assets/js/border.js":"assets/js/border.js","/assets/js/utilityController.js":"assets/js/utilityController.js","/assets/js/thumbnails.js":"assets/js/thumbnails.js","/assets/js/skills.js":"assets/js/skills.js","/assets/js/info.js":"assets/js/info.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -9249,7 +9255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1221" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2238" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -9425,5 +9431,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js","assets/js/mainControllerLighter.js"], null)
-//# sourceMappingURL=mainControllerLighter.8d0e238a.js.map
+},{}]},{},["C:/Users/sophia/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js","assets/js/mainControllerLighter.js"], null)
+//# sourceMappingURL=/mainControllerLighter.8d0e238a.js.map
