@@ -174,7 +174,6 @@ Thumbnails.prototype.createAlinedImages = function(project){
     file = document.createElement('img');
     file.src = project.array[project.main]; 
   }
-    file.classList.add('content');
     file.addEventListener('click',(e)=>{ e.stopPropagation() });
 
 
@@ -183,8 +182,9 @@ Thumbnails.prototype.createAlinedImages = function(project){
     a.href= project.artstation;
     a.setAttribute('target','_blank');
     
-    a.classList.add('a');
+ 
     a.classList.add('mainContent');
+    a.classList.add('content');
 
     a.appendChild(file);
     files.push(a);
@@ -192,41 +192,45 @@ Thumbnails.prototype.createAlinedImages = function(project){
   }else{
 
     file.classList.add('mainContent');
+    file.classList.add('content');
     files.push(file);
   };
 
 
 
-  project.array.forEach((address, i)=>{
+  project.array.forEach((array, i)=>{
     if( i != project.main){
       let file;
 
         if(project.array[project.main].slice(1,7) == 'iframe'){
           file = document.createElement('div');
-          file.innerHTML = address;
+          file.innerHTML = array;
         }else{
           file = document.createElement('img');
           file.src = project.array[i];
         }
-        file.classList.add('content');
-        file.classList.add('subContent');
         file.addEventListener('click',(e)=>{ e.stopPropagation() });
 
+        
         if(project.artstation !=null){
+          let a = document.createElement('a');
+          a.href= project.artstation;
+          a.setAttribute('target','_blank');
+          
+          a.classList.add('subContent');
+          a.classList.add('content');
 
-            let a = document.createElement('a');
-            a.href= project.artstation;
-            a.setAttribute('target','_blank');
-            
-            a.classList.add('a');
-
-            a.appendChild(file);
-            files.push(file);
+          a.appendChild(file);
+          files.push(a);
+          console.log(a,file)
 
         }else{
-            files.push(file);
+          file.classList.add('subContent');
+          file.classList.add('content');
+          files.push(file);
         };
       
+       
     }
   });
 

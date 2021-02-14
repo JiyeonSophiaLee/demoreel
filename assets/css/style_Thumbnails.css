@@ -63,25 +63,61 @@
     
     }
   }
-
-  .alinedImagesChild < img,iframe{
-    border-radius: 0.7rem;
+/* 
+  .alinedImagesChild .content{
     padding: 0.1vw;
-    width:-webkit-fill-available;
-    /* height:-webkit-fill-available; */
+    
     object-fit: cover;
   }
     @media (max-width:800px){
-      .alinedImagesChild < img,iframe{
+      .alinedImagesChild .content{
+        border-radius: 0.5rem;
+      }
+    }
+    .alinedImagesChild img,iframe{
+      
+    border-radius: 0.7rem;
+      width:-webkit-fill-available;
+
+    }
+    
+  .alinedImagesChild div{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 20px;
+    padding: 0.1vw;
+    padding: 28.125% 0; 
+  }
+  .alinedImagesChild div iframe{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+  } */
+
+  .alinedImagesChild .content{
+    box-sizing: initial;
+  }
+  .alinedImagesChild img,iframe{
+    border-radius: 0.7rem;
+    margin: 0.1vw;
+    width: 100%;
+    height: 100%;
+    /* height:-webkit-fill-available; */
+    /* object-fit: cover; */
+  }
+    @media (max-width:800px){
+      .alinedImagesChild img,iframe{
         border-radius: 0.5rem;
       }
     }
     
   .alinedImagesChild div{
     position: relative;
-    border-radius: 20px;
-    padding: 0.1vw;
-    object-fit: cover;
+    /* border-radius: 20px; */
+    /* object-fit: cover; */
     padding: 28.125% 0; 
   }
   .alinedImagesChild div iframe{
@@ -91,4 +127,3 @@
     width: 100%;
     height: 100%;
   }
-
