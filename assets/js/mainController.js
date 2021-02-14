@@ -299,8 +299,8 @@ function getDemoVideHeight(menuExpanded){
     if(menuExpanded){
       if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }else{
-        demoVideoHeight = (ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      }else{masterMinWidth
+        demoVideoHeight = (ISU.transitionValue[''] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }
     }else{
       if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
