@@ -190,9 +190,13 @@ Thumbnails.prototype.createAlinedImages = function(project){
     files.push(a);
   
   }else{
+    // let div = document.createElement('div');
 
     file.classList.add('mainContent');
     file.classList.add('content');
+    
+    // div.appendChild(file)
+    // files.push(div);
     files.push(file);
   };
 
@@ -225,8 +229,12 @@ Thumbnails.prototype.createAlinedImages = function(project){
           console.log(a,file)
 
         }else{
+          // let div = document.createElement('div');
+
           file.classList.add('subContent');
           file.classList.add('content');
+          // div.appendChild(file)
+          // files.push(div);
           files.push(file);
         };
       
