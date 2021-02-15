@@ -1,5 +1,4 @@
 node_modules
-assets/images/icons/svg
-assets/images/icons/svg/originalSize
+assets/images/icons/svg/
+assets/images/icons/svg/originalSize/
 .cache/
-node_modules/

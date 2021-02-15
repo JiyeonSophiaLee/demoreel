@@ -226,7 +226,6 @@ Thumbnails.prototype.createAlinedImages = function(project){
 
           a.appendChild(file);
           files.push(a);
-          console.log(a,file)
 
         }else{
           // let div = document.createElement('div');

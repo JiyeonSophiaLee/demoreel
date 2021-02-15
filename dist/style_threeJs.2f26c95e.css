@@ -1,0 +1,25 @@
+#threejsBlocker{
+    background:var(--backgroundColor);
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+  #threeJSCanvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -3;
+  }
+  #threeJSVignette{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
+    z-index: -2;
+  }
+
+/*# sourceMappingURL=style_threeJs.2f26c95e.css.map */
