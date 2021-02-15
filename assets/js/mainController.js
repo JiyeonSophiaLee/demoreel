@@ -85,6 +85,7 @@ function MenuController(id, hasThumbnail=false, hasSkills=false, hasInfo = false
 
   window.addEventListener('resize',this.updateResizeHandler);
   this.elem.addEventListener('click',this.callClickEvent,false);
+  this.elem.addEventListener('orientationchange', this.updateResize.call(this))
   this.elem.firstElementChild.addEventListener('mouseover', this.hoveroverOnHandler);
   this.elem.firstElementChild.addEventListener('mouseout', this.hoveroverOffHandler);
 }
