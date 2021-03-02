@@ -1,0 +1,291 @@
+/** If you have any questions, email me.
+/**
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ *   2.1 - Top Font
+ * 3.0 - Top
+ *   3.1 My Piction
+ *   3.1 Me
+ * 4.0 - Line
+ * 5.0 - Bot
+ *   5.1 - Head
+ *   5.2 - Bodies
+ * ----------------------------------------------------------------------------
+ */ 
+
+
+
+
+/**
+ * 1.0 Basic Structure
+ * ----------------------------------------------------------------------------
+ */
+
+
+  .infoContents{
+    background:rgba(30,30,30,0.8);
+    color:white;
+    display: none;
+    font-family: 'Darker Grotesque', sans-serif;
+  }
+  
+
+  /**
+   * 2.1 Top Font
+   * --------------------------------------
+   */
+  
+    .infoTop{
+      padding: 3%;
+      .myPic{
+        width: 50%;
+        margin: auto;
+        position: relative;
+        display: grid;
+        .myPicBG{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+          background: linear-gradient(35deg, #ff6ee2, #5cd3ff);
+          animation: morphingBGAni 10s infinite linear;
+          z-index: -1;
+        }
+        .myPicImage{
+          width: 95%;
+          justify-self: center;
+          animation: morphingAni 10s infinite linear;
+        }
+      }
+      .myPicText{
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+      padding-top: 2vw;
+        .myName{
+          font-family: 'theboldfont';
+          .name .name:nth-child(1){
+            font-size: 6vw;
+            line-height: 6vw;
+          }
+          .name .name:nth-child(2){
+            font-size: 5vw;
+            line-height: 5vw;
+            color: transparent;
+            -webkit-text-stroke: 1px white;
+          }
+        }
+        .position{
+          font-size: 2vw;
+          font-weight: 500;
+          color: tomato;
+        }
+      }
+
+  
+    }
+      @media (min-width:1100px){
+        .infoTop{
+          display: grid;
+          grid-template-columns: 0.35fr 0.65fr;
+          .myPic{
+              width: 100%;
+          }
+        }
+      }
+      @media (max-width:800px){
+        .infoTop .myPicText{
+          .myName .name .name:nth-child(1){
+            font-size: 3.2rem;
+            line-height: 3.2rem;
+          }
+          .myName .name .name:nth-child(2){
+            font-size: 3rem;
+            line-height: 3rem;
+          }
+          .position{
+            font-size: 1.3rem;
+            line-height: 1.3rem;
+          }
+        }
+      }
+      @media (min-width:1400px){
+        .infoTop .myPicText .myName .name .name:nth-child(2){
+          font-size: 4.5vw;
+          line-height: 4.5vw;
+        }
+      }
+  
+
+  
+
+      @keyframes morphingBGAni {
+        0% {
+          border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+        }
+        30% {
+          border-radius: 73% 35% 85% 26%/ 58% 63% 31% 67%;
+        }
+        60% {
+          border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
+        }
+        80% {
+          border-radius: 60% 17% 30% 41%/ 71% 80% 61% 13%;
+        }
+        100%{
+          border-radius: 37% 40% 52% 20%/ 35% 21% 73% 50%;
+        }
+      }
+      @keyframes morphingAni {
+        0% {
+          border-radius: 35% 47% 49% 21%/ 31% 20% 69% 53%;
+        }
+        25% {
+          border-radius: 73% 35% 85% 26%/ 58% 63% 31% 67%;
+        }
+        50% {
+          border-radius: 50% 50% 33% 67%/55% 27% 73% 45%;
+        }
+        75% {
+          border-radius: 60% 17% 30% 41%/ 71% 80% 61% 13%;
+        }
+        100%{
+          border-radius: 35% 47% 49% 21%/ 31% 20% 69% 53%;
+        }
+      }
+      
+      
+
+  /**
+   * 2.2 topBotDivider
+   * --------------------------------------
+   */
+  
+      .topBotDivider{
+        width: 26%;
+        height: 0.4rem;
+        background: white;
+        margin: 6% auto 15% auto;
+      }
+      @media (min-width:1100px){
+        #info .line{
+          width: 16%;
+        }
+      }
+
+
+
+
+    
+/**
+  * 5.0 Bot
+  * ----------------------------------------------------------------------------
+  */
+  
+  
+    .infoBot{
+      padding:3%;
+      > div{
+        padding-bottom: 15%;
+        .heads{
+          font-size: 2.5rem;
+          font-weight: 500;
+          text-align: center;
+          margin: 10%;
+          &::after{
+            content: '';
+            background: white;
+            height: 0.15rem;
+            width: calc(100% /10);
+            position: relative;
+            display: block;
+            margin: 1rem auto;
+          }
+        }
+        .bodies{
+          font-size: 1.5rem;
+          line-height: 1.5rem;
+          align-self: center;
+          .school{
+            .schoolText{
+              font-size: 1.7rem;
+              line-height: 1.7rem;
+              font-weight: bold;
+            }
+            .countryText, .dateText{
+              font-size: 1.1rem;
+            }
+          }
+          .education{
+            overflow-wrap: anywhere;
+          }
+        }
+      }
+      .contact{
+        .bodies{
+          width:fit-content;
+          .bodies .address{
+            display: flex;
+            margin: 0.7rem 0;
+            background: rgb(30,30,30);
+            border: solid rgba(255,255,255, 0.6) 2px;
+            border-radius: 0.5rem;
+            *{
+              /* display: inline; */
+              /* align-self:center; */
+              padding: 0.4rem;
+            }
+            a{
+              text-decoration: none;
+              /* overflow-wrap:anywhere; */
+            }
+          }
+        }
+      }
+      
+      
+    }
+ 
+        @media (min-width:1100px){
+          .infoBot > div{
+            display: grid;
+            grid-template-columns: 0.4fr 0.60fr;
+            .heads::after{
+              width: calc(100% / 5);
+            }
+          }
+      }
+
+        @media (min-width:1400px){
+          .infoBot 
+            >div{     
+              .heads{
+                font-size: 3.5rem;
+                line-height: 3.5rem;
+              }
+              .bodies{
+                font-size: 1.7rem;
+                line-height: 1.7rem;
+                .school{
+                  .schoolText{
+                    font-size: 2rem;
+                    line-height: 2rem;
+                  }
+                  .countryText, .dateText{
+                    font-size: 1.3rem;
+                  }
+                }
+              }
+            }
+          }
+
+  
+  
+  
+
+
