@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from "next/link";
 
 export default function _Head(){
   return(
@@ -9,6 +10,14 @@ export default function _Head(){
       <meta name="keywords" content="3D Artist,Fonted Engeener,3d,maya,javscript,demo"/>
       <meta name="auto" content="Sophia Jiyeon Lee"/>
       <title>Sophia Jiyeon Personal Demo Website</title>
+      <link rel="preload"
+            href="/assets/fonts/GathaSans.ttf"
+            as="font"
+            crossOrigin=""/>
+      <link rel="preload"
+            href="/assets/fonts/theboldfont.woff"
+            as="font"
+            crossOrigin=""/>
     </Head>
   )
 }

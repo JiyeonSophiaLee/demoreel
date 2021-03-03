@@ -1,5 +1,6 @@
 import '../styles/globals.css'
-import '../styles/globals2.scss'
+import '../styles/homeLayout.scss'
+import '../styles/infoLayout.scss'
 
 
 function MyApp({ Component, pageProps }) {

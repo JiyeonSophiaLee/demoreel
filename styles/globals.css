@@ -20,11 +20,12 @@ a {
   box-sizing: border-box;
 }
 
-/* @font-face{
+@font-face{
   font-family: 'GathaSans';
-  src: url(../fonts/GathaSans.ttf);
+  src: url(/assets/fonts/GathaSans.ttf);
+  font-display: swap;
 }
 @font-face{
   font-family: 'theboldfont';
-  src: url(../fonts/theboldfont.woff);
-} */
+  src: url(/assets/fonts/theboldfont.woff);
+}
