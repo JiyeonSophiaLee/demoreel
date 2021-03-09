@@ -15,17 +15,13 @@
   --LiScrollbarWidth: 8px;
 } */
 
+@import "./variableCss.module.scss";
+
 /**
  * 1.0 Basic Structure
  * ----------------------------------------------------------------------------
  */
 
-$demoBorderWidth: 0.6vw;
-$demoVideoWidth:67%;
-$demoVideoWidthMediaQuery: 80%;
-$demoVideoBgCSSAnimBorderSize: 8px;
-
-$masterMinWidth: 400px;
 
 
 
@@ -145,26 +141,26 @@ $masterMinWidth: 400px;
     width: 100%;
     height: 100%;
   }
-  #logo_heigher{
-    display: initial;
-  }
-  #logo_wider{
-    display: none;
-  }
+  // #logo_heigher{
+  //   display: initial;
+  // }
+  // #logo_wider{
+  //   display: none;
+  // }
 }
-  @media (max-width:800px){
-    #demo #logo{
-      width: 50%;
-      padding: 1rem 0;
+  // @media (max-width:800px){
+  //   #demo #logo{
+  //     width: 50%;
+  //     padding: 1rem 0;
 
-      #logo_heigher{
-        display: none;
-      }
-      #logo_wider{
-        display: initial;
-      }
-    }
-  }
+  //     #logo_heigher{
+  //       display: none;
+  //     }
+  //     #logo_wider{
+  //       display: initial;
+  //     }
+  //   }
+  // }
 
 
 

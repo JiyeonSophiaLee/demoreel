@@ -3,9 +3,10 @@ import '../styles/homeLayout.scss'
 import '../styles/infoLayout.scss'
 
 
+
 function MyApp({ Component, pageProps }) {
   return (
-    <Component {...pageProps} />
+    <Component {...pageProps}/>
   )
 }
 
