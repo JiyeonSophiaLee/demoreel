@@ -7,14 +7,16 @@ import Image from 'next/image';
 
 
 
-export default function Menu(){
+export default function Menu(props){
+  
+  
   return (
     <section id = "menu">
       <SvgIvory/>
-      <MenuComponent id="work"  svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34"/>
-      <MenuComponent id="skill" svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179"/>
-      <MenuComponent id="paint" svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98"/>
-      <MenuComponent id="info"  svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>}/>
+      <MenuComponent id="work"  svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
+      <MenuComponent id="skill" svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
+      <MenuComponent id="paint" svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
+      <MenuComponent id="info"  svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem } contents={<InfoContent/>} />
     </section>
   )
 }
@@ -32,31 +34,33 @@ function SvgIvory(){
   )
 }
 
-class MenuComponent extends Component{
-  constructor(props){
-    super(props);
+function MenuComponent (props){
+  
+  function onClick(elemId){
+    props.switchMenuExtended();
+    props.getSetBiggerElem(elemId);
   }
-  render(){
-    return(
-      <li id={this.props.id}>
-        <div className="svgFramePackage">
-            <div className="menuText">{this.props.id.toUpperCase()}</div>
-            <div className="neon neon1"></div>
-            <div className="neon neon2"></div>
-            <SvgFrame 
-              id={this.props.id} 
-              svgFrameStopColor1={this.props.svgFrameStopColor1}
-              svgFrameStopColor2={this.props.svgFrameStopColor2}
-              strokeColor1={this.props.strokeColor1}
-              strokeColor2={this.props.strokeColor2}
-            />
-        </div>
-        <div className="contents">
-            {this.props.contents}
-        </div>
-      </li>
-    )
-  }
+  
+
+  return(
+    <li id={props.id}  onClick={(e)=>{onClick(e.currentTarget.id)}}>
+      <div className="svgFramePackage">
+          <div className="menuText">{props.id.toUpperCase()}</div>
+          <div className="neon neon1"></div>
+          <div className="neon neon2"></div>
+          {/* <SvgFrame 
+            id={props.id} 
+            svgFrameStopColor1={props.svgFrameStopColor1}
+            svgFrameStopColor2={props.svgFrameStopColor2}
+            strokeColor1={props.strokeColor1}
+            strokeColor2={props.strokeColor2}
+          /> */}
+      </div>
+      <div className="contents">
+          {props.contents}
+      </div>
+    </li>
+  )
 }
 
 class SvgFrame extends Component{

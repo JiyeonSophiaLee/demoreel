@@ -4,8 +4,16 @@ $demoVideoWidth:67%;
 $demoVideoWidthMediaQuery: 80%;
 // $demoVideoBgCSSAnimBorderSize: 8px;
 
-$masterMinWidth: 400px;
+$masterMinWidth : 400px;
+$masterMaxWidth : 1400px;
+$masterMinHeight: 700px;
+
+$LiScrollbarWidth: 8px;
 
 :export{
+  masterMinWidth: $masterMinWidth;
+  masterMaxWidth: $masterMaxWidth;
+  masterMinHeight: $masterMinHeight;
   demoVideoWidth: $demoVideoWidth;
+  demoVideoWidthMediaQuery: $demoVideoWidthMediaQuery;
 }
