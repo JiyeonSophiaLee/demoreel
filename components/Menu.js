@@ -1,22 +1,23 @@
-import { Component } from 'react';
+import { Component, useContext } from 'react';
 import { MdPhoneIphone } from 'react-icons/md'; 
 import { FaArtstation } from 'react-icons/fa'; 
 import { ImAddressBook } from 'react-icons/im'; 
 import Image from 'next/image';
 
-
+import { ExtendMenuContext } from './HomeLayout.js'
 
 
 export default function Menu(props){
-  
-  
+
+  // console.log(extendMenuContext)
+
   return (
     <section id = "menu">
       <SvgIvory/>
-      <MenuComponent id="work"  svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
-      <MenuComponent id="skill" svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
-      <MenuComponent id="paint" svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem }/>
-      <MenuComponent id="info"  svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" switchMenuExtended={ props.switchMenuExtended } getSetBiggerElem={ props.getSetBiggerElem } contents={<InfoContent/>} />
+      <MenuComponent id="work"  svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" />
+      <MenuComponent id="skill" svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
+      <MenuComponent id="paint" svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
+      <MenuComponent id="info"  svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
     </section>
   )
 }
@@ -36,9 +37,10 @@ function SvgIvory(){
 
 function MenuComponent (props){
   
+  const extendMenuContext = useContext(ExtendMenuContext);
+
   function onClick(elemId){
-    props.switchMenuExtended();
-    props.getSetBiggerElem(elemId);
+    extendMenuContext(elemId)
   }
   
 

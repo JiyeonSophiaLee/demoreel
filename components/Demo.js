@@ -10,7 +10,7 @@ export default function Demo(){
   //   const [size,setSize] = useState([ window.innerHeight, window.innerWidth]);
   // }
   
-  const [menuExpanded,setMenuExpanded] = useState('false');
+  // const [menuExpanded,setMenuExpanded] = useState('false');
   const [logoDisplay,setLogoDisplay] = useState({logo_heigher:'none',logo_wider:'none'});
   const [demoVideo_height, setDemovideo_height] = useState(0);
   const demoRef = React.useRef(null);
@@ -24,10 +24,15 @@ export default function Demo(){
     switchLogos();
     getDemoVideHeight();
 
-    window.addEventListener('resize',()=>{
+    let updateResize = () =>{
       switchLogos();
-      getDemoVideHeight();
-    })
+      getDemoVideHeight();  
+    }
+
+    window.addEventListener('resize',updateResize)
+    return ()=>{
+      window.removeEventListener('resize',updateResize);
+    }
   },[])  
   
 
@@ -79,7 +84,7 @@ export default function Demo(){
   };
   
   function onclick(){
-    
+
   }
   //------------------------------------------------------//
 

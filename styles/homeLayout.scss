@@ -1,6 +1,6 @@
 /* :root{
   --backgroundColor:rgba(30, 30, 30, 1);
-  --demoVideoWidthMediaQuery:80%;
+  --demoVideoWidth800:80%;
 
   --subMenuNeonDuration:1.5s;
   --masterMinWidth : 400px;
@@ -73,7 +73,7 @@
   display:flex;
 }
 @media (max-width:800px){
-  .master{
+  #master{
     display: grid;
     grid-template-rows:auto 1fr;
   }
@@ -145,19 +145,19 @@
   //   display: none;
   // }
 }
-  // @media (max-width:800px){
-  //   #demo #logo{
-  //     width: 50%;
-  //     padding: 1rem 0;
+  @media (max-width:800px){
+    #demo #logo{
+      width: 50%;
+      padding: 1rem 0;
 
-  //     #logo_heigher{
-  //       display: none;
-  //     }
-  //     #logo_wider{
-  //       display: initial;
-  //     }
-  //   }
-  // }
+      #logo_heigher{
+        display: none;
+      }
+      #logo_wider{
+        display: initial;
+      }
+    }
+  }
 
 
 
@@ -185,7 +185,7 @@
   }
     @media (max-width:800px){
       #demo #demoVideo{
-        width: $demoVideoWidthMediaQuery;
+        width: $demoVideoWidth800;
         #demoVideoBgCSSAnim{
           filter: none;
         }

@@ -22,8 +22,8 @@ import variable from '../../../styles/variableCss.module.scss';
 
 // const allElems = [WORK,PAINT,SKILL,INFO];
 
-// export {
-//   MASTER,
+export {
+  // MASTER,
 //   LOGO__,
 //   LOGO_HEIGHER,
 //   LOGO_WIDER,
@@ -41,7 +41,7 @@ import variable from '../../../styles/variableCss.module.scss';
 //   SKILL_CONTENTS,
 //   INFO_CONTENTS,
 //   allElems
-// }
+}
 
 
 
@@ -82,7 +82,7 @@ import variable from '../../../styles/variableCss.module.scss';
 const transitionValue ={
   symetryDemoMenu : 50,
   unSymetryDemoMenu : 75,
-  duration : 1,
+  menuDuration : 1,
   symetryEachMenu : 50,
   unSymetryEachMenu : 75,
   masterMinWidth : parseInt(variable.masterMinWidth),
@@ -90,8 +90,8 @@ const transitionValue ={
   masterMinHeight : parseInt(variable.masterMinHeight),
   symetryDemoVideoWidth : parseInt(variable.demoVideoWidth),
   unSymetryDemoVideoWidth : 90,
-  symetryDemoVideoWidthMediaQuery : parseInt(variable.demoVideoWidthMediaQuery),
-  unSymetryDemoVideoWidthMediaQuery : 50,
+  symetryDemoVideoWidth800 : parseInt(variable.demoVideoWidth800),
+  unSymetryDemoVideoWidth800 : 50,
   // rectMinMediaQuery : 13,
   // rectMinMediaQueryUnit : 'vw',
   // rectSize : getComputedStyle(document.documentElement).getPropertyValue('--rectSize'),

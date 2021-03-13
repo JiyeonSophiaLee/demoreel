@@ -18,6 +18,8 @@ export default function _Head(){
             href="/assets/fonts/theboldfont.woff"
             as="font"
             crossOrigin=""/>
+       {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script> */}
+
     </Head>
   )
 }
