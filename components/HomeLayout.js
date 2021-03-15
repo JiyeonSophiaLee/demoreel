@@ -92,35 +92,31 @@ export default HomeLayout
 
 function homeGsapSet(_menuExtended){
   if(innerWidth > 800){
-    //   gsap.set(
-    //     '#master',{
-    //       maxWidth: '100%'
-    //     }
-    //   )
-    //   gsap.set(
-    //     '#demo',{
-    //       width: (100 - TV.unSymetryDemoMenu) + '%'
-    //     },0
-    //   )
-    // }
-  // }else{
-  //   if(_menuExtended){
-  //     gsap.set('#demo'     ,{ width: 100 + '%' })
-  //     gsap.set('#demoVideo',{ width: TV.unSymetryDemoVideoWidth800 + '%' })
-  //   }else{
-  //     gsap.set('#demo'     ,{ width: 100 + '%'})
-  //     gsap.set('#demoVideo',{ width: TV.symetryDemoVideoWidth800 + '%' })
-  //   }
+    if(_menuExtended){
+      gsap.set("#master"   , { maxWidth : 100 + '%'                     });
+      gsap.set("#demo"     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
+      gsap.set("#demoVideo", { width: TV.unSymetryDemoVideoWidth + '%', height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+    }else{
+      gsap.set("#master"   , { maxWidth : TV.masterMaxWidth + 'px'    });
+      gsap.set("#demo"     , { width: symetryDemoMenu + '%'           });
+      gsap.set("#demoVideo", { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
+    }
+  }else{
+    if(_menuExtended){
+      gsap.set('#demo'     ,{ width: 100 + '%' })
+      gsap.set('#demoVideo',{ width: TV.unSymetryDemoVideoWidth800 + '%' })
+    }else{
+      gsap.set('#demo'     ,{ width: 100 + '%'})
+      gsap.set('#demoVideo',{ width: TV.symetryDemoVideoWidth800 + '%' })
+    }
   }
 }
 function homeGsapTransition(_menuExtended){
   
   if(innerWidth > 800){
     if(_menuExtended){
-      console.log('if')
       homeGsapTransitionToUnSymetry();
     }else{
-      console.log('else')
       homeGsapTransitionToSymetry();
     }
     
