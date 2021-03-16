@@ -98,7 +98,7 @@ function homeGsapSet(_menuExtended){
       gsap.set("#demoVideo", { width: TV.unSymetryDemoVideoWidth + '%', height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
     }else{
       gsap.set("#master"   , { maxWidth : TV.masterMaxWidth + 'px'    });
-      gsap.set("#demo"     , { width: symetryDemoMenu + '%'           });
+      gsap.set("#demo"     , { width: TV.symetryDemoMenu + '%'           });
       gsap.set("#demoVideo", { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
     }
   }else{
@@ -119,45 +119,6 @@ function homeGsapTransition(_menuExtended){
     }else{
       homeGsapTransitionToSymetry();
     }
-    
-    //   demoMenuTransformTL
-    //     .fromTo(
-    //       '#master',{
-    //         maxWidth: TV.masterMaxWidth
-    //       },{
-    //         maxWidth: '100%'
-    //       },0
-    //     )
-    //     .fromTo(
-    //       '#demo',{
-    //         width: TV.symetryDemoMenu + '%'
-    //       },{
-    //         width: (100 - TV.unSymetryDemoMenu) + '%'
-    //       },0
-    //     )
-    //         if(innerWidth < TV.masterMaxWidth){
-    //           demoMenuTransformTL.add(gsap.fromTo(
-    //             '#demoVideo',{
-    //               width: TV.symetryDemoVideoWidth + '%',
-    //               height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
-    //             },{
-    //               width: TV.unSymetryDemoVideoWidth + '%',
-    //               height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16
-    //             }
-    //           ),0)
-    //         }else{
-    //           demoMenuTransformTL.add(gsap.fromTo(
-    //             '#demoVideo',{
-    //               width: TV.symetryDemoVideoWidth + '%',
-    //               height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
-    //             },{
-    //               width: TV.unSymetryDemoVideoWidth + '%',
-    //               height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16
-    //             }
-    //           ),0)
-    //         }
-    // if(_menuExtended){
-
   }
   else{
     // demoMenuTransformTL800

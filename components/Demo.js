@@ -1,25 +1,35 @@
 // import variable from '../styles/variableCss.module.scss';
-import React, { useState, useEffect, createContext } from "react";
+import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
+import { useState, useEffect, createContext, useRef, useReducer } from "react";
 import TV from '../public/assets/js/transitionValue';
 
+
+
+const logoDisplayReducer = (state,action)=>{
+  switch(action.type){
+    case 'initial':
+      state = { logo_heigher: "initial", logo_wider:"none"}
+      return state
+    case 'none':
+      state = { logo_heigher: "none", logo_wider:"initial"}
+      return state
+    default:
+      return state
+  }
+} 
 
 
 
 export default function Demo(){
   
-  // if (typeof window !== 'undefined') {
-  //   const [size,setSize] = useState([ window.innerHeight, window.innerWidth]);
-  // }
-  
-  // const [menuExpanded,setMenuExpanded] = useState('false');
-  const [logoDisplay,setLogoDisplay] = useState({logo_heigher:'none',logo_wider:'none'});
+  // const [logoDisplay,setLogoDisplay] = useState({logo_heigher:'none',logo_wider:'none'});
   const [demoVideo_height, setDemovideo_height] = useState(0);
-  const demoRef = React.useRef(null);
-  const logoRef = React.useRef(null);
-  const demoVieoRef = React.useRef(null);
+  const demoRef = useRef(null);
+  const logoRef = useRef(null);
+  const demoVieoRef = useRef(null);
 
-
-
+  const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
+  
 
   useEffect(()=>{
     switchLogos();
@@ -42,15 +52,15 @@ export default function Demo(){
     if(innerWidth > 800){
       if(innerWidth > innerHeight){
         if(demoRef.current.clientHeight/3 < logoRef.current.clientWidth*4/6){
-          setLogoDisplay({logo_heigher: 'none', logo_wider : 'initial'})
+          logoDisplayDispatch({ type: "none" });
         }else{
-          setLogoDisplay({logo_heigher: 'initial', logo_wider : 'none'})
+          logoDisplayDispatch({ type: "initial"});
         }
       }else{
-        setLogoDisplay({logo_heigher: 'initial', logo_wider : 'none'})
+        logoDisplayDispatch({ type: "initial"});
       }
     }else{
-      setLogoDisplay({logo_heigher: 'none', logo_wider : 'initial'})
+      logoDisplayDispatch({ type: "none" });
     }
   }
 
