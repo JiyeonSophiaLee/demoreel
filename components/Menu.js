@@ -1,14 +1,15 @@
-import { Component, useContext } from 'react';
+import { Component, useContext, memo } from 'react';
 import { MdPhoneIphone } from 'react-icons/md'; 
 import { FaArtstation } from 'react-icons/fa'; 
 import { ImAddressBook } from 'react-icons/im'; 
 import Image from 'next/image';
 
 import { ExtendMenuContext } from './HomeLayout.js'
+import { useCallback } from 'react/cjs/react.development';
 
 
-export default function Menu(props){
-
+function Menu(props){
+  console.log('---MEMO---')
   // console.log(extendMenuContext)
 
   return (
@@ -21,6 +22,7 @@ export default function Menu(props){
     </section>
   )
 }
+export default memo(Menu)
 
 function SvgIvory(){
   return(
@@ -39,24 +41,24 @@ function MenuComponent (props){
   
   const extendMenuContext = useContext(ExtendMenuContext);
 
-  function onClick(elemId){
-    extendMenuContext(elemId)
-  }
+  const onClick = useCallback((elemId)=>{
+    extendMenuContext(elemId);
+  },[extendMenuContext])
   
 
   return(
-    <li id={props.id}  onClick={(e)=>{onClick(e.currentTarget.id)}}>
+    <li id={props.id}  onClick={(e)=>{ onClick(e.currentTarget.id)}}>
       <div className="svgFramePackage">
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>
-          {/* <SvgFrame 
+          <SvgFrame 
             id={props.id} 
             svgFrameStopColor1={props.svgFrameStopColor1}
             svgFrameStopColor2={props.svgFrameStopColor2}
             strokeColor1={props.strokeColor1}
             strokeColor2={props.strokeColor2}
-          /> */}
+          />
       </div>
       <div className="contents">
           {props.contents}
