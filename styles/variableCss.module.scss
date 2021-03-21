@@ -2,6 +2,9 @@
 // $demoBorderWidth: 0.6vw;
 $demoVideoWidth:67%;
 $demoVideoWidth800: 80%;
+
+$logoWidth: 60%;
+$logoWidth800: 50%;
 // $demoVideoBgCSSAnimBorderSize: 8px;
 
 $masterMinWidth : 400px;
@@ -16,4 +19,6 @@ $LiScrollbarWidth: 8px;
   masterMinHeight: $masterMinHeight;
   demoVideoWidth: $demoVideoWidth;
   demoVideoWidth800: $demoVideoWidth800;
+  logoWidth: $logoWidth;
+  logoWidth800: $logoWidth800;
 }

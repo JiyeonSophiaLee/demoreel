@@ -131,7 +131,7 @@
   align-self: end;
   justify-self: center;
   padding-bottom: 10%;
-  width: 60%;
+  width: $logoWidth;
   cursor: pointer;
 
   img{
@@ -147,7 +147,7 @@
 }
   @media (max-width:800px){
     #demo #logo{
-      width: 50%;
+      width: $logoWidth800;
       padding: 1rem 0;
 
       #logo_heigher{

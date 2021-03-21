@@ -92,6 +92,8 @@ const transitionValue ={
   unSymetryDemoVideoWidth : 90,
   symetryDemoVideoWidth800 : parseInt(variable.demoVideoWidth800),
   unSymetryDemoVideoWidth800 : 50,
+  logoWidth: parseInt(variable.logoWidth),
+  logoWidth800: parseInt(variable.logoWidth800)
   // rectMinMediaQuery : 13,
   // rectMinMediaQueryUnit : 'vw',
   // rectSize : getComputedStyle(document.documentElement).getPropertyValue('--rectSize'),

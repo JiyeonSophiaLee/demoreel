@@ -3,14 +3,14 @@
 import { useState, useEffect, createContext, useRef, useReducer, memo } from "react";
 import { useContext } from "react/cjs/react.development";
 // import TV from '../public/assets/js/transitionValue';
-import { LogoDisplayContext } from './HomeLayout'
+import { LogoDisplayContext } from './HomeLayout.jsx'
 
 
 
 
 
 function Demo(){
-  console.log('---DEMO---')
+  // console.log('---DEMO---')
   const [demoVideo_height, setDemovideo_height] = useState(0);
   const demoRef = useRef(null);
   const logoRef = useRef(null);
@@ -29,6 +29,7 @@ function Demo(){
     getDemoVideHeight();
 
     let updateResize = () =>{
+      // console.log('demoRef: ',demoRef.current.clientHeight, "demo: ",demo.clientHeight)
       _mobileMode = innerWidth <= 800 ? true : false; 
       if(mobileMode !==_mobileMode ){
         mobileMode = innerWidth <= 800 ? true : false;

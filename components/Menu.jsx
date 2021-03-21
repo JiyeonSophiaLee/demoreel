@@ -1,24 +1,24 @@
-import { Component, useContext, memo } from 'react';
+import { useContext, memo, useCallback, useRef} from 'react';
 import { MdPhoneIphone } from 'react-icons/md'; 
 import { FaArtstation } from 'react-icons/fa'; 
 import { ImAddressBook } from 'react-icons/im'; 
 import Image from 'next/image';
+import RunSvgFrame from "../public/assets/js/SvgFrame.js";
 
-import { ExtendMenuContext } from './HomeLayout.js'
-import { useCallback } from 'react/cjs/react.development';
+import { ExtendMenuContext } from './HomeLayout.jsx';
 
 
-function Menu(props){
-  console.log('---MEMO---')
+function Menu(){
+  // console.log('---MEMO---')
   // console.log(extendMenuContext)
 
   return (
     <section id = "menu">
       <SvgIvory/>
-      <MenuComponent id="work"  svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" />
-      <MenuComponent id="skill" svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
-      <MenuComponent id="paint" svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
-      <MenuComponent id="info"  svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
+      <MenuComponent id="work"  order='1' svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" />
+      <MenuComponent id="skill" order='2' svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
+      <MenuComponent id="paint" order='3' svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
+      <MenuComponent id="info"  order='4' svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
     </section>
   )
 }
@@ -40,10 +40,12 @@ function SvgIvory(){
 function MenuComponent (props){
   
   const extendMenuContext = useContext(ExtendMenuContext);
+  const svgFrameRef = useRef(new RunSvgFrame(props.id, props.order));
 
-  const onClick = useCallback((elemId)=>{
+  function onClick(elemId){
     extendMenuContext(elemId);
-  },[extendMenuContext])
+    svgFrameRef.current.test()
+  }
   
 
   return(
@@ -67,26 +69,24 @@ function MenuComponent (props){
   )
 }
 
-class SvgFrame extends Component{
-  constructor(props){
-    super(props);
-  }
-  render(){
-    
-    return(
-      <svg>
-        <defs>
-          <linearGradient id={`${this.props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="10%" stopColor={this.props.svgFrameStopColor1}></stop>
-            <stop offset="90%" stopColor={this.props.svgFrameStopColor2}></stop>
-          </linearGradient>
-        </defs>
-        <path id={`${this.props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={this.props.strokeColor1}/>
-        <path id={`${this.props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={this.props.strokeColor2}/>
-        <rect id={`${this.props.id}SvgFrame`}/>
-      </svg>
-    )
-  }
+
+function SvgFrame(props){
+  
+
+  return(
+    <svg>
+      <defs>
+        <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="10%" stopColor={props.svgFrameStopColor1}></stop>
+          <stop offset="90%" stopColor={props.svgFrameStopColor2}></stop>
+        </linearGradient>
+      </defs>
+      <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1}/>
+      <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2}/>
+      <rect id={`${props.id}SvgFrame`}/>
+    </svg>
+  )
+
 }
 
 function InfoContent(){

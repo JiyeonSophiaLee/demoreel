@@ -1,9 +1,10 @@
-import Demo from './Demo'
-import Menu from './Menu'
+import Demo from './Demo.jsx'
+import Menu from './Menu.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback} from "react"
 // import gsap from 'gsap';
-// import TV from '../public/assets/js/transitionValue'
-import { homeGsapSet, homeGsapTransition} from './funcs'
+import TV from '../public/assets/js/transitionValue'
+import { homeGsapSet, utilityMenuIf} from '../public/assets/js/utilities.js'
+// import { workSvgFrame, skillSvgFrame, paintSvgFrame, infoSvgFrame } from "../public/assets/js/SvgFrame";
 
 
 
@@ -14,6 +15,7 @@ export const LogoDisplayContext = createContext();
 
 
 const logoDisplayReducer = (state,action)=>{
+  
   if(innerWidth > 800){
     if(innerWidth > innerHeight){
       if(action.demoClientHeight/3 < action.logoClientWidth*4.5/6){
@@ -35,11 +37,12 @@ const logoDisplayReducer = (state,action)=>{
 
 
 const HomeLayout = () =>{ 
-  console.log('---HomeLayout---')
-  const [menuExtended,setMenuExtended] = useState(false);
-  const [biggerElem,setBiggerElem] = useState(null);
-  const [biggeredElem,setBiggeredElem] = useState(null);
-  let _menuExtended = menuExtended;
+  // console.log('---HomeLayout---')
+  
+  let menuExtended = false;
+  let biggerElem = null; 
+  let biggeredElem = null;
+  
   let mobileMode, _mobileMode ;
 
   
@@ -50,6 +53,7 @@ const HomeLayout = () =>{
   
   
   useEffect(()=>{
+    // console.log('HomeLayout -useEffect runs-')
     mobileMode = innerWidth <= 800 ? true : false; 
     
     // homeGsapTransition();
@@ -57,6 +61,7 @@ const HomeLayout = () =>{
 
   useEffect(()=>{
     let updateResize = () =>{
+      // console.log('HomeLayout -reszies run-')
       _mobileMode = innerWidth <= 800 ? true : false; 
 
 
@@ -64,7 +69,7 @@ const HomeLayout = () =>{
       if(mobileMode !== _mobileMode){
         console.log('changed')
         mobileMode = !mobileMode;
-        homeGsapSet(_menuExtended);
+        homeGsapSet(menuExtended);
       }
     }
     window.addEventListener('resize',updateResize);
@@ -73,52 +78,59 @@ const HomeLayout = () =>{
     }
   },[])
 
-  const runSetMenuExtended = useCallback(()=>{
-    setMenuExtended(!menuExtended)
-  },[menuExtended]);
-
-  const runSetBiggerElem = useCallback((elem)=>{
-    console.log('elem ID ===> ',elem);
-    setBiggerElem(elem);
-  },[biggerElem]);
-
   
   
 
   const extendMenu = useCallback((elem)=>{
-    console.log('clicked ---elemId', elem)
+    // console.log('clicked extendMenu-->')
     if(menuExtended === false){
-      runSetMenuExtended;
-      _menuExtended = true;
-      // runSetBiggerElem(elem);
-
-      // setBiggerElem(elem);
+      menuExtended = true;
+      biggerElem = elem;
 
 
-    //   extendMenuIf();
+
+      extendMenuIf();
 
     }else if( biggerElem !== elem){
-    //   setBiggeredElem(biggerElem);
-    //   setBiggerElem(elem);
+      biggeredElem = biggerElem;
+      biggerElem = elem;
+
+    
     
     }else{
-      runSetMenuExtended;
-    //   _menuExtended = false;
-    //   setBiggeredElem(null);
-    //   setBiggerElem(null);
+      menuExtended = false;
+      biggeredElem = null;
+      biggerElem = null;
 
-    //   extendMenuElse();
+      extendMenuElse();
     }
   },[menuExtended]) 
 
+  function test(){
+    return new Promise((resolve,reject)=>{
+      setTimeout(() => {
+        
+        console.log('end')
+        resolve();
+      }, 1000);
+    })
+  }
   function extendMenuIf(){
-    homeGsapTransition(_menuExtended);
+    // console.log("HomeLayout -ExtendMenuIf runs-")
+    Promise.all([
+      utilityMenuIf(menuExtended),
+      logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100})
+    ]).then(()=>{
+      test()
+    })
     if(innerWidth > 800){
       // logoDisplayDispatch({demoClientHeight:})
     }
   }
   function extendMenuElse(){
-    homeGsapTransition(_menuExtended);
+    // console.log("HomeLayout -ExtendMenuElse runs-")
+    utilityMenuIf(menuExtended);
+    logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100})
   }
 
 
