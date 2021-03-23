@@ -23,7 +23,15 @@ export default function RunSvgFrame(id, order){
   this.stroke = true;
   this.strokeColor = `url(#${this.rectId}Color)`;
 }
-RunSvgFrame.prototype.test = function(){
+RunSvgFrame.prototype.extendMenuIf = function(){
+  return new Promise((resolve,reject)=>{
+
+    this.unSymetryEachMenuTransform();
+    
+    resolve();
+  })
+}
+RunSvgFrame.prototype.unSymetryEachMenuTransform = function(){
   const elem = eval(this.id);
   let allMenusInOrder = [elem];
   let j = 0;
@@ -48,8 +56,10 @@ RunSvgFrame.prototype.test = function(){
       }
     }
   }
-  console.log(allMenusInOrder)
 
+  allMenusInOrder.forEach((elem)=>{
+    elem.classList.add('menutransition')
+  })
 }
 
 

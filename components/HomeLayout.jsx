@@ -1,9 +1,9 @@
 import Demo from './Demo.jsx'
 import Menu from './Menu.jsx'
-import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback} from "react"
+import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef} from "react"
 // import gsap from 'gsap';
 import TV from '../public/assets/js/transitionValue'
-import { homeGsapSet, utilityMenuIf} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, utilityMenuIf} from '../public/assets/js/utilities.js'
 // import { workSvgFrame, skillSvgFrame, paintSvgFrame, infoSvgFrame } from "../public/assets/js/SvgFrame";
 
 
@@ -38,10 +38,12 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   // console.log('---HomeLayout---')
+  let allElemsRef = useRef()
   
   let menuExtended = false;
   let biggerElem = null; 
   let biggeredElem = null;
+  let demoVideoHeight;
   
   let mobileMode, _mobileMode ;
 
@@ -55,7 +57,8 @@ const HomeLayout = () =>{
   useEffect(()=>{
     // console.log('HomeLayout -useEffect runs-')
     mobileMode = innerWidth <= 800 ? true : false; 
-    
+    homeGsapSet(menuExtended)
+    allElemsRef = [work,skill,paint,info]
     // homeGsapTransition();
   },[])
 
@@ -77,19 +80,42 @@ const HomeLayout = () =>{
       window.removeEventListener('resize',updateResize);
     }
   },[])
-
-  
   
 
-  const extendMenu = useCallback((elem)=>{
-    // console.log('clicked extendMenu-->')
+  
+  function addEvetnCB(){
+    console.log('add');
+
+  };
+  function removeEventCB(){
+    console.log('remove');
+    allElemsRef.forEach((elem) => {
+      // console.log(getEventListeners())
+      // elem.removeEventListener('click',onClick)
+    });
+  };
+
+  const extendMenu = useCallback((elem,svgFrameRef)=>{
+    removeEventCB()
+
     if(menuExtended === false){
       menuExtended = true;
       biggerElem = elem;
 
+      demoVideoHeight = getDemoVideoHeight(menuExtended)
 
 
-      extendMenuIf();
+
+      Promise.all([
+        utilityMenuIf(menuExtended),
+        logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+        svgFrameRef.extendMenuIf()
+      ]).then(()=>{
+        console.log(' finished')
+      })
+      
+      
+
 
     }else if( biggerElem !== elem){
       biggeredElem = biggerElem;
@@ -102,38 +128,21 @@ const HomeLayout = () =>{
       biggeredElem = null;
       biggerElem = null;
 
-      extendMenuElse();
+      demoVideoHeight = getDemoVideoHeight(menuExtended)
+      console.log('demoVideoHeight: ',demoVideoHeight)
+
+      Promise.all([
+        utilityMenuIf(menuExtended),
+        logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
+      ]).then(()=>{
+        console.log('Else finished')
+      })
+
     }
   },[menuExtended]) 
 
-  function test(){
-    return new Promise((resolve,reject)=>{
-      setTimeout(() => {
-        
-        console.log('end')
-        resolve();
-      }, 1000);
-    })
-  }
-  function extendMenuIf(){
-    // console.log("HomeLayout -ExtendMenuIf runs-")
-    Promise.all([
-      utilityMenuIf(menuExtended),
-      logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100})
-    ]).then(()=>{
-      test()
-    })
-    if(innerWidth > 800){
-      // logoDisplayDispatch({demoClientHeight:})
-    }
-  }
-  function extendMenuElse(){
-    // console.log("HomeLayout -ExtendMenuElse runs-")
-    utilityMenuIf(menuExtended);
-    logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100})
-  }
 
-
+  
   return(
     <div id = "master">
       <ExtendMenuContext.Provider value={extendMenu}>

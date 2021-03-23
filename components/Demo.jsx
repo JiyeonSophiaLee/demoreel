@@ -4,6 +4,8 @@ import { useState, useEffect, createContext, useRef, useReducer, memo } from "re
 import { useContext } from "react/cjs/react.development";
 // import TV from '../public/assets/js/transitionValue';
 import { LogoDisplayContext } from './HomeLayout.jsx'
+// import { homeGsapSet } from '../public/assets/js/utilities.js'
+
 
 
 
@@ -11,7 +13,6 @@ import { LogoDisplayContext } from './HomeLayout.jsx'
 
 function Demo(){
   // console.log('---DEMO---')
-  const [demoVideo_height, setDemovideo_height] = useState(0);
   const demoRef = useRef(null);
   const logoRef = useRef(null);
   const demoVieoRef = useRef(null);
@@ -26,7 +27,7 @@ function Demo(){
     _checkLogoHigher = checkLogoHigher;
     logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
 
-    getDemoVideHeight();
+
 
     let updateResize = () =>{
       // console.log('demoRef: ',demoRef.current.clientHeight, "demo: ",demo.clientHeight)
@@ -42,7 +43,7 @@ function Demo(){
           logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
         }
       }
-      getDemoVideHeight();  
+      // getDemoVideHeight();  
     }
 
     window.addEventListener('resize',updateResize)
@@ -53,33 +54,6 @@ function Demo(){
 
     
 
-  function getDemoVideHeight(){
-    setDemovideo_height( demoVieoRef.current.clientWidth * (9/16));
-    // if(innerWidth > 800){
-    //   if(menuExpanded === 'true'){
-    //     console.log(menuExpanded)
-    //     // console.log(((innerWidth * (100- TV.unSymetryDemoMenu) / 100) * TV.unSymetryDemoVideoWidth/100)  * 9/16 )
-    //     // setDemovideo_height( ((innerWidth * (100- TV.unSymetryDemoMenu) / 100) * TV.unSymetryDemoVideoWidth/100)  * 9/16 )
-    //     // demoVideoHeight = ((window.innerWidth * (100-ISU.transitionValue['unSymetryDemoMenu']) / 100) * ISU.transitionValue['unSymetryDemoVideoWidth']/100)  * (9/16);
-    //   }else{
-    //     setDemovideo_height( demoVieoRef.current.clientWidth * (9/16));
-    //   }
-    // }else{
-    //   if(menuExpanded === 'true'){
-    //   //   if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
-    //   //     demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-    //   //   }else{masterMinWidth
-    //   //     demoVideoHeight = (ISU.transitionValue[''] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-    //   //   }
-    //   }else{
-    //   //   if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
-    //   //     demoVideoHeight = (window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-    //   //   }else{
-    //   //     demoVideoHeight = (ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-    //   //   }
-    //   }
-    // };
-  };
 
 
   //------------------------------------------------------//
@@ -94,7 +68,7 @@ function Demo(){
                 <img id="logo_wider"   src="/assets/images/logo/logo_wider.svg"    style={{display: logoDisplayContext.logoDisplay.logo_wider}} />
     
             </header>
-          <header id="demoVideo" ref={demoVieoRef} style={{height: demoVideo_height}}>
+          <header id="demoVideo" ref={demoVieoRef}>
               <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
               <div id="demoVideoBgCSSAnim"></div>
           </header>

@@ -1,4 +1,4 @@
-import { useContext, memo, useCallback, useRef} from 'react';
+import { useContext, memo, useCallback, useRef, useEffect} from 'react';
 import { MdPhoneIphone } from 'react-icons/md'; 
 import { FaArtstation } from 'react-icons/fa'; 
 import { ImAddressBook } from 'react-icons/im'; 
@@ -6,56 +6,65 @@ import Image from 'next/image';
 import RunSvgFrame from "../public/assets/js/SvgFrame.js";
 
 import { ExtendMenuContext } from './HomeLayout.jsx';
-
+import { useState } from 'react/cjs/react.development';
 
 function Menu(){
-  // console.log('---MEMO---')
-  // console.log(extendMenuContext)
+  console.log('---MEMO---')
 
   return (
     <section id = "menu">
-      <SvgIvory/>
-      <MenuComponent id="work"  order='1' svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" />
-      <MenuComponent id="skill" order='2' svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
-      <MenuComponent id="paint" order='3' svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
-      <MenuComponent id="info"  order='4' svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
+      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" ivory={<SvgIvory/>}/>
+      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
+      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
+      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
     </section>
   )
 }
 export default memo(Menu)
 
-function SvgIvory(){
-  return(
-    <svg style={{display:'none'}}>
-      <defs>
-        <linearGradient id="SvgIvory">
-          <stop offset="10%" stopColor="ivory"/>
-          <stop offset="90%" stopColor="ivory"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  )
-}
+
 
 function MenuComponent (props){
-  
+  console.log('---MenuComponent---')
+  const [event,setEvent] =useState(null);
   const extendMenuContext = useContext(ExtendMenuContext);
+  const elemRef = useRef();
   const svgFrameRef = useRef(new RunSvgFrame(props.id, props.order));
 
-  function onClick(elemId){
-    extendMenuContext(elemId);
-    svgFrameRef.current.test()
+  useEffect(()=>{
+    console.log('useEffects')
+    // elemRef.current.addEventListener('click',(e)=>onClick(e.currentTarget.id, svgFrameRef.current,e))
+    elemRef.current.addEventListener('click',onClick,false)
+ 
+    setEvent([work])
+  },[])
+
+
+  function test(){
+    console.log('working')
+    // return [work,skill]
+  }
+
+  function onClick(e){
+    console.log(event)
+    // console.log(skill)
+    // elemRef.current.removeEventListener('click',onClick)
+    // skill.removeEventListener('click',onClick)
+    // extendMenuContext(e.currentTarget.id, svgFrameRef.current);
+    // svgFrameRef.current.test()
   }
   
 
   return(
-    <li id={props.id}  onClick={(e)=>{ onClick(e.currentTarget.id)}}>
+    <li id={props.id} ref={elemRef}>
+    {/* <li id={props.id}  onClick={(e)=>{ onClick(e.currentTarget.id, svgFrameRef.current)}}> */}
       <div className="svgFramePackage">
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>
           <SvgFrame 
             id={props.id} 
+            ivory={props.ivory}
             svgFrameStopColor1={props.svgFrameStopColor1}
             svgFrameStopColor2={props.svgFrameStopColor2}
             strokeColor1={props.strokeColor1}
@@ -71,11 +80,11 @@ function MenuComponent (props){
 
 
 function SvgFrame(props){
-  
-
+  console.log('---SvgFrame---')
   return(
     <svg>
       <defs>
+        {props.ivory}
         <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="10%" stopColor={props.svgFrameStopColor1}></stop>
           <stop offset="90%" stopColor={props.svgFrameStopColor2}></stop>
@@ -89,7 +98,22 @@ function SvgFrame(props){
 
 }
 
+
+function SvgIvory(){
+  console.log('---SvgIvory---')
+  return(
+      <>
+        <linearGradient id="SvgIvory">
+          <stop offset="10%" stopColor="ivory"/>
+          <stop offset="90%" stopColor="ivory"/>
+        </linearGradient>
+      </>
+  )
+}
+
+
 function InfoContent(){
+  console.log('---InfoContent---')
   return(
     <>
       <InfoTop/>
@@ -100,6 +124,7 @@ function InfoContent(){
 }
 
 function InfoTop(){
+  console.log('---infoTop---')
   return(
     <div id="infoTop">
       <div id="myPic">
@@ -119,6 +144,7 @@ function InfoTop(){
   )
 }
 function InfoBot(){
+  console.log('---InfoBot---')
   return(
     <div id="infoBot">
       <InfoBotSummary/>
@@ -128,6 +154,7 @@ function InfoBot(){
   )
 }
 function InfoBotSummary(){
+  console.log('---infoBotSummary---')
   return(
     <div id="summary">
       <div className="heads">WHO AM I</div>
@@ -143,6 +170,7 @@ function InfoBotSummary(){
   )
 }
 function InfoBotEducation(){
+  console.log('---InfoBotEducation---')
   return(
     <div id="education">
       <div className="heads">EDUCATION</div>
@@ -158,6 +186,7 @@ function InfoBotEducation(){
   )
 }
 function InfoBotContact(){
+  console.log('---InfoBotContact---')
   return(
     <div id="contact">
       <div className="heads">WHERE TO FIND ME</div>

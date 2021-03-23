@@ -4,14 +4,15 @@ import TV from './transitionValue.js'
 const gsap = _gsap;
 
 export function homeGsapSet(menuExtended){
+
   if(innerWidth > 800){
     if(menuExtended){
-      gsap.set(master   , { maxWidth : 100 + '%'                     });
+      gsap.set(master   , { maxWidth : 100                      + '%'});
       gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
-      gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth + '%', height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+      gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
     }else{
-      gsap.set(master   , { maxWidth : TV.masterMaxWidth + 'px'    });
-      gsap.set(demo     , { width: TV.symetryDemoMenu + '%'           });
+      gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
+      gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
       gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
     }
   }else{
@@ -22,13 +23,45 @@ export function homeGsapSet(menuExtended){
       gsap.set(demo     ,{ width: 100 + '%'})
       gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
     }
+
+    gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
   }
 }
 export function utilityMenuIf(menuExtended){
   return new Promise ((resolve,reject)=>{
     homeGsapTransition(menuExtended);
+    resolve();
   })
 }
+
+export function getDemoVideoHeight(menuExpanded){
+  let demoVideoHeight; 
+
+  if(window.innerWidth > 800){  
+    if(menuExpanded){
+      demoVideoHeight = ((window.innerWidth * (100 - TV.unSymetryDemoMenu) / 100) * TV.unSymetryDemoVideoWidth/100)  * (9/16);
+    }else{
+      // demoVideoHeight = demoVideo.clientWidth * (9/16);
+    }
+    
+  }else{
+    if(menuExpanded){
+      // if(window.innerWidth > TV.masterMinWidth){
+      //   demoVideoHeight = (window.innerWidth * TV.unSymetryDemoVideoWidth800 /100)  * (9/16);
+      // }else{
+      //   demoVideoHeight = (TV.masterMinWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      // }
+    }else{
+      // if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
+      //   demoVideoHeight = (window.innerWidth * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      // }else{
+      //   demoVideoHeight = (ISU.transitionValue['masterMinWidth'] * ISU.transitionValue['symetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
+      // }
+    }
+  }
+    return demoVideoHeight;
+}
+
 
 function homeGsapTransition(menuExtended){
   

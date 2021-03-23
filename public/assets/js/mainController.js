@@ -298,7 +298,7 @@ function getDemoVideHeight(menuExpanded){
     if(menuExpanded){
       if(window.innerWidth > ISU.transitionValue['masterMinWidth']){
         demoVideoHeight = (window.innerWidth * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
-      }else{masterMinWidth
+      }else{
         demoVideoHeight = (ISU.transitionValue[''] * ISU.transitionValue['unSymetryDemoVideoWidthMediaQuery'] /100)  * (9/16);
       }
     }else{
