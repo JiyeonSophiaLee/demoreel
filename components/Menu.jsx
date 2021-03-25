@@ -1,4 +1,4 @@
-import { useContext, memo, useCallback, useRef, useEffect} from 'react';
+import { useContext, memo, useCallback, useRef, useEffect, useReducer} from 'react';
 import { MdPhoneIphone } from 'react-icons/md'; 
 import { FaArtstation } from 'react-icons/fa'; 
 import { ImAddressBook } from 'react-icons/im'; 
@@ -6,7 +6,7 @@ import Image from 'next/image';
 import RunSvgFrame from "../public/assets/js/SvgFrame.js";
 
 import { ExtendMenuContext } from './HomeLayout.jsx';
-import { useState } from 'react/cjs/react.development';
+// import { SvgFrameContext } from './HomeLayout.jsx';
 
 function Menu(){
   console.log('---MEMO---')
@@ -26,38 +26,39 @@ export default memo(Menu)
 
 function MenuComponent (props){
   console.log('---MenuComponent---')
-  const [event,setEvent] =useState(null);
+  
   const extendMenuContext = useContext(ExtendMenuContext);
-  const elemRef = useRef();
-  const svgFrameRef = useRef(new RunSvgFrame(props.id, props.order));
+  // const svgFrameContext = useContext(SvgFrameContext);
+  // const elemRef = useRef();
+  let svgFrameRef = useRef();
 
   useEffect(()=>{
-    console.log('useEffects')
-    // elemRef.current.addEventListener('click',(e)=>onClick(e.currentTarget.id, svgFrameRef.current,e))
-    elemRef.current.addEventListener('click',onClick,false)
+    svgFrameRef = new RunSvgFrame(props.id, props.order);
+
+  //   console.log('useEffects')
+  //   // elemRef.current.addEventListener('click',(e)=>onClick(e.currentTarget.id, svgFrameRef.current,e))
+  //   // elemRef.current.addEventListener('click',onClick,false)
  
-    setEvent([work])
+    
   },[])
 
 
-  function test(){
-    console.log('working')
-    // return [work,skill]
-  }
 
   function onClick(e){
-    console.log(event)
-    // console.log(skill)
-    // elemRef.current.removeEventListener('click',onClick)
-    // skill.removeEventListener('click',onClick)
-    // extendMenuContext(e.currentTarget.id, svgFrameRef.current);
-    // svgFrameRef.current.test()
+  //   console.log('hello')
+  //   // eventDispatch();
+  //   // console.log(skill)
+  //   // elemRef.current.removeEventListener('click',onClick)
+  //   // skill.removeEventListener('click',onClick)
+    extendMenuContext(e.currentTarget.id, svgFrameRef);
+  //   // svgFrameRef.current.test()
   }
   
 
   return(
-    <li id={props.id} ref={elemRef}>
-    {/* <li id={props.id}  onClick={(e)=>{ onClick(e.currentTarget.id, svgFrameRef.current)}}> */}
+    // <li id={props.id}>
+    // <li id={props.id} ref={elemRef}> //
+    <li id={props.id}  onClick={onClick} > 
       <div className="svgFramePackage">
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>

@@ -3,9 +3,8 @@
 import { useState, useEffect, createContext, useRef, useReducer, memo } from "react";
 import { useContext } from "react/cjs/react.development";
 // import TV from '../public/assets/js/transitionValue';
-import { LogoDisplayContext } from './HomeLayout.jsx'
+import { ExtendMenuContext, LogoDisplayContext } from './HomeLayout.jsx'
 // import { homeGsapSet } from '../public/assets/js/utilities.js'
-
 
 
 
@@ -17,6 +16,7 @@ function Demo(){
   const logoRef = useRef(null);
   const demoVieoRef = useRef(null);
   const logoDisplayContext = useContext(LogoDisplayContext);
+  const extendMenuContext = useContext(ExtendMenuContext);
   let mobileMode, _mobileMode;
   let checkLogoHigher, _checkLogoHigher = false;
 
@@ -53,7 +53,9 @@ function Demo(){
   },[])  
 
     
-
+  function onClick(){
+    extendMenuContext('logo')
+  }
 
 
   //------------------------------------------------------//
@@ -61,7 +63,7 @@ function Demo(){
 
   return (
     <section id="demo"    ref={demoRef}> 
-            <header id="logo" ref={logoRef}> 
+            <header id="logo" ref={logoRef} onClick={onClick}> 
             {/* <h1>{JSON.stringify(logo_display)}</h1> */}
 
                 <img id="logo_heigher" src="/assets/images/logo/logo_heigher.svg"  style={{display: logoDisplayContext.logoDisplay.logo_heigher}}/>

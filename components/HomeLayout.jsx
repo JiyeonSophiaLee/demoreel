@@ -4,7 +4,8 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 // import gsap from 'gsap';
 import TV from '../public/assets/js/transitionValue'
 import { homeGsapSet, getDemoVideoHeight, utilityMenuIf} from '../public/assets/js/utilities.js'
-// import { workSvgFrame, skillSvgFrame, paintSvgFrame, infoSvgFrame } from "../public/assets/js/SvgFrame";
+// import  MainController  from '../public/assets/js/mainController.js'
+// import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 
 
@@ -44,6 +45,7 @@ const HomeLayout = () =>{
   let biggerElem = null; 
   let biggeredElem = null;
   let demoVideoHeight;
+  let activeClick = false;
   
   let mobileMode, _mobileMode ;
 
@@ -55,10 +57,11 @@ const HomeLayout = () =>{
   
   
   useEffect(()=>{
+    allElemsRef = [work,skill,paint,info]
+
     // console.log('HomeLayout -useEffect runs-')
     mobileMode = innerWidth <= 800 ? true : false; 
-    homeGsapSet(menuExtended)
-    allElemsRef = [work,skill,paint,info]
+    homeGsapSet(menuExtended, false)
     // homeGsapTransition();
   },[])
 
@@ -67,13 +70,13 @@ const HomeLayout = () =>{
       // console.log('HomeLayout -reszies run-')
       _mobileMode = innerWidth <= 800 ? true : false; 
 
-
-
+      homeGsapSet(menuExtended, mobileMode === _mobileMode ? true : false);
+      
       if(mobileMode !== _mobileMode){
         console.log('changed')
         mobileMode = !mobileMode;
-        homeGsapSet(menuExtended);
       }
+      
     }
     window.addEventListener('resize',updateResize);
     return ()=>{
@@ -81,63 +84,77 @@ const HomeLayout = () =>{
     }
   },[])
   
-
+  function test(){
+    return new Promise((resolve, reject)=>{
+      setTimeout(() => {
+        console.log('finish');
+        resolve();
+      }, 1000);
+    })
+  }
+  function disableClick(){
+    return new Promise((resolve, reject)=>{
+      activeClick = false;
+      console.log(activeClick);
+      resolve();
+    })
+  }
   
-  function addEvetnCB(){
-    console.log('add');
 
-  };
-  function removeEventCB(){
-    console.log('remove');
-    allElemsRef.forEach((elem) => {
-      // console.log(getEventListeners())
-      // elem.removeEventListener('click',onClick)
-    });
-  };
+  const extendMenu = useCallback((elem,svgFrameRef=null)=>{
 
-  const extendMenu = useCallback((elem,svgFrameRef)=>{
-    removeEventCB()
+    if(!activeClick){
+      activeClick = true;
 
-    if(menuExtended === false){
-      menuExtended = true;
-      biggerElem = elem;
-
-      demoVideoHeight = getDemoVideoHeight(menuExtended)
-
-
-
-      Promise.all([
-        utilityMenuIf(menuExtended),
-        logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-        svgFrameRef.extendMenuIf()
-      ]).then(()=>{
-        console.log(' finished')
-      })
+      if(menuExtended === false && svgFrameRef !== null){
+        console.log('if')
+        menuExtended = true;
+        biggerElem = elem;
+  
+        demoVideoHeight = getDemoVideoHeight(menuExtended)
+        console.log(demoVideoHeight)
+  
+  
+  
+        Promise.all([
+          utilityMenuIf(menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+          svgFrameRef.extendMenuIf(demoVideoHeight),
+          test()
+        ]).then(()=>{
+          disableClick()
+        })
+        
+        
+  
+  
+      }else if( biggerElem !== elem && svgFrameRef !== null){
+        console.log('else if')
+        biggeredElem = biggerElem;
+        biggerElem = elem;
+  
       
       
-
-
-    }else if( biggerElem !== elem){
-      biggeredElem = biggerElem;
-      biggerElem = elem;
-
+      }else{
+        if( menuExtended ){
+          menuExtended = false;
+          biggeredElem = null;
+          biggerElem = null;
     
+          demoVideoHeight = getDemoVideoHeight(menuExtended)
+          console.log('demoVideoHeight: ',demoVideoHeight)
     
-    }else{
-      menuExtended = false;
-      biggeredElem = null;
-      biggerElem = null;
-
-      demoVideoHeight = getDemoVideoHeight(menuExtended)
-      console.log('demoVideoHeight: ',demoVideoHeight)
-
-      Promise.all([
-        utilityMenuIf(menuExtended),
-        logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
-      ]).then(()=>{
-        console.log('Else finished')
-      })
-
+          Promise.all([
+            utilityMenuIf(menuExtended),
+            logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
+            test()
+          ]).then(()=>{
+            disableClick()
+          })
+        }
+      
+  
+      }
     }
   },[menuExtended]) 
 

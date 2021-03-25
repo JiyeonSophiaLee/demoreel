@@ -146,8 +146,6 @@ export default function Rect(id) {
 
 Rect.prototype.expandMenuIf = function(demoVideoHeight,menuExpanded) {
   return new Promise((resolve,reject)=>{
-    // this.demoVideoHeight = demoVideoHeight;
-    
    
     
     if(innerWidth > 800){

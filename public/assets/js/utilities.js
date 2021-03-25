@@ -3,30 +3,33 @@ import TV from './transitionValue.js'
 
 const gsap = _gsap;
 
-export function homeGsapSet(menuExtended){
+export function homeGsapSet(menuExtended, mobileMode){
 
-  if(innerWidth > 800){
-    if(menuExtended){
-      gsap.set(master   , { maxWidth : 100                      + '%'});
-      gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
-      gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+  if(!mobileMode){
+    console.log('mobileMode = ',mobileMode)
+    if(innerWidth > 800){
+      if(menuExtended){
+        gsap.set(master   , { maxWidth : 100                      + '%'});
+        gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
+        gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+      }else{
+        gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
+        gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
+        gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
+      }
     }else{
-      gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
-      gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
-      gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
+      if(menuExtended){
+        gsap.set(demo     ,{ width: 100 + '%' })
+        gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
+      }else{
+        gsap.set(demo     ,{ width: 100 + '%'})
+        gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
+      }
     }
-  }else{
-    if(menuExtended){
-      gsap.set(demo     ,{ width: 100 + '%' })
-      gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
-    }else{
-      gsap.set(demo     ,{ width: 100 + '%'})
-      gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
-    }
-
-    gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
   }
+  gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
 }
+
 export function utilityMenuIf(menuExtended){
   return new Promise ((resolve,reject)=>{
     homeGsapTransition(menuExtended);
