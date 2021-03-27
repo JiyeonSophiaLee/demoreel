@@ -1,5 +1,5 @@
-
 import TV from './transitionValue.js'
+
 
 export default function RunSvgFrame(id, order){
   this.id = id;
@@ -33,6 +33,7 @@ export default function RunSvgFrame(id, order){
   
 
 
+
   this.createSvgFrame();
 }
 RunSvgFrame.prototype.setUpdateValues = function(){
@@ -47,84 +48,19 @@ RunSvgFrame.prototype.createSvgFrame = function(){
   this.svgCanvas.style.left = `-${this.extraSVGspace/2}px`;
   this.svgCanvas.style.top = `-${this.extraSVGspace/2}px`;
   
-  console.log(this.svgCanvas)
+  // console.log(this.svgCanvas)
 }
 
 RunSvgFrame.prototype.extendMenuIf = function(demoVideoHeight){
   return new Promise((resolve,reject)=>{
 
 
-    this.unSymetryEachMenuTransform(demoVideoHeight);
+    // this.unSymetryEachMenuTransform(demoVideoHeight);
     
     resolve();
   })
 }
-RunSvgFrame.prototype.unSymetryEachMenuTransform = function(demoVideoHeight){
-  const elem = eval(this.id);
-  let allMenusInOrder = [elem];
-  let j = 0;
 
-  for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
-    j = j + 1;
-    if (elem.parentElement.childNodes[i].nodeType != 1) {
-      j = j - 1;
-    }
-    if (elem.parentElement.childNodes[i].nodeType == 1) {
-      if(j != this.order){
-        if(this.order %2 == j%2){
-          allMenusInOrder.splice(1,0, elem.parentElement.childNodes[i]);
-         
-
-        }else if(Math.ceil(this.order*0.5) == Math.ceil(j*0.5)){
-          allMenusInOrder.splice(2,0, elem.parentElement.childNodes[i]);
-        
-        }else{
-          allMenusInOrder.splice(3,0, elem.parentElement.childNodes[i]);
-        }
-      }
-    }
-  }
-
-  allMenusInOrder.forEach((elem)=>{
-    elem.classList.add('menutransition');
-    if( elem === this.elem ){
-      elem.firstElementChild.classList.add("menutransition");
-    }
-  })
-
-  this.getExpandMenuSize(demoVideoHeight);
-
-  
-  allMenusInOrder[0].style.width = TV.unSymetryEachMenu + '%';
-  allMenusInOrder[0].style.height = TV.unSymetryEachMenu + '%';
-  
-    this.elem.firstElementChild.style.width = this.getExpandMenuSizeWidth + "px";
-    this.elem.firstElementChild.style.height = this.getExpandMenuSizeHeight + "px";
-   
-  allMenusInOrder[1].style.width = TV.unSymetryEachMenu + '%';
-  allMenusInOrder[1].style.height = (100 - TV.unSymetryEachMenu) + '%';
-
-  allMenusInOrder[2].style.width = (100 - TV.unSymetryEachMenu) + '%';
-  allMenusInOrder[2].style.height = TV.unSymetryEachMenu + '%';
-
-  allMenusInOrder[3].style.width = (100 - TV.unSymetryEachMenu) + '%';
-  allMenusInOrder[3].style.height = (100 - TV.unSymetryEachMenu) + '%';
-
-
-  
-  setTimeout(() => {
-    allMenusInOrder.forEach((elem)=>{
-      elem.classList.remove("menutransition")
-      if (elem == this.elem) {
-        elem.firstElementChild.classList.remove("menutransition");
-      }
-    })
-  }, TV.menuDuration * 1000 );
-
-    this.elem.firstElementChild.style.width = '100%';
-    this.elem.firstElementChild.style.height = '100%';
-
-}
 
 RunSvgFrame.prototype.getExpandMenuSize = function(demoVideoHeight) {
   this.getPadding();

@@ -8,15 +8,16 @@ import RunSvgFrame from "../public/assets/js/SvgFrame.js";
 import { ExtendMenuContext } from './HomeLayout.jsx';
 // import { SvgFrameContext } from './HomeLayout.jsx';
 
-function Menu(){
+function Menu(props){
   console.log('---MEMO---')
+  
 
   return (
     <section id = "menu">
-      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" ivory={<SvgIvory/>}/>
-      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" />
-      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" />
-      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
+      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" LI_size={props.LI_size.order1} svgFramePackageSize={props.svgFramePackageSize.order1} ivory={<SvgIvory/> }/>
+      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" LI_size={props.LI_size.order2} svgFramePackageSize={props.svgFramePackageSize.order2}/>
+      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" LI_size={props.LI_size.order3} svgFramePackageSize={props.svgFramePackageSize.order3}/>
+      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" LI_size={props.LI_size.order4} svgFramePackageSize={props.svgFramePackageSize.order4} contents={<InfoContent/>} />
     </section>
   )
 }
@@ -26,31 +27,32 @@ export default memo(Menu)
 
 function MenuComponent (props){
   console.log('---MenuComponent---')
+  // console.log('props',props.LI_size['width'])
   
   const extendMenuContext = useContext(ExtendMenuContext);
   // const svgFrameContext = useContext(SvgFrameContext);
   // const elemRef = useRef();
   let svgFrameRef = useRef();
+  let test;
+
 
   useEffect(()=>{
     svgFrameRef = new RunSvgFrame(props.id, props.order);
-
-  //   console.log('useEffects')
-  //   // elemRef.current.addEventListener('click',(e)=>onClick(e.currentTarget.id, svgFrameRef.current,e))
-  //   // elemRef.current.addEventListener('click',onClick,false)
- 
-    
+    test= 'test'
   },[])
 
 
 
   function onClick(e){
-  //   console.log('hello')
+    console.log('test')
+    console.log('hello',e.currentTarget,svgFrameRef)
   //   // eventDispatch();
   //   // console.log(skill)
   //   // elemRef.current.removeEventListener('click',onClick)
   //   // skill.removeEventListener('click',onClick)
-    extendMenuContext(e.currentTarget.id, svgFrameRef);
+
+  // console.log('this is svg frame ref', svgFrameRef)
+    // extendMenuContext(e.currentTarget.id, svgFrameRef.current);
   //   // svgFrameRef.current.test()
   }
   
@@ -58,8 +60,8 @@ function MenuComponent (props){
   return(
     // <li id={props.id}>
     // <li id={props.id} ref={elemRef}> //
-    <li id={props.id}  onClick={onClick} > 
-      <div className="svgFramePackage">
+    <li id={props.id}  onClick={onClick} style={{width:props.LI_size['width'], height:props.LI_size['height']}}> 
+      <div className="svgFramePackage" style={{width:props.svgFramePackageSize['width'], height:props.svgFramePackageSize['height']}}>
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>

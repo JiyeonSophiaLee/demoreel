@@ -1,9 +1,9 @@
-import head from 'next/head'
+import Head from 'next/head'
 
 
-export default function Head(){
+export default function _Head(){
   return(
-    <head>
+    <Head>
       <meta charset="UTF-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta name="description" content="Sophia JiyeonLee's personal demo webstie who is 3D artist and fronted engineer."/>
@@ -20,6 +20,6 @@ export default function Head(){
             crossOrigin=""/>
        {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script> */}
 
-    </head>
+    </Head>
   )
 }
