@@ -1,19 +1,19 @@
 import TV from './transitionValue.js'
 
 
-export default function RunSvgFrame(id, order){
-  this.id = id;
-  this.svgFrameId = id + 'SvgFrame';
-  this.elem = eval(id);
-  this.order = order
-  this.svgFrame = eval(this.svgFrameId);
-  this.svgCanvas = this.svgFrame.parentElement;
+export default function RunSvgFrame(_innerWidth,_innerHeight){
+  // this.id = id;
+  // this.svgFrameId = id + 'SvgFrame';
+  // this.elem = eval(id);
+  // this.order = order
+  // this.svgFrame = eval(this.svgFrameId);
+  // this.svgCanvas = this.svgFrame.parentElement;
   // this.wavy1 = document.getElementById(id + 'RectWavy1');
   // this.wavy2 = document.getElementById(id + 'RectWavy2');
   this.x = 0;
   this.y = 0;
-  this.w = this.svgCanvas.parentElement.clientWidth;
-  this.h = this.svgCanvas.parentElement.clientHeight;
+  // this.w = this.svgCanvas.parentElement.clientWidth;
+  // this.h = this.svgCanvas.parentElement.clientHeight;
   this.border = 5;
   this.multiply = 3;
   this.scale = 1;
@@ -25,20 +25,20 @@ export default function RunSvgFrame(id, order){
   //------------borderWavyPath and radius is going to be set by setUpdateValues()-----------------------
   this.borderWavyPath;
   this.radius;
-  this.setUpdateValues();
+  this.setUpdateValues(_innerWidth,_innerHeight);
 
 
   //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
   this.extraSVGspace = this.radius * 5 ;
-  
+  console.log('svgFrame is working')
 
 
 
-  this.createSvgFrame();
+  // this.createSvgFrame();
 }
-RunSvgFrame.prototype.setUpdateValues = function(){
-  this.borderWavyPath = Math.abs((window.innerWidth - window.innerHeight )) * 0.01 + 25;
-  this.radius = window.innerWidth > 800 ? ( window.innerWidth > 1400 ? 9 : 7 ) : 5;
+RunSvgFrame.prototype.setUpdateValues = function(_innerWidth, _innerHeight){
+  this.borderWavyPath = Math.abs((_innerWidth - _innerWidth )) * 0.01 + 25;
+  this.radius = _innerWidth > 800 ? ( _innerWidth > 1400 ? 9 : 7 ) : 5;
 }
 RunSvgFrame.prototype.createSvgFrame = function(){
   this.svgCanvas.style.width = this.w + this.extraSVGspace + 'px';

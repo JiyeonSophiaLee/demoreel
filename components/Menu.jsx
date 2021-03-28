@@ -10,7 +10,7 @@ import { ExtendMenuContext } from './HomeLayout.jsx';
 
 function Menu(props){
   console.log('---MEMO---')
-  
+  console.log(props.value)
 
   return (
     <section id = "menu">
@@ -32,27 +32,27 @@ function MenuComponent (props){
   const extendMenuContext = useContext(ExtendMenuContext);
   // const svgFrameContext = useContext(SvgFrameContext);
   // const elemRef = useRef();
-  let svgFrameRef = useRef();
+  // let svgFrameRef = useRef();
   let test;
 
 
   useEffect(()=>{
-    svgFrameRef = new RunSvgFrame(props.id, props.order);
-    test= 'test'
+    // svgFrameRef = new RunSvgFrame(props.id, props.order);
+    console
   },[])
 
 
 
   function onClick(e){
     console.log('test')
-    console.log('hello',e.currentTarget,svgFrameRef)
+    console.log('hello',e.currentTarget)
   //   // eventDispatch();
   //   // console.log(skill)
   //   // elemRef.current.removeEventListener('click',onClick)
   //   // skill.removeEventListener('click',onClick)
 
   // console.log('this is svg frame ref', svgFrameRef)
-    // extendMenuContext(e.currentTarget.id, svgFrameRef.current);
+    extendMenuContext(e.currentTarget.id);
   //   // svgFrameRef.current.test()
   }
   
