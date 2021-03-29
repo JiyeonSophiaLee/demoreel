@@ -3,6 +3,7 @@ import Menu from './Menu.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef} from "react"
 // import gsap from 'gsap';
 import TV from '../public/assets/js/transitionValue'
+import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, utilityMenuIf} from '../public/assets/js/utilities.js'
 // import  MainController  from '../public/assets/js/mainController.js'
 import RunSvgFrame from "../public/assets/js/SvgFrame";
@@ -11,6 +12,7 @@ import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
+export const MenuSizeContext = createContext();
 
 
 
@@ -38,9 +40,13 @@ const logoDisplayReducer = (state,action)=>{
 
 
 const HomeLayout = () =>{ 
-  // console.log('---HomeLayout---')
-  const [LI_size, setLI_size] = useState({order1:{width:"50%",height:"50%"}, order2:{width:"50%",height:"50%"}, order3:{width:"50%",height:"50%"}, order4:{width:"50%",height:"50%"}})
-  const [svgFramePackageSize, setSvgFramePackageSize] = useState({order1:{width:"", height:""}, order2:{width:"", height:""}, order3:{width:"", height:""}, order4:{width:"", height:""}})
+  console.log('---HomeLayout---')
+  const [work_setLI_size, work_setCanvasSize, work_setSvgFrameSize, work_style, work_setDefaultSvgFramePackageSize , work_hookTest] = useMenuSize()
+  const [skill_setLI_size, skill_setCanvasSize, skill_setSvgFrameSize, skill_style, skill_setDefaultSvgFramePackageSize, skill_hookTest] = useMenuSize()
+  const [paint_setLI_size, paint_setCanvasSize, paint_setSvgFrameSize, paint_style, paint_setDefaultSvgFramePackageSize, paint_hookTest] = useMenuSize()
+  const [info_setLI_size, info_setCanvasSize, info_setSvgFrameSize, info_style, info_setDefaultSvgFramePackageSize, info_hookTest] = useMenuSize()
+  
+  
   let svgFrame = useRef();
 
   // let allElemsRef = useRef()
@@ -62,15 +68,25 @@ const HomeLayout = () =>{
   
   
   useEffect(()=>{
+    console.log('working')
+    work_hookTest('custom hook is testing')
+    skill_hookTest('what is wrong with you?')
     // allElemsRef = [work,skill,paint,info];
-    let size = getDefaultSvgFramePackageSize();
     svgFrame = new RunSvgFrame(innerWidth,innerHeight)
-
-    // console.log('HomeLayout -useEffect runs-')
+    
+    
+    
+    
     mobileMode = innerWidth <= 800 ? true : false; 
     homeGsapSet(menuExtended, false);
-    setSvgFramePackageSize({order1:{width:size, height:size}, order2:{width:size, height:size}, order3:{width:size, height:size}, order4:{width:size, height:size}})
-    // homeGsapTransition();
+
+
+    work_setDefaultSvgFramePackageSize();
+    skill_setDefaultSvgFramePackageSize();
+    paint_setDefaultSvgFramePackageSize();
+    info_setDefaultSvgFramePackageSize();
+
+
   },[])
 
   useEffect(()=>{
@@ -93,21 +109,6 @@ const HomeLayout = () =>{
   },[])
   
   
-  function getDefaultSvgFramePackageSize(){
-    let size;
-    if(innerWidth >= 1400){
-      size = TV.rectSize1400;
-    }else if(innerWidth > 800){
-      size = TV.rectSize;
-    }else{
-      if(menuExpanded == false){
-        size = TV.rectSize800;
-      }else{
-        size = TV.rectSmallerSize;
-      }
-    }
-    return size;
-  }
   function test(){
     return new Promise((resolve, reject)=>{
       setTimeout(() => {
@@ -183,15 +184,20 @@ const HomeLayout = () =>{
     }
   },[menuExtended]) 
 
+  const onClick = ()=>{
+    work_hookTest('custom hook is testing')
+  }
 
   
   return(
-    <div id = "master">
+    <div id = "master" onClick={onClick}>
       <ExtendMenuContext.Provider value={extendMenu}>
-        <LogoDisplayContext.Provider  value={{logoDisplay:logoDisplay, logoDisplayDispatch:logoDisplayDispatch}}>
+        <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}>
           <Demo/>
-          <Menu  LI_size={LI_size} svgFramePackageSize={svgFramePackageSize}/>
         </LogoDisplayContext.Provider>
+        <MenuSizeContext.Provider  value={{work_style, skill_style, paint_style, info_style}}>
+          <Menu/>
+        </MenuSizeContext.Provider>
       </ExtendMenuContext.Provider>
     </div>
   )

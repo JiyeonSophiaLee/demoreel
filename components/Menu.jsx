@@ -6,18 +6,18 @@ import Image from 'next/image';
 import RunSvgFrame from "../public/assets/js/SvgFrame.js";
 
 import { ExtendMenuContext } from './HomeLayout.jsx';
+import { MenuSizeContext } from './HomeLayout.jsx';
 // import { SvgFrameContext } from './HomeLayout.jsx';
 
 function Menu(props){
   console.log('---MEMO---')
-  console.log(props.value)
 
   return (
     <section id = "menu">
-      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" LI_size={props.LI_size.order1} svgFramePackageSize={props.svgFramePackageSize.order1} ivory={<SvgIvory/> }/>
-      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179" LI_size={props.LI_size.order2} svgFramePackageSize={props.svgFramePackageSize.order2}/>
-      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98" LI_size={props.LI_size.order3} svgFramePackageSize={props.svgFramePackageSize.order3}/>
-      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" LI_size={props.LI_size.order4} svgFramePackageSize={props.svgFramePackageSize.order4} contents={<InfoContent/>} />
+      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" ivory={<SvgIvory/> }/>
+      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179"/>
+      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98"/>
+      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
     </section>
   )
 }
@@ -27,41 +27,23 @@ export default memo(Menu)
 
 function MenuComponent (props){
   console.log('---MenuComponent---')
-  // console.log('props',props.LI_size['width'])
-  
   const extendMenuContext = useContext(ExtendMenuContext);
-  // const svgFrameContext = useContext(SvgFrameContext);
-  // const elemRef = useRef();
-  // let svgFrameRef = useRef();
-  let test;
-
+  const menuSizeContext = useContext(MenuSizeContext);
+  
 
   useEffect(()=>{
-    // svgFrameRef = new RunSvgFrame(props.id, props.order);
-    console
   },[])
 
 
 
   function onClick(e){
-    console.log('test')
-    console.log('hello',e.currentTarget)
-  //   // eventDispatch();
-  //   // console.log(skill)
-  //   // elemRef.current.removeEventListener('click',onClick)
-  //   // skill.removeEventListener('click',onClick)
-
-  // console.log('this is svg frame ref', svgFrameRef)
     extendMenuContext(e.currentTarget.id);
-  //   // svgFrameRef.current.test()
   }
   
 
   return(
-    // <li id={props.id}>
-    // <li id={props.id} ref={elemRef}> //
-    <li id={props.id}  onClick={onClick} style={{width:props.LI_size['width'], height:props.LI_size['height']}}> 
-      <div className="svgFramePackage" style={{width:props.svgFramePackageSize['width'], height:props.svgFramePackageSize['height']}}>
+    <li id={props.id}  onClick={onClick} {...menuSizeContext[props.id+"_style"].style_LI}> 
+      <div className="svgFramePackage" {...menuSizeContext[props.id+"_style"].style_svgFramePackage}>
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>
@@ -72,6 +54,7 @@ function MenuComponent (props){
             svgFrameStopColor2={props.svgFrameStopColor2}
             strokeColor1={props.strokeColor1}
             strokeColor2={props.strokeColor2}
+            // styleContext={{canvas:menuSizeContext[props.id+"_style"].style_canvas, svgFrame:menuSizeContext[props.id+"_style"].style_svgFrame}}
           />
       </div>
       <div className="contents">
@@ -83,9 +66,12 @@ function MenuComponent (props){
 
 
 function SvgFrame(props){
-  console.log('---SvgFrame---')
+  // const canvas = props.styleContext['canvas'];
+  // const svgFrame = props.styleContext['svgFrame'];
+  const menuSizeContext = useContext(MenuSizeContext);
+
   return(
-    <svg>
+    <svg {...menuSizeContext[props.id+"_style"].style_canvas}>
       <defs>
         {props.ivory}
         <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -95,7 +81,7 @@ function SvgFrame(props){
       </defs>
       <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1}/>
       <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2}/>
-      <rect id={`${props.id}SvgFrame`}/>
+      <rect id={`${props.id}SvgFrame`} {...menuSizeContext[props.id+"_style"].style_svgFrame}/>
     </svg>
   )
 
