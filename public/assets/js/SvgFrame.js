@@ -30,28 +30,28 @@ export default function RunSvgFrame(_innerWidth,_innerHeight){
 
   //----this.extraSVGspace is for gsap wiggling on wave path. even if there is this.radius, wiggling curve is go over the svg canvas with cardinal curve method---- 
   this.extraSVGspace = this.radius * 5 ;
-  console.log('svgFrame is working')
+  // console.log('svgFrame is working')
 
 
-
-  this.createSvgFrame();
+  console.log('radius= ',this.radius)
+  // this.createSvgFrame();
 }
+
 RunSvgFrame.prototype.setUpdateValues = function(_innerWidth, _innerHeight){
   this.borderWavyPath = Math.abs((_innerWidth - _innerWidth )) * 0.01 + 25;
   this.radius = _innerWidth > 800 ? ( _innerWidth > 1400 ? 9 : 7 ) : 5;
-  console.log('this.radius= ', this.radius)
 }
-RunSvgFrame.prototype.createSvgFrame = function(){
-  console.log('this.extraSVGspace= ',this.extraSVGspace)
-  // this.svgCanvas.style.width = this.w + this.extraSVGspace + 'px';
-  // this.svgCanvas.style.height = this.h + this.extraSVGspace +'px';
-  // // -------------svg transform and translate is not working on Safari, so need to use top and left -------------
-  // // this.svgCanvas.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
-  // this.svgCanvas.style.left = `-${this.extraSVGspace/2}px`;
-  // this.svgCanvas.style.top = `-${this.extraSVGspace/2}px`;
+
+// RunSvgFrame.prototype.createSvgFrame = function(){
+//   this.svgCanvas.style.width = this.w + this.extraSVGspace + 'px';
+//   this.svgCanvas.style.height = this.h + this.extraSVGspace +'px';
+//   // -------------svg transform and translate is not working on Safari, so need to use top and left -------------
+//   // this.svgCanvas.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
+//   this.svgCanvas.style.left = `-${this.extraSVGspace/2}px`;
+//   this.svgCanvas.style.top = `-${this.extraSVGspace/2}px`;
   
-  // console.log(this.svgCanvas)
-}
+//   // console.log(this.svgCanvas)
+// }
 
 RunSvgFrame.prototype.extendMenuIf = function(demoVideoHeight){
   return new Promise((resolve,reject)=>{
