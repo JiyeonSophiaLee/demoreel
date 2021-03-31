@@ -80,6 +80,31 @@
 }
 
 
+ 
+/**
+ * 2.0 Font
+ * ----------------------------------------------------------------------------
+ */
+
+ #menu > li .svgFramePackage{
+  font-family: 'Text Me One', sans-serif;
+  font-size:2vw;
+  color:white;
+}
+  @media (max-width:800px){
+    #menu > li .svgFramePackage{
+      font-size: 1.5rem;
+    }
+  }
+  @media (min-width:1400px){
+    #menu > li .svgFramePackage{
+      font-size: 1.8rem;
+    }
+  }
+
+
+
+
 
 /**
  * 4.0 Demo and Menu
@@ -234,11 +259,11 @@
   flex-direction: row;
   flex-grow: 1;
   flex-shrink: 0;
-  padding: 30px 30px 30px 0px;
+  padding: $menuPadding
 }
   @media (max-width:800px){
     #menu{
-      padding: 1rem;
+      padding: $menuPadding800;;
     }
   }
 
@@ -253,18 +278,19 @@
     // height:50%;
     display: flex;
     cursor: pointer;
-    padding :0.85vw;
+    padding: $liPadding;
     list-style:none;
     position: relative;
+
   }
   @media (max-width:800px){
     #menu > li{
-      padding :0.5rem;
+      padding : $liPadding800;
     }
   }
   @media (min-width:1400px){
     #menu > li{
-      padding :0.8rem;
+      padding : $liPadding1400;
     }
   }
 

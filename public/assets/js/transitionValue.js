@@ -44,7 +44,21 @@ export {
 }
 
 
+const rootFontSize = 16;
 
+export function convertToPix(unit){
+  const splitUnits = unit.match(/([\d\.]+)(.*)/);
+  switch(splitUnits[2]){
+    case "rem":
+      return splitUnits[1] * rootFontSize;
+    case "vw":
+      return splitUnits[1] * innerWidth / 100;
+    case "vh":
+      return splitUnits[1] * innerHeight / 100;
+    default:
+      return splitUnits[1];
+  }
+}
 
 
 // let select = s => document.querySelector(s);
@@ -97,10 +111,10 @@ const transitionValue ={
   //
   // rectMinMediaQuery : 13,
   // rectMinMediaQueryUnit : 'vw',
-  rectSize : "10vw",
-  rectSmallerSize : "5rem",
-  rectSize800 : "7rem",
-  rectSize1400 : "8.7rem",
+  svgFramePackageSize : "10vw",
+  svgFramePackageSizeSmallerSize : "5rem",
+  svgFramePackageSize800 : "7rem",
+  svgFramePackageSize1400 : "8.7rem",
   // skillTLDuration : 2.5,
   // skillTLEase : "power2.inOut",
   // skillTLDuration800 : 1,

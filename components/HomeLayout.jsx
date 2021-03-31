@@ -2,7 +2,7 @@ import Demo from './Demo.jsx'
 import Menu from './Menu.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef} from "react"
 // import gsap from 'gsap';
-import TV from '../public/assets/js/transitionValue'
+import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, utilityMenuIf} from '../public/assets/js/utilities.js'
 // import  MainController  from '../public/assets/js/mainController.js'
@@ -41,15 +41,11 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  const [work_setLI_size, work_setCanvasSize, work_setSvgFrameSize, work_style, work_setDefaultSvgFramePackageSize , work_hookTest] = useMenuSize()
-  const [skill_setLI_size, skill_setCanvasSize, skill_setSvgFrameSize, skill_style, skill_setDefaultSvgFramePackageSize, skill_hookTest] = useMenuSize()
-  const [paint_setLI_size, paint_setCanvasSize, paint_setSvgFrameSize, paint_style, paint_setDefaultSvgFramePackageSize, paint_hookTest] = useMenuSize()
-  const [info_setLI_size, info_setCanvasSize, info_setSvgFrameSize, info_style, info_setDefaultSvgFramePackageSize, info_hookTest] = useMenuSize()
+  const [work_setLI_size, work_style, work_setSvgFrame, work_hookTest] = useMenuSize()
+  const [skill_setLI_size, skill_style, skill_setSvgFrame, skill_hookTest] = useMenuSize()
+  const [paint_setLI_size, paint_style, paint_setSvgFrame, paint_hookTest] = useMenuSize()
+  const [info_setLI_size, info_style, info_setSvgFrame, info_hookTest] = useMenuSize()
   
-  
-  let svgFrame = useRef();
-
-  // let allElemsRef = useRef()
   
   
   let menuExtended = false;
@@ -59,7 +55,8 @@ const HomeLayout = () =>{
   let activeClick = false;
   
   let mobileMode, _mobileMode ;
-
+  let widerMode, _widerMode ;
+  let svgFramePackageSize;
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
@@ -71,36 +68,63 @@ const HomeLayout = () =>{
     console.log('working')
     work_hookTest('custom hook is testing')
     skill_hookTest('what is wrong with you?')
-    // allElemsRef = [work,skill,paint,info];
-    svgFrame = new RunSvgFrame(innerWidth,innerHeight)
     
     
     
     
     mobileMode = innerWidth <= 800 ? true : false; 
+    widerMode = innerWidth >= 1400 ? true : false; 
+    svgFramePackageSize = convertToPix( innerWidth>1400 ? TV.svgFramePackageSize1400 : innerWidth<800 ? TV.svgFramePackageSize : TV.svgFramePackageSize800);
+    console.log('svgFramePackageSize = ',svgFramePackageSize)
     homeGsapSet(menuExtended, false);
 
 
-    work_setDefaultSvgFramePackageSize();
-    skill_setDefaultSvgFramePackageSize();
-    paint_setDefaultSvgFramePackageSize();
-    info_setDefaultSvgFramePackageSize();
-
+    
 
   },[])
 
   useEffect(()=>{
-    let updateResize = () =>{
-      // console.log('HomeLayout -reszies run-')
-      _mobileMode = innerWidth <= 800 ? true : false; 
 
-      homeGsapSet(menuExtended, mobileMode === _mobileMode ? true : false);
-      
+    let updateResize = () =>{
+      _mobileMode = innerWidth <= 800 ? true : false; 
+      _widerMode = innerWidth >= 1400 ? true : false;
+
+
+
+      if( menuExtended ){
+        if( biggerElem === "work" ){ work_setSvgFrame(null,) }else{skill_setSvgFrame();paint_setSvgFrame();info_setSvgFrame();}
+        if( biggerElem === "skill" ){skill_setSvgFrame(null,)}else{work_setSvgFrame(); paint_setSvgFrame();info_setSvgFrame();}
+        if( biggerElem === "paint" ){paint_setSvgFrame(null,)}else{work_setSvgFrame(); skill_setSvgFrame();info_setSvgFrame();}
+        if( biggerElem === "info" ){ info_setSvgFrame(null) }else{work_setSvgFrame(); skill_setSvgFrame();paint_setSvgFrame();}
+      }else{
+        if(!mobileMode && !widerMode){
+          if(mobileMode !== _mobileMode){
+            convertToPix( innerWidth>800 ? TV.svgFramePackageSize : TV.svgFramePackageSize800);
+          }else if(widerMode !== widerMode){
+            convertToPix( innerWidth<1400 ? TV.svgFramePackageSize1400 : TV.svgFramePackageSize);
+          }
+          console.log(svgFramePackageSize)
+          // work_setSvgFrame(svgFramePackageSize);
+          // skill_setSvgFrame(svgFramePackageSize);
+          // paint_setSvgFrame(svgFramePackageSize);
+          // info_setSvgFrame(svgFramePackageSize);
+        }
+      }
+
+       
       if(mobileMode !== _mobileMode){
         console.log('changed')
         mobileMode = !mobileMode;
+        homeGsapSet(menuExtended, mobileMode);
       }
-      
+      if(widerMode !== _widerMode){
+        console.log('changed')
+        widerMode = !widerMode;
+      }
+   
+
+     
+
     }
     window.addEventListener('resize',updateResize);
     return ()=>{

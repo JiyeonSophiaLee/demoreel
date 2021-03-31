@@ -4,8 +4,8 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
 body{
   background:rgb(30, 30, 30);
@@ -34,7 +34,7 @@ a {
   font-family: 'theboldfont';
   src: url(/assets/fonts/theboldfont.woff);
 }
-
+@import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
 
 .menutransition{
   transition: width 1s ease-in-out, height 1s ease-in-out, flex 1s ease-in-out, max-width 1s ease-in-out;

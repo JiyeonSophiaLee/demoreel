@@ -13,6 +13,12 @@ $masterMinHeight: 700px;
 
 $LiScrollbarWidth: 8px;
 
+$menuPadding: 30px 30px 30px 0px;
+$menuPadding800: 1rem;
+$liPadding: 0.85vw;
+$liPadding800: 0.5rem;
+$liPadding1400: 0.8rem;
+
 :export{
   masterMinWidth: $masterMinWidth;
   masterMaxWidth: $masterMaxWidth;
@@ -21,4 +27,9 @@ $LiScrollbarWidth: 8px;
   demoVideoWidth800: $demoVideoWidth800;
   logoWidth: $logoWidth;
   logoWidth800: $logoWidth800;
+  menuPadding: $menuPadding;
+  menuPadding800: $menuPadding800;
+  liPadding: $liPadding;
+  liPadding800: $liPadding800;
+  liPadding1400: $liPadding1400;
 }

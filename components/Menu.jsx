@@ -81,7 +81,7 @@ function SvgFrame(props){
       </defs>
       <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1}/>
       <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2}/>
-      <rect id={`${props.id}SvgFrame`} {...menuSizeContext[props.id+"_style"].style_svgFrame}/>
+      <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...menuSizeContext[props.id+"_style"].style_svgFrame}/>
     </svg>
   )
 

@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import TV from '../public/assets/js/transitionValue';
+import TV, { convertToPix } from '../public/assets/js/transitionValue';
 import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 function useMenuSize(){
   const [LI_size,setLI_size] = useState({width:"50%", height:"50%"});
-  const [svgFramePackageSize,setSvgFramePackageSize] = useState({width:"", height:""})
-  const [canvasSize, setCanvasSize] = useState({width:"", height:"", left:"", top:""})
-  const [svgFrameSize,setSvgFrameSize] = useState({width:"", height:"", x:"", y:"", rx:"", ry:"", fill:"", stroke:"", transform:""})
+  const [svgFramePackageSize,setSvgFramePackageSize] = useState({width:"0px", height:"0px"})
+  const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
+  const [svgFrameSize,setSvgFrameSize] = useState({width:"0px", height:"0px", x:"0px", y:"0px", rx:"0px", ry:"0px", fill:"none", transform:"translate(0,0)"})
   
-  let svgFrame = useRef()
-
+  let svgFrameRef = useRef()
+  let mobileMode, _mobileMode ;
+  let widerMode, _widerMode ;
+  let size;
+  let menuPaddingHeight, menuPaddingWidth;
+  let liPaddingHeight, liPaddingWidth;
 
 
   const hookTest = (word)=>{
@@ -24,52 +28,95 @@ function useMenuSize(){
     
 
 
-  function setDefaultSvgFramePackageSize(){
+
+  // function getPaddingSize(){
+  //   if(innerWidth < 1400){
+  //     menuPaddingHeight = TV.menuPadding
+  //   }
+  // }
+
+  function getDefaultSvgFramePackageSize(){
     let size;
     if(innerWidth >= 1400){
-      size = TV.rectSize1400;
+      size = TV.svgFramePackageSize1400;
     }else if(innerWidth > 800){
-      size = TV.rectSize;
+      size = TV.svgFramePackageSize;
     }else{
       if(menuExpanded == false){
-        size = TV.rectSize800;
+        size = TV.svgFramePackageSize800;
       }else{
-        size = TV.rectSmallerSize;
+        size = TV.svgFramePackageSizeSmallerSize;
       }
     }
+    return size;
+    
+  }
+  function setDefaultSvgFramePackageSize(){
+    let size = getDefaultSvgFramePackageSize()
     setSvgFramePackageSize({width:size, height:size})
   }
 
-  function createSvgFrame(elemParent, extraSVGspace, expandMenuSize=null){
-    getSvgFrameSize(elemParent, extraSVGspace);
+  function createSvgFrame(expandMenuSize=null){
+    let size = getDefaultSvgFramePackageSize();
+    let sizeToPix = convertToPix(size);
+
+    setSvgFramePackageSize({width:size, height:size})
+    setSvgFrame(sizeToPix);
   }
 
-  function getSvgFrameSize(elemParent, extraSVGspace, expandMenuSize=null){
+  function setSvgFrame(size=null, expandMenuSize=null){
     let width, height;
-    if(!expandMenuSize){
+    if(expandMenuSize){
       // this.getExpandMenuSize(demoVideoHeight);
       width = expandMenuSize['width'];
       height = expandMenuSize['height'];
     }else{
-      width = elemParent.clientWidth;
-      height = width;
+      width = size;
+      height = size;
     }
 
-    setCanvasSize({width: + extraSVGspace + 'px', height : height + extraSVGspace + 'px'});
-    setSvgFrameSize({width: width + 'px', height: height + 'px'});
+    setCanvasSize({width: width + svgFrameRef.extraSVGspace + 'px', height : height + svgFrameRef.extraSVGspace + 'px', left: `-${svgFrameRef.extraSVGspace/2}px`, top: `-${svgFrameRef.extraSVGspace/2}px`});
+    setSvgFrameSize({width: width + 'px', height: height + 'px', x: svgFrameRef['x'], y: svgFrameRef['y'], rx: svgFrameRef['border'], ry: svgFrameRef['border'], fill: svgFrameRef['fill'], transform: `translate(${svgFrameRef.extraSVGspace/2},${svgFrameRef.extraSVGspace/2})`});
 
   }
 
 
 
   useEffect(()=>{
-    svgFrame = new RunSvgFrame(innerWidth,innerHeight);
+    svgFrameRef = new RunSvgFrame(innerWidth,innerHeight);
+    mobileMode = innerWidth <= 800 ? true : false; 
+    widerMode = innerWidth <= 1400 ? true : false; 
+    _mobileMode = mobileMode; 
+    _widerMode = widerMode; 
 
-    setDefaultSvgFramePackageSize();
+    createSvgFrame();
   },[])
- 
+  useEffect(()=>{
+    let updateResize = () =>{
+      _mobileMode = innerWidth <= 800 ? true : false; 
+      _widerMode = innerWidth <= 1400 ? true : false; 
     
-  return [setLI_size, setCanvasSize, setSvgFrameSize, style, setDefaultSvgFramePackageSize, hookTest]
+    
+      if(mobileMode !== _mobileMode){
+        console.log('mobileMode = ',mobileMode)
+        mobileMode = !mobileMode;
+        svgFrameRef.setUpdateValues(innerWidth,innerHeight);
+        setDefaultSvgFramePackageSize();
+      }
+      if(widerMode !== _widerMode){
+        console.log('widerMode = ',widerMode)
+        widerMode = !widerMode;
+        svgFrameRef.setUpdateValues(innerWidth,innerHeight);
+        setDefaultSvgFramePackageSize();
+      }
+    
+      
+    }
+
+    window.addEventListener('resize',updateResize);
+  },[])
+    
+  return [setLI_size, style, setSvgFrame, hookTest]
 }
 
 export default useMenuSize;

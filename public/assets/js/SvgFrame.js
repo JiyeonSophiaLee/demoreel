@@ -2,7 +2,7 @@ import TV from './transitionValue.js'
 
 
 export default function RunSvgFrame(_innerWidth,_innerHeight){
-  // this.id = id;
+
   // this.svgFrameId = id + 'SvgFrame';
   // this.elem = eval(id);
   // this.order = order
@@ -18,10 +18,12 @@ export default function RunSvgFrame(_innerWidth,_innerHeight){
   this.multiply = 3;
   this.scale = 1;
   this.speed = [2, 3];
-  this.color = 'none';
+  this.fill = 'none';
   this.stroke = true;
-  this.strokeColor = `url(#${this.rectId}Color)`;
-  
+  this.strokeColor = `url(#${this.Id}SvgFrameStopColor)`;
+
+
+
   //------------borderWavyPath and radius is going to be set by setUpdateValues()-----------------------
   this.borderWavyPath;
   this.radius;
@@ -33,25 +35,15 @@ export default function RunSvgFrame(_innerWidth,_innerHeight){
   // console.log('svgFrame is working')
 
 
-  console.log('radius= ',this.radius)
   // this.createSvgFrame();
 }
 
 RunSvgFrame.prototype.setUpdateValues = function(_innerWidth, _innerHeight){
   this.borderWavyPath = Math.abs((_innerWidth - _innerWidth )) * 0.01 + 25;
   this.radius = _innerWidth > 800 ? ( _innerWidth > 1400 ? 9 : 7 ) : 5;
+
 }
 
-// RunSvgFrame.prototype.createSvgFrame = function(){
-//   this.svgCanvas.style.width = this.w + this.extraSVGspace + 'px';
-//   this.svgCanvas.style.height = this.h + this.extraSVGspace +'px';
-//   // -------------svg transform and translate is not working on Safari, so need to use top and left -------------
-//   // this.svgCanvas.setAttribute('transform', `translate( -${this.extraSVGspace/2}, 0)`);
-//   this.svgCanvas.style.left = `-${this.extraSVGspace/2}px`;
-//   this.svgCanvas.style.top = `-${this.extraSVGspace/2}px`;
-  
-//   // console.log(this.svgCanvas)
-// }
 
 RunSvgFrame.prototype.extendMenuIf = function(demoVideoHeight){
   return new Promise((resolve,reject)=>{
@@ -62,6 +54,44 @@ RunSvgFrame.prototype.extendMenuIf = function(demoVideoHeight){
     resolve();
   })
 }
+
+
+// Rect.prototype.updateResize = function(biggerElem,menuExpanded,demoVideoHeight) {
+  
+  
+//   if(menuExpanded && this.elem == biggerElem){
+//     if(innerWidth <= 800 && this.wavyAnimTLRunning){
+//       this.wavyAnimTL.pause(0);
+//       document.getElementById(this.id + 'RectWavy1').setAttribute('d', '');
+//       document.getElementById(this.id + 'RectWavy2').setAttribute('d', '');
+//     }else{
+//       this.getExpandMenuSize(demoVideoHeight);
+//       this.createWavyAnimation();
+//     }
+//   }
+  
+
+//   if(this.elem != biggerElem){
+//     SetDefaultRectSize(this.elem,menuExpanded);
+//   }
+
+
+//   let width, height;
+//   if(menuExpanded && this.elem == biggerElem){
+//     this.getExpandMenuSize(demoVideoHeight);
+//     width = this.getExpandMenuSizeWidth;
+//     height = this.getExpandMenuSizeHeight;
+//   }else{
+//     width = this.svgCanvas.parentElement.clientWidth;
+//     height = this.svgCanvas.parentElement.clientHeight;
+//   }
+
+//   this.svgCanvas.style.width = width + this.extraSVGspace + 'px'
+//   this.svgCanvas.style.height = height + this.extraSVGspace + 'px'
+//   this.rect.style.width = width + 'px';
+//   this.rect.style.height = height + 'px';
+
+// };
 
 
 RunSvgFrame.prototype.getExpandMenuSize = function(demoVideoHeight) {
