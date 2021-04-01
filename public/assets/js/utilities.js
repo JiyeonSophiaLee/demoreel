@@ -3,10 +3,9 @@ import TV from './transitionValue.js'
 
 const gsap = _gsap;
 
-export function homeGsapSet(menuExtended, mobileMode){
+export function homeGsapSet(menuExtended,viewChanged){
 
-  if(!mobileMode){
-    // console.log('mobileMode = ',mobileMode)
+  if(viewChanged){
     if(innerWidth > 800){
       if(menuExtended){
         gsap.set(master   , { maxWidth : 100                      + '%'});
@@ -27,6 +26,7 @@ export function homeGsapSet(menuExtended, mobileMode){
       }
     }
   }
+
   gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
 }
 

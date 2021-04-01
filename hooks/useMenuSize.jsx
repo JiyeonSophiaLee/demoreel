@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import TV, { convertToPix } from '../public/assets/js/transitionValue';
 import RunSvgFrame from "../public/assets/js/SvgFrame";
 
@@ -11,9 +11,10 @@ function useMenuSize(){
   let svgFrameRef = useRef()
   let mobileMode, _mobileMode ;
   let widerMode, _widerMode ;
-  let size;
+  let defaultSvgFramePackageSize, defaultSvgFramePackageSizeToPix;
   let menuPaddingHeight, menuPaddingWidth;
   let liPaddingHeight, liPaddingWidth;
+  
 
 
   const hookTest = (word)=>{
@@ -35,14 +36,14 @@ function useMenuSize(){
   //   }
   // }
 
-  function getDefaultSvgFramePackageSize(){
+  function getDefaultSvgFramePackageSize(menuExtended=false){
     let size;
     if(innerWidth >= 1400){
       size = TV.svgFramePackageSize1400;
     }else if(innerWidth > 800){
       size = TV.svgFramePackageSize;
     }else{
-      if(menuExpanded == false){
+      if(menuExtended == false){
         size = TV.svgFramePackageSize800;
       }else{
         size = TV.svgFramePackageSizeSmallerSize;
@@ -56,24 +57,37 @@ function useMenuSize(){
     setSvgFramePackageSize({width:size, height:size})
   }
 
-  function createSvgFrame(expandMenuSize=null){
-    let size = getDefaultSvgFramePackageSize();
-    let sizeToPix = convertToPix(size);
+  // function createSvgFrame(){
+  //   let size = getDefaultSvgFramePackageSize();
+  //   let sizeToPix = convertToPix(size);
 
-    setSvgFramePackageSize({width:size, height:size})
-    setSvgFrame(sizeToPix);
-  }
+  //   setSvgFramePackageSize({width:size, height:size})
+  //   setAllSvgFrame(sizeToPix);
+  // }
 
-  function setSvgFrame(size=null, expandMenuSize=null){
-    let width, height;
+  function setAllSvgFrame(viewChanged=false,expandMenuSize=null){  
+    let width, height
+    
+
+
+    if(viewChanged){
+      console.log('view is changed')
+      defaultSvgFramePackageSize = getDefaultSvgFramePackageSize();
+      setSvgFramePackageSize({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize});
+    }
+
+
     if(expandMenuSize){
       // this.getExpandMenuSize(demoVideoHeight);
       width = expandMenuSize['width'];
       height = expandMenuSize['height'];
     }else{
-      width = size;
-      height = size;
+      defaultSvgFramePackageSizeToPix = convertToPix(defaultSvgFramePackageSize);
+
+      width = defaultSvgFramePackageSizeToPix;
+      height = defaultSvgFramePackageSizeToPix;
     }
+    
 
     setCanvasSize({width: width + svgFrameRef.extraSVGspace + 'px', height : height + svgFrameRef.extraSVGspace + 'px', left: `-${svgFrameRef.extraSVGspace/2}px`, top: `-${svgFrameRef.extraSVGspace/2}px`});
     setSvgFrameSize({width: width + 'px', height: height + 'px', x: svgFrameRef['x'], y: svgFrameRef['y'], rx: svgFrameRef['border'], ry: svgFrameRef['border'], fill: svgFrameRef['fill'], transform: `translate(${svgFrameRef.extraSVGspace/2},${svgFrameRef.extraSVGspace/2})`});
@@ -89,7 +103,7 @@ function useMenuSize(){
     _mobileMode = mobileMode; 
     _widerMode = widerMode; 
 
-    createSvgFrame();
+    setAllSvgFrame(true);
   },[])
   useEffect(()=>{
     let updateResize = () =>{
@@ -101,22 +115,22 @@ function useMenuSize(){
         console.log('mobileMode = ',mobileMode)
         mobileMode = !mobileMode;
         svgFrameRef.setUpdateValues(innerWidth,innerHeight);
-        setDefaultSvgFramePackageSize();
+        // setDefaultSvgFramePackageSize();
       }
       if(widerMode !== _widerMode){
         console.log('widerMode = ',widerMode)
         widerMode = !widerMode;
         svgFrameRef.setUpdateValues(innerWidth,innerHeight);
-        setDefaultSvgFramePackageSize();
+        // setDefaultSvgFramePackageSize();
       }
     
       
     }
 
-    window.addEventListener('resize',updateResize);
+    // window.addEventListener('resize',updateResize);
   },[])
     
-  return [setLI_size, style, setSvgFrame, hookTest]
+  return [setLI_size, style, setAllSvgFrame, hookTest]
 }
 
 export default useMenuSize;

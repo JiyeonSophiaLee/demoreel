@@ -41,10 +41,10 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  const [work_setLI_size, work_style, work_setSvgFrame, work_hookTest] = useMenuSize()
-  const [skill_setLI_size, skill_style, skill_setSvgFrame, skill_hookTest] = useMenuSize()
-  const [paint_setLI_size, paint_style, paint_setSvgFrame, paint_hookTest] = useMenuSize()
-  const [info_setLI_size, info_style, info_setSvgFrame, info_hookTest] = useMenuSize()
+  const [work_setLI_size, work_style, work_setAllSvgFrame, work_hookTest] = useMenuSize()
+  const [skill_setLI_size, skill_style, skill_setAllSvgFrame, skill_hookTest] = useMenuSize()
+  const [paint_setLI_size, paint_style, paint_setAllSvgFrame, paint_hookTest] = useMenuSize()
+  const [info_setLI_size, info_style, info_setAllSvgFrame, info_hookTest] = useMenuSize()
   
   
   
@@ -74,9 +74,10 @@ const HomeLayout = () =>{
     
     mobileMode = innerWidth <= 800 ? true : false; 
     widerMode = innerWidth >= 1400 ? true : false; 
-    svgFramePackageSize = convertToPix( innerWidth>1400 ? TV.svgFramePackageSize1400 : innerWidth<800 ? TV.svgFramePackageSize : TV.svgFramePackageSize800);
-    console.log('svgFramePackageSize = ',svgFramePackageSize)
-    homeGsapSet(menuExtended, false);
+    _mobileMode = mobileMode;
+    _widerMode = widerMode;
+
+    homeGsapSet(menuExtended, true);
 
 
     
@@ -91,23 +92,30 @@ const HomeLayout = () =>{
 
 
 
+
+      homeGsapSet(menuExtended, mobileMode !== _mobileMode)
+
       if( menuExtended ){
-        if( biggerElem === "work" ){ work_setSvgFrame(null,) }else{skill_setSvgFrame();paint_setSvgFrame();info_setSvgFrame();}
-        if( biggerElem === "skill" ){skill_setSvgFrame(null,)}else{work_setSvgFrame(); paint_setSvgFrame();info_setSvgFrame();}
-        if( biggerElem === "paint" ){paint_setSvgFrame(null,)}else{work_setSvgFrame(); skill_setSvgFrame();info_setSvgFrame();}
-        if( biggerElem === "info" ){ info_setSvgFrame(null) }else{work_setSvgFrame(); skill_setSvgFrame();paint_setSvgFrame();}
+        if( biggerElem === "work" ){ work_setAllSvgFrame(null,) }else{skill_setAllSvgFrame();paint_setAllSvgFrame();info_setAllSvgFrame();}
+        if( biggerElem === "skill" ){skill_setAllSvgFrame(null,)}else{work_setAllSvgFrame(); paint_setAllSvgFrame();info_setAllSvgFrame();}
+        if( biggerElem === "paint" ){paint_setAllSvgFrame(null,)}else{work_setAllSvgFrame(); skill_setAllSvgFrame();info_setAllSvgFrame();}
+        if( biggerElem === "info" ){ info_setAllSvgFrame(null) }else{work_setAllSvgFrame(); skill_setAllSvgFrame();paint_setAllSvgFrame();}
       }else{
-        if(!mobileMode && !widerMode){
-          if(mobileMode !== _mobileMode){
-            convertToPix( innerWidth>800 ? TV.svgFramePackageSize : TV.svgFramePackageSize800);
-          }else if(widerMode !== widerMode){
-            convertToPix( innerWidth<1400 ? TV.svgFramePackageSize1400 : TV.svgFramePackageSize);
-          }
-          console.log(svgFramePackageSize)
-          // work_setSvgFrame(svgFramePackageSize);
-          // skill_setSvgFrame(svgFramePackageSize);
-          // paint_setSvgFrame(svgFramePackageSize);
-          // info_setSvgFrame(svgFramePackageSize);
+        // if(!mobileMode && !widerMode){
+          // when menu's width in the between 800 and 1400, the unit of menu's size is "vw" which means menu's size have to be recalculated by window's width every window's resize. 
+          if(widerMode !== _widerMode){
+            console.log('if is working')
+            work_setAllSvgFrame(true);
+            // skill_setAllSvgFrame(true);
+            // paint_setAllSvgFrame(true);
+            // info_setAllSvgFrame(true);
+          // }else {
+            // work_setAllSvgFrame();
+            // skill_setAllSvgFrame();
+            // paint_setAllSvgFrame();
+            // info_setAllSvgFrame();
+          // }
+
         }
       }
 
@@ -115,7 +123,6 @@ const HomeLayout = () =>{
       if(mobileMode !== _mobileMode){
         console.log('changed')
         mobileMode = !mobileMode;
-        homeGsapSet(menuExtended, mobileMode);
       }
       if(widerMode !== _widerMode){
         console.log('changed')
