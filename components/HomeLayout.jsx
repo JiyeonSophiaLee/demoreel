@@ -4,7 +4,7 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
-import { homeGsapSet, getDemoVideoHeight, homeGsapTransition} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu} from '../public/assets/js/utilities.js'
 // import  MainController  from '../public/assets/js/mainController.js'
 import RunSvgFrame from "../public/assets/js/SvgFrame";
 
@@ -185,20 +185,23 @@ const HomeLayout = () =>{
         menuExtended = true;
         biggerElem = elem;
   
-        demoVideoHeight = getDemoVideoHeight(menuExtended)
-        console.log(demoVideoHeight)
-        console.log('elem - ',elem)
+        demoVideoHeight = getDemoVideoHeight(menuExtended);
+        
+        let LI_size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+        console.log('LI_size= ',LI_size)
   
-  
-        // Promise.all([
-        //   homeGsapTransition(menuExtended),
-        //   logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-        //   // svgFrameRef.extendMenuIf(demoVideoHeight),
-        //   setLI_size(unSymetryEachMenuTransform(demoVideoHeight, elem, order)),
-        //   test()
-        // ]).then(()=>{
-        //   disableClick()
-        // })
+        Promise.all([
+          homeGsapTransition(menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+          // svgFrameRef.extendMenuIf(demoVideoHeight),
+          work_setLI_size(LI_size.LI[0]),
+          skill_setLI_size(LI_size.LI[1]),
+          paint_setLI_size(LI_size.LI[2]),
+          info_setLI_size(LI_size.LI[3]),
+          test()
+        ]).then(()=>{
+          disableClick()
+        })
         
         
   

@@ -56,7 +56,7 @@ function useMenuSize(){
   }
 
 
-  function changeHeirachySvgFramePackage(svgFrameValues,expandMenuSize=null){  
+  function changeHeirachySvgFramePackage(svgFrameValues,extendMenuSize=null){  
 
     // console.log('viewChanged = ',svgFrameValues )
     let size = getDefaultSvgFramePackageSize();
@@ -66,15 +66,15 @@ function useMenuSize(){
       console.log('view is changed??===')
 
 
-    if(expandMenuSize){
-      // setHeirachySvgFramePackage({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize, widthToPix:expandMenuSize['width'] ,heightToPix:expandMenuSize['height'], svgFrameValues})
-      setSvgFramePackageSize({width:expandMenuSize['width'], height:expandMenuSize['height']});
-      setCanvasSize({width: expandMenuSize['width'] + svgFrameValues.extraSpace + 'px' ,
-                    height : expandMenuSize['height'] + svgFrameValues.extraSpace + 'px' ,
+    if(extendMenuSize){
+      // setHeirachySvgFramePackage({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
+      setSvgFramePackageSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
+      setCanvasSize({width: extendMenuSize['width'] + svgFrameValues.extraSpace + 'px' ,
+                    height : extendMenuSize['height'] + svgFrameValues.extraSpace + 'px' ,
                     left: `-${svgFrameValues.extraSpace/2}px` ,
                     top: `-${svgFrameValues.extraSpace/2}px`});
-      setSvgFrameSize({width: expandMenuSize['width'] , 
-                      height: expandMenuSize['height'] ,
+      setSvgFrameSize({width: extendMenuSize['width'] , 
+                      height: extendMenuSize['height'] ,
                       x: svgFrameValues['x'],
                       y: svgFrameValues['y'],
                       rx: svgFrameValues['border'],

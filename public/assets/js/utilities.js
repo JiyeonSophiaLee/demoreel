@@ -65,63 +65,44 @@ export function getDemoVideoHeight(menuExpanded){
     return demoVideoHeight;
 }
 
-export function unSymetryEachMenuTransform(demoVideoHeight, elem, order){
-  // const elem = elemRef.elem;
-  // const order = elemRef.order;
-  
-  let allMenusInOrder = [[order,elem]];
+export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
+ 
+  const LI = elem.parentElement.parentElement;
+  const svgFramePackage = elem.parentElement;
+  let allMenusInOrder = [[order, svgFramePackage]];
   let j = 0;
 
-  console.log('elem= ', demoVideoHeight,elemRef)
-
-  for (let i = 0; i < elem.parentElement.childNodes.length; i++) {
+  for (let i = 0; i < LI.childNodes.length; i++) {
     j = j + 1;
-    if (elem.parentElement.childNodes[i].nodeType != 1) {
+    if (LI.childNodes[i].nodeType != 1) {
       j = j - 1;
     }
-    if (elem.parentElement.childNodes[i].nodeType == 1) {
-      if(j != order){
+    if (LI.childNodes[i].nodeType == 1) {
+      if(j !== order){
         if(order %2 == j%2){
-          allMenusInOrder.splice(1,0, [j,elem.parentElement.childNodes[i]]);
+          allMenusInOrder.splice(1,0, [j, LI.childNodes[i]]);
          
 
         }else if(Math.ceil(order*0.5) == Math.ceil(j*0.5)){
-          allMenusInOrder.splice(2,0, [j,elem.parentElement.childNodes[i]]);
+          allMenusInOrder.splice(2,0, [j, LI.childNodes[i]]);
         
         }else{
-          allMenusInOrder.splice(3,0, [j,elem.parentElement.childNodes[i]]);
+          allMenusInOrder.splice(3,0, [j, LI.childNodes[i]]);
         }
       }
     }
   }
-  console.log(allMenusInOrder)
+  
   
   allMenusInOrder.forEach((e)=>{
     e[1].classList.add('menutransition');
-    if( e[1] === elem ){
+    if( e[1] === svgFramePackage ){
       e[1].firstElementChild.classList.add("menutransition");
     }
   })
 
   
-
-  // this.getExpandMenuSize(demoVideoHeight);
-
-  
-  // let firstWidth = TV.unSymetryEachMenu + '%';
-  // let firstHeight = TV.unSymetryEachMenu + '%';
-  
-  // //   this.elem.firstElementChild.style.width = this.getExpandMenuSizeWidth + "px";
-  // //   this.elem.firstElementChild.style.height = this.getExpandMenuSizeHeight + "px";
-   
-  // let secondWidth = TV.unSymetryEachMenu + '%';
-  // let secondHeight = (100 - TV.unSymetryEachMenu) + '%';
-
-  // let thirdWidth = (100 - TV.unSymetryEachMenu) + '%';
-  // let thirdHeight = TV.unSymetryEachMenu + '%';
-
-  // let fourthWidth = (100 - TV.unSymetryEachMenu) + '%';
-  // let fourthHeight = (100 - TV.unSymetryEachMenu) + '%';
+  this.getExtendMenuSize(demoVideoHeight);
 
 
   let getValuesInOrder = 
@@ -144,19 +125,68 @@ export function unSymetryEachMenuTransform(demoVideoHeight, elem, order){
         e[1].firstElementChild.classList.remove("menutransition");
       }
     })
-    elem.firstElementChild.style.width = '100%';
-    elem.firstElementChild.style.height = '100%';
+    elem.style.width = '100%';
+    elem.style.height = '100%';
   }, TV.menuDuration * 1000 );
-l
+
   var result = 
-    { order1: { width: reOrder[0]['width'], height: reOrder[0]['height'] }
-    , order2: { width: reOrder[1]['width'], height: reOrder[1]['height'] }
-    , order3: { width: reOrder[2]['width'], height: reOrder[2]['height'] }
-    , order4: { width: reOrder[3]['width'], height: reOrder[3]['height'] } }
+    { LI:[{ width: reOrder[0]['width'], height: reOrder[0]['height'] }, 
+          { width: reOrder[1]['width'], height: reOrder[1]['height'] }, 
+          { width: reOrder[2]['width'], height: reOrder[2]['height'] }, 
+          { width: reOrder[3]['width'], height: reOrder[3]['height'] }], 
+      svgFramePackage:{width: this.extendMenuSizeWidth, height: this.extendMenuSizeHeight}}
   
 
   return result
 }
+
+
+transformToUnSymetryEachMenu.prototype.getExtendMenuSize = function(demoVideoHeight) {
+  this.getPadding();
+
+
+  if(window.innerWidth > 800){
+    this.extendMenuSizeWidth = ((document.body.clientWidth * ( TV.unSymetryDemoMenu / 100) - this.menuPaddingWidth) * ( TV.unSymetryEachMenu / 100)) - this.liPaddingWidth;
+    this.extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
+
+
+    function getHeight(totalHeight){
+      return ((totalHeight - this.menuPaddingHeight) * ( TV.unSymetryEachMenu / 100))- this.liPaddingHeight;
+    }
+
+  }else{
+    this.extendMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
+    this.extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
+   
+
+    function getWidth(totalWidth){
+      return (totalWidth - this.menuPaddingWidth ) * ( TV.unSymetryEachMenu / 100) - this.liPaddingWidth ;
+    }
+    function getHeight(totalHeight){
+      return (totalHeight - logo.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (TV.unSymetryEachMenu / 100) - this.liPaddingHeight ;
+    }
+  }
+
+}
+
+transformToUnSymetryEachMenu.prototype.getPadding = function(){
+  this.menuPaddingTop = parseFloat(window.getComputedStyle(menu).paddingTop);
+  this.menuPaddingLeft = parseFloat(window.getComputedStyle(menu).paddingLeft);
+  this.menuPaddingRight = parseFloat(window.getComputedStyle(menu).paddingRight);
+  this.menuPaddingBot = parseFloat(window.getComputedStyle(menu).paddingBottom);
+  this.menuPaddingWidth = this.menuPaddingLeft + this.menuPaddingRight;
+  this.menuPaddingHeight = this.menuPaddingTop + this.menuPaddingBot;
+
+  this.liPaddingTop = parseFloat(window.getComputedStyle(this.elem).paddingTop);
+  this.liPaddingLeft = parseFloat(window.getComputedStyle(this.elem).paddingLeft);
+  this.liPaddingRight = parseFloat(window.getComputedStyle(this.elem).paddingRight);
+  this.liPaddingBot = parseFloat(window.getComputedStyle(this.elem).paddingBottom);
+  this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
+  this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
+
+ 
+}
+
 
 export function homeGsapTransition(menuExtended){
   
