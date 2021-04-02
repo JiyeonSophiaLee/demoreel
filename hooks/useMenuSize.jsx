@@ -8,10 +8,12 @@ function useMenuSize(){
   const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
   const [svgFrameSize,setSvgFrameSize] = useState({width:"0px", height:"0px", x:"0px", y:"0px", rx:"0px", ry:"0px", fill:"none", transform:"translate(0,0)"})
   
-  let svgFrameRef = useRef()
+  // const [heirachySvgFramePackage, setHeirachySvgFramePackage ] = useState({width: "0", height: "0", widthToPix:"0", heightToPix:"0", svgFrameRef:"none"});
+
+  // let svgFrameRef = useRef()
   let mobileMode, _mobileMode ;
   let widerMode, _widerMode ;
-  let defaultSvgFramePackageSize, defaultSvgFramePackageSizeToPix;
+
   let menuPaddingHeight, menuPaddingWidth;
   let liPaddingHeight, liPaddingWidth;
   
@@ -52,58 +54,63 @@ function useMenuSize(){
     return size;
     
   }
-  function setDefaultSvgFramePackageSize(){
-    let size = getDefaultSvgFramePackageSize()
-    setSvgFramePackageSize({width:size, height:size})
-  }
-
-  // function createSvgFrame(){
-  //   let size = getDefaultSvgFramePackageSize();
-  //   let sizeToPix = convertToPix(size);
-
-  //   setSvgFramePackageSize({width:size, height:size})
-  //   setAllSvgFrame(sizeToPix);
-  // }
-
-  function setAllSvgFrame(viewChanged=false,expandMenuSize=null){  
-    let width, height
-    
 
 
-    if(viewChanged){
-      console.log('view is changed')
-      defaultSvgFramePackageSize = getDefaultSvgFramePackageSize();
-      setSvgFramePackageSize({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize});
-    }
+  function changeHeirachySvgFramePackage(svgFrameValues,expandMenuSize=null){  
+
+    // console.log('viewChanged = ',svgFrameValues )
+    let size = getDefaultSvgFramePackageSize();
+    let sizeToPix = convertToPix(size);
+
+
+      console.log('view is changed??===')
 
 
     if(expandMenuSize){
-      // this.getExpandMenuSize(demoVideoHeight);
-      width = expandMenuSize['width'];
-      height = expandMenuSize['height'];
+      // setHeirachySvgFramePackage({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize, widthToPix:expandMenuSize['width'] ,heightToPix:expandMenuSize['height'], svgFrameValues})
+      setSvgFramePackageSize({width:expandMenuSize['width'], height:expandMenuSize['height']});
+      setCanvasSize({width: expandMenuSize['width'] + svgFrameValues.extraSpace + 'px' ,
+                    height : expandMenuSize['height'] + svgFrameValues.extraSpace + 'px' ,
+                    left: `-${svgFrameValues.extraSpace/2}px` ,
+                    top: `-${svgFrameValues.extraSpace/2}px`});
+      setSvgFrameSize({width: expandMenuSize['width'] , 
+                      height: expandMenuSize['height'] ,
+                      x: svgFrameValues['x'],
+                      y: svgFrameValues['y'],
+                      rx: svgFrameValues['border'],
+                      ry: svgFrameValues['border'],
+                      fill: svgFrameValues['fill'],
+                      transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
+                  });
     }else{
-      defaultSvgFramePackageSizeToPix = convertToPix(defaultSvgFramePackageSize);
-
-      width = defaultSvgFramePackageSizeToPix;
-      height = defaultSvgFramePackageSizeToPix;
+      // console.log('svgFrameValues.svgFrameValues.extraSpace=  ',svgFrameValues,'mobileMode_: ',mobileMode)
+      setSvgFramePackageSize({width:size, height:size});
+      setCanvasSize({width: sizeToPix + svgFrameValues.extraSpace + 'px' ,
+                     height : sizeToPix + svgFrameValues.extraSpace + 'px' ,
+                     left: `-${svgFrameValues.extraSpace/2}px` ,
+                     top: `-${svgFrameValues.extraSpace/2}px`});
+      setSvgFrameSize({width: sizeToPix , 
+                      height: sizeToPix ,
+                      x: svgFrameValues['x'],
+                      y: svgFrameValues['y'],
+                      rx: svgFrameValues['border'],
+                      ry: svgFrameValues['border'],
+                      fill: svgFrameValues['fill'],
+                      transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
+                  });
     }
-    
-
-    setCanvasSize({width: width + svgFrameRef.extraSVGspace + 'px', height : height + svgFrameRef.extraSVGspace + 'px', left: `-${svgFrameRef.extraSVGspace/2}px`, top: `-${svgFrameRef.extraSVGspace/2}px`});
-    setSvgFrameSize({width: width + 'px', height: height + 'px', x: svgFrameRef['x'], y: svgFrameRef['y'], rx: svgFrameRef['border'], ry: svgFrameRef['border'], fill: svgFrameRef['fill'], transform: `translate(${svgFrameRef.extraSVGspace/2},${svgFrameRef.extraSVGspace/2})`});
-
+  
   }
 
 
-
   useEffect(()=>{
-    svgFrameRef = new RunSvgFrame(innerWidth,innerHeight);
+    // svgFrameRef = new RunSvgFrame(innerWidth,innerHeight);
     mobileMode = innerWidth <= 800 ? true : false; 
     widerMode = innerWidth <= 1400 ? true : false; 
     _mobileMode = mobileMode; 
     _widerMode = widerMode; 
 
-    setAllSvgFrame(true);
+  
   },[])
   useEffect(()=>{
     let updateResize = () =>{
@@ -130,7 +137,7 @@ function useMenuSize(){
     // window.addEventListener('resize',updateResize);
   },[])
     
-  return [setLI_size, style, setAllSvgFrame, hookTest]
+  return [setLI_size, style, changeHeirachySvgFramePackage, hookTest]
 }
 
 export default useMenuSize;

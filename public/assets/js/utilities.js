@@ -30,7 +30,7 @@ export function homeGsapSet(menuExtended,viewChanged){
   gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
 }
 
-export function utilityMenuIf(menuExtended){
+function utilityMenuIf(menuExtended){
   return new Promise ((resolve,reject)=>{
     homeGsapTransition(menuExtended);
     resolve();
@@ -65,9 +65,9 @@ export function getDemoVideoHeight(menuExpanded){
     return demoVideoHeight;
 }
 
-export function unSymetryEachMenuTransform(demoVideoHeight, elemRef){
-  const elem = elemRef.elem;
-  const order = elemRef.order;
+export function unSymetryEachMenuTransform(demoVideoHeight, elem, order){
+  // const elem = elemRef.elem;
+  // const order = elemRef.order;
   
   let allMenusInOrder = [[order,elem]];
   let j = 0;
@@ -94,7 +94,7 @@ export function unSymetryEachMenuTransform(demoVideoHeight, elemRef){
       }
     }
   }
-  // console.log(allMenusInOrder)
+  console.log(allMenusInOrder)
   
   allMenusInOrder.forEach((e)=>{
     e[1].classList.add('menutransition');
@@ -103,6 +103,7 @@ export function unSymetryEachMenuTransform(demoVideoHeight, elemRef){
     }
   })
 
+  
 
   // this.getExpandMenuSize(demoVideoHeight);
 
@@ -157,7 +158,7 @@ l
   return result
 }
 
-function homeGsapTransition(menuExtended){
+export function homeGsapTransition(menuExtended){
   
   if(innerWidth > 800){
     if(menuExtended){

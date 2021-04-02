@@ -47,7 +47,7 @@ export {
 const rootFontSize = 16;
 
 export function convertToPix(unit){
-
+  // console.log('unit,',unit)
   const splitUnits = unit.match( /([\d\.]+)(.*)/);
   switch(splitUnits[2]){
     case "rem":
