@@ -29,7 +29,7 @@ function MenuComponent (props){
   console.log('---MenuComponent---')
   const extendMenuContext = useContext(ExtendMenuContext);
   const menuSizeContext = useContext(MenuSizeContext);
- 
+  const svgFrameRef = useRef()
   
 
   useEffect(()=>{
@@ -38,13 +38,13 @@ function MenuComponent (props){
 
 
   function onClick(e){
-    extendMenuContext(e.currentTarget,props.order);
+    extendMenuContext(e.currentTarget,props.order, svgFrameRef);
   }
   
 
   return(
-    <li id={props.id} {...menuSizeContext[props.id+"_style"].style_LI}> 
-      <div className="svgFramePackage" onClick={onClick} {...menuSizeContext[props.id+"_style"].style_svgFramePackage}>
+    <li id={props.id} {...menuSizeContext[props.id+"_style"].style_LI} ref={svgFrameRef}> 
+      <div className="svgFramePack" onClick={onClick} {...menuSizeContext[props.id+"_style"].style_svgFramePack}>
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>

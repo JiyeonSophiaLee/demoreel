@@ -4,11 +4,11 @@ import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 function useMenuSize(){
   const [LI_size,setLI_size] = useState({width:"50%", height:"50%"});
-  const [svgFramePackageSize,setSvgFramePackageSize] = useState({width:"0px", height:"0px"})
+  const [svgFramePackSize,setsvgFramePackSize] = useState({width:"0px", height:"0px"})
   const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
   const [svgFrameSize,setSvgFrameSize] = useState({width:"0px", height:"0px", x:"0px", y:"0px", rx:"0px", ry:"0px", fill:"none", transform:"translate(0,0)"})
   
-  // const [heirachySvgFramePackage, setHeirachySvgFramePackage ] = useState({width: "0", height: "0", widthToPix:"0", heightToPix:"0", svgFrameRef:"none"});
+  // const [heirachysvgFramePack, setHeirachysvgFramePack ] = useState({width: "0", height: "0", widthToPix:"0", heightToPix:"0", svgFrameRef:"none"});
 
   // let svgFrameRef = useRef()
   let mobileMode, _mobileMode ;
@@ -25,7 +25,7 @@ function useMenuSize(){
 
   const style =
     { style_LI: {style:{width:LI_size["width"], height:LI_size["height"]}}
-    , style_svgFramePackage: {style:{width:svgFramePackageSize["width"], height:svgFramePackageSize["height"]}}
+    , style_svgFramePack: {style:{width:svgFramePackSize["width"], height:svgFramePackSize["height"]}}
     , style_canvas: {style:{width:canvasSize["width"], height: canvasSize["height"], left: canvasSize["left"], top: canvasSize["top"]}}
     , style_svgFrame: {width:svgFrameSize["width"], height: svgFrameSize["height"], x: svgFrameSize["x"], y: svgFrameSize["y"], rx:svgFrameSize["rx"], ry:svgFrameSize["ry"], fill:svgFrameSize["fill"], transform:svgFrameSize["transform"] }};
     
@@ -38,17 +38,17 @@ function useMenuSize(){
   //   }
   // }
 
-  function getDefaultSvgFramePackageSize(menuExtended=false){
+  function getDefaultsvgFramePackSize(menuExtended=false){
     let size;
     if(innerWidth >= 1400){
-      size = TV.svgFramePackageSize1400;
+      size = TV.svgFramePackSize1400;
     }else if(innerWidth > 800){
-      size = TV.svgFramePackageSize;
+      size = TV.svgFramePackSize;
     }else{
       if(menuExtended == false){
-        size = TV.svgFramePackageSize800;
+        size = TV.svgFramePackSize800;
       }else{
-        size = TV.svgFramePackageSizeSmallerSize;
+        size = TV.svgFramePackSizeSmallerSize;
       }
     }
     return size;
@@ -56,21 +56,22 @@ function useMenuSize(){
   }
 
 
-  function changeHeirachySvgFramePackage(svgFrameValues,extendMenuSize=null){  
+  function changeHeirachysvgFramePack(svgFrameValues,extendMenuSize=null){  
 
     // console.log('viewChanged = ',svgFrameValues )
-    let size = getDefaultSvgFramePackageSize();
+    let size = getDefaultsvgFramePackSize();
     let sizeToPix = convertToPix(size);
 
 
-      console.log('view is changed??===')
+      console.log('view is changed??===', size)
 
 
     if(extendMenuSize){
-      // setHeirachySvgFramePackage({width:defaultSvgFramePackageSize, height:defaultSvgFramePackageSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
-      setSvgFramePackageSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
-      setCanvasSize({width: extendMenuSize['width'] + svgFrameValues.extraSpace + 'px' ,
-                    height : extendMenuSize['height'] + svgFrameValues.extraSpace + 'px' ,
+      console.log()
+      // setHeirachysvgFramePack({width:defaultsvgFramePackSize, height:defaultsvgFramePackSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
+      setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
+      setCanvasSize({width: extendMenuSize['width'] + svgFrameValues.extraSpace + "px" ,
+                    height :  extendMenuSize['height'] + svgFrameValues.extraSpace + "px" ,
                     left: `-${svgFrameValues.extraSpace/2}px` ,
                     top: `-${svgFrameValues.extraSpace/2}px`});
       setSvgFrameSize({width: extendMenuSize['width'] , 
@@ -84,13 +85,13 @@ function useMenuSize(){
                   });
     }else{
       // console.log('svgFrameValues.svgFrameValues.extraSpace=  ',svgFrameValues,'mobileMode_: ',mobileMode)
-      setSvgFramePackageSize({width:size, height:size});
-      setCanvasSize({width: sizeToPix + svgFrameValues.extraSpace + 'px' ,
-                     height : sizeToPix + svgFrameValues.extraSpace + 'px' ,
+      setsvgFramePackSize({width:size, height:size});
+      setCanvasSize({width: `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
+                     height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
                      left: `-${svgFrameValues.extraSpace/2}px` ,
                      top: `-${svgFrameValues.extraSpace/2}px`});
-      setSvgFrameSize({width: sizeToPix , 
-                      height: sizeToPix ,
+      setSvgFrameSize({width: size , 
+                      height: size ,
                       x: svgFrameValues['x'],
                       y: svgFrameValues['y'],
                       rx: svgFrameValues['border'],
@@ -100,6 +101,11 @@ function useMenuSize(){
                   });
     }
   
+  }
+
+  function setAnim(widthRef, heightRef, extraSpace){
+    setCanvasSize({...canvasSize, width:widthRef + extraSpace + "px", height:heightRef + extraSpace + "px"})
+    setSvgFrameSize({...svgFrameSize, width:widthRef + "px", height:heightRef + "px"})
   }
 
 
@@ -122,13 +128,13 @@ function useMenuSize(){
         console.log('mobileMode = ',mobileMode)
         mobileMode = !mobileMode;
         svgFrameRef.setUpdateValues(innerWidth,innerHeight);
-        // setDefaultSvgFramePackageSize();
+        // setDefaultsvgFramePackSize();
       }
       if(widerMode !== _widerMode){
         console.log('widerMode = ',widerMode)
         widerMode = !widerMode;
         svgFrameRef.setUpdateValues(innerWidth,innerHeight);
-        // setDefaultSvgFramePackageSize();
+        // setDefaultsvgFramePackSize();
       }
     
       
@@ -137,7 +143,7 @@ function useMenuSize(){
     // window.addEventListener('resize',updateResize);
   },[])
     
-  return [setLI_size, style, changeHeirachySvgFramePackage, hookTest]
+  return [setLI_size, setsvgFramePackSize, setAnim, style, changeHeirachysvgFramePack, hookTest]
 }
 
 export default useMenuSize;

@@ -69,8 +69,9 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
  
   const LI = elem.parentElement.parentElement;
   const svgFramePackage = elem.parentElement;
-  let allMenusInOrder = [[order, svgFramePackage]];
+  let allMenusInOrder = [svgFramePackage];
   let j = 0;
+  let size = getExtendMenuSize(demoVideoHeight, elem);
 
   for (let i = 0; i < LI.childNodes.length; i++) {
     j = j + 1;
@@ -80,14 +81,14 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
     if (LI.childNodes[i].nodeType == 1) {
       if(j !== order){
         if(order %2 == j%2){
-          allMenusInOrder.splice(1,0, [j, LI.childNodes[i]]);
+          allMenusInOrder.splice(1,0, LI.childNodes[i]);
          
 
         }else if(Math.ceil(order*0.5) == Math.ceil(j*0.5)){
-          allMenusInOrder.splice(2,0, [j, LI.childNodes[i]]);
+          allMenusInOrder.splice(2,0, LI.childNodes[i]);
         
         }else{
-          allMenusInOrder.splice(3,0, [j, LI.childNodes[i]]);
+          allMenusInOrder.splice(3,0, LI.childNodes[i]);
         }
       }
     }
@@ -95,34 +96,35 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
   
   
   allMenusInOrder.forEach((e)=>{
-    e[1].classList.add('menutransition');
-    if( e[1] === svgFramePackage ){
-      e[1].firstElementChild.classList.add("menutransition");
+    e.classList.add('menutransition');
+    if( e === svgFramePackage ){
+      e.firstElementChild.classList.add("menutransition");
     }
   })
 
   
-  this.getExtendMenuSize(demoVideoHeight);
-
+  
+  console.log('allMenusInOrder: ',allMenusInOrder)
 
   let getValuesInOrder = 
-    [{ width: TV.unSymetryEachMenu + '%', height: TV.unSymetryEachMenu + '%'}
-    ,{ width: TV.unSymetryEachMenu + '%', height: (100 - TV.unSymetryEachMenu) + '%'}
-    ,{ width: (100 - TV.unSymetryEachMenu) + '%', height: TV.unSymetryEachMenu + '%'}
-    ,{ width: (100 - TV.unSymetryEachMenu) + '%', height: (100 - TV.unSymetryEachMenu) + '%'}];
+    [{ elemId: allMenusInOrder[0].id, width: TV.unSymetryEachMenu + '%', height: TV.unSymetryEachMenu + '%'}
+    ,{ elemId: allMenusInOrder[1].id, width: TV.unSymetryEachMenu + '%', height: (100 - TV.unSymetryEachMenu) + '%'}
+    ,{ elemId: allMenusInOrder[2].id, width: (100 - TV.unSymetryEachMenu) + '%', height: TV.unSymetryEachMenu + '%'}
+    ,{ elemId: allMenusInOrder[3].id, width: (100 - TV.unSymetryEachMenu) + '%', height: (100 - TV.unSymetryEachMenu) + '%'}];
 
-  let reOrder=getValuesInOrder.concat();
+  // let reOrder=getValuesInOrder.concat();
 
-  for(let i=0; i<getValuesInOrder.length; i++){
-    let getOrder = allMenusInOrder[i][0]-1
-    reOrder.splice(getOrder,1,getValuesInOrder[i]);
-  }
+  // for(let i=0; i<getValuesInOrder.length; i++){
+  //   let getOrder = allMenusInOrder[i][0]-1
+  //   reOrder.splice(getOrder,1,getValuesInOrder[i]);
+  // }
+  console.log('getValuesInOrder= ', getValuesInOrder)
 
   setTimeout(() => {
     allMenusInOrder.forEach((e)=>{
-      e[1].classList.remove("menutransition")
-      if (e[1] == elem) {
-        e[1].firstElementChild.classList.remove("menutransition");
+      e.classList.remove("menutransition")
+      if (e == svgFramePackage) {
+        e.firstElementChild.classList.remove("menutransition");
       }
     })
     elem.style.width = '100%';
@@ -130,61 +132,62 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
   }, TV.menuDuration * 1000 );
 
   var result = 
-    { LI:[{ width: reOrder[0]['width'], height: reOrder[0]['height'] }, 
-          { width: reOrder[1]['width'], height: reOrder[1]['height'] }, 
-          { width: reOrder[2]['width'], height: reOrder[2]['height'] }, 
-          { width: reOrder[3]['width'], height: reOrder[3]['height'] }], 
-      svgFramePackage:{width: this.extendMenuSizeWidth, height: this.extendMenuSizeHeight}}
+    { LI: getValuesInOrder, 
+      svgFramePackage:{width: size["extendMenuSizeWidth"], height: size["extendMenuSizeHeight"]}}
   
 
   return result
 }
 
-
-transformToUnSymetryEachMenu.prototype.getExtendMenuSize = function(demoVideoHeight) {
-  this.getPadding();
+function getExtendMenuSize (demoVideoHeight, elem) {
+  console.log('hello this is working')
+  let extendMenuSizeWidth, extendMenuSizeHeight;
+  let padding = getPadding(elem); 
+  
 
 
   if(window.innerWidth > 800){
-    this.extendMenuSizeWidth = ((document.body.clientWidth * ( TV.unSymetryDemoMenu / 100) - this.menuPaddingWidth) * ( TV.unSymetryEachMenu / 100)) - this.liPaddingWidth;
-    this.extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
+    extendMenuSizeWidth = ((document.body.clientWidth * ( TV.unSymetryDemoMenu / 100) - padding["menuPaddingWidth"]) * ( TV.unSymetryEachMenu / 100)) - padding["liPaddingWidth"];
+    extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
 
 
     function getHeight(totalHeight){
-      return ((totalHeight - this.menuPaddingHeight) * ( TV.unSymetryEachMenu / 100))- this.liPaddingHeight;
+      return ((totalHeight - padding["menuPaddingHeight"]) * ( TV.unSymetryEachMenu / 100)) - padding["liPaddingHeight"];
     }
 
   }else{
-    this.extendMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
-    this.extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
+    extendMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
+    extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
    
 
     function getWidth(totalWidth){
-      return (totalWidth - this.menuPaddingWidth ) * ( TV.unSymetryEachMenu / 100) - this.liPaddingWidth ;
+      return (totalWidth - padding["menuPaddingWidth"] ) * ( TV.unSymetryEachMenu / 100) - padding["liPaddingWidth"] ;
     }
     function getHeight(totalHeight){
-      return (totalHeight - logo.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (TV.unSymetryEachMenu / 100) - this.liPaddingHeight ;
+      return (totalHeight - logo.clientHeight - demoVideoHeight - padding["menuPaddingHeight"]) * (TV.unSymetryEachMenu / 100) - padding["liPaddingHeight"] ;
     }
   }
 
+  return {extendMenuSizeWidth, extendMenuSizeHeight}
+
 }
 
-transformToUnSymetryEachMenu.prototype.getPadding = function(){
-  this.menuPaddingTop = parseFloat(window.getComputedStyle(menu).paddingTop);
-  this.menuPaddingLeft = parseFloat(window.getComputedStyle(menu).paddingLeft);
-  this.menuPaddingRight = parseFloat(window.getComputedStyle(menu).paddingRight);
-  this.menuPaddingBot = parseFloat(window.getComputedStyle(menu).paddingBottom);
-  this.menuPaddingWidth = this.menuPaddingLeft + this.menuPaddingRight;
-  this.menuPaddingHeight = this.menuPaddingTop + this.menuPaddingBot;
+function getPadding (elem){
+  let menuPaddingTop = parseFloat(window.getComputedStyle(menu).paddingTop);
+  let menuPaddingLeft = parseFloat(window.getComputedStyle(menu).paddingLeft);
+  let menuPaddingRight = parseFloat(window.getComputedStyle(menu).paddingRight);
+  let menuPaddingBot = parseFloat(window.getComputedStyle(menu).paddingBottom);
+  let menuPaddingWidth = menuPaddingLeft + menuPaddingRight;
+  let menuPaddingHeight = menuPaddingTop + menuPaddingBot;
 
-  this.liPaddingTop = parseFloat(window.getComputedStyle(this.elem).paddingTop);
-  this.liPaddingLeft = parseFloat(window.getComputedStyle(this.elem).paddingLeft);
-  this.liPaddingRight = parseFloat(window.getComputedStyle(this.elem).paddingRight);
-  this.liPaddingBot = parseFloat(window.getComputedStyle(this.elem).paddingBottom);
-  this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
-  this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
+  let liPaddingTop = parseFloat(window.getComputedStyle(elem).paddingTop);
+  let liPaddingLeft = parseFloat(window.getComputedStyle(elem).paddingLeft);
+  let liPaddingRight = parseFloat(window.getComputedStyle(elem).paddingRight);
+  let liPaddingBot = parseFloat(window.getComputedStyle(elem).paddingBottom);
+  let liPaddingWidth = liPaddingLeft + liPaddingRight;
+  let liPaddingHeight = liPaddingTop + liPaddingBot;
 
- 
+  return {menuPaddingWidth, menuPaddingHeight, liPaddingWidth, liPaddingHeight}
 }
 
 

@@ -86,18 +86,18 @@
  * ----------------------------------------------------------------------------
  */
 
- #menu > li .svgFramePackage{
+ #menu > li .svgFramePack{
   font-family: 'Text Me One', sans-serif;
   font-size: 1.5rem;
   color:white;
 }
   @media (max-width:800px){
-    #menu > li .svgFramePackage{
+    #menu > li .svgFramePack{
       font-size: 1.5rem;
     }
   }
   @media (min-width:1400px){
-    #menu > li .svgFramePackage{
+    #menu > li .svgFramePack{
       font-size: 1.8rem;
     }
   }
@@ -299,25 +299,25 @@
 
 
 /**
- * 4.2.2 - svgFramePackage
+ * 4.2.2 - svgFramePack
  * ------------------
  */  
 
 
 
-    #menu #work .svgFramePackage{
+    #menu #work .svgFramePack{
       margin-left: auto;
       align-self: flex-end;
     }
-    #menu #skill .svgFramePackage{
+    #menu #skill .svgFramePack{
       margin-right: auto;
       align-self:flex-end;
     }
-    #menu #paint .svgFramePackage{
+    #menu #paint .svgFramePack{
       margin-left: auto;
       align-self: flex-start;
     }
-    #menu #info .svgFramePackage{
+    #menu #info .svgFramePack{
       margin-right: auto;
       align-self:flex-start;
     }
@@ -325,7 +325,7 @@
 
 
       
-    #menu > li .svgFramePackage{
+    #menu > li .svgFramePack{
       display:grid;
       text-align: center ;
       position: relative;

@@ -41,14 +41,14 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  const [work_setLI_size, work_style, work_changeHeirachySvgFramePackage, work_hookTest] = useMenuSize();
-  const [skill_setLI_size, skill_style, skill_changeHeirachySvgFramePackage, skill_hookTest] = useMenuSize();
-  const [paint_setLI_size, paint_style, paint_changeHeirachySvgFramePackage, paint_hookTest] = useMenuSize();
-  const [info_setLI_size, info_style, info_changeHeirachySvgFramePackage, info_hookTest] = useMenuSize();
+  const [work_setLI_size, work_setsvgFramePackSize, work_setAnim, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
+  const [skill_setLI_size, skill_setsvgFramePackSize, skill_setAnim, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
+  const [paint_setLI_size, paint_setsvgFramePackSize, paint_setAnim, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
+  const [info_setLI_size, info_setsvgFramePackSize, info_setAnim, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
-  const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined});
-  
+  const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
+  const extendingRequestAnimRef = useRef();
   
   // let svgFrameRef = useRef();
 
@@ -60,7 +60,7 @@ const HomeLayout = () =>{
   
   let mobileMode, _mobileMode ;
   let widerMode, _widerMode ;
-  let svgFramePackageSize;
+  let svgFramePackSize;
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
@@ -107,25 +107,13 @@ const HomeLayout = () =>{
       homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
       if( menuExtended ){
-        if( biggerElem === "work" ){ work_changeHeirachySvgFramePackage(null,) }else{skill_changeHeirachySvgFramePackage();paint_changeHeirachySvgFramePackage();info_changeHeirachySvgFramePackage();}
-        if( biggerElem === "skill" ){skill_changeHeirachySvgFramePackage(null,)}else{work_changeHeirachySvgFramePackage(); paint_changeHeirachySvgFramePackage();info_changeHeirachySvgFramePackage();}
-        if( biggerElem === "paint" ){paint_changeHeirachySvgFramePackage(null,)}else{work_changeHeirachySvgFramePackage(); skill_changeHeirachySvgFramePackage();info_changeHeirachySvgFramePackage();}
-        if( biggerElem === "info" ){ info_changeHeirachySvgFramePackage(null) }else{work_changeHeirachySvgFramePackage(); skill_changeHeirachySvgFramePackage();paint_changeHeirachySvgFramePackage();}
+        setSvgFrameValues({...svgFrameValues, _menuExtended: true})
       }else{
-        // if(!mobileMode && !widerMode){
-          // when menu's width in the between 800 and 1400, the unit of menu's size is "vw" which means menu's size have to be recalculated by window's width every window's resize. 
           
-          if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
-            console.log('view is changing')
-            updateSvgFrameValues();
-          // }else {
-            // work_changeHeirachySvgFramePackage();
-            // skill_changeHeirachySvgFramePackage();
-            // paint_changeHeirachySvgFramePackage();
-            // info_changeHeirachySvgFramePackage();
-          // }
-
-        }
+      }
+      if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
+        console.log('view is changing');
+        updateSvgFrameValues();
       }
 
        
@@ -150,13 +138,33 @@ const HomeLayout = () =>{
   
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
-      console.log(' it is called!!')
-      work_changeHeirachySvgFramePackage(svgFrameValues);
-      skill_changeHeirachySvgFramePackage(svgFrameValues);
-      paint_changeHeirachySvgFramePackage(svgFrameValues);
-      info_changeHeirachySvgFramePackage(svgFrameValues);
+      console.log(' it is called!!');
+      if(menuExtended){
+        switch(biggerElem){
+          case "work":
+            work_changeHeirachySvgFramePack(null,);
+            break;
+          case "skill":
+            skill_changeHeirachySvgFramePack(null,);
+            break;
+          case "paint":
+            paint_changeHeirachySvgFramePack(null,);
+            break;
+          case "info":
+            info_changeHeirachySvgFramePack(null);
+        }
+      }else{
+        work_changeHeirachySvgFramePack(svgFrameValues);
+        skill_changeHeirachySvgFramePack(svgFrameValues);
+        paint_changeHeirachySvgFramePack(svgFrameValues);
+        info_changeHeirachySvgFramePack(svgFrameValues);
+      }
     }
   },[svgFrameValues])
+
+  function updateHeirachySvgFramePack(){
+    
+  }
   
   function test(){
     return new Promise((resolve, reject)=>{
@@ -173,9 +181,37 @@ const HomeLayout = () =>{
       resolve();
     })
   }
-  
+  function callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef){
+    return new Promise((resolve, reject)=>{
 
-  const extendMenu = useCallback((elem,order=0)=>{
+      let size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+      let f = 0;
+      let dir = 1;
+      const NF = TV['menuDuration'] * 63;
+      console.log("NF", NF)
+      
+      size.LI.forEach((obj)=>{
+        eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
+      })
+      eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, size['svgFramePackage']);
+      console.log('this is working')
+  
+      function anim(){
+        f += dir;
+        console.log('f: ',f)
+        eval(elem.parentElement.id + "_setAnim")(svgFrameRef.clientWidth, svgFrameRef.clientHeight, svgFrameValues.extraSpace)
+
+        extendingRequestAnimRef.current = requestAnimationFrame(anim)
+        if(!(f % NF)){
+          console.log('=======finished=======')
+          cancelAnimationFrame(extendingRequestAnimRef.current)
+        }
+      }
+      anim();
+    })
+  }
+
+  const extendMenu = useCallback((elem,order=0, svgFrameRef)=>{
     console.log('clicked')
     if(!activeClick){
       activeClick = true;
@@ -186,19 +222,16 @@ const HomeLayout = () =>{
         biggerElem = elem;
   
         demoVideoHeight = getDemoVideoHeight(menuExtended);
+        console.log('elem',elem)
         
-        let LI_size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        console.log('LI_size= ',LI_size)
+        
   
         Promise.all([
           homeGsapTransition(menuExtended),
           logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
           // svgFrameRef.extendMenuIf(demoVideoHeight),
-          work_setLI_size(LI_size.LI[0]),
-          skill_setLI_size(LI_size.LI[1]),
-          paint_setLI_size(LI_size.LI[2]),
-          info_setLI_size(LI_size.LI[3]),
-          test()
+          callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef)
+          // test()
         ]).then(()=>{
           disableClick()
         })
@@ -236,13 +269,10 @@ const HomeLayout = () =>{
     }
   },[menuExtended]) 
 
-  const onClick = ()=>{
-    work_hookTest('custom hook is testing')
-  }
-
+ 
   
   return(
-    <div id = "master" onClick={onClick}>
+    <div id = "master" >
       <ExtendMenuContext.Provider value={extendMenu}>
         <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}>
           <Demo/>

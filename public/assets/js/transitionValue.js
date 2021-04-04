@@ -47,7 +47,7 @@ export {
 const rootFontSize = 16;
 
 export function convertToPix(unit){
-  // console.log('unit,',unit)
+  console.log('unit,',unit)
   const splitUnits = unit.match( /([\d\.]+)(.*)/);
   switch(splitUnits[2]){
     case "rem":
@@ -112,10 +112,10 @@ const transitionValue ={
   //
   // rectMinMediaQuery : 13,
   // rectMinMediaQueryUnit : 'vw',
-  svgFramePackageSize : "7rem",
-  svgFramePackageSizeSmallerSize : "5rem",
-  svgFramePackageSize800 : "7rem",
-  svgFramePackageSize1400 : "8.7rem",
+  svgFramePackSize : "10vw",
+  svgFramePackSizeSmallerSize : "5rem",
+  svgFramePackSize800 : "7rem",
+  svgFramePackSize1400 : "8.7rem",
   // skillTLDuration : 2.5,
   // skillTLEase : "power2.inOut",
   // skillTLDuration800 : 1,
