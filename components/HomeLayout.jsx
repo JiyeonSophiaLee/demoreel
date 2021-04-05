@@ -41,22 +41,27 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  const [work_setLI_size, work_setsvgFramePackSize, work_setAnim, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
-  const [skill_setLI_size, skill_setsvgFramePackSize, skill_setAnim, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
-  const [paint_setLI_size, paint_setsvgFramePackSize, paint_setAnim, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
-  const [info_setLI_size, info_setsvgFramePackSize, info_setAnim, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
+  const [work_setLI_size, work_setsvgFramePackSize, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
+  const [skill_setLI_size, skill_setsvgFramePackSize, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
+  const [paint_setLI_size, paint_setsvgFramePackSize, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
+  const [info_setLI_size, info_setsvgFramePackSize, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
   const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
+  let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false};
+  // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
   const extendingRequestAnimRef = useRef();
+  const biggerElem = useRef(null);
+  const menuNames = ['work', 'skill', 'paint', 'info'];
   
   // let svgFrameRef = useRef();
 
   let menuExtended = false;
-  let biggerElem = null; 
+  // let biggerElem = null; 
   let biggeredElem = null;
   let demoVideoHeight;
   let activeClick = false;
+  let onAnim = false
   
   let mobileMode, _mobileMode ;
   let widerMode, _widerMode ;
@@ -83,19 +88,23 @@ const HomeLayout = () =>{
     
     homeGsapSet(menuExtended, true);
     updateSvgFrameValues();
+    // updateHeirachySvgFramePack();
 
     
 
   },[])
 
   function updateSvgFrameValues(){
-    console.log('updateSvgFrameValues is working')
     let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
     let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
-    setSvgFrameValues({...svgFrameValues
-                  , radius: _radius
-                  , wavyPath: _wavyPath
-                  , extraSpace: _radius * 5})
+    setSvgFrameValues({ ...svgFrameValues,
+                      radius: _radius,
+                      wavyPath: _wavyPath,
+                      extraSpace: _radius * 5})     
+    _svgFrameValues = {..._svgFrameValues,
+                      radius: _radius,
+                      wavyPath: _wavyPath,
+                      extraSpace: _radius * 5}
   }
 
   useEffect(()=>{
@@ -107,7 +116,7 @@ const HomeLayout = () =>{
       homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
       if( menuExtended ){
-        setSvgFrameValues({...svgFrameValues, _menuExtended: true})
+        remainExtendingMenu();
       }else{
           
       }
@@ -135,36 +144,33 @@ const HomeLayout = () =>{
       window.removeEventListener('resize',updateResize);
     }
   },[])
+
+  function remainExtendingMenu(){
+    let widthRef = biggerElem.current.parentElement.clientWidth;
+    let heightRef = biggerElem.current.parentElement.clientHeight;
+    console.log('widthRef', widthRef, 'heightRef', heightRef);
+
+    eval( biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, {width:widthRef, height: heightRef}, onAnim, widthRef, heightRef)
+  }
   
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
-      console.log(' it is called!!');
-      if(menuExtended){
-        switch(biggerElem){
-          case "work":
-            work_changeHeirachySvgFramePack(null,);
-            break;
-          case "skill":
-            skill_changeHeirachySvgFramePack(null,);
-            break;
-          case "paint":
-            paint_changeHeirachySvgFramePack(null,);
-            break;
-          case "info":
-            info_changeHeirachySvgFramePack(null);
+      for(let i=0; i<4; i++){
+        if(menuExtended){
+          if(biggerElem.current.parentElement.id === menuNames[i]){
+            eval(biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues);
+          }else{
+            eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
+          }
+        }else{
+          eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
         }
-      }else{
-        work_changeHeirachySvgFramePack(svgFrameValues);
-        skill_changeHeirachySvgFramePack(svgFrameValues);
-        paint_changeHeirachySvgFramePack(svgFrameValues);
-        info_changeHeirachySvgFramePack(svgFrameValues);
       }
     }
   },[svgFrameValues])
+ 
 
-  function updateHeirachySvgFramePack(){
-    
-  }
+
   
   function test(){
     return new Promise((resolve, reject)=>{
@@ -187,24 +193,26 @@ const HomeLayout = () =>{
       let size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
       let f = 0;
       let dir = 1;
+      
       const NF = TV['menuDuration'] * 63;
-      console.log("NF", NF)
       
       size.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
-      eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, size['svgFramePackage']);
-      console.log('this is working')
-  
+      
+      console.log(elem.parentElement.id)
+
       function anim(){
         f += dir;
-        console.log('f: ',f)
-        eval(elem.parentElement.id + "_setAnim")(svgFrameRef.clientWidth, svgFrameRef.clientHeight, svgFrameValues.extraSpace)
+        eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
+  
+        onAnim = true;
+        extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
-        extendingRequestAnimRef.current = requestAnimationFrame(anim)
         if(!(f % NF)){
           console.log('=======finished=======')
-          cancelAnimationFrame(extendingRequestAnimRef.current)
+          onAnim = false;
+          cancelAnimationFrame(extendingRequestAnimRef.current);
         }
       }
       anim();
@@ -219,10 +227,10 @@ const HomeLayout = () =>{
       if(menuExtended === false){
         console.log('if')
         menuExtended = true;
-        biggerElem = elem;
+        biggerElem.current = elem;
   
         demoVideoHeight = getDemoVideoHeight(menuExtended);
-        console.log('elem',elem)
+        console.log('svgFrameRef',svgFrameRef)
         
         
   
@@ -253,7 +261,7 @@ const HomeLayout = () =>{
           biggerElem = null;
     
           demoVideoHeight = getDemoVideoHeight(menuExtended)
-          console.log('demoVideoHeight: ',demoVideoHeight)
+          console.log('svgFrameValues====> ',svgFrameValues)
     
           Promise.all([
             utilityMenuIf(menuExtended),
@@ -278,7 +286,7 @@ const HomeLayout = () =>{
           <Demo/>
         </LogoDisplayContext.Provider>
         <MenuSizeContext.Provider  value={{work_style, skill_style, paint_style, info_style}}>
-          <Menu/>
+          <Menu menuNames={menuNames}/>
         </MenuSizeContext.Provider>
       </ExtendMenuContext.Provider>
     </div>

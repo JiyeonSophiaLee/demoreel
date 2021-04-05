@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import TV, { convertToPix } from '../public/assets/js/transitionValue';
 import RunSvgFrame from "../public/assets/js/SvgFrame";
 
+
+
 function useMenuSize(){
   const [LI_size,setLI_size] = useState({width:"50%", height:"50%"});
   const [svgFramePackSize,setsvgFramePackSize] = useState({width:"0px", height:"0px"})
@@ -56,40 +58,26 @@ function useMenuSize(){
   }
 
 
-  function changeHeirachysvgFramePack(svgFrameValues,extendMenuSize=null){  
-
+  function changeHeirachysvgFramePack(svgFrameValues,extendMenuSize=false,onAnim=false,widthRef=null,heightRef=null){  
+    if(svgFrameValues.extraSpace === undefined) {
+      console.log('undefined?', svgFrameValues)
+      return;
+    }
+    console.log('it is called')
     // console.log('viewChanged = ',svgFrameValues )
     let size = getDefaultsvgFramePackSize();
-    let sizeToPix = convertToPix(size);
 
-
-      console.log('view is changed??===', size)
-
-
-    if(extendMenuSize){
-      console.log()
+      console.log('initiate is working?')
+      
+    if(!extendMenuSize){
+      console.log('if')
       // setHeirachysvgFramePack({width:defaultsvgFramePackSize, height:defaultsvgFramePackSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
-      setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
-      setCanvasSize({width: extendMenuSize['width'] + svgFrameValues.extraSpace + "px" ,
-                    height :  extendMenuSize['height'] + svgFrameValues.extraSpace + "px" ,
-                    left: `-${svgFrameValues.extraSpace/2}px` ,
-                    top: `-${svgFrameValues.extraSpace/2}px`});
-      setSvgFrameSize({width: extendMenuSize['width'] , 
-                      height: extendMenuSize['height'] ,
-                      x: svgFrameValues['x'],
-                      y: svgFrameValues['y'],
-                      rx: svgFrameValues['border'],
-                      ry: svgFrameValues['border'],
-                      fill: svgFrameValues['fill'],
-                      transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
-                  });
-    }else{
       // console.log('svgFrameValues.svgFrameValues.extraSpace=  ',svgFrameValues,'mobileMode_: ',mobileMode)
       setsvgFramePackSize({width:size, height:size});
       setCanvasSize({width: `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
-                     height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
-                     left: `-${svgFrameValues.extraSpace/2}px` ,
-                     top: `-${svgFrameValues.extraSpace/2}px`});
+                      height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
+                      left: `-${svgFrameValues.extraSpace/2}px` ,
+                      top: `-${svgFrameValues.extraSpace/2}px`});
       setSvgFrameSize({width: size , 
                       height: size ,
                       x: svgFrameValues['x'],
@@ -99,13 +87,28 @@ function useMenuSize(){
                       fill: svgFrameValues['fill'],
                       transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
                   });
-    }
-  
-  }
+    }else{
+      console.log('else')
+      if(!onAnim){
+        console.log('extendMenuSize[width]',extendMenuSize['width'])
+        setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
+      }
+      setCanvasSize({ width: widthRef + svgFrameValues["extraSpace"] + "px", 
+                      height: heightRef + svgFrameValues["extraSpace"] + "px", 
+                      left: `-${svgFrameValues["extraSpace"]/2}px` ,
+                      top: `-${svgFrameValues["extraSpace"]/2}px`})
+      setSvgFrameSize({width:widthRef + "px", 
+              height:heightRef + "px", 
+              x: svgFrameValues['x'],
+              y: svgFrameValues['y'],
+              rx: svgFrameValues['border'],
+              ry: svgFrameValues['border'],
+              fill: svgFrameValues['fill'],
+              transform: `translate(${svgFrameValues["extraSpace"]/2},${svgFrameValues["extraSpace"]/2})`})
 
-  function setAnim(widthRef, heightRef, extraSpace){
-    setCanvasSize({...canvasSize, width:widthRef + extraSpace + "px", height:heightRef + extraSpace + "px"})
-    setSvgFrameSize({...svgFrameSize, width:widthRef + "px", height:heightRef + "px"})
+      
+    }
+    
   }
 
 
@@ -143,7 +146,7 @@ function useMenuSize(){
     // window.addEventListener('resize',updateResize);
   },[])
     
-  return [setLI_size, setsvgFramePackSize, setAnim, style, changeHeirachysvgFramePack, hookTest]
+  return [setLI_size, setsvgFramePackSize, style, changeHeirachysvgFramePack, hookTest]
 }
 
 export default useMenuSize;

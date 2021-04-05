@@ -14,10 +14,10 @@ function Menu(props){
 
   return (
     <section id = "menu">
-      <MenuComponent id="work"  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" ivory={<SvgIvory/> }/>
-      <MenuComponent id="skill" order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179"/>
-      <MenuComponent id="paint" order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98"/>
-      <MenuComponent id="info"  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
+      <MenuComponent id={props.menuNames[0]}  order={1} svgFrameStopColor1="#ff3b29" svgFrameStopColor2="#ff8c34" strokeColor1="#ff3b29" strokeColor2="#ff8c34" ivory={<SvgIvory/> }/>
+      <MenuComponent id={props.menuNames[1]} order={2} svgFrameStopColor1="#cd4dff" svgFrameStopColor2="#ff4179" strokeColor1="#cd4dff" strokeColor2="#ff4179"/>
+      <MenuComponent id={props.menuNames[2]} order={3} svgFrameStopColor1="#ffa934" svgFrameStopColor2="#30ab98" strokeColor1="#ffa934" strokeColor2="#30ab98"/>
+      <MenuComponent id={props.menuNames[3]}  order={4} svgFrameStopColor1="#ff6ee2" svgFrameStopColor2="#5cd3ff" strokeColor1="#ff6ee2" strokeColor2="#5cd3ff" contents={<InfoContent/>} />
     </section>
   )
 }
@@ -43,8 +43,8 @@ function MenuComponent (props){
   
 
   return(
-    <li id={props.id} {...menuSizeContext[props.id+"_style"].style_LI} ref={svgFrameRef}> 
-      <div className="svgFramePack" onClick={onClick} {...menuSizeContext[props.id+"_style"].style_svgFramePack}>
+    <li id={props.id} {...menuSizeContext[props.id+"_style"].style_LI} > 
+      <div className="svgFramePack" onClick={onClick} ref={svgFrameRef} {...menuSizeContext[props.id+"_style"].style_svgFramePack}>
           <div className="menuText">{props.id.toUpperCase()}</div>
           <div className="neon neon1"></div>
           <div className="neon neon2"></div>

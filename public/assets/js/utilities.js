@@ -71,7 +71,7 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
   const svgFramePackage = elem.parentElement;
   let allMenusInOrder = [svgFramePackage];
   let j = 0;
-  let size = getExtendMenuSize(demoVideoHeight, elem);
+  let size = getExtendMenuSize(demoVideoHeight, svgFramePackage);
 
   for (let i = 0; i < LI.childNodes.length; i++) {
     j = j + 1;
@@ -187,6 +187,7 @@ function getPadding (elem){
   let liPaddingWidth = liPaddingLeft + liPaddingRight;
   let liPaddingHeight = liPaddingTop + liPaddingBot;
 
+  console.log(menu, menuPaddingWidth, menuPaddingHeight, liPaddingWidth, liPaddingHeight)
   return {menuPaddingWidth, menuPaddingHeight, liPaddingWidth, liPaddingHeight}
 }
 
