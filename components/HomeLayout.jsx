@@ -116,7 +116,7 @@ const HomeLayout = () =>{
       homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
       if( menuExtended ){
-        remainExtendingMenu();
+        // remainExtendingMenu();
       }else{
           
       }
@@ -158,7 +158,7 @@ const HomeLayout = () =>{
       for(let i=0; i<4; i++){
         if(menuExtended){
           if(biggerElem.current.parentElement.id === menuNames[i]){
-            eval(biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues);
+            eval(biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, "100%");
           }else{
             eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
           }
@@ -193,6 +193,7 @@ const HomeLayout = () =>{
       let size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
       let f = 0;
       let dir = 1;
+
       
       const NF = TV['menuDuration'] * 63;
       
@@ -204,14 +205,22 @@ const HomeLayout = () =>{
 
       function anim(){
         f += dir;
-        eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
-  
         onAnim = true;
+        console.log('f',f)
+        // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
+        work_changeHeirachySvgFramePack(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
+        
+  
         extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
         if(!(f % NF)){
           console.log('=======finished=======')
           onAnim = false;
+          
+          // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, "100%", onAnim)
+
+
+
           cancelAnimationFrame(extendingRequestAnimRef.current);
         }
       }
@@ -241,7 +250,7 @@ const HomeLayout = () =>{
           callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef)
           // test()
         ]).then(()=>{
-          disableClick()
+          // disableClick()
         })
         
         

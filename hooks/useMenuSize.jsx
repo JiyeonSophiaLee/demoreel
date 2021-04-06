@@ -4,7 +4,7 @@ import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 
 
-function useMenuSize(){
+function useMenuSize(id){
   const [LI_size,setLI_size] = useState({width:"50%", height:"50%"});
   const [svgFramePackSize,setsvgFramePackSize] = useState({width:"0px", height:"0px"})
   const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
@@ -58,19 +58,19 @@ function useMenuSize(){
   }
 
 
-  function changeHeirachysvgFramePack(svgFrameValues,extendMenuSize=false,onAnim=false,widthRef=null,heightRef=null){  
+  function changeHeirachysvgFramePack(svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null){  
     if(svgFrameValues.extraSpace === undefined) {
       console.log('undefined?', svgFrameValues)
       return;
     }
     console.log('it is called')
     // console.log('viewChanged = ',svgFrameValues )
-    let size = getDefaultsvgFramePackSize();
-
-      console.log('initiate is working?')
-      
-    if(!extendMenuSize){
+    
+    console.log('--------------',id)
+    
+    if(!onAnim){
       console.log('if')
+      let size = extendMenuSize==='none' ? getDefaultsvgFramePackSize() : extendMenuSize;
       // setHeirachysvgFramePack({width:defaultsvgFramePackSize, height:defaultsvgFramePackSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
       // console.log('svgFrameValues.svgFrameValues.extraSpace=  ',svgFrameValues,'mobileMode_: ',mobileMode)
       setsvgFramePackSize({width:size, height:size});
@@ -89,7 +89,7 @@ function useMenuSize(){
                   });
     }else{
       console.log('else')
-      if(!onAnim){
+      if(frame===1){
         console.log('extendMenuSize[width]',extendMenuSize['width'])
         setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
       }
