@@ -10,11 +10,11 @@ import { ExtendMenuContext, LogoDisplayContext } from './HomeLayout.jsx'
 
 
 
-function Demo(){
+function Demo(props){
   // console.log('---DEMO---')
-  const demoRef = useRef(null);
-  const logoRef = useRef(null);
-  const demoVieoRef = useRef(null);
+  const demoRef = useRef();
+  const logoRef = useRef();
+  const demoVieoRef = useRef();
   const logoDisplayContext = useContext(LogoDisplayContext);
   const extendMenuContext = useContext(ExtendMenuContext);
   let mobileMode, _mobileMode;
@@ -22,6 +22,9 @@ function Demo(){
 
 
   useEffect(()=>{
+    demoRef.current = props.refs['demoRef'];
+    logoRef.current = props.refs['logoRef'];
+
     mobileMode = innerWidth <= 800 ? true : false;
     checkLogoHigher = innerWidth > 800 && demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
     _checkLogoHigher = checkLogoHigher;
@@ -62,8 +65,8 @@ function Demo(){
 
 
   return (
-    <section id="demo"    ref={demoRef}> 
-            <header id="logo" ref={logoRef} onClick={onClick}> 
+    <section id="demo"    ref={props.refs['demoRef']}> 
+            <header id="logo" ref={props.refs['logoRef']} onClick={onClick}> 
             {/* <h1>{JSON.stringify(logo_display)}</h1> */}
 
                 <img id="logo_heigher" src="/assets/images/logo/logo_heigher.svg"  style={{display: logoDisplayContext.logoDisplay.logo_heigher}}/>

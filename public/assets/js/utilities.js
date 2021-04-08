@@ -104,7 +104,6 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
 
   
   
-  console.log('allMenusInOrder: ',allMenusInOrder)
 
   let getValuesInOrder = 
     [{ elemId: allMenusInOrder[0].id, width: TV.unSymetryEachMenu + '%', height: TV.unSymetryEachMenu + '%'}
@@ -118,8 +117,6 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
   //   let getOrder = allMenusInOrder[i][0]-1
   //   reOrder.splice(getOrder,1,getValuesInOrder[i]);
   // }
-  console.log('getValuesInOrder= ', getValuesInOrder)
-
   setTimeout(() => {
     allMenusInOrder.forEach((e)=>{
       e.classList.remove("menutransition")
@@ -127,8 +124,6 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
         e.firstElementChild.classList.remove("menutransition");
       }
     })
-    elem.style.width = '100%';
-    elem.style.height = '100%';
   }, TV.menuDuration * 1000 );
 
   var result = 
@@ -187,7 +182,6 @@ function getPadding (elem){
   let liPaddingWidth = liPaddingLeft + liPaddingRight;
   let liPaddingHeight = liPaddingTop + liPaddingBot;
 
-  console.log(menu, menuPaddingWidth, menuPaddingHeight, liPaddingWidth, liPaddingHeight)
   return {menuPaddingWidth, menuPaddingHeight, liPaddingWidth, liPaddingHeight}
 }
 

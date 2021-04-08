@@ -41,18 +41,26 @@ const logoDisplayReducer = (state,action)=>{
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  const [work_setLI_size, work_setsvgFramePackSize, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
-  const [skill_setLI_size, skill_setsvgFramePackSize, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
-  const [paint_setLI_size, paint_setsvgFramePackSize, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
-  const [info_setLI_size, info_setsvgFramePackSize, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
+  // const [work_setLI_size, work_setsvgFramePackSize, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
+  // const [skill_setLI_size, skill_setsvgFramePackSize, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
+  // const [paint_setLI_size, paint_setsvgFramePackSize, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
+  // const [info_setLI_size, info_setsvgFramePackSize, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
-  const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
+  // const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
   let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false};
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
   const extendingRequestAnimRef = useRef();
-  const biggerElem = useRef(null);
-  const menuNames = ['work', 'skill', 'paint', 'info'];
+  // const biggerElem = useRef(null);
+
+
+  const homeLayoutRef = useRef()
+  const demoRef =useRef();
+  const logoRef =useRef();
+  const workRef = useRef();
+  const skillRef = useRef();
+  const paintRef = useRef();
+  const infoRef = useRef();
   
   // let svgFrameRef = useRef();
 
@@ -74,10 +82,10 @@ const HomeLayout = () =>{
   
   
   useEffect(()=>{
-    console.log('working')
-    work_hookTest('custom hook is testing')
-    skill_hookTest('what is wrong with you?')
-    // svgFrameRef.current = new RunSvgFrame(innerWidth,innerHeight);
+  //   console.log('working')
+  //   // work_hookTest('custom hook is testing')
+  //   // skill_hookTest('what is wrong with you?')
+  //   // svgFrameRef.current = new RunSvgFrame(innerWidth,innerHeight);
     
     
     
@@ -87,25 +95,25 @@ const HomeLayout = () =>{
     _widerMode = widerMode;
     
     homeGsapSet(menuExtended, true);
-    updateSvgFrameValues();
-    // updateHeirachySvgFramePack();
+  //   updateSvgFrameValues();
+  //   // updateHeirachySvgFramePack();
 
     
 
   },[])
 
-  function updateSvgFrameValues(){
-    let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
-    let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
-    setSvgFrameValues({ ...svgFrameValues,
-                      radius: _radius,
-                      wavyPath: _wavyPath,
-                      extraSpace: _radius * 5})     
-    _svgFrameValues = {..._svgFrameValues,
-                      radius: _radius,
-                      wavyPath: _wavyPath,
-                      extraSpace: _radius * 5}
-  }
+  // function updateSvgFrameValues(){
+  //   let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
+  //   let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
+  //   setSvgFrameValues({ ...svgFrameValues,
+  //                     radius: _radius,
+  //                     wavyPath: _wavyPath,
+  //                     extraSpace: _radius * 5})     
+  //   _svgFrameValues = {..._svgFrameValues,
+  //                     radius: _radius,
+  //                     wavyPath: _wavyPath,
+  //                     extraSpace: _radius * 5}
+  // }
 
   useEffect(()=>{
 
@@ -115,15 +123,18 @@ const HomeLayout = () =>{
 
       homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
-      if( menuExtended ){
-        // remainExtendingMenu();
-      }else{
+  //     if( menuExtended ){
+  //       // remainExtendingMenu();
+  //     }else{
           
-      }
-      if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
-        console.log('view is changing');
-        updateSvgFrameValues();
-      }
+  //     }
+      // if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
+      //   console.log('view is changing');
+      //   // updateSvgFrameValues();
+      //   homeGsapSet(menuExtended, mobileMode !== _mobileMode)
+      // }else{
+
+      // }
 
        
       if(mobileMode !== _mobileMode){
@@ -145,158 +156,158 @@ const HomeLayout = () =>{
     }
   },[])
 
-  function remainExtendingMenu(){
-    let widthRef = biggerElem.current.parentElement.clientWidth;
-    let heightRef = biggerElem.current.parentElement.clientHeight;
-    console.log('widthRef', widthRef, 'heightRef', heightRef);
+  // function remainExtendingMenu(){
+  //   let widthRef = biggerElem.current.parentElement.clientWidth;
+  //   let heightRef = biggerElem.current.parentElement.clientHeight;
+  //   console.log('widthRef', widthRef, 'heightRef', heightRef);
 
-    eval( biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, {width:widthRef, height: heightRef}, onAnim, widthRef, heightRef)
-  }
+  //   eval( biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, {width:widthRef, height: heightRef}, onAnim, widthRef, heightRef)
+  // }
   
-  useEffect(()=>{
-    if(svgFrameValues.radius !== undefined){
-      for(let i=0; i<4; i++){
-        if(menuExtended){
-          if(biggerElem.current.parentElement.id === menuNames[i]){
-            eval(biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, "100%");
-          }else{
-            eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
-          }
-        }else{
-          eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
-        }
-      }
-    }
-  },[svgFrameValues])
+  // useEffect(()=>{
+  //   if(svgFrameValues.radius !== undefined){
+  //     for(let i=0; i<4; i++){
+  //       if(menuExtended){
+  //         if(biggerElem.current.parentElement.id === menuNames[i]){
+  //           eval(biggerElem.current.parentElement.id + "_changeHeirachySvgFramePack")(svgFrameValues, "100%");
+  //         }else{
+  //           eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
+  //         }
+  //       }else{
+  //         eval(menuNames[i] + "_changeHeirachySvgFramePack")(svgFrameValues);
+  //       }
+  //     }
+  //   }
+  // },[svgFrameValues])
  
 
 
   
-  function test(){
-    return new Promise((resolve, reject)=>{
-      setTimeout(() => {
-        console.log('finish');
-        resolve();
-      }, 1000);
-    })
-  }
-  function disableClick(){
-    return new Promise((resolve, reject)=>{
-      activeClick = false;
-      console.log(activeClick);
-      resolve();
-    })
-  }
-  function callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef){
-    return new Promise((resolve, reject)=>{
+  // function test(){
+  //   return new Promise((resolve, reject)=>{
+  //     setTimeout(() => {
+  //       console.log('finish');
+  //       resolve();
+  //     }, 1000);
+  //   })
+  // }
+  // function disableClick(){
+  //   return new Promise((resolve, reject)=>{
+  //     activeClick = false;
+  //     console.log(activeClick);
+  //     resolve();
+  //   })
+  // }
+  // function callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef){
+  //   return new Promise((resolve, reject)=>{
 
-      let size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-      let f = 0;
-      let dir = 1;
+  //     let size = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+  //     let f = 0;
+  //     let dir = 1;
 
       
-      const NF = TV['menuDuration'] * 63;
+  //     const NF = TV['menuDuration'] * 63;
       
-      size.LI.forEach((obj)=>{
-        eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
-      })
+  //     size.LI.forEach((obj)=>{
+  //       eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
+  //     })
       
-      console.log(elem.parentElement.id)
+  //     console.log(elem.parentElement.id)
 
-      function anim(){
-        f += dir;
-        onAnim = true;
-        console.log('f',f)
-        // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
-        work_changeHeirachySvgFramePack(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
+  //     function anim(){
+  //       f += dir;
+  //       onAnim = true;
+  //       console.log('f',f)
+  //       // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
+  //       work_changeHeirachySvgFramePack(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
         
   
-        extendingRequestAnimRef.current = requestAnimationFrame(anim);
+  //       extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
-        if(!(f % NF)){
-          console.log('=======finished=======')
-          onAnim = false;
+  //       if(!(f % NF)){
+  //         console.log('=======finished=======')
+  //         onAnim = false;
           
-          // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, "100%", onAnim)
+  //         // eval(elem.parentElement.id + "_changeHeirachySvgFramePack")(_svgFrameValues, "100%", onAnim)
 
 
 
-          cancelAnimationFrame(extendingRequestAnimRef.current);
-        }
-      }
-      anim();
-    })
+  //         cancelAnimationFrame(extendingRequestAnimRef.current);
+  //       }
+  //     }
+  //     anim();
+  //   })
+  // }
+
+  const extendMenu = ()=>{
+  //   console.log('clicked')
+  //   if(!activeClick){
+  //     activeClick = true;
+
+  //     if(menuExtended === false){
+  //       console.log('if')
+  //       menuExtended = true;
+  //       biggerElem.current = elem;
+  
+  //       demoVideoHeight = getDemoVideoHeight(menuExtended);
+  //       console.log('svgFrameRef',svgFrameRef)
+        
+        
+  
+  //       Promise.all([
+  //         homeGsapTransition(menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demoRef.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100})
+  //         // svgFrameRef.extendMenuIf(demoVideoHeight),
+  //         callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef)
+  //         // test()
+  //       ]).then(()=>{
+  //         // disableClick()
+  //       })
+        
+        
+  
+  
+  //     }else if( biggerElem !== elem && svgFrameRef !== null){
+  //       console.log('else if')
+  //       biggeredElem = biggerElem;
+  //       biggerElem = elem;
+  
+      
+      
+  //     }else{
+  //       if( menuExtended ){
+  //         menuExtended = false;
+  //         biggeredElem = null;
+  //         biggerElem = null;
+    
+  //         demoVideoHeight = getDemoVideoHeight(menuExtended)
+  //         console.log('svgFrameValues====> ',svgFrameValues)
+    
+  //         Promise.all([
+  //           utilityMenuIf(menuExtended),
+  //           logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
+  //           test()
+  //         ]).then(()=>{
+  //           disableClick()
+  //         })
+  //       }
+      
+  
+  //     }
+  //   }
   }
-
-  const extendMenu = useCallback((elem,order=0, svgFrameRef)=>{
-    console.log('clicked')
-    if(!activeClick){
-      activeClick = true;
-
-      if(menuExtended === false){
-        console.log('if')
-        menuExtended = true;
-        biggerElem.current = elem;
-  
-        demoVideoHeight = getDemoVideoHeight(menuExtended);
-        console.log('svgFrameRef',svgFrameRef)
-        
-        
-  
-        Promise.all([
-          homeGsapTransition(menuExtended),
-          logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-          // svgFrameRef.extendMenuIf(demoVideoHeight),
-          callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef)
-          // test()
-        ]).then(()=>{
-          // disableClick()
-        })
-        
-        
-  
-  
-      }else if( biggerElem !== elem && svgFrameRef !== null){
-        console.log('else if')
-        biggeredElem = biggerElem;
-        biggerElem = elem;
-  
-      
-      
-      }else{
-        if( menuExtended ){
-          menuExtended = false;
-          biggeredElem = null;
-          biggerElem = null;
-    
-          demoVideoHeight = getDemoVideoHeight(menuExtended)
-          console.log('svgFrameValues====> ',svgFrameValues)
-    
-          Promise.all([
-            utilityMenuIf(menuExtended),
-            logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
-            test()
-          ]).then(()=>{
-            disableClick()
-          })
-        }
-      
-  
-      }
-    }
-  },[menuExtended]) 
 
  
   
   return(
-    <div id = "master" >
+    <div id = "master" ref={homeLayoutRef}>
       <ExtendMenuContext.Provider value={extendMenu}>
         <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}>
-          <Demo/>
+          <Demo refs={{demoRef, logoRef}}/>
         </LogoDisplayContext.Provider>
-        <MenuSizeContext.Provider  value={{work_style, skill_style, paint_style, info_style}}>
-          <Menu menuNames={menuNames}/>
-        </MenuSizeContext.Provider>
+        {/* <MenuSizeContext.Provider  value={{work_style, skill_style, paint_style, info_style}}> */}
+          <Menu refs={{workRef, skillRef, paintRef, infoRef}}/>
+        {/* </MenuSizeContext.Provider> */}
       </ExtendMenuContext.Provider>
     </div>
   )

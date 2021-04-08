@@ -94,52 +94,6 @@ RunSvgFrame.prototype.extendMenuIf = function(demoVideoHeight){
 // };
 
 
-RunSvgFrame.prototype.getExpandMenuSize = function(demoVideoHeight) {
-  this.getPadding();
-
-
-  if(window.innerWidth > 800){
-    this.getExpandMenuSizeWidth = ((document.body.clientWidth * ( TV.unSymetryDemoMenu / 100) - this.menuPaddingWidth) * ( TV.unSymetryEachMenu / 100)) - this.liPaddingWidth;
-    this.getExpandMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
-
-
-    function getHeight(totalHeight){
-      return ((totalHeight - this.menuPaddingHeight) * ( TV.unSymetryEachMenu / 100))- this.liPaddingHeight;
-    }
-
-  }else{
-    this.getExpandMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
-    this.getExpandMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
-   
-    function getWidth(totalWidth){
-      return (totalWidth - this.menuPaddingWidth ) * ( TV.unSymetryEachMenu / 100) - this.liPaddingWidth ;
-    }
-    function getHeight(totalHeight){
-      return (totalHeight - logo.clientHeight - demoVideoHeight - this.menuPaddingHeight) * (TV.unSymetryEachMenu / 100) - this.liPaddingHeight ;
-    }
-  }
-
-}
-
-RunSvgFrame.prototype.getPadding = function(){
-  this.menuPaddingTop = parseFloat(window.getComputedStyle(menu).paddingTop);
-  this.menuPaddingLeft = parseFloat(window.getComputedStyle(menu).paddingLeft);
-  this.menuPaddingRight = parseFloat(window.getComputedStyle(menu).paddingRight);
-  this.menuPaddingBot = parseFloat(window.getComputedStyle(menu).paddingBottom);
-  this.menuPaddingWidth = this.menuPaddingLeft + this.menuPaddingRight;
-  this.menuPaddingHeight = this.menuPaddingTop + this.menuPaddingBot;
-
-  this.liPaddingTop = parseFloat(window.getComputedStyle(this.elem).paddingTop);
-  this.liPaddingLeft = parseFloat(window.getComputedStyle(this.elem).paddingLeft);
-  this.liPaddingRight = parseFloat(window.getComputedStyle(this.elem).paddingRight);
-  this.liPaddingBot = parseFloat(window.getComputedStyle(this.elem).paddingBottom);
-  this.liPaddingWidth = this.liPaddingLeft + this.liPaddingRight;
-  this.liPaddingHeight = this.liPaddingTop + this.liPaddingBot;
-
- 
-}
-
-
 
 
 
