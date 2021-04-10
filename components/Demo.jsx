@@ -1,6 +1,6 @@
 // import variable from '../styles/variableCss.module.scss';
 // import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
-import { useState, useEffect, createContext, useRef, useReducer, memo } from "react";
+import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo } from "react";
 import { useContext } from "react/cjs/react.development";
 // import TV from '../public/assets/js/transitionValue';
 import { ExtendMenuContext, LogoDisplayContext } from './HomeLayout.jsx'
@@ -10,76 +10,74 @@ import { ExtendMenuContext, LogoDisplayContext } from './HomeLayout.jsx'
 
 
 
-function Demo(props){
-  // console.log('---DEMO---')
-  const demoRef = useRef();
-  const logoRef = useRef();
-  const demoVieoRef = useRef();
+function Demo(){
+  console.log('---DEMO---')
+  const demoRef = useRef(null);
+  const logoRef = useRef(null);
+  const demoVieoRef = useRef(null);
   const logoDisplayContext = useContext(LogoDisplayContext);
-  const extendMenuContext = useContext(ExtendMenuContext);
-  let mobileMode, _mobileMode;
-  let checkLogoHigher, _checkLogoHigher = false;
-
+ 
+   const extendMenuContext = useContext(ExtendMenuContext);
+  // let mobileMode, _mobileMode;
+  // let checkLogoHigher, _checkLogoHigher = false;
+  console.log('logoDisplay',logoDisplayContext.logoDisplay)
 
   useEffect(()=>{
-    demoRef.current = props.refs['demoRef'];
-    logoRef.current = props.refs['logoRef'];
-
-    mobileMode = innerWidth <= 800 ? true : false;
-    checkLogoHigher = innerWidth > 800 && demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
-    _checkLogoHigher = checkLogoHigher;
+    // mobileMode = innerWidth <= 800 ? true : false;
+    // checkLogoHigher = innerWidth > 800 && demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
+    // _checkLogoHigher = checkLogoHigher;
     logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
 
 
 
     let updateResize = () =>{
-      // console.log('demoRef: ',demoRef.current.clientHeight, "demo: ",demo.clientHeight)
-      _mobileMode = innerWidth <= 800 ? true : false; 
-      if(mobileMode !==_mobileMode ){
-        mobileMode = innerWidth <= 800 ? true : false;
-        logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
-      }
-      if( innerWidth > 800 ){
-        _checkLogoHigher = demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
-        if(checkLogoHigher !== _checkLogoHigher){
-          checkLogoHigher = !checkLogoHigher;
-          logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
-        }
-      }
-      // getDemoVideHeight();  
-    }
+    //   // console.log('demoRef: ',demoRef.current.clientHeight, "demo: ",demo.clientHeight)
+    //   _mobileMode = innerWidth <= 800 ? true : false; 
+    //   if(mobileMode !==_mobileMode ){
+    //     mobileMode = innerWidth <= 800 ? true : false;
+        // logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
+    //   }
+    //   if( innerWidth > 800 ){
+    //     _checkLogoHigher = demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
+    //     if(checkLogoHigher !== _checkLogoHigher){
+    //       checkLogoHigher = !checkLogoHigher;
+    //       logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
+    //     }
+    //   }
+    //   // getDemoVideHeight();  
+    // }
 
     window.addEventListener('resize',updateResize)
     return ()=>{
-      window.removeEventListener('resize',updateResize);
+      window.removeEventListener('resize',updateResize);}
     }
   },[])  
 
     
   function onClick(){
-    extendMenuContext('logo')
+     extendMenuContext('logo')
   }
 
 
   //------------------------------------------------------//
 
+  return useMemo(()=>{
+    return  <section id="demo"    ref={demoRef}> 
+              <header id="logo" ref={logoRef} onClick={onClick}> 
 
-  return (
-    <section id="demo"    ref={props.refs['demoRef']}> 
-            <header id="logo" ref={props.refs['logoRef']} onClick={onClick}> 
-            {/* <h1>{JSON.stringify(logo_display)}</h1> */}
+                  <img id="logo_heigher" src="/assets/images/logo/logo_heigher.svg"  style={{display: logoDisplayContext.logoDisplay.logo_heigher}}/>
+                  <img id="logo_wider"   src="/assets/images/logo/logo_wider.svg"    style={{display: logoDisplayContext.logoDisplay.logo_wider}}   />
+       
+              </header>
+             <header id="demoVideo" ref={demoVieoRef}>
+                <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
+                <div id="demoVideoBgCSSAnim"></div>
+            </header> 
+            <div id="demoSVG" className="blurSVG"></div>
 
-                <img id="logo_heigher" src="/assets/images/logo/logo_heigher.svg"  style={{display: logoDisplayContext.logoDisplay.logo_heigher}}/>
-                <img id="logo_wider"   src="/assets/images/logo/logo_wider.svg"    style={{display: logoDisplayContext.logoDisplay.logo_wider}} />
-    
-            </header>
-          <header id="demoVideo" ref={demoVieoRef}>
-              <iframe src="https://player.vimeo.com/video/374348394?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
-              <div id="demoVideoBgCSSAnim"></div>
-          </header>
-          <div id="demoSVG" className="blurSVG"></div>
-
-      </section>
-  )
+        </section>
+  },[logoDisplayContext.logoDisplay.logo_heigher])
 }
-export default memo(Demo)
+
+
+export default Demo

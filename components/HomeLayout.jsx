@@ -1,6 +1,6 @@
 import Demo from './Demo.jsx'
 import Menu from './Menu.jsx'
-import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef} from "react"
+import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef, useMemo} from "react"
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
@@ -18,62 +18,57 @@ export const MenuSizeContext = createContext();
 
 
 const logoDisplayReducer = (state,action)=>{
-  
-  if(innerWidth > 800){
-    if(innerWidth > innerHeight){
-      if(action.demoClientHeight/3 < action.logoClientWidth*4.5/6){
-        state = { logo_heigher: "none", logo_wider:"initial"}
+  // console.log('logoDisplay reducer is working')
+  if(innerWidth != undefined){
+    if(innerWidth > 800){
+      if(innerWidth > innerHeight){
+        if(action.demoClientHeight/3 < action.logoClientWidth*4.5/6){
+          state = { logo_heigher: "none", logo_wider:"initial"}
+          return state
+        }else{
+          state = { logo_heigher: "initial", logo_wider:"none"}
         return state
+        }
       }else{
         state = { logo_heigher: "initial", logo_wider:"none"}
-      return state
+        return state
       }
     }else{
-      state = { logo_heigher: "initial", logo_wider:"none"}
+      state = { logo_heigher: "none", logo_wider:"initial"}
       return state
     }
-  }else{
-    state = { logo_heigher: "none", logo_wider:"initial"}
-    return state
   }
+ 
 }
-
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
-  // const [work_setLI_size, work_setsvgFramePackSize, work_style, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
-  // const [skill_setLI_size, skill_setsvgFramePackSize, skill_style, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
-  // const [paint_setLI_size, paint_setsvgFramePackSize, paint_style,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
-  // const [info_setLI_size, info_setsvgFramePackSize, info_style, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
+  const [work_setLI_size, work_setsvgFramePackSize, work_styleLI, work_styleSvgFramePack, work_changeHeirachySvgFramePack, work_hookTest] = useMenuSize();
+  const [skill_setLI_size, skill_setsvgFramePackSize, skill_styleLI, skill_styleSvgFramePack, skill_changeHeirachySvgFramePack, skill_hookTest] = useMenuSize();
+  const [paint_setLI_size, paint_setsvgFramePackSize, paint_styleLI, paint_styleSvgFramePack,  paint_changeHeirachySvgFramePack, paint_hookTest] = useMenuSize();
+  const [info_setLI_size, info_setsvgFramePackSize, info_styleLI, info_styleSvgFramePack, info_changeHeirachySvgFramePack, info_hookTest] = useMenuSize();
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
-  // const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
-  let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false};
+  const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
+  // let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false};
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
   const extendingRequestAnimRef = useRef();
-  // const biggerElem = useRef(null);
-
-
-  const homeLayoutRef = useRef()
-  const demoRef =useRef();
-  const logoRef =useRef();
-  const workRef = useRef();
-  const skillRef = useRef();
-  const paintRef = useRef();
-  const infoRef = useRef();
+  const biggerElem = useRef(null);
+  const biggeredElem = useRef(null);
+  
+  const menuNames = useRef(['work', 'skill', 'paint', 'info']);
   
   // let svgFrameRef = useRef();
 
-  let menuExtended = false;
-  // let biggerElem = null; 
-  let biggeredElem = null;
-  let demoVideoHeight;
-  let activeClick = false;
-  let onAnim = false
-  
-  let mobileMode, _mobileMode ;
-  let widerMode, _widerMode ;
-  let svgFramePackSize;
+  const menuExtended = useRef(false) ;
+  const demoVideoHeight = useRef()
+  const activeClick = useRef(false) ;
+  const onAnim = useRef(false) 
+  const mobileMode = useRef();
+  const _mobileMode = useRef();
+  const widerMode = useRef();
+  const _widerMode = useRef();
+  const svgFramePackSize = useRef()
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
@@ -83,22 +78,18 @@ const HomeLayout = () =>{
   
   useEffect(()=>{
   //   console.log('working')
-  //   // work_hookTest('custom hook is testing')
-  //   // skill_hookTest('what is wrong with you?')
+  //   work_hookTest('custom hook is testing')
+  //   skill_hookTest('what is wrong with you?')
   //   // svgFrameRef.current = new RunSvgFrame(innerWidth,innerHeight);
     
-    
-    
-    mobileMode = innerWidth <= 800 ? true : false; 
-    widerMode = innerWidth >= 1400 ? true : false; 
-    _mobileMode = mobileMode;
-    _widerMode = widerMode;
-    
-    homeGsapSet(menuExtended, true);
+    mobileMode.current = innerWidth <= 800 ? true : false; 
+    widerMode.current = innerWidth >= 1400 ? true : false; 
+    _mobileMode.current = mobileMode;
+    _widerMode.current = widerMode;
+  
+    // homeGsapSet(menuExtended.current, true);
   //   updateSvgFrameValues();
   //   // updateHeirachySvgFramePack();
-
-    
 
   },[])
 
@@ -115,46 +106,43 @@ const HomeLayout = () =>{
   //                     extraSpace: _radius * 5}
   // }
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    let updateResize = () =>{
-      _mobileMode = innerWidth <= 800 ? true : false; 
-      _widerMode = innerWidth >= 1400 ? true : false;
+  //   let updateResize = () =>{
+  //     _mobileMode = innerWidth <= 800 ? true : false; 
+  //     _widerMode = innerWidth >= 1400 ? true : false;
 
-      homeGsapSet(menuExtended, mobileMode !== _mobileMode)
+  //     homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
   //     if( menuExtended ){
   //       // remainExtendingMenu();
   //     }else{
           
   //     }
-      // if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
-      //   console.log('view is changing');
-      //   // updateSvgFrameValues();
-      //   homeGsapSet(menuExtended, mobileMode !== _mobileMode)
-      // }else{
-
-      // }
+  //     if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
+  //       console.log('view is changing');
+  //       updateSvgFrameValues();
+  //     }
 
        
-      if(mobileMode !== _mobileMode){
-        console.log('changed')
-        mobileMode = !mobileMode;
-      }
-      if(widerMode !== _widerMode){
-        console.log('changed')
-        widerMode = !widerMode;
-      }
+  //     if(mobileMode !== _mobileMode){
+  //       console.log('changed')
+  //       mobileMode = !mobileMode;
+  //     }
+  //     if(widerMode !== _widerMode){
+  //       console.log('changed')
+  //       widerMode = !widerMode;
+  //     }
    
 
      
 
-    }
-    window.addEventListener('resize',updateResize);
-    return ()=>{
-      window.removeEventListener('resize',updateResize);
-    }
-  },[])
+  //   }
+  //   window.addEventListener('resize',updateResize);
+  //   return ()=>{
+  //     window.removeEventListener('resize',updateResize);
+  //   }
+  // },[])
 
   // function remainExtendingMenu(){
   //   let widthRef = biggerElem.current.parentElement.clientWidth;
@@ -239,8 +227,8 @@ const HomeLayout = () =>{
   //   })
   // }
 
-  const extendMenu = ()=>{
-  //   console.log('clicked')
+  const extendMenu = useCallback((elem,order=0, svgFrameRef)=>{
+    console.log('clicked')
   //   if(!activeClick){
   //     activeClick = true;
 
@@ -256,7 +244,7 @@ const HomeLayout = () =>{
   
   //       Promise.all([
   //         homeGsapTransition(menuExtended),
-          logoDisplayDispatch({ demoClientHeight: demoRef.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100})
+  //         logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
   //         // svgFrameRef.extendMenuIf(demoVideoHeight),
   //         callToUnSymetryEachMenu(demoVideoHeight, elem, order, svgFrameRef)
   //         // test()
@@ -295,22 +283,21 @@ const HomeLayout = () =>{
   
   //     }
   //   }
-  }
+  },[]) 
 
  
-  
-  return(
-    <div id = "master" ref={homeLayoutRef}>
-      <ExtendMenuContext.Provider value={extendMenu}>
-        <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}>
-          <Demo refs={{demoRef, logoRef}}/>
-        </LogoDisplayContext.Provider>
-        {/* <MenuSizeContext.Provider  value={{work_style, skill_style, paint_style, info_style}}> */}
-          <Menu refs={{workRef, skillRef, paintRef, infoRef}}/>
-        {/* </MenuSizeContext.Provider> */}
-      </ExtendMenuContext.Provider>
+   return useMemo(()=>{
+    return <div id = "master" >
+            <ExtendMenuContext.Provider value={extendMenu}>
+              <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}>
+                <Demo/>
+              </LogoDisplayContext.Provider>
+              <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
+                <Menu    menuNames={menuNames.current} />
+              </MenuSizeContext.Provider>
+            </ExtendMenuContext.Provider>
     </div>
-  )
+  },[logoDisplay]);
 } 
 
-export default memo(HomeLayout)
+export default HomeLayout
