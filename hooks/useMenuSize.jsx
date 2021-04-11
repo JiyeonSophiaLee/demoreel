@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import TV, { convertToPix } from '../public/assets/js/transitionValue';
 import RunSvgFrame from "../public/assets/js/SvgFrame";
 
@@ -42,55 +42,47 @@ function useMenuSize(){
     
 
 
-  function getDefaultsvgFramePackSize(menuExtended=false){
-    // let size;
-    // if(innerWidth >= 1400){
-    //   size = TV.svgFramePackSize1400;
-    // }else if(innerWidth > 800){
-    //   size = TV.svgFramePackSize;
-    // }else{
-    //   if(menuExtended == false){
-    //     size = TV.svgFramePackSize800;
-    //   }else{
-    //     size = TV.svgFramePackSizeSmallerSize;
-    //   }
-    // }
-    // return size;
+  const getDefaultsvgFramePackSize = useCallback((menuExtended=false)=>{
+    let size;
+    if(innerWidth >= 1400){
+      size = TV.svgFramePackSize1400;
+    }else if(innerWidth > 800){
+      size = TV.svgFramePackSize;
+    }else{
+      if(menuExtended == false){
+        size = TV.svgFramePackSize800;
+      }else{
+        size = TV.svgFramePackSizeSmallerSize;
+      }
+    }
+    return size;
     
-  }
+  },[])
 
 
-  function changeHierarchySvgFramePack(svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null){ 
-    console.log('this is working') 
-    // if(svgFrameValues.extraSpace === undefined) {
-    //   console.log('undefined?', svgFrameValues)
-    //   return;
-    // }
-    // console.log('it is called')
-    // // console.log('viewChanged = ',svgFrameValues )
+  const changeHierarchySvgFramePack= useCallback((svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null)=>{ 
+  
+
+
     
-    // console.log('--------------',id)
-    
-    // if(!onAnim){
-    //   console.log('if')
-    //   let size = extendMenuSize==='none' ? getDefaultsvgFramePackSize() : extendMenuSize;
-    //   // setHeirachysvgFramePack({width:defaultsvgFramePackSize, height:defaultsvgFramePackSize, widthToPix:extendMenuSize['width'] ,heightToPix:extendMenuSize['height'], svgFrameValues})
-    //   // console.log('svgFrameValues.svgFrameValues.extraSpace=  ',svgFrameValues,'mobileMode_: ',mobileMode)
-    //   setsvgFramePackSize({width:size, height:size});
-    //   setCanvasSize({width: `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
-    //                   height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
-    //                   left: `-${svgFrameValues.extraSpace/2}px` ,
-    //                   top: `-${svgFrameValues.extraSpace/2}px`});
-    //   setSvgFrameSize({width: size , 
-    //                   height: size ,
-    //                   x: svgFrameValues['x'],
-    //                   y: svgFrameValues['y'],
-    //                   rx: svgFrameValues['border'],
-    //                   ry: svgFrameValues['border'],
-    //                   fill: svgFrameValues['fill'],
-    //                   transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
-    //               });
-    // }else{
+    if(!onAnim){
+      let size = extendMenuSize==='none' ? getDefaultsvgFramePackSize() : extendMenuSize;
+      console.log('size', size)
+      setsvgFramePackSize({width:size, height:size});
+      setCanvasSize({width: `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
+                      height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
+                      left: `-${svgFrameValues.extraSpace/2}px` ,
+                      top: `-${svgFrameValues.extraSpace/2}px`});
+      setSvgFrameSize({width: size , 
+                      height: size ,
+                      x: svgFrameValues['x'],
+                      y: svgFrameValues['y'],
+                      rx: svgFrameValues['border'],
+                      ry: svgFrameValues['border'],
+                      fill: svgFrameValues['fill'],
+                      transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
+                  });
+    }else{
     //   console.log('else')
     //   if(frame===1){
     //     console.log('extendMenuSize[width]',extendMenuSize['width'])
@@ -110,9 +102,9 @@ function useMenuSize(){
     //           transform: `translate(${svgFrameValues["extraSpace"]/2},${svgFrameValues["extraSpace"]/2})`})
 
       
-    // }
+    }
     
-  }
+  },[])
 
 
   useEffect(()=>{

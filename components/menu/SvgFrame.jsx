@@ -5,7 +5,7 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 
 function SvgFrame(props){
-  console.log('-------SvgFrame----------',props.styleContext)
+  console.log('-------SvgFrame----------')
     // const canvas = props.styleContext['canvas'];
     // const svgFrame = props.styleContext['svgFrame'];
     // const menuSizeContext = useContext(MenuSizeContext);

@@ -76,7 +76,7 @@ function Demo(){
             <div id="demoSVG" className="blurSVG"></div>
 
         </section>
-  },[logoDisplayContext.logoDisplay.logo_heigher])
+  },[logoDisplayContext.logoDisplay.logo_heigher, logoDisplayContext.logoDisplay.logo_wider])
 }
 
 

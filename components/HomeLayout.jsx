@@ -89,11 +89,9 @@ const HomeLayout = () =>{
   
     homeGsapSet(menuExtended.current, true);
     updateSvgFrameValues();
-  //   // updateHierarchySvgFramePack();
-
   },[])
 
-  function updateSvgFrameValues(){
+  const updateSvgFrameValues = useCallback(()=>{
     let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
     let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
     setSvgFrameValues({ ...svgFrameValues,
@@ -104,7 +102,7 @@ const HomeLayout = () =>{
     //                   radius: _radius,
     //                   wavyPath: _wavyPath,
     //                   extraSpace: _radius * 5}
-  }
+  },[])
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
       if(menuExtended.current){
@@ -124,43 +122,40 @@ const HomeLayout = () =>{
       }
     }
   },[svgFrameValues])
-  // useEffect(()=>{
 
-  //   let updateResize = () =>{
-  //     _mobileMode = innerWidth <= 800 ? true : false; 
-  //     _widerMode = innerWidth >= 1400 ? true : false;
+    useEffect(()=>{
 
-  //     homeGsapSet(menuExtended, mobileMode !== _mobileMode)
+      let updateResize = () =>{
+        _mobileMode.current = innerWidth <= 800 ? true : false; 
+        _widerMode.current = innerWidth >= 1400 ? true : false;
 
-  //     if( menuExtended ){
-  //       // remainExtendingMenu();
-  //     }else{
-          
-  //     }
-  //     if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
-  //       console.log('view is changing');
-  //       updateSvgFrameValues();
-  //     }
+        homeGsapSet(menuExtended.current, mobileMode !== _mobileMode)
 
-       
-  //     if(mobileMode !== _mobileMode){
-  //       console.log('changed')
-  //       mobileMode = !mobileMode;
-  //     }
-  //     if(widerMode !== _widerMode){
-  //       console.log('changed')
-  //       widerMode = !widerMode;
-  //     }
-   
+    //     if( menuExtended ){
+    //       // remainExtendingMenu();
+    //     }else{
+            
+    //     }
+        if(mobileMode.current !== _mobileMode.current || widerMode.current !== _widerMode.current ){
+          console.log('view is changing');
+          updateSvgFrameValues();
+        }
 
-     
-
-  //   }
-  //   window.addEventListener('resize',updateResize);
-  //   return ()=>{
-  //     window.removeEventListener('resize',updateResize);
-  //   }
-  // },[])
+        
+    //     if(mobileMode !== _mobileMode){
+    //       console.log('changed')
+    //       mobileMode = !mobileMode;
+    //     }
+    //     if(widerMode !== _widerMode){
+    //       console.log('changed')
+    //       widerMode = !widerMode;
+    //     }
+    }
+      window.addEventListener('resize',updateResize);
+      return ()=>{
+        window.removeEventListener('resize',updateResize);
+      }
+    },[])
 
   // function remainExtendingMenu(){
   //   let widthRef = biggerElem.current.parentElement.clientWidth;
@@ -301,7 +296,7 @@ const HomeLayout = () =>{
               </MenuSizeContext.Provider>
             </ExtendMenuContext.Provider>
     </div>
-  },[logoDisplay]);
+  },[logoDisplay, work_styleLI, work_styleSvgFramePack]);
 } 
 
 export default HomeLayout

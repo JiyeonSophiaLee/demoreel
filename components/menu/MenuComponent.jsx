@@ -20,13 +20,13 @@ function MenuComponent (props){
   
     return useMemo(()=>{
       return <MenuComponentRender values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef}></MenuComponentRender>
-    },[menuSizeContext[props.id+"_styleLI"]])
+    },[menuSizeContext[props.values.id+"_styleLI"],menuSizeContext[props.values.id+"_styleSvgFramePack"] ])
   }
   function MenuComponentRender(props){
     console.log('---------MenuComponentRender---------')
     return(
         <li id={props.values.id} style = {props.menuSizeContext[props.values.id+"_styleLI"]} > 
-                <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = {props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_styleSvgFramePack}>
+                <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = { props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack}>
                     <div className="menuText">{props.values.id.toUpperCase()}</div>
                     <div className="neon neon1"></div>
                     <div className="neon neon2"></div>
