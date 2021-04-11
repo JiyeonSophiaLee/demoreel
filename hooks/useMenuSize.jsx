@@ -22,8 +22,8 @@ function useMenuSize(){
     // let _widerMode = widerMode; 
 
     
-    let menuPaddingHeight, menuPaddingWidth;
-    let liPaddingHeight, liPaddingWidth;
+    // let menuPaddingHeight, menuPaddingWidth;
+    // let liPaddingHeight, liPaddingWidth;
 
  
   },[])
@@ -61,9 +61,6 @@ function useMenuSize(){
 
 
   const changeHierarchySvgFramePack= useCallback((svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null)=>{ 
-  
-
-
     
     if(!onAnim){
       let size = extendMenuSize==='none' ? getDefaultsvgFramePackSize() : extendMenuSize;

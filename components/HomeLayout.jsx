@@ -91,6 +91,18 @@ const HomeLayout = () =>{
     updateSvgFrameValues();
   },[])
 
+  // function updateSvgFrameValues (){
+  //   let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
+  //   let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
+  //   setSvgFrameValues({ ...svgFrameValues,
+  //                     radius: _radius,
+  //                     wavyPath: _wavyPath,
+  //                     extraSpace: _radius * 5})     
+  //   // _svgFrameValues = {..._svgFrameValues,
+  //   //                   radius: _radius,
+  //   //                   wavyPath: _wavyPath,
+  //   //                   extraSpace: _radius * 5}
+  // }
   const updateSvgFrameValues = useCallback(()=>{
     let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
     let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
@@ -142,14 +154,14 @@ const HomeLayout = () =>{
         }
 
         
-    //     if(mobileMode !== _mobileMode){
-    //       console.log('changed')
-    //       mobileMode = !mobileMode;
-    //     }
-    //     if(widerMode !== _widerMode){
-    //       console.log('changed')
-    //       widerMode = !widerMode;
-    //     }
+        if(mobileMode.current !== _mobileMode.current){
+          console.log('changed')
+          mobileMode.current = !mobileMode.current;
+        }
+        if(widerMode.current !== _widerMode.current){
+          console.log('changed')
+          widerMode.current = !widerMode.current;
+        }
     }
       window.addEventListener('resize',updateResize);
       return ()=>{
