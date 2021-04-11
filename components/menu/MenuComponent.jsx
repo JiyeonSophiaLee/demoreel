@@ -9,8 +9,8 @@ function MenuComponent (props){
     console.log('---MenuComponent---')
     // const extendMenuContext = useContext(ExtendMenuContext);
     const menuSizeContext = useContext(MenuSizeContext);
-    // const svgFrameRef = useRef()
-    
+    const svgFrameRef = useRef()
+  
 
   
     function onClick(e){
@@ -19,32 +19,32 @@ function MenuComponent (props){
     
   
     return useMemo(()=>{
-      return <Result></Result>
-    },[])
+      return <MenuComponentRender values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef}></MenuComponentRender>
+    },[menuSizeContext[props.id+"_styleLI"]])
   }
-  function Result(){
-    console.log('---------result---------')
+  function MenuComponentRender(props){
+    console.log('---------MenuComponentRender---------')
     return(
-       //  <li id={props.id} style = {menuSizeContext[props.id+"_styleLI"]} > 
-      //           <div className="svgFramePack" onClick={onClick} ref={svgFrameRef} style = {menuSizeContext[props.id+"_styleSvgFramePack"].style_styleSvgFramePack}>
-      //               <div className="menuText">{props.id.toUpperCase()}</div>
-      //               <div className="neon neon1"></div>
-      //               <div className="neon neon2"></div>
-      //               {/* <SvgFrame 
-      //                 id={props.id} 
-      //                 ivory={props.ivory}
-      //                 svgFrameStopColor1={props.svgFrameStopColor1}
-      //                 svgFrameStopColor2={props.svgFrameStopColor2}
-      //                 strokeColor1={props.strokeColor1}
-      //                 strokeColor2={props.strokeColor2}
-      //                 // styleContext={{canvas:menuSizeContext[props.id+"_style"].style_canvas, svgFrame:menuSizeContext[props.id+"_style"].style_svgFrame}}
-      //               /> */}
-      //           </div>
-      //           <div className="contents">
-      //               {props.contents}
-      //           </div>
-      //         </li>
-        <div></div>
+        <li id={props.values.id} style = {props.menuSizeContext[props.values.id+"_styleLI"]} > 
+                <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = {props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_styleSvgFramePack}>
+                    <div className="menuText">{props.values.id.toUpperCase()}</div>
+                    <div className="neon neon1"></div>
+                    <div className="neon neon2"></div>
+                    <SvgFrame 
+                      id={props.values.id} 
+                      ivory={props.values.ivory}
+                      svgFrameStopColor1={props.values.svgFrameStopColor1}
+                      svgFrameStopColor2={props.values.svgFrameStopColor2}
+                      strokeColor1={props.values.strokeColor1}
+                      strokeColor2={props.values.strokeColor2}
+                      styleContext={{canvas:props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_canvas, svgFrame:props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFrame}}
+                    />
+                </div>
+                <div className="contents">
+                    {props.values.contents}
+                </div>
+              </li>
+        // <div></div>
     )
   }
 

@@ -60,7 +60,8 @@ function useMenuSize(){
   }
 
 
-  function changeHeirachysvgFramePack(svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null){  
+  function changeHierarchySvgFramePack(svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null){ 
+    console.log('this is working') 
     // if(svgFrameValues.extraSpace === undefined) {
     //   console.log('undefined?', svgFrameValues)
     //   return;
@@ -139,7 +140,7 @@ function useMenuSize(){
     // // window.addEventListener('resize',updateResize);
   },[])
     
-  return [setLI_size, setsvgFramePackSize, styleLI, styleSvgFramePack, changeHeirachysvgFramePack, hookTest]
+  return [setLI_size, setsvgFramePackSize, styleLI, styleSvgFramePack, changeHierarchySvgFramePack, hookTest]
 }
 
 export default useMenuSize;

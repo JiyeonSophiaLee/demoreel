@@ -5,12 +5,13 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 
 function SvgFrame(props){
+  console.log('-------SvgFrame----------',props.styleContext)
     // const canvas = props.styleContext['canvas'];
     // const svgFrame = props.styleContext['svgFrame'];
-    const menuSizeContext = useContext(MenuSizeContext);
+    // const menuSizeContext = useContext(MenuSizeContext);
   
     return(
-      <svg style = {menuSizeContext[props.id+"_styleSvgFramePack"].style_canvas}>
+      <svg style = {props.styleContext.canvas}>
         <defs>
           {props.ivory}
           <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -20,10 +21,10 @@ function SvgFrame(props){
         </defs>
         <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1}/>
         <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2}/>
-        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...menuSizeContext[props.id+"_styleSvgFramePack"].style_svgFrame}/>
+        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.svgFrame}/>
       </svg>
+      // <div></div>
     )
-  
 }
 
-export default memo(SvgFrame);
+export default SvgFrame;
