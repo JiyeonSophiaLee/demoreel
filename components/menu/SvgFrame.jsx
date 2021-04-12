@@ -11,7 +11,7 @@ function SvgFrame(props){
     // const menuSizeContext = useContext(MenuSizeContext);
   
     return(
-      <svg style = {props.styleContext.canvas}>
+      <svg style = {props.styleContext.style_canvas}>
         <defs>
           {props.ivory}
           <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
@@ -19,9 +19,9 @@ function SvgFrame(props){
             <stop offset="90%" stopColor={props.svgFrameStopColor2}></stop>
           </linearGradient>
         </defs>
-        <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1}/>
-        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2}/>
-        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.svgFrame}/>
+        <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1} {...props.styleContext.wavyPath}/>
+        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} {...props.styleContext.wavyPath}/>
+        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.style_svgFrame}/>
       </svg>
       // <div></div>
     )

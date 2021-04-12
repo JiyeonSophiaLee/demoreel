@@ -11,7 +11,7 @@ import InfoContent from './menu/info/InfoContent.jsx'
 function Menu(props){
   console.log('----------Menu-----------')
   return useMemo(()=>{
-    return <MenuRender menuNames={props.menuNames}></MenuRender>
+    return <MenuRender menuValues={props.menuValues}></MenuRender>
   },[])
 }
 
@@ -20,10 +20,10 @@ function MenuRender(props){
   console.log('----------MenuRender----------')
   return (
     <section id = "menu">
-      <MenuComponent values = {{id:props.menuNames[0], order:1, svgFrameStopColor1:"#ff3b29", svgFrameStopColor2:"#ff8c34", strokeColor1:"#ff3b29", strokeColor2:"#ff8c34", ivory:<SvgIvory/> }}/>
-      <MenuComponent values = {{id:props.menuNames[1], order:2, svgFrameStopColor1:"#cd4dff", svgFrameStopColor2:"#ff4179", strokeColor1:"#cd4dff", strokeColor2:"#ff4179" }} />
-      <MenuComponent values = {{id:props.menuNames[2], order:3, svgFrameStopColor1:"#ffa934", svgFrameStopColor2:"#30ab98", strokeColor1:"#ffa934", strokeColor2:"#30ab98" }} />
-      <MenuComponent values = {{id:props.menuNames[3], order:4, svgFrameStopColor1:"#ff6ee2", svgFrameStopColor2:"#5cd3ff", strokeColor1:"#ff6ee2", strokeColor2:"#5cd3ff", contents:<InfoContent/>}} />
+      <MenuComponent  values = {{id:props.menuValues[0].id, order:props.menuValues[0].order, svgFrameStopColor1:props.menuValues[0]["svgFrameStopColor1"], svgFrameStopColor2:props.menuValues[0]["svgFrameStopColor2"], strokeColor1:props.menuValues[0]["strokeColor1"], strokeColor2:props.menuValues[0]["strokeColor2"], ivory:<SvgIvory/> }}/>
+      <MenuComponent values = {{id:props.menuValues[1].id, order:props.menuValues[1].order, svgFrameStopColor1:props.menuValues[1]["svgFrameStopColor1"], svgFrameStopColor2:props.menuValues[1]["svgFrameStopColor2"], strokeColor1:props.menuValues[1]["strokeColor1"], strokeColor2:props.menuValues[1]["strokeColor2"] }}/>
+      <MenuComponent values = {{id:props.menuValues[2].id, order:props.menuValues[2].order, svgFrameStopColor1:props.menuValues[2]["svgFrameStopColor1"], svgFrameStopColor2:props.menuValues[2]["svgFrameStopColor2"], strokeColor1:props.menuValues[2]["strokeColor1"], strokeColor2:props.menuValues[2]["strokeColor2"] }}/>
+      <MenuComponent values = {{id:props.menuValues[3].id, order:props.menuValues[3].order, svgFrameStopColor1:props.menuValues[3]["svgFrameStopColor1"], svgFrameStopColor2:props.menuValues[3]["svgFrameStopColor2"], strokeColor1:props.menuValues[3]["strokeColor1"], strokeColor2:props.menuValues[3]["strokeColor2"], contents:<InfoContent/>}}/>
     </section>
     )
 }

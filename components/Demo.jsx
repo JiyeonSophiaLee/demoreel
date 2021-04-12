@@ -10,7 +10,7 @@ import { ExtendMenuContext, LogoDisplayContext } from './HomeLayout.jsx'
 
 
 
-function Demo(){
+function Demo(props){
   console.log('---DEMO---')
   const demoRef = useRef(null);
   const logoRef = useRef(null);
@@ -27,6 +27,8 @@ function Demo(){
     checkLogoHigher = innerWidth > 800 && demoRef.current.clientHeight/3 > logoRef.current.clientWidth*4.5/6 ? true : false;
     _checkLogoHigher = checkLogoHigher;
     logoDisplayContext.logoDisplayDispatch({ demoClientHeight:demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth })
+    props.refs.demoRef.current = demoRef.current;
+    props.refs.logoRef.current = logoRef.current;
    
 
 
@@ -65,10 +67,16 @@ function Demo(){
 
   return useMemo(()=>{
     return <DemoRender demoRef={demoRef} logoRef={logoRef} demoVideoRef={demoVideoRef} onClick={onClick} context={logoDisplayContext}></DemoRender>
-  },[logoDisplayContext.logoDisplay.logo_heigher])
+  },[logoDisplayContext.logoDisplay.logo_heigher, logoDisplayContext.logoDisplay.logo_wider])
 }
 
 function DemoRender(props){
+  console.log('----------DemoRender-----------');
+  useEffect(()=>{
+    // props.refs.demoRef.current = props.demoRef;
+    // props.refs.logoRef.current = props.demoRef;
+  },[])
+
   return (
     <section id="demo"    ref={props.demoRef}> 
       <header id="logo" ref={props.logoRef} onClick={props.onClick}> 

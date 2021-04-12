@@ -1,41 +1,43 @@
-import _gsap from 'gsap';
+import {gsap, Sine} from 'Gsap';
 import TV from './transitionValue.js'
 
-const gsap = _gsap;
+
+const Gsap = gsap;
+
 
 export function homeGsapSet(menuExtended,viewChanged){
 
   if(viewChanged){
     if(innerWidth > 800){
       if(menuExtended){
-        gsap.set(master   , { maxWidth : 100                      + '%'});
-        gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
-        gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+        Gsap.set(master   , { maxWidth : 100                      + '%'});
+        Gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
+        Gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
       }else{
-        gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
-        gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
-        gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
+        Gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
+        Gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
+        Gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
       }
     }else{
       if(menuExtended){
-        gsap.set(demo     ,{ width: 100 + '%' })
-        gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
+        Gsap.set(demo     ,{ width: 100 + '%' })
+        Gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
       }else{
-        gsap.set(demo     ,{ width: 100 + '%'})
-        gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
+        Gsap.set(demo     ,{ width: 100 + '%'})
+        Gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
       }
     }
   }
 
-  gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
+  Gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
 }
 
-function utilityMenuIf(menuExtended){
-  return new Promise ((resolve,reject)=>{
-    homeGsapTransition(menuExtended);
-    resolve();
-  })
-}
+// function utilityMenuIf(menuExtended){
+//   return new Promise ((resolve,reject)=>{
+//     homeGsapTransition(menuExtended);
+//     resolve();
+//   })
+// }
 
 export function getDemoVideoHeight(menuExpanded){
   let demoVideoHeight; 
@@ -93,7 +95,6 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
       }
     }
   }
-  
   
   allMenusInOrder.forEach((e)=>{
     e.classList.add('menutransition');
@@ -206,7 +207,7 @@ export function homeGsapTransition(menuExtended){
 }
 
 function homeGsapTransitionToUnSymetry(){
-  gsap.fromTo(
+  Gsap.fromTo(
     master,{
       maxWidth: TV.masterMaxWidth,
       duration: 1
@@ -214,7 +215,7 @@ function homeGsapTransitionToUnSymetry(){
       maxWidth: 100 + "%"
     }
   )
-  gsap.fromTo(
+  Gsap.fromTo(
       demo,{
         width: TV.symetryDemoMenu + '%',
         duration: TV.menuDuration
@@ -222,7 +223,7 @@ function homeGsapTransitionToUnSymetry(){
         width: (100 - TV.unSymetryDemoMenu) + '%'
       }
   )
-  gsap.fromTo(
+  Gsap.fromTo(
       demoVideo,{
         width: TV.symetryDemoVideoWidth + '%',
         height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16,
@@ -235,7 +236,7 @@ function homeGsapTransitionToUnSymetry(){
 }
 
 function homeGsapTransitionToSymetry(){
-  gsap.fromTo(
+  Gsap.fromTo(
     master,{
       maxWidth: 100 + "%",
       duration: 1
@@ -243,7 +244,7 @@ function homeGsapTransitionToSymetry(){
       maxWidth: TV.masterMaxWidth +'px'
     }
   )
-  gsap.fromTo(
+  Gsap.fromTo(
       demo,{
         width: (100 - TV.unSymetryDemoMenu) + '%',
         duration: TV.menuDuration
@@ -255,7 +256,7 @@ function homeGsapTransitionToSymetry(){
   //   this homeGsapTransitionToSymetry have maxWidth, which translate to two way to get height for demovideo
   //   so I gave a condition for it.
   if(innerWidth < TV.masterMaxWidth){
-      gsap.fromTo(
+      Gsap.fromTo(
           demoVideo,{
             width: TV.unSymetryDemoVideoWidth + '%',
             height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16,
@@ -266,7 +267,7 @@ function homeGsapTransitionToSymetry(){
           }
         )
   }else{
-      gsap.fromTo(
+      Gsap.fromTo(
         demoVideo,{
           width: TV.unSymetryDemoVideoWidth + '%',
           height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16,
@@ -280,7 +281,7 @@ function homeGsapTransitionToSymetry(){
 }
 
 function homeGsapTransitionToUnSymetry800(){
-  gsap.fromTo(
+  Gsap.fromTo(
     demoVideo,{
       width: TV.symetryDemoVideoWidth800 + '%',
       height: innerWidth * TV.symetryDemoVideoWidth800/100 * 9/16
@@ -291,7 +292,7 @@ function homeGsapTransitionToUnSymetry800(){
   )
 }
 function homeGsapTransitionToSymetry800(){
-  gsap.fromTo(
+  Gsap.fromTo(
     demoVideo,{
       width: TV.unSymetryDemoVideoWidth800 + '%',
       height: innerWidth * TV.unSymetryDemoVideoWidth800/100 * 9/16
@@ -301,3 +302,175 @@ function homeGsapTransitionToSymetry800(){
     }
   )
 }
+
+
+export function tweenCardinal(data, closed, tension) {
+  
+  if (data.length < 1) return "M0 0";
+  if (tension == null) tension = 1;
+
+  var size = data.length - (closed ? 0 : 1);
+  var path = "M" + data[0].x + " " + data[0].y + " C";
+
+  for (var i = 0; i < size; i++) {
+
+    var p0, p1, p2, p3;
+
+    if (closed) {
+      p0 = data[(i - 1 + size) % size];
+      p1 = data[i];
+      p2 = data[(i + 1) % size];
+      p3 = data[(i + 2) % size];
+
+    } else {
+      p0 = i == 0 ? data[0] : data[i - 1];
+      p1 = data[i];
+      p2 = data[i + 1];
+      p3 = i == size - 1 ? p2 : data[i + 2];
+    }
+
+    var x1 = p1.x + (p2.x - p0.x) / 6 * tension;
+    var y1 = p1.y + (p2.y - p0.y) / 6 * tension;
+
+    var x2 = p2.x - (p3.x - p1.x) / 6 * tension;
+    var y2 = p2.y - (p3.y - p1.y) / 6 * tension;
+
+    path += " " + x1 + " " + y1 + " " + x2 + " " + y2 + " " + p2.x + " " + p2.y;
+  }
+
+  return closed ? path + "z" : path;
+}
+
+export function random(min, max) {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+  if (min > max) {
+    var tmp = min;
+    min = max;
+    max = tmp;
+  }
+  return min + (max - min) * Math.random();
+}
+
+
+
+export function getDataPoints(extendingSize, svgFrameValues){
+  // let w = this.w + this.radius * 2;
+  // let h = this.h + this.radius * 2;
+  // let w = this.w ;
+  // let h = this.h ;
+  let w = extendingSize['width'];
+  let h = extendingSize['height'];
+
+  // this.x = this.x - this.radius;
+  // this.y = this.y - this.radius ;
+  let x = svgFrameValues["x"];
+  let y = svgFrameValues["y"];
+
+  let points1 = [];
+  let points2 = [];
+  let pointsTween1 = [];
+  let pointsTween2 = [];
+
+  // This option should be activate, but I just postone for react redux.
+  // It makes code much more complecate. 
+  // if (svgFrameValues.wavyPath > this.w / 2) {
+  //   return svgFrameValues.wavyPath = this.w / 2;
+  // }
+
+  const getPositions = function(x,y,svgFrameValues) {
+    return {
+      position0: {
+        x: x + svgFrameValues["wavyPath"],
+        y: y
+      },
+      position1: {
+        x: x + w - svgFrameValues["wavyPath"],
+        y: y
+      },
+      position2: {
+        x: x + w,
+        y: y + svgFrameValues["wavyPath"]
+      },
+      position3: {
+        x: x + w,
+        y: y + h - svgFrameValues["wavyPath"]
+      },
+      position4: {
+        x: x + w - svgFrameValues["wavyPath"],
+        y: y + h
+      },
+      position5: {
+        x: x + svgFrameValues["wavyPath"],
+        y: y + h
+      },
+      position6: {
+        x: x,
+        y: y + h - svgFrameValues["wavyPath"]
+      },
+      position7: {
+        x: x,
+        y: y + svgFrameValues["wavyPath"]
+      }
+    }
+  }
+
+
+  let positions = getPositions(x,y,svgFrameValues);
+  
+  points1 = getMutipliedPoints(svgFrameValues["multiply"], positions, 0);
+  points2 = getMutipliedPoints(svgFrameValues["multiply"], positions, 1);
+
+  //--- get points for tween ---------------------------------------------------------------------------------
+
+  w = w + (svgFrameValues["radius"] * 2);
+  h = h + (svgFrameValues["radius"] * 2);
+
+  x = x - svgFrameValues["radius"];
+  y = y - svgFrameValues["radius"];
+
+  let positionsTween = getPositions(x,y,svgFrameValues);
+
+  pointsTween1 = getMutipliedPoints(svgFrameValues["multiply"], positionsTween, 0);
+  pointsTween2 = getMutipliedPoints(svgFrameValues["multiply"], positionsTween, 1);
+  
+  return {
+    points1: points1,
+    points2: points2,
+    pointsTween1: pointsTween1,
+    pointsTween2: pointsTween2
+  }
+
+  function getMutipliedPoints(multiply, positions, plusNum) {
+    let slice = multiply + plusNum;
+    let slicedLength = [];
+
+    Object.values(positions).forEach((value, i, arr) => {
+      if ((i % 2) == 0) {
+
+        let length = {
+          x: arr[i + 1].x - value.x,
+          y: arr[i + 1].y - value.y
+        }
+        //---smoodness of wavy animation---------
+
+        slicedLength.push({
+          x: value.x,
+          y: value.y
+        })
+
+        //----------------------------------------
+        for (let j = 1; j < slice + 1; j++) {
+          slicedLength.push({
+            x: value.x + (length.x * (j / slice)),
+            y: value.y + (length.y * (j / slice))
+          })
+        }
+      }
+    })
+    return slicedLength;
+  }
+
+};

@@ -7,14 +7,16 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 function MenuComponent (props){
     console.log('---MenuComponent---')
-    // const extendMenuContext = useContext(ExtendMenuContext);
+    
+    const extendMenuContext = useContext(ExtendMenuContext);
     const menuSizeContext = useContext(MenuSizeContext);
     const svgFrameRef = useRef()
+    
   
 
   
     function onClick(e){
-      // extendMenuContext(e.currentTarget,props.order, svgFrameRef);
+      extendMenuContext(e.currentTarget, props.values.order, svgFrameRef);
     }
     
   
@@ -22,6 +24,8 @@ function MenuComponent (props){
       return <MenuComponentRender values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef}></MenuComponentRender>
     },[menuSizeContext[props.values.id+"_styleLI"],menuSizeContext[props.values.id+"_styleSvgFramePack"] ])
   }
+
+
   function MenuComponentRender(props){
     console.log('---------MenuComponentRender---------')
     return(
@@ -37,7 +41,7 @@ function MenuComponent (props){
                       svgFrameStopColor2={props.values.svgFrameStopColor2}
                       strokeColor1={props.values.strokeColor1}
                       strokeColor2={props.values.strokeColor2}
-                      styleContext={{canvas:props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_canvas, svgFrame:props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFrame}}
+                      styleContext={props.menuSizeContext[props.values.id+"_styleSvgFramePack"] }
                     />
                 </div>
                 <div className="contents">
@@ -48,4 +52,4 @@ function MenuComponent (props){
     )
   }
 
-  export default memo(MenuComponent)
+  export default MenuComponent

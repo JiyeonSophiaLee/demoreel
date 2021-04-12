@@ -4,11 +4,12 @@ import RunSvgFrame from "../public/assets/js/SvgFrame";
 
 
 
-function useMenuSize(){
+function useMenuSize(id){
   const [LI_size,setLI_size] = useState({width:"50%", height:"50%"});
   const [svgFramePackSize,setsvgFramePackSize] = useState({width:"0px", height:"0px"})
   const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
   const [svgFrameSize,setSvgFrameSize] = useState({width:"0px", height:"0px", x:"0px", y:"0px", rx:"0px", ry:"0px", fill:"none", transform:"translate(0,0)"})
+  const [wavyPath,setWavyPath] = useState({transform:"translate(0,0)"})
   
 
 
@@ -22,8 +23,8 @@ function useMenuSize(){
     // let _widerMode = widerMode; 
 
     
-    // let menuPaddingHeight, menuPaddingWidth;
-    // let liPaddingHeight, liPaddingWidth;
+    let menuPaddingHeight, menuPaddingWidth;
+    let liPaddingHeight, liPaddingWidth;
 
  
   },[])
@@ -37,7 +38,8 @@ function useMenuSize(){
   const styleSvgFramePack = useMemo(()=>({
     style_svgFramePack: {width:svgFramePackSize["width"], height:svgFramePackSize["height"]},
     style_canvas: {width:canvasSize["width"], height: canvasSize["height"], left: canvasSize["left"], top: canvasSize["top"]},
-    style_svgFrame: {width:svgFrameSize["width"], height: svgFrameSize["height"], x: svgFrameSize["x"], y: svgFrameSize["y"], rx:svgFrameSize["rx"], ry:svgFrameSize["ry"], fill:svgFrameSize["fill"], transform:svgFrameSize["transform"] }
+    style_svgFrame: {width:svgFrameSize["width"], height: svgFrameSize["height"], x: svgFrameSize["x"], y: svgFrameSize["y"], rx:svgFrameSize["rx"], ry:svgFrameSize["ry"], fill:svgFrameSize["fill"], transform:svgFrameSize["transform"] },
+    wavyPath: wavyPath
   }),[canvasSize["width"]])
     
 
@@ -61,10 +63,8 @@ function useMenuSize(){
 
 
   const changeHierarchySvgFramePack= useCallback((svgFrameValues, extendMenuSize='none', onAnim=false, frame=1, widthRef=null, heightRef=null)=>{ 
-    
     if(!onAnim){
       let size = extendMenuSize==='none' ? getDefaultsvgFramePackSize() : extendMenuSize;
-      console.log('size', size)
       setsvgFramePackSize({width:size, height:size});
       setCanvasSize({width: `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
                       height : `calc( ${size} + ${svgFrameValues.extraSpace }px)` ,
@@ -79,25 +79,24 @@ function useMenuSize(){
                       fill: svgFrameValues['fill'],
                       transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
                   });
+      setWavyPath( {transform: `translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`})
     }else{
-    //   console.log('else')
-    //   if(frame===1){
-    //     console.log('extendMenuSize[width]',extendMenuSize['width'])
-    //     setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
-    //   }
-    //   setCanvasSize({ width: widthRef + svgFrameValues["extraSpace"] + "px", 
-    //                   height: heightRef + svgFrameValues["extraSpace"] + "px", 
-    //                   left: `-${svgFrameValues["extraSpace"]/2}px` ,
-    //                   top: `-${svgFrameValues["extraSpace"]/2}px`})
-    //   setSvgFrameSize({width:widthRef + "px", 
-    //           height:heightRef + "px", 
-    //           x: svgFrameValues['x'],
-    //           y: svgFrameValues['y'],
-    //           rx: svgFrameValues['border'],
-    //           ry: svgFrameValues['border'],
-    //           fill: svgFrameValues['fill'],
-    //           transform: `translate(${svgFrameValues["extraSpace"]/2},${svgFrameValues["extraSpace"]/2})`})
-
+      if(frame===1){
+        setsvgFramePackSize({width:extendMenuSize['width'], height:extendMenuSize['height']});
+      }
+      setCanvasSize({ width: widthRef + svgFrameValues["extraSpace"] + "px", 
+                      height: heightRef + svgFrameValues["extraSpace"] + "px", 
+                      left: `-${svgFrameValues["extraSpace"]/2}px` ,
+                      top: `-${svgFrameValues["extraSpace"]/2}px`})
+      setSvgFrameSize({width:widthRef + "px", 
+                      height:heightRef + "px", 
+                      x: svgFrameValues['x'],
+                      y: svgFrameValues['y'],
+                      rx: svgFrameValues['border'],
+                      ry: svgFrameValues['border'],
+                      fill: svgFrameValues['fill'],
+                      transform: `translate(${svgFrameValues["extraSpace"]/2},${svgFrameValues["extraSpace"]/2})`})
+      setWavyPath( {transform:`translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`})
       
     }
     
