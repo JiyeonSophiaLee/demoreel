@@ -6,12 +6,12 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 
 function MenuComponent (props){
+  console.log('---MenuComponent---')
   
   const extendMenuContext = useContext(ExtendMenuContext);
   const menuSizeContext = useContext(MenuSizeContext);
   const svgFrameRef = useRef()
-  console.log('---MenuComponent---',menuSizeContext[props.values.id+"_styleSvgFramePack"])
-    
+    console.log('menuSizeContext',menuSizeContext)
   
 
   
@@ -22,12 +22,12 @@ function MenuComponent (props){
   
     return useMemo(()=>{
       return <MenuComponentRender values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef}></MenuComponentRender>
-    },[menuSizeContext[props.values.id+"_styleLI"],menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFrame ])
+    },[menuSizeContext[props.values.id+"_styleLI"],menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack ])
   }
 
 
   function MenuComponentRender(props){
-    console.log('---------MenuComponentRender---------',props.menuSizeContext[props.values.id+"_styleSvgFramePack"])
+    console.log('---------MenuComponentRender---------',props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack)
     return(
         <li id={props.values.id} style = {props.menuSizeContext[props.values.id+"_styleLI"]} > 
                 <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = { props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack}>
@@ -42,6 +42,7 @@ function MenuComponent (props){
                       strokeColor1={props.values.strokeColor1}
                       strokeColor2={props.values.strokeColor2}
                       styleContext={props.menuSizeContext[props.values.id+"_styleSvgFramePack"] }
+                      svgFrameValuesImmutable = {props.values.svgFrameValuesImmutable}
                     />
                 </div>
                 <div className="contents">

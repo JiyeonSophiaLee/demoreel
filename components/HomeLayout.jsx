@@ -48,10 +48,11 @@ const HomeLayout = () =>{
   const [info_setLI_size, info_setsvgFramePackSize, info_styleLI, info_styleSvgFramePack, info_changeHierarchySvgFramePack, info_hookTest] = useMenuSize('info');
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
-  const [svgFrameValues, setSvgFrameValues] = useState({x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined});
+  const [svgFrameValues, setSvgFrameValues] = useState({svgFrameDefault:undefined, radius:undefined, wavyPath:undefined, extraSpace:undefined});
+  const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
   // let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false};
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended: false});
-  const extendingRequestAnimRef = useRef();
+  // const extendingRequestAnimRef = useRef();
   const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
   const biggeredElem = useRef(null);
@@ -96,42 +97,43 @@ const HomeLayout = () =>{
     updateSvgFrameValues();
   },[])
 
-  // function updateSvgFrameValues (){
-  //   let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
-  //   let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
-  //   setSvgFrameValues({ ...svgFrameValues,
-  //                     radius: _radius,
-  //                     wavyPath: _wavyPath,
-  //                     extraSpace: _radius * 5})     
-  //   // _svgFrameValues = {..._svgFrameValues,
-  //   //                   radius: _radius,
-  //   //                   wavyPath: _wavyPath,
-  //   //                   extraSpace: _radius * 5}
-  // }
+
   const updateSvgFrameValues = useCallback(()=>{
     console.log('updateSvgFrameValues is calling')
     let _radius = innerWidth > 800 ? ( innerWidth > 1400 ? 9 : 7 ) : 5;
     let _wavyPath = Math.abs((innerWidth - innerWidth )) * 0.01 + 25;
+    let _svgFrameDefault;
+    
+    if(innerWidth > 1400){
+      _svgFrameDefault = TV.svgFrameDefaultSize1400;
+    }else if(innerWidth > 800){
+      _svgFrameDefault = TV.svgFrameDefaultSize;
+    }else{
+      if(menuExtended == false){
+        _svgFrameDefault = TV.svgFrameDefaultSize800;
+      }else{
+        _svgFrameDefault = TV.svgFrameDefaultSizeSmallerSize;
+      }
+    }
+
     setSvgFrameValues({ ...svgFrameValues,
+                      svgFrameDefault: {width:_svgFrameDefault,  height:_svgFrameDefault},
                       radius: _radius,
                       wavyPath: _wavyPath,
                       extraSpace: _radius * 5})     
-    // _svgFrameValues = {..._svgFrameValues,
-    //                   radius: _radius,
-    //                   wavyPath: _wavyPath,
-    //                   extraSpace: _radius * 5}
   },[])
+
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
       if(menuExtended){
         console.log('menuExtended: ',menuExtended)
-        menuValues.current.forEach(()=>{
-        //   if(biggerElem.current.parentElement.id === menuValues[i]){
-        //     eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
-        //   }else{
-        //     eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
-        //   }
-        })
+        // menuValues.current.forEach(()=>{
+        // //   if(biggerElem.current.parentElement.id === menuValues[i]){
+        // //     eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
+        // //   }else{
+        // //     eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
+        // //   }
+        // })
       }else{
         console.log('else', menuValues.current.length)
         menuValues.current.forEach((value)=>{
@@ -149,11 +151,8 @@ const HomeLayout = () =>{
 
         homeGsapSet(menuExtended, mobileMode !== _mobileMode)
 
-    //     if( menuExtended ){
-    //       // remainExtendingMenu();
-    //     }else{
-            
-    //     }
+        if( menuExtended ) remainExtendingMenu();
+
         if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
           console.log('view is changing');
           updateSvgFrameValues();
@@ -175,13 +174,15 @@ const HomeLayout = () =>{
       }
     },[])
 
-  // function remainExtendingMenu(){
-  //   let widthRef = biggerElem.current.parentElement.clientWidth;
-  //   let heightRef = biggerElem.current.parentElement.clientHeight;
-  //   console.log('widthRef', widthRef, 'heightRef', heightRef);
-
-  //   eval( biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, {width:widthRef, height: heightRef}, onAnim, widthRef, heightRef)
-  // }
+  function remainExtendingMenu(){
+    menuValues.current.forEach((value, i)=>{
+      if(biggerElem.current.parentElement.id === menuValues[i].id){
+        eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
+      }else{
+        eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
+      }
+    })
+  }
   
 
  
@@ -209,39 +210,15 @@ const HomeLayout = () =>{
     return new Promise((resolve, reject)=>{  
       let f = 0;
       let dir = 1;
-      const NF = TV['menuDuration'] * 63;
+      const NF = TV['menuDuration'];
 
       
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
-      
-      
+console.log('this sis wokring')
+      eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage'], true);
 
-      function anim(){
-        f += dir;
-        onAnim = true;
-        console.log('f',f,elemParentId)
-        // eval(elem.parentElement.id + "_changeHierarchySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
-        if(f !== NF) eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage'], onAnim, f, elem.clientWidth, elem.clientHeight);
-        // skill_changeHierarchySvgFramePack(svgFrameValues, extendingSize['svgFramePackage'], onAnim, f, elem.clientWidth, elem.clientHeight);
-        
-        extendingRequestAnimRef.current = requestAnimationFrame(anim);
-
-        if(!(f % NF)){
-          console.log('=======finished=======',work_setsvgFramePackSize)
-        
-          
-          onAnim = false;
-          eval(elem.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%", onAnim)
-  
-          
-
-          cancelAnimationFrame(extendingRequestAnimRef.current);
-          resolve();
-        }
-      }
-      anim();
     })
   },[svgFrameValues])
 
@@ -384,24 +361,26 @@ const HomeLayout = () =>{
   },[svgFrameValues]) 
 
  
-   return useMemo(()=>{
+  //  return useMemo(()=>{
     return <div id = "master" >
             <ExtendMenuContext.Provider value={extendMenu}>
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
-                <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
-                  <HomeLayoutRender refs={{demoRef, logoRef}} menuValues={menuValues.current}/>
-                </MenuSizeContext.Provider>
+                <Demo refs={{demoRef, logoRef}}/>
               </LogoDisplayContext.Provider>
+              <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
+                <Menu menuValues={menuValues.current} values={svgFrameValuesImmutable.current}/>
+                {/* <HomeLayoutRender refs={{demoRef, logoRef}} menuValues={menuValues.current} values={svgFrameValuesImmutable.current}/> */}
+              </MenuSizeContext.Provider>
             </ExtendMenuContext.Provider>
     </div>
-  },[logoDisplay, work_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack]);
+  // },[logoDisplay, work_styleLI, work_styleSvgFramePack]);
 } 
 function HomeLayoutRender(props){
   console.log('--------------HomeLayoutRender-----------------')
   return (
     <>
       <Demo refs={props.refs}/>
-      <Menu menuValues={props.menuValues}/>
+      <Menu menuValues={props.menuValues} values={props.values}/>
     </>
   )
 }
