@@ -223,17 +223,17 @@ const HomeLayout = () =>{
         onAnim = true;
         console.log('f',f,elemParentId)
         // eval(elem.parentElement.id + "_changeHierarchySvgFramePack")(_svgFrameValues, size['svgFramePackage'], onAnim, f, svgFrameRef.current.clientWidth, svgFrameRef.current.clientHeight);
-        eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage'], onAnim, f, elem.clientWidth, elem.clientHeight);
+        if(f !== NF) eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage'], onAnim, f, elem.clientWidth, elem.clientHeight);
         // skill_changeHierarchySvgFramePack(svgFrameValues, extendingSize['svgFramePackage'], onAnim, f, elem.clientWidth, elem.clientHeight);
         
         extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
         if(!(f % NF)){
-          console.log('=======finished=======')
+          console.log('=======finished=======',work_setsvgFramePackSize)
         
           
-          // eval(elem.parentElement.id + "_changeHierarchySvgFramePack")(_svgFrameValues, "100%", onAnim)
           onAnim = false;
+          eval(elem.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%", onAnim)
   
           
 
@@ -346,7 +346,7 @@ const HomeLayout = () =>{
           callToUnSymetryEachMenu(extendingSize, elem, elemParentId)
           // test()
         ]).then(()=>{
-          createWavyAnimation(elemParentId, extendingSize['svgFramePackage'])
+          // createWavyAnimation(elemParentId, extendingSize['svgFramePackage'])
           // disableClick()
         })
         
