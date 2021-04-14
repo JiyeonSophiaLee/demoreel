@@ -11,7 +11,7 @@
   --rectSize1400: 8.7rem;
 
 
-} */
+// } */
 
 @import "./variableCss.module.scss";
 
@@ -66,7 +66,7 @@
   width: 100%;
   height: 100%;
   min-width: $masterMinWidth;
-  max-width: $masterMaxWidth;
+  // max-width: $masterMaxWidth;
   min-height: $masterMinHeight;
   margin: auto;
   box-sizing: border-box;
@@ -90,6 +90,7 @@
   font-family: 'Text Me One', sans-serif;
   font-size: 1.5rem;
   color:white;
+  position: relative;
 }
   @media (max-width:800px){
     #menu > li .svgFramePack{
@@ -297,7 +298,6 @@
 
 
 
-
 /**
  * 4.2.2 - svgFramePack
  * ------------------
@@ -343,28 +343,28 @@
       }
       svg{
         position: absolute;
-        rect{
-          stroke-width: 0.5vw;
-        }
-        .wavyPath{
-          stroke-width: 1vw;
-        }
-        @media (max-width:800px){
-          rect{
-            stroke-width: 0.3rem;
-          }
-          .wavyPath{
-            stroke-width: 0.5rem;
-          }
-        }
-        @media (min-width:1400px){
-          rect{
-            stroke-width: 0.5rem;
-          }
-          .wavyPath{
-            stroke-width: 0.7rem;
-          }
-        }
+        // rect{
+        //   stroke-width: 0.5vw;
+        // }
+        // .wavyPath{
+        //   stroke-width: 1vw;
+        // }
+        // @media (max-width:800px){
+        //   rect{
+        //     stroke-width: 0.3rem;
+        //   }
+        //   .wavyPath{
+        //     stroke-width: 0.5rem;
+        //   }
+        // }
+        // @media (min-width:1400px){
+        //   rect{
+        //     stroke-width: 0.5rem;
+        //   }
+        //   .wavyPath{
+        //     stroke-width: 0.7rem;
+        //   }
+        // }
       }
     } 
 
@@ -406,5 +406,4 @@
           width: calc(100% - 40px);
         }
       }
-
 

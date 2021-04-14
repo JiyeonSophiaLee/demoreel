@@ -14,7 +14,7 @@ export function homeGsapSet(menuExtended,viewChanged){
         Gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
         Gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
       }else{
-        Gsap.set(master   , { maxWidth : TV.masterMaxWidth    + 'px'});
+        Gsap.set(master   , { maxWidth : TV.masterMaxWidth    });
         Gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
         Gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
       }

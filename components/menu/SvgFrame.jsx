@@ -19,9 +19,9 @@ function SvgFrame(props){
             <stop offset="90%" stopColor={props.svgFrameStopColor2}></stop>
           </linearGradient>
         </defs>
-        <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1} {...props.styleContext.wavyPath}/>
-        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} {...props.styleContext.wavyPath}/>
-        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.style_svgFrame} {...props.svgFrameValuesImmutable}/>
+        <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1} transform={props.styleContext.style_svgFrame['transform']}/>
+        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} transform={props.styleContext.style_svgFrame['transform']}/>
+        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.style_svgFrame} {...props.svgFrameValuesImmutable} />
       </svg>
       // <div></div>
     )

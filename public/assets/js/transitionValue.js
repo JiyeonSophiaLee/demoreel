@@ -56,6 +56,8 @@ export function convertToPix(unit){
       return splitUnits[1] * innerWidth / 100;
     case "vh":
       return splitUnits[1] * innerHeight / 100;
+    case "px":
+      return splitUnits[1]
     default:
       return splitUnits[1];
   }
@@ -101,7 +103,7 @@ const transitionValue ={
   symetryEachMenu : 50,
   unSymetryEachMenu : 75,
   masterMinWidth : parseInt(variable.masterMinWidth),
-  masterMaxWidth : parseInt(variable.masterMaxWidth),
+  masterMaxWidth : variable.masterMaxWidth,
   masterMinHeight : parseInt(variable.masterMinHeight),
   symetryDemoVideoWidth : parseInt(variable.demoVideoWidth),
   unSymetryDemoVideoWidth : 90,

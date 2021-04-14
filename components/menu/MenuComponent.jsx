@@ -11,7 +11,6 @@ function MenuComponent (props){
   const extendMenuContext = useContext(ExtendMenuContext);
   const menuSizeContext = useContext(MenuSizeContext);
   const svgFrameRef = useRef()
-    console.log('menuSizeContext',menuSizeContext)
   
 
   
@@ -27,7 +26,7 @@ function MenuComponent (props){
 
 
   function MenuComponentRender(props){
-    console.log('---------MenuComponentRender---------',props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack)
+    console.log('---------MenuComponentRender---------')
     return(
         <li id={props.values.id} style = {props.menuSizeContext[props.values.id+"_styleLI"]} > 
                 <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = { props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack}>
