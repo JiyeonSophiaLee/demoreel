@@ -217,10 +217,11 @@ const HomeLayout = () =>{
       
       let f = 0;
       let dir = 1;
-      
+      console.log('svgFrameValue>>>>>>>>>>>>>', svgFrameValues.current)
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
+  
       eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage']);
 
 

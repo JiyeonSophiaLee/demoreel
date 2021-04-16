@@ -41,18 +41,18 @@ function MenuComponent (props){
     },[])
                                                              
     const mouseEnterHandler = useCallback(()=>{
-        // console.log('on')
-        // neonOnTL.current.play();
-        // noen1Ref.current.classList.add(`${props.values.id}Neon1`)
-        // noen2Ref.current.classList.add(`${props.values.id}Neon2`)
+        console.log('on')
+        neonOnTL.current.play();
+        noen1Ref.current.classList.add(`${props.values.id}Neon1`)
+        noen2Ref.current.classList.add(`${props.values.id}Neon2`)
     },[])
     const mouseLeaveHandler = useCallback(()=>{
-      // console.log('off')
-      // if(!menuExtended.current){
-      // neonOnTL.current.reverse();
-      //   noen1Ref.current.classList.remove(`${props.values.id}Neon1`)
-      //   noen2Ref.current.classList.remove(`${props.values.id}Neon2`)
-      // }
+      console.log('off')
+      if(!menuExtended.current){
+      neonOnTL.current.reverse();
+        noen1Ref.current.classList.remove(`${props.values.id}Neon1`)
+        noen2Ref.current.classList.remove(`${props.values.id}Neon2`)
+      }
     },[menuExtended])
 
     const onClick = useCallback((e)=>{

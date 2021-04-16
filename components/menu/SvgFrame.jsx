@@ -14,7 +14,7 @@ function SvgFrame(props){
       <svg style = {props.styleContext.style_canvas} xmlns="http://www.w3.org/2000/svg">
         <defs>
           {props.ivory}
-          <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%" color-interpolation-filters="sRGB" >
+          <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%" colorInterpolationFilters="sRGB" >
             <stop offset="10%" stopColor={props.stopColor[0]} ref={props.stopColorRefs[0]}></stop>
             <stop offset="90%" stopColor={props.stopColor[1]} ref={props.stopColorRefs[1]}></stop>
           </linearGradient>
