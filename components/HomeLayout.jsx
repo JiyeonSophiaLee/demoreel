@@ -62,10 +62,10 @@ const HomeLayout = () =>{
   const demoRef = useRef(null);
   const logoRef = useRef(null);
   
-  const menuValues = useRef([{id:"work",  order:1, svgFrameStopColor1:"#ff3b29", svgFrameStopColor2:"#ff8c34", strokeColor1:"#ff3b29", strokeColor2:"#ff8c34"},
-                            {id:"skill", order:2, svgFrameStopColor1:"#cd4dff", svgFrameStopColor2:"#ff4179", strokeColor1:"#cd4dff", strokeColor2:"#ff4179"},
-                            {id:"paint", order:3, svgFrameStopColor1:"#ffa934", svgFrameStopColor2:"#30ab98", strokeColor1:"#ffa934", strokeColor2:"#30ab98"},
-                            {id:"info",   order:4, svgFrameStopColor1:"#ff6ee2", svgFrameStopColor2:"#5cd3ff", strokeColor1:"#ff6ee2", strokeColor2:"#5cd3ff"}
+  const menuValues = useRef([{id:"work",  order:1, stopColor: ["rgb(220, 51, 35)","rgb(212, 116, 43)"], strokeColor:["#ff3b29", "#ff8c34"]},
+                            {id:"skill", order:2, stopColor: ["rgb(168, 63, 209)","rgb(192, 49, 91)"], strokeColor:["#cd4dff", "#ff4179"]},
+                            {id:"paint", order:3, stopColor: ["rgb(225, 149, 46)","rgb(48, 171, 152)"], strokeColor:["#ffa934", "#30ab98"]},
+                            {id:"info",   order:4, stopColor: ["rgb(200, 86, 177)","rgb(75, 173, 209)"], strokeColor:["#ff6ee2", "#5cd3ff"]}
                           ]);
   
   let demoVideoHeight;
