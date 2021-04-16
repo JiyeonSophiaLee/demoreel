@@ -20,7 +20,7 @@ function SvgFrame(props){
           </linearGradient>
         </defs>
         <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1} transform={props.styleContext.style_svgFrame['transform']}/>
-        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} transform={props.styleContext.style_svgFrame['transform']}/>
+        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} transform={props.styleContext.style_svgFrame['transform']} {...props.styleContext.style_wavyPath}/>
         <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.style_svgFrame} {...props.svgFrameValuesImmutable} />
       </svg>
       // <div></div>

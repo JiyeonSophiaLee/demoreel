@@ -55,6 +55,7 @@ const HomeLayout = () =>{
   const extendingRequestAnimRef = useRef();
   const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
+  const biggerElemRect = useRef(null);
   const biggeredElem = useRef(null);
   const menuExtended = useRef(false);
 
@@ -67,7 +68,6 @@ const HomeLayout = () =>{
                             {id:"info",   order:4, svgFrameStopColor1:"#ff6ee2", svgFrameStopColor2:"#5cd3ff", strokeColor1:"#ff6ee2", strokeColor2:"#5cd3ff"}
                           ]);
   
-
   let demoVideoHeight;
   let mobileMode, _mobileMode;
   let widerMode, _widerMode;
@@ -85,6 +85,7 @@ const HomeLayout = () =>{
   //   work_hookTest('custom hook is testing')
   //   skill_hookTest('what is wrong with you?')
     
+
     mobileMode = innerWidth <= 800 ? true : false; 
     widerMode = innerWidth >= 1400 ? true : false; 
     _mobileMode = mobileMode;
@@ -126,13 +127,13 @@ const HomeLayout = () =>{
     if(svgFrameValues.radius !== undefined){
       if(menuExtended.current){
         console.log('menuExtended.current: ',menuExtended.current)
-        // menuValues.current.forEach(()=>{
-        // //   if(biggerElem.current.parentElement.id === menuValues[i]){
-        // //     eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
-        // //   }else{
-        // //     eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
-        // //   }
-        // })
+        menuValues.current.forEach((value)=>{
+          if(biggerElem.current.parentElement.id === value.id){
+            eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, {width:"100%", height:"100%"});
+          }else{
+            eval(value.id + "_changeHierarchySvgFramePack")(svgFrameValues);
+          }
+        })
       }else{
         console.log('else', menuValues.current.length)
         menuValues.current.forEach((value)=>{
@@ -144,13 +145,16 @@ const HomeLayout = () =>{
 
     useEffect(()=>{
 
-      let updateResize = () =>{
+      const updateResize = () =>{
         _mobileMode = innerWidth <= 800 ? true : false; 
         _widerMode = innerWidth >= 1400 ? true : false;
 
         homeGsapSet(menuExtended.current, mobileMode !== _mobileMode)
 
-        // if( menuExtended.current ) remainExtendingMenu();
+        if( menuExtended.current ) {
+          biggerElemRect.current.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
+          biggerElemRect.current.setAttributeNS(null, "height", biggerElem.current.clientHeight);
+        }
         // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
 
         if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
@@ -173,16 +177,17 @@ const HomeLayout = () =>{
         window.removeEventListener('resize',updateResize);
       }
     },[])
+   
 
-  function remainExtendingMenu(){
-    menuValues.current.forEach((value, i)=>{
-      if(biggerElem.current.parentElement.id === menuValues[i].id){
-        eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
-      }else{
-        eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
-      }
-    })
-  }
+  // function remainExtendingMenu(){
+  //   menuValues.current.forEach((value, i)=>{
+  //     if(biggerElem.current.parentElement.id === menuValues[i].id){
+  //       eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
+  //     }else{
+  //       eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
+  //     }
+  //   })
+  // }
   
 
  
@@ -209,7 +214,7 @@ const HomeLayout = () =>{
   const callToUnSymetryEachMenu = useCallback((extendingSize, elemParentId)=>{
     return new Promise((resolve, reject)=>{  
       const NF = TV['menuDuration']*60;
-      const rect = document.getElementById(elemParentId+"SvgFrame");
+      
       let f = 0;
       let dir = 1;
       
@@ -222,9 +227,8 @@ const HomeLayout = () =>{
       function anim(){
         f += dir;
         console.log('f',f)
-        rect.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
-        rect.setAttributeNS(null, "height", biggerElem.current.clientHeight);
-
+        biggerElemRect.current.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
+        biggerElemRect.current.setAttributeNS(null, "height", biggerElem.current.clientHeight);
 
         extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
@@ -325,6 +329,7 @@ const HomeLayout = () =>{
         console.log('if')
         menuExtended.current = true;
         biggerElem.current = elem;
+        biggerElemRect.current = document.getElementById(elemParentId+"SvgFrame");
         console.log('menuExtended.current turn to true')
   
         demoVideoHeight = getDemoVideoHeight(menuExtended.current);
