@@ -5,7 +5,7 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 
 function SvgFrame(props){
-  console.log('-------SvgFrame----------')
+  console.log('-------SvgFrame----------',props.stopColor)
     // const canvas = props.styleContext['canvas'];
     // const svgFrame = props.styleContext['svgFrame'];
     // const menuSizeContext = useContext(MenuSizeContext);
@@ -15,8 +15,8 @@ function SvgFrame(props){
         <defs>
           {props.ivory}
           <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%" color-interpolation-filters="sRGB" >
-            <stop offset="10%" stopColor={props.stopColor[0]}></stop>
-            <stop offset="90%" stopColor={props.stopColor[1]}></stop>
+            <stop offset="10%" stopColor={props.stopColor[0]} ref={props.stopColorRefs[0]}></stop>
+            <stop offset="90%" stopColor={props.stopColor[1]} ref={props.stopColorRefs[1]}></stop>
           </linearGradient>
         </defs>
         <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor[0]} transform={props.styleContext.style_svgFrame['transform']} />

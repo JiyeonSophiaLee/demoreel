@@ -7,6 +7,9 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
+:root{
+  --subMenuNeonDuration:1.5s;
+}
 body{
   background:rgb(30, 30, 30);
 }
@@ -44,6 +47,8 @@ a {
 
 
 /* -----------------------------------WORK NEON------------------------------------------ */
+
+
 .workNeon1{
   animation: workNeon1Ani var(--subMenuNeonDuration) ease-in-out infinite alternate;
   --workColor1 : rgba(220, 51, 35, 0.4);
