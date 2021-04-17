@@ -1,8 +1,7 @@
-import {gsap, Sine} from 'Gsap';
+import {gsap, Sine} from 'gsap';
 import TV from './transitionValue.js'
 
 
-const Gsap = gsap;
 
 
 export function homeGsapSet(menuExtended,viewChanged){
@@ -10,26 +9,26 @@ export function homeGsapSet(menuExtended,viewChanged){
   if(viewChanged){
     if(innerWidth > 800){
       if(menuExtended){
-        Gsap.set(master   , { maxWidth : 100                      + '%'});
-        Gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
-        Gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
+        gsap.set(master   , { maxWidth : 100                      + '%'});
+        gsap.set(demo     , { width: (100 - TV.unSymetryDemoMenu) + '%'});
+        gsap.set(demoVideo, { width: TV.unSymetryDemoVideoWidth   + '%'  , height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16 });
       }else{
-        Gsap.set(master   , { maxWidth : TV.masterMaxWidth    });
-        Gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
-        Gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
+        gsap.set(master   , { maxWidth : TV.masterMaxWidth    });
+        gsap.set(demo     , { width: TV.symetryDemoMenu       + '%'});
+        gsap.set(demoVideo, { width: TV.symetryDemoVideoWidth + '%', height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16 })
       }
     }else{
       if(menuExtended){
-        Gsap.set(demo     ,{ width: 100 + '%' })
-        Gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
+        gsap.set(demo     ,{ width: 100 + '%' })
+        gsap.set(demoVideo,{ width: TV.unSymetryDemoVideoWidth800 + '%' })
       }else{
-        Gsap.set(demo     ,{ width: 100 + '%'})
-        Gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
+        gsap.set(demo     ,{ width: 100 + '%'})
+        gsap.set(demoVideo,{ width: TV.symetryDemoVideoWidth800 + '%' })
       }
     }
   }
 
-  Gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
+  gsap.set(demoVideo, { height : demoVideo.clientWidth * (9/16)});
 }
 
 // function utilityMenuIf(menuExtended){
@@ -207,7 +206,7 @@ export function homeGsapTransition(menuExtended){
 }
 
 function homeGsapTransitionToUnSymetry(){
-  Gsap.fromTo(
+  gsap.fromTo(
     master,{
       maxWidth: TV.masterMaxWidth,
       duration: 1
@@ -215,7 +214,7 @@ function homeGsapTransitionToUnSymetry(){
       maxWidth: 100 + "%"
     }
   )
-  Gsap.fromTo(
+  gsap.fromTo(
       demo,{
         width: TV.symetryDemoMenu + '%',
         duration: TV.menuDuration
@@ -223,7 +222,7 @@ function homeGsapTransitionToUnSymetry(){
         width: (100 - TV.unSymetryDemoMenu) + '%'
       }
   )
-  Gsap.fromTo(
+  gsap.fromTo(
       demoVideo,{
         width: TV.symetryDemoVideoWidth + '%',
         height: innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16,
@@ -236,7 +235,7 @@ function homeGsapTransitionToUnSymetry(){
 }
 
 function homeGsapTransitionToSymetry(){
-  Gsap.fromTo(
+  gsap.fromTo(
     master,{
       maxWidth: 100 + "%",
       duration: 1
@@ -244,7 +243,7 @@ function homeGsapTransitionToSymetry(){
       maxWidth: TV.masterMaxWidth +'px'
     }
   )
-  Gsap.fromTo(
+  gsap.fromTo(
       demo,{
         width: (100 - TV.unSymetryDemoMenu) + '%',
         duration: TV.menuDuration
@@ -256,7 +255,7 @@ function homeGsapTransitionToSymetry(){
   //   this homeGsapTransitionToSymetry have maxWidth, which translate to two way to get height for demovideo
   //   so I gave a condition for it.
   if(innerWidth < TV.masterMaxWidth){
-      Gsap.fromTo(
+      gsap.fromTo(
           demoVideo,{
             width: TV.unSymetryDemoVideoWidth + '%',
             height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16,
@@ -267,7 +266,7 @@ function homeGsapTransitionToSymetry(){
           }
         )
   }else{
-      Gsap.fromTo(
+      gsap.fromTo(
         demoVideo,{
           width: TV.unSymetryDemoVideoWidth + '%',
           height: innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16,
@@ -281,7 +280,7 @@ function homeGsapTransitionToSymetry(){
 }
 
 function homeGsapTransitionToUnSymetry800(){
-  Gsap.fromTo(
+  gsap.fromTo(
     demoVideo,{
       width: TV.symetryDemoVideoWidth800 + '%',
       height: innerWidth * TV.symetryDemoVideoWidth800/100 * 9/16
@@ -292,7 +291,7 @@ function homeGsapTransitionToUnSymetry800(){
   )
 }
 function homeGsapTransitionToSymetry800(){
-  Gsap.fromTo(
+  gsap.fromTo(
     demoVideo,{
       width: TV.unSymetryDemoVideoWidth800 + '%',
       height: innerWidth * TV.unSymetryDemoVideoWidth800/100 * 9/16

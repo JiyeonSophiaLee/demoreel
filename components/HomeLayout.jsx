@@ -5,14 +5,14 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random} from '../public/assets/js/utilities.js'
-import {gsap, Sine} from 'Gsap';
+import {gsap, Sine} from 'gsap';
 
 
 
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
 export const MenuSizeContext = createContext();
-const Gsap = gsap;
+
 
 
 
@@ -61,10 +61,10 @@ const HomeLayout = () =>{
   const demoRef = useRef(null);
   const logoRef = useRef(null);
   
-  const menuValues = useRef([{id:"work",  order:1, svgFrameStopColor1:"#ff3b29", svgFrameStopColor2:"#ff8c34", strokeColor1:"#ff3b29", strokeColor2:"#ff8c34"},
-                            {id:"skill", order:2, svgFrameStopColor1:"#cd4dff", svgFrameStopColor2:"#ff4179", strokeColor1:"#cd4dff", strokeColor2:"#ff4179"},
-                            {id:"paint", order:3, svgFrameStopColor1:"#ffa934", svgFrameStopColor2:"#30ab98", strokeColor1:"#ffa934", strokeColor2:"#30ab98"},
-                            {id:"info",   order:4, svgFrameStopColor1:"#ff6ee2", svgFrameStopColor2:"#5cd3ff", strokeColor1:"#ff6ee2", strokeColor2:"#5cd3ff"}
+  const menuValues = useRef([{id:"work",  order:1, stopColor:["#ff3b29","#ff8c34"], strokeColor:["#ff3b29","#ff8c34"]},
+                            {id:"skill", order:2, stopColor:["#cd4dff","#ff4179"], strokeColor:["#cd4dff","#ff4179"]},
+                            {id:"paint", order:3, stopColor:["#ffa934","#30ab98"], strokeColor:["#ffa934","#30ab98"]},
+                            {id:"info",   order:4, stopColor:["#ff6ee2","#5cd3ff"], strokeColor:["#ff6ee2","#5cd3ff"]}
                           ]);
   
 
@@ -258,7 +258,7 @@ const HomeLayout = () =>{
       
         
         if (wavyAnimTL.current === null) {
-          wavyAnimTL.current = Gsap.timeline({
+          wavyAnimTL.current = gsap.timeline({
             onUpdate: update
           });
         } else {
@@ -279,7 +279,7 @@ const HomeLayout = () =>{
           let duration = random(svgFrameValues["speed"][0], svgFrameValues["speed"][1]);
     
     
-          let tween1 = Gsap.to(points1[i], {
+          let tween1 = gsap.to(points1[i], {
             duration: duration,
             x: pointsTween1[i].x,
             y: pointsTween1[i].y,
@@ -288,7 +288,7 @@ const HomeLayout = () =>{
             ease: Sine.easeInOut
           });
     
-          let tween2 = Gsap.to(points2[i], {
+          let tween2 = gsap.to(points2[i], {
             duration: duration,
             x: pointsTween2[i].x,
             y: pointsTween2[i].y,

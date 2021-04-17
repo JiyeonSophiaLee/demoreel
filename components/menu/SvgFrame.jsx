@@ -5,23 +5,19 @@ import { MenuSizeContext } from '../HomeLayout.jsx';
 
 
 function SvgFrame(props){
-  console.log('-------SvgFrame----------')
-    // const canvas = props.styleContext['canvas'];
-    // const svgFrame = props.styleContext['svgFrame'];
-    // const menuSizeContext = useContext(MenuSizeContext);
-  
+  console.log('-------SvgFrame----------',props.refs)
     return(
-      <svg style = {props.styleContext.style_canvas}>
+      <svg style = {props.menuSizeContext.style_canvas}>
         <defs>
-          {props.ivory}
-          <linearGradient id={`${props.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="10%" stopColor={props.svgFrameStopColor1}></stop>
-            <stop offset="90%" stopColor={props.svgFrameStopColor2}></stop>
+          {props.values.ivory}
+          <linearGradient id={`${props.values.id}SvgFrameStopColor`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="10%" stopColor={props.values.stopColor[0]} ref={props.refs.stopColor1Ref}></stop>
+            <stop offset="90%" stopColor={props.values.stopColor[1]} ref={props.refs.stopColor2Ref}></stop>
           </linearGradient>
         </defs>
-        <path id={`${props.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.strokeColor1} transform={props.styleContext.style_svgFrame['transform']}/>
-        <path id={`${props.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.strokeColor2} transform={props.styleContext.style_svgFrame['transform']}/>
-        <rect id={`${props.id}SvgFrame`} stroke={`url(#${props.id}SvgFrameStopColor)`} {...props.styleContext.style_svgFrame} {...props.svgFrameValuesImmutable} />
+        <path id={`${props.values.id}SvgWavy1`} className="wavyPath"  fill="none" stroke={props.values.strokeColor[0]} transform={props.menuSizeContext.style_svgFrame['transform']}/>
+        <path id={`${props.values.id}SvgWavy2`} className="wavyPath"  fill="none" stroke={props.values.strokeColor[1]} transform={props.menuSizeContext.style_svgFrame['transform']}/>
+        <rect id={`${props.values.id}SvgFrame`} stroke={`url(#${props.values.id}SvgFrameStopColor)`} {...props.menuSizeContext.style_svgFrame} {...props.values.svgFrameValuesImmutable} />
       </svg>
       // <div></div>
     )
