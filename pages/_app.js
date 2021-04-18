@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import '../styles/homeLayout.scss'
 import '../styles/infoLayout.scss'
+import '../styles/imageLayout.scss'
 // import { createStore } from 'redux';
 // import allReducers from '../redux/reducers'
 

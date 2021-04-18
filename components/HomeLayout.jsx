@@ -8,7 +8,6 @@ import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymet
 import {gsap, Sine} from 'gsap';
 
 
-
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
 export const MenuSizeContext = createContext();
@@ -392,6 +391,7 @@ const HomeLayout = () =>{
     </div>
   },[logoDisplay, work_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack]);
 } 
+
 function HomeLayoutRender(props){
   console.log('--------------HomeLayoutRender-----------------')
   return (
@@ -402,3 +402,5 @@ function HomeLayoutRender(props){
   )
 }
 export default HomeLayout
+
+

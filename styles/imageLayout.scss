@@ -1,0 +1,64 @@
+/** If you have any questions, email me.
+/**
+ * Table of Contents:
+ * 1.0 - GroupedImages
+ * 2.0 - AlinedImages
+ * ----------------------------------------------------------------------------
+ */
+
+
+  
+  /**
+   * 2.0 - AlinedImages
+   * ----------------------------------------------------------------------------
+   */
+  .alinedImages{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    padding: 0.5vw;
+    grid-gap: 0.3vw;
+    background: rgba(10, 10, 10, 0.7);
+
+    .content{
+      box-sizing: initial;
+    }
+    img,iframe{
+      border-radius: 0.7rem;
+      /* padding: 0.1vw; */
+      width: 100%;
+      height: auto;
+      /* height:-webkit-fill-available; */
+      /* object-fit: cover; */
+    }
+    div{
+      position: relative;
+      /* border-radius: 20px; */
+      /* object-fit: cover; */
+      padding: 28.125% 0; 
+      iframe{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    @media (max-width:800px){
+      .alinedImages{
+        grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+        img,iframe{
+          border-radius: 0.5rem;
+        }
+      }
+    }
+    @media (min-width:2500px){
+      .alinedImages{
+        grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+        grid-gap: 0.3rem;
+      }
+    }
+  }
+  
+
+
+

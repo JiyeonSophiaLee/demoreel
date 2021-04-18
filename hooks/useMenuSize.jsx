@@ -29,10 +29,10 @@ function useMenuSize(id){
 
 
   const changeHierarchySvgFramePack= useCallback((svgFrameValues, extendMenuSize='none')=>{
-    console.log('????????????',svgFrameValues)
+    // console.log('????????????',svgFrameValues)
     // if(!onAnim){
       let size = extendMenuSize==='none' ? svgFrameValues['svgFrameDefault'] : extendMenuSize;
-    console.log('size', size)
+    // console.log('size', size)
       setsvgFramePackSize({width:size['width'], height:size['height']});
       setCanvasSize({width: `calc( 100% + ${svgFrameValues.extraSpace }px)` ,
                       height : `calc( 100% + ${svgFrameValues.extraSpace }px)`, 
