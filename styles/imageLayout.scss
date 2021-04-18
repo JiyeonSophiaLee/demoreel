@@ -18,19 +18,29 @@
     padding: 0.5vw;
     grid-gap: 0.3vw;
     background: rgba(10, 10, 10, 0.7);
-
-    .content{
-      box-sizing: initial;
+    
+    
+    .mainContent{
+      max-width:100%;
+      grid-row: span 2;
+      grid-column: span 2;
     }
-    img,iframe{
-      border-radius: 0.7rem;
-      /* padding: 0.1vw; */
-      width: 100%;
-      height: auto;
-      /* height:-webkit-fill-available; */
-      /* object-fit: cover; */
+    .subContent{
+      max-width:100%;
     }
-    div{
+  
+    // .content{
+    //   box-sizing: initial;
+    // }
+    // img,iframe{
+    //   border-radius: 0.7rem;
+    //   /* padding: 0.1vw; */
+    //   width: 100%;
+    //   height: auto;
+    //   /* height:-webkit-fill-available; */
+    //   /* object-fit: cover; */
+    // }
+    > div{
       position: relative;
       /* border-radius: 20px; */
       /* object-fit: cover; */

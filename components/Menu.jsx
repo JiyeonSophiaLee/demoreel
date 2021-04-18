@@ -4,6 +4,7 @@ import { memo, useMemo, useRef } from 'react';
 import MenuComponent from './menu/MenuComponent.jsx';
 import SvgIvory from './menu/SvgIvory.jsx'
 import WorkContent from './menu/work/WorkContent.jsx'
+import PaintContent from './menu/paint/PaintContent.jsx'
 import InfoContent from './menu/info/InfoContent.jsx'
 
 
@@ -37,7 +38,8 @@ function MenuRender(props){
                                 order:props.menuValues[2].order,
                                 stopColor:props.menuValues[2]["stopColor"],
                                 strokeColor:props.menuValues[2]["strokeColor"],
-                                svgFrameValuesImmutable: props.values }}/>
+                                svgFrameValuesImmutable: props.values, 
+                                contents:<PaintContent/> }}/>
       <MenuComponent values = {{id:props.menuValues[3].id,
                                 order:props.menuValues[3].order,
                                 stopColor:props.menuValues[3]["stopColor"],
