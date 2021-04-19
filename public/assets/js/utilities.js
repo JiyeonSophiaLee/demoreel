@@ -50,6 +50,7 @@ export function getDemoVideoHeight(menuExpanded){
     
   }else{
     if(menuExpanded){
+      demoVideoHeight = innerWidth * TV.unSymetryDemoVideoWidth800/100 * 9/16;
       // if(window.innerWidth > TV.masterMinWidth){
       //   demoVideoHeight = (window.innerWidth * TV.unSymetryDemoVideoWidth800 /100)  * (9/16);
       // }else{
@@ -135,9 +136,10 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
 }
 
 function getExtendMenuSize (demoVideoHeight, elem) {
-  console.log('hello this is working')
+  console.log('hello this is working', demoVideoHeight)
   let extendMenuSizeWidth, extendMenuSizeHeight;
   let padding = getPadding(elem); 
+
   
 
 
@@ -153,12 +155,15 @@ function getExtendMenuSize (demoVideoHeight, elem) {
   }else{
     extendMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
     extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
-   
+    console.log("extendMenuSizeWidth",extendMenuSizeWidth)
+    console.log("extendMenuSizeHeight",extendMenuSizeHeight)
 
     function getWidth(totalWidth){
+      console.log('totalWidth: ',totalWidth)
       return (totalWidth - padding["menuPaddingWidth"] ) * ( TV.unSymetryEachMenu / 100) - padding["liPaddingWidth"] ;
     }
     function getHeight(totalHeight){
+      console.log('totalWidth: ',totalHeight, logo.clientHeight, demoVideoHeight, padding["menuPaddingHeight"], TV.unSymetryEachMenu / 100, padding["liPaddingHeight"])
       return (totalHeight - logo.clientHeight - demoVideoHeight - padding["menuPaddingHeight"]) * (TV.unSymetryEachMenu / 100) - padding["liPaddingHeight"] ;
     }
   }
@@ -355,7 +360,7 @@ export function random(min, max) {
 
 
 
-export function getDataPoints(extendingSize, svgFrameValues){
+export function getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmutable){
   // let w = this.w + this.radius * 2;
   // let h = this.h + this.radius * 2;
   // let w = this.w ;
@@ -365,8 +370,8 @@ export function getDataPoints(extendingSize, svgFrameValues){
 
   // this.x = this.x - this.radius;
   // this.y = this.y - this.radius ;
-  let x = svgFrameValues["x"];
-  let y = svgFrameValues["y"];
+  let x = svgFrameValuesImmutable["x"];
+  let y = svgFrameValuesImmutable["y"];
 
   let points1 = [];
   let points2 = [];
@@ -419,8 +424,8 @@ export function getDataPoints(extendingSize, svgFrameValues){
 
   let positions = getPositions(x,y,svgFrameValues);
   
-  points1 = getMutipliedPoints(svgFrameValues["multiply"], positions, 0);
-  points2 = getMutipliedPoints(svgFrameValues["multiply"], positions, 1);
+  points1 = getMutipliedPoints(svgFrameValuesImmutable["multiply"], positions, 0);
+  points2 = getMutipliedPoints(svgFrameValuesImmutable["multiply"], positions, 1);
 
   //--- get points for tween ---------------------------------------------------------------------------------
 
@@ -432,8 +437,8 @@ export function getDataPoints(extendingSize, svgFrameValues){
 
   let positionsTween = getPositions(x,y,svgFrameValues);
 
-  pointsTween1 = getMutipliedPoints(svgFrameValues["multiply"], positionsTween, 0);
-  pointsTween2 = getMutipliedPoints(svgFrameValues["multiply"], positionsTween, 1);
+  pointsTween1 = getMutipliedPoints(svgFrameValuesImmutable["multiply"], positionsTween, 0);
+  pointsTween2 = getMutipliedPoints(svgFrameValuesImmutable["multiply"], positionsTween, 1);
   
   return {
     points1: points1,

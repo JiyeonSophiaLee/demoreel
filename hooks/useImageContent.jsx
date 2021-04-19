@@ -12,13 +12,12 @@ function useImageContent(useImageContent){
             project.fileNames.forEach((name,i)=>{
               let _name = project.src+name;
               let _className = project.artstation !== null ? "" : project.main === i ? 'mainContent content' : 'subContent content';
-              // console.log(_className)
               let _image = <Image layout="responsive" key={_name} width={project.size.width} height={project.size.height} alt={project.alt} src={_name} className={_className}/>;
-              console.log('_image',_image)
+
 
               if(project.artstation!==null){
                 let className = project.main === i ? 'mainContent content' : 'subContent content';
-                let output = <a herf={project.artstation} target="_blank" className={className}>{_image}</a>;
+                let output = <a herf={project.artstation} key={_name} target="_blank" className={className}>{_image}</a>;
                   if(project.main === i){
                     content.splice(0,0,output)
                   }else{

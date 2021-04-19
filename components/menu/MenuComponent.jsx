@@ -20,6 +20,8 @@ function MenuComponent (props){
   const noen2Ref = useRef(null);
   const stopColor1Ref = useRef(null);
   const stopColor2Ref = useRef(null);
+  const textRef = useRef();
+  const contentRef = useRef();
   const neonOnTL = useRef();
 
 
@@ -59,13 +61,13 @@ function MenuComponent (props){
 
   
     function onClick(e){
-      extendMenuContext(e.currentTarget, props.values.order, svgFrameRef);
+      extendMenuContext(e.currentTarget, props.values.order, textRef.current, contentRef.current);
       menuExtended.current = !menuExtended.current
     }
     
   
     return useMemo(()=>{
-      return <MenuComponentRender refs={{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref}} values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef} handlers={{mouseEnterHandler, mouseLeaveHandler}}></MenuComponentRender>
+      return <MenuComponentRender refs={{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef, contentRef}} values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef} handlers={{mouseEnterHandler, mouseLeaveHandler}}></MenuComponentRender>
     },[menuSizeContext[props.values.id+"_styleLI"],menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack ])
   }
 
@@ -75,7 +77,7 @@ function MenuComponent (props){
     return(
         <li id={props.values.id} style = {props.menuSizeContext[props.values.id+"_styleLI"]} > 
                 <div className="svgFramePack" onClick={props.onClick} ref={props.svgFrameRef} style = { props.menuSizeContext[props.values.id+"_styleSvgFramePack"].style_svgFramePack} onMouseEnter={props.handlers.mouseEnterHandler} onMouseLeave={props.handlers.mouseLeaveHandler}>
-                    <div className="menuText">{props.values.id.toUpperCase()}</div>
+                    <div className="menuText" ref={props.refs.textRef}>{props.values.id.toUpperCase()}</div>
                     <div className="neon neon1"  ref={props.refs.noen1Ref}></div>
                     <div className="neon neon2"  ref={props.refs.noen2Ref}></div>
                     <SvgFrame 
@@ -84,7 +86,7 @@ function MenuComponent (props){
                       refs ={{stopColor1Ref:props.refs.stopColor1Ref, stopColor2Ref:props.refs.stopColor2Ref}}
                     />
                 </div>
-                <div className="contents">
+                <div className="contents" ref={props.refs.contentRef}>
                     {props.values.contents}
                 </div>
               </li>

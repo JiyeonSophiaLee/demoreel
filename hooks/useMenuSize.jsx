@@ -9,6 +9,7 @@ function useMenuSize(id){
   const [svgFramePackSize,setsvgFramePackSize] = useState({width:"0px", height:"0px"})
   const [canvasSize, setCanvasSize] = useState({width:"0px", height:"0px", left:"0px", top:"0px", transform:"translate(0,0)"})
   const [svgFrameSize,setSvgFrameSize] = useState({style:{width:"0px", height:"0px", strokeWidth:"0px"}, transform:"translate(0,0)"})
+  const [wavyPath,setWavyPath] = useState({strokeWidth:"0px"})
 
 
   
@@ -24,6 +25,7 @@ function useMenuSize(id){
     style_svgFramePack: svgFramePackSize,
     style_canvas: canvasSize,
     style_svgFrame: svgFrameSize,
+    style_wavy: wavyPath,
   }),[svgFramePackSize['width'], canvasSize["width"], svgFrameSize["width"]])
    
 
@@ -43,6 +45,7 @@ function useMenuSize(id){
                               strokeWidth: svgFrameValues["strokeWidth"].rect},
                       transform:`translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
                      });
+      setWavyPath({strokeWidth: svgFrameValues["strokeWidth"].wavy})
                      
       // setsvgFramePackSize({width:"100%", height:"100%"});
       // setCanvasSize({width: `calc( 100% + ${svgFrameValues.extraSpace }px)` ,

@@ -53,12 +53,19 @@ const HomeLayout = () =>{
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
   const extendingRequestAnimRef = useRef();
   const wavyAnimTL = useRef(null);
+  // const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
   const biggeredElem = useRef(null);
   const menuExtended = useRef(false);
 
   const demoRef = useRef(null);
   const logoRef = useRef(null);
+
+  const mobileMode = useRef(null);
+  const _mobileMode = useRef(null);
+  const widerMode = useRef(null);
+  const _widerMode = useRef(null);
+
   
   const menuValues = useRef([{id:"work",  order:1, stopColor:["#ff3b29","#ff8c34"], strokeColor:["#ff3b29","#ff8c34"]},
                             {id:"skill", order:2, stopColor:["#cd4dff","#ff4179"], strokeColor:["#cd4dff","#ff4179"]},
@@ -68,26 +75,24 @@ const HomeLayout = () =>{
   
 
   let demoVideoHeight;
-  let mobileMode, _mobileMode;
-  let widerMode, _widerMode;
+  // let mobileMode, _mobileMode;
+  // let widerMode, _widerMode;
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
   
 
   
-  useEffect(()=>{
-    console.log(wavyAnimTL)
-  },[wavyAnimTL])
+
   useEffect(()=>{
   //   console.log('working')
   //   work_hookTest('custom hook is testing')
   //   skill_hookTest('what is wrong with you?')
     
-    mobileMode = innerWidth <= 800 ? true : false; 
-    widerMode = innerWidth >= 1400 ? true : false; 
-    _mobileMode = mobileMode;
-    _widerMode = widerMode;
+    mobileMode.current = innerWidth <= 800 ? true : false; 
+    widerMode.current = innerWidth >= 1400 ? true : false; 
+    _mobileMode.current = mobileMode.current;
+    _widerMode.current = widerMode.current;
   
     homeGsapSet(menuExtended.current, true);
     updateSvgFrameValues();
@@ -144,43 +149,44 @@ const HomeLayout = () =>{
     useEffect(()=>{
 
       let updateResize = () =>{
-        _mobileMode = innerWidth <= 800 ? true : false; 
-        _widerMode = innerWidth >= 1400 ? true : false;
+        _mobileMode.current = innerWidth <= 800 ? true : false; 
+        _widerMode.current = innerWidth >= 1400 ? true : false;
 
-        homeGsapSet(menuExtended.current, mobileMode !== _mobileMode)
+        homeGsapSet(menuExtended.current, mobileMode.current !== _mobileMode.current)
 
-        // if( menuExtended.current ) remainExtendingMenu();
+        if( menuExtended.current ) {
+          console.log('resize is working')
+          remainExtendingMenu();
+          createWavyAnimation(biggerElem.current.parentElement.id, {width:biggerElem.current.clientWidth, height:biggerElem.current.clientHeight})
+        }
         // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
 
-        if(mobileMode !== _mobileMode || widerMode !== _widerMode ){
+        if(mobileMode.current !== _mobileMode.current || widerMode.current !== _widerMode.current ){
           console.log('view is changing');
           updateSvgFrameValues();
         }
 
         
-        if(mobileMode !== _mobileMode){
+        if(mobileMode.current !== _mobileMode.current){
           console.log('changed')
-          mobileMode = !mobileMode;
+          mobileMode.current = !mobileMode.current;
         }
-        if(widerMode !== _widerMode){
+        if(widerMode.current !== _widerMode.current){
           console.log('changed')
-          widerMode = !widerMode;
+          widerMode.current = !widerMode.current;
         }
     }
       window.addEventListener('resize',updateResize);
       return ()=>{
         window.removeEventListener('resize',updateResize);
       }
-    },[])
+    },[svgFrameValues])
 
   function remainExtendingMenu(){
-    menuValues.current.forEach((value, i)=>{
-      if(biggerElem.current.parentElement.id === menuValues[i].id){
-        eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
-      }else{
-        eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
-      }
-    })
+    const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
+
+    rect.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
+    rect.setAttributeNS(null, "height", biggerElem.current.clientHeight);
   }
   
 
@@ -220,7 +226,6 @@ const HomeLayout = () =>{
 
       function anim(){
         f += dir;
-        console.log('f',f)
         rect.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
         rect.setAttributeNS(null, "height", biggerElem.current.clientHeight);
 
@@ -245,39 +250,49 @@ const HomeLayout = () =>{
   
    const createWavyAnimation = useCallback((id, extendingSize)=>{
     return new Promise((resolve,reject)=>{
+      // let wavyAnimationTL = null;
+
+
       if(window.innerWidth > 800){
-        console.log('createWavyAnimation is working');
         let dataPoints, points1, points2, pointsTween1, pointsTween2;
         const wavyPath1 = document.getElementById(id + 'SvgWavy1');
         const wavyPath2 = document.getElementById(id + 'SvgWavy2');
 
-        if(svgFrameValues.wavyPath > extendingSize['svgFramePackage'] / 2){
-          return setSvgFrameValues({...svgFrameValues, w: extendingSize['svgFramePackage']/2})
+
+        console.log('createWavyAnimation is working');
+        
+
+        if(svgFrameValues.wavyPath > extendingSize['width'] / 2){
+          return setSvgFrameValues({...svgFrameValues, wavyPath: extendingSize['width']/2})
         }
       
         
-        if (wavyAnimTL.current === null) {
+        // if (wavyAnimTL.current === null) {
           wavyAnimTL.current = gsap.timeline({
             onUpdate: update
           });
-        } else {
-          wavyAnimTL.current.resume();
-        }
-
-        dataPoints = getDataPoints(extendingSize, svgFrameValues);
+        // } else {
+        //   // wavyAnimTL.current.resume();
+        //   console.log('???????')
+        //   // wavyAnimTL.current.remove(tween1)
+        //   // wavyAnimTL.current.remove(tween2)
+        // }
+  
+        
+        
+        dataPoints = getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmutable.current);
 
       
         points1 = dataPoints.points1;
         points2 = dataPoints.points2;
-    
+        
         pointsTween1 = dataPoints.pointsTween1;
         pointsTween2 = dataPoints.pointsTween2;
-        
-    
+
+
         for (let i = 0; i < points1.length; i++) {
-          let duration = random(svgFrameValues["speed"][0], svgFrameValues["speed"][1]);
-    
-    
+          let duration = random(svgFrameValuesImmutable.current["speed"][0], svgFrameValuesImmutable.current["speed"][1]);
+  
           let tween1 = gsap.to(points1[i], {
             duration: duration,
             x: pointsTween1[i].x,
@@ -296,25 +311,29 @@ const HomeLayout = () =>{
             ease: Sine.easeInOut
           });
           
-    
+          // if(i==2){
+          //   console.log("tween1= ",tween1)
+          //   console.log("tween2= ",tween2)
+          // }
           wavyAnimTL.current.add(tween1, -random(duration))
           wavyAnimTL.current.add(tween2, -random(duration))
         }
-        
 
         function update() {
           wavyPath1.setAttribute('d', tweenCardinal(points1, true, 1));
           wavyPath2.setAttribute('d', tweenCardinal(points2, true, 1));
         }
-    
-  
-        console.log('done wavy animation');
-        }
+        console.log('wavyAnimTL',wavyAnimTL.current)
+      
+      }else{
+        console.log('wavyAnimTL.current.pause()')
+        wavyAnimTL.pause()
+      }
       resolve();
     })
-  },[svgFrameValues]);
+  },[svgFrameValues,wavyAnimTL]);
 
-  const extendMenu = useCallback((elem, order=0)=>{
+  const extendMenu = useCallback((elem, order=0, textRef, contentRef)=>{
     const elemParentId = elem.parentElement.id;
 
   //   if(!activeClick){
@@ -329,7 +348,7 @@ const HomeLayout = () =>{
         demoVideoHeight = getDemoVideoHeight(menuExtended.current);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
 
-
+        
         
         
 
@@ -341,7 +360,10 @@ const HomeLayout = () =>{
           callToUnSymetryEachMenu(extendingSize, elemParentId)
           // test()
         ]).then(()=>{
-          // createWavyAnimation(elemParentId, extendingSize['svgFramePackage'])
+          createWavyAnimation(elemParentId, extendingSize['svgFramePackage']);
+          textRef.style.display = 'none';
+          contentRef.style.display ='initial';
+          contentRef.style.zIndex =3;
           // disableClick()
         })
         
