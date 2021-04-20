@@ -53,6 +53,8 @@ const HomeLayout = () =>{
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
   const extendingRequestAnimRef = useRef();
   const wavyAnimTL = useRef(null);
+  const testTL = useRef()
+  // const [wavyAnimTL,setWavyAnimTL] = useState(null);
   // const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
   const biggeredElem = useRef(null);
@@ -65,6 +67,8 @@ const HomeLayout = () =>{
   const _mobileMode = useRef(null);
   const widerMode = useRef(null);
   const _widerMode = useRef(null);
+
+  const wavyPointsRef = useRef();
 
   
   const menuValues = useRef([{id:"work",  order:1, stopColor:["#ff3b29","#ff8c34"], strokeColor:["#ff3b29","#ff8c34"]},
@@ -222,7 +226,13 @@ const HomeLayout = () =>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
       eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage']);
-
+      // if(innerWidth < 800 ){
+      //   menuValues.current.forEach((elem)=>{
+      //     if(biggerElem.current.parentElement.id !== elem.id){
+      //       // eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues);
+      //     }
+      //   })
+      // }
 
       function anim(){
         f += dir;
@@ -251,12 +261,13 @@ const HomeLayout = () =>{
    const createWavyAnimation = useCallback((id, extendingSize)=>{
     return new Promise((resolve,reject)=>{
       // let wavyAnimationTL = null;
-
+     
+      const wavyPath1 = document.getElementById(id + 'SvgWavy1');
+      const wavyPath2 = document.getElementById(id + 'SvgWavy2');
+      
 
       if(window.innerWidth > 800){
         let dataPoints, points1, points2, pointsTween1, pointsTween2;
-        const wavyPath1 = document.getElementById(id + 'SvgWavy1');
-        const wavyPath2 = document.getElementById(id + 'SvgWavy2');
 
 
         console.log('createWavyAnimation is working');
@@ -267,7 +278,7 @@ const HomeLayout = () =>{
         }
       
         
-        // if (wavyAnimTL.current === null) {
+        if (wavyAnimTL.current === null) {
           wavyAnimTL.current = gsap.timeline({
             onUpdate: update
           });
@@ -276,24 +287,23 @@ const HomeLayout = () =>{
         //   console.log('???????')
         //   // wavyAnimTL.current.remove(tween1)
         //   // wavyAnimTL.current.remove(tween2)
-        // }
+        }
   
         
         
         dataPoints = getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmutable.current);
 
       
-        points1 = dataPoints.points1;
-        points2 = dataPoints.points2;
-        
+        wavyPointsRef.current = {points1 : dataPoints.points1, points2 : dataPoints.points2};
+
         pointsTween1 = dataPoints.pointsTween1;
         pointsTween2 = dataPoints.pointsTween2;
 
 
-        for (let i = 0; i < points1.length; i++) {
+        for (let i = 0; i < wavyPointsRef.current.points1.length; i++) {
           let duration = random(svgFrameValuesImmutable.current["speed"][0], svgFrameValuesImmutable.current["speed"][1]);
   
-          let tween1 = gsap.to(points1[i], {
+          let tween1 = gsap.to(wavyPointsRef.current.points1[i], {
             duration: duration,
             x: pointsTween1[i].x,
             y: pointsTween1[i].y,
@@ -302,7 +312,7 @@ const HomeLayout = () =>{
             ease: Sine.easeInOut
           });
     
-          let tween2 = gsap.to(points2[i], {
+          let tween2 = gsap.to(wavyPointsRef.current.points2[i], {
             duration: duration,
             x: pointsTween2[i].x,
             y: pointsTween2[i].y,
@@ -311,23 +321,30 @@ const HomeLayout = () =>{
             ease: Sine.easeInOut
           });
           
-          // if(i==2){
-          //   console.log("tween1= ",tween1)
-          //   console.log("tween2= ",tween2)
-          // }
+    
+
           wavyAnimTL.current.add(tween1, -random(duration))
           wavyAnimTL.current.add(tween2, -random(duration))
-        }
 
-        function update() {
-          wavyPath1.setAttribute('d', tweenCardinal(points1, true, 1));
-          wavyPath2.setAttribute('d', tweenCardinal(points2, true, 1));
         }
-        console.log('wavyAnimTL',wavyAnimTL.current)
+        
+        function update() {
+          wavyPath1.setAttribute('d', tweenCardinal(wavyPointsRef.current.points1, true, 1));
+          wavyPath2.setAttribute('d', tweenCardinal(wavyPointsRef.current.points2, true, 1));
+        }
+      
+        return wavyAnimTL.current
       
       }else{
-        console.log('wavyAnimTL.current.pause()')
-        wavyAnimTL.pause()
+        console.log('wavyAnimTL', wavyAnimTL)
+        // if(wavyAnimTL!==null){
+        //   if(!wavyAnimTL.current.paused()){
+        //     wavyAnimTL.current = wavyAnimTL.current.pause()
+        //     wavyPath1.setAttribute('d', "");
+        //     wavyPath2.setAttribute('d', "");
+        //   }
+        // }
+        // return wavyAnimTL.current
       }
       resolve();
     })
@@ -347,7 +364,6 @@ const HomeLayout = () =>{
   
         demoVideoHeight = getDemoVideoHeight(menuExtended.current);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-
         
         
         

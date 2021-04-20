@@ -309,7 +309,7 @@ function homeGsapTransitionToSymetry800(){
 
 
 export function tweenCardinal(data, closed, tension) {
-  
+
   if (data.length < 1) return "M0 0";
   if (tension == null) tension = 1;
 
