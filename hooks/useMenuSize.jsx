@@ -34,19 +34,18 @@ function useMenuSize(id){
     // console.log('????????????',svgFrameValues)
     // if(!onAnim){
       let size = extendMenuSize==='none' ? svgFrameValues['svgFrameDefault'] : extendMenuSize;
-    // console.log('size', size)
+
       setsvgFramePackSize({width:size['width'], height:size['height']});
       setCanvasSize({width: `calc( 100% + ${svgFrameValues.extraSpace }px)` ,
                       height : `calc( 100% + ${svgFrameValues.extraSpace }px)`, 
                       left: `-${svgFrameValues.extraSpace/2}px`,
                       top: `-${svgFrameValues.extraSpace/2}px`});
-      setSvgFrameSize({style:{width: `calc( 100% - ${svgFrameValues.extraSpace }px)`  , 
+      setSvgFrameSize({style:{width: `calc( 100% - ${svgFrameValues.extraSpace }px)` , 
                               height: `calc( 100% - ${svgFrameValues.extraSpace }px)`,
                               strokeWidth: svgFrameValues["strokeWidth"].rect},
                       transform:`translate(${svgFrameValues.extraSpace/2},${svgFrameValues.extraSpace/2})`
                      });
       setWavyPath({strokeWidth: svgFrameValues["strokeWidth"].wavy})
-                     
       // setsvgFramePackSize({width:"100%", height:"100%"});
       // setCanvasSize({width: `calc( 100% + ${svgFrameValues.extraSpace }px)` ,
       //                 height : `calc( 100% + ${svgFrameValues.extraSpace }px)`, 

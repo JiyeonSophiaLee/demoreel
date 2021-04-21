@@ -5,6 +5,7 @@ import gsap from 'gsap'
 
 import { ExtendMenuContext } from '../HomeLayout.jsx';
 import { MenuSizeContext } from '../HomeLayout.jsx';
+import { useState } from 'react/cjs/react.development';
 
 
 function MenuComponent (props){
@@ -70,11 +71,14 @@ function MenuComponent (props){
       // return <MenuComponentRender refs={{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef, contentRef}} values={props.values} menuSizeContext={menuSizeContext} onClick={onClick} svgFrameRef={svgFrameRef} handlers={{mouseEnterHandler, mouseLeaveHandler}}></MenuComponentRender>
       return <MenuComponentRender vals={{...props.vals, refs:{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef, contentRef}, menuSizeContext:menuSizeContext, onClick:onClick, svgFrameRef:svgFrameRef, handlers:{mouseEnterHandler, mouseLeaveHandler} }}  ></MenuComponentRender>
     },[menuSizeContext[props.vals.id+"_styleLI"],menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack ])
+
   }
 
 
   function MenuComponentRender(props){
     console.log('---------MenuComponentRender---------')
+                               
+      
     return(
         <li id={props.vals.id} style = {props.vals.menuSizeContext[props.vals.id+"_styleLI"]} > 
                 <div className="svgFramePack" onClick={props.vals.onClick} ref={props.vals.svgFrameRef} style = { props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack} onMouseEnter={props.vals.handlers.mouseEnterHandler} onMouseLeave={props.vals.handlers.mouseLeaveHandler}>
@@ -90,6 +94,7 @@ function MenuComponent (props){
                               svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
                               refs: {stopColor1Ref:props.vals.refs.stopColor1Ref, stopColor2Ref:props.vals.refs.stopColor2Ref},
                       }}
+
                     />
                 </div>
                 <div className="contents" ref={props.vals.refs.contentRef}>

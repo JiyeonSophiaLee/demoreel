@@ -57,6 +57,7 @@ const HomeLayout = () =>{
   // const [wavyAnimTL,setWavyAnimTL] = useState(null);
   // const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
+  const biggerElemRect = useRef(null);
   const biggeredElem = useRef(null);
   const menuExtended = useRef(false);
 
@@ -71,14 +72,15 @@ const HomeLayout = () =>{
   const wavyPointsRef = useRef();
 
   
-  const menuValues = useRef([{id:"work",  order:1, stopColor:["#ff3b29","#ff8c34"], strokeColor:["#ff3b29","#ff8c34"]},
-                            {id:"skill", order:2, stopColor:["#cd4dff","#ff4179"], strokeColor:["#cd4dff","#ff4179"]},
-                            {id:"paint", order:3, stopColor:["#ffa934","#30ab98"], strokeColor:["#ffa934","#30ab98"]},
-                            {id:"info",   order:4, stopColor:["#ff6ee2","#5cd3ff"], strokeColor:["#ff6ee2","#5cd3ff"]}
+
+
+  const menuValues = useRef([{id:"work",  order:1, stopColor: ["rgb(220, 51, 35)","rgb(212, 116, 43)"], strokeColor:["#ff3b29", "#ff8c34"]},
+                            {id:"skill", order:2, stopColor: ["rgb(168, 63, 209)","rgb(192, 49, 91)"], strokeColor:["#cd4dff", "#ff4179"]},
+                            {id:"paint", order:3, stopColor: ["rgb(225, 149, 46)","rgb(48, 171, 152)"], strokeColor:["#ffa934", "#30ab98"]},
+                            {id:"info",   order:4, stopColor: ["rgb(200, 86, 177)","rgb(75, 173, 209)"], strokeColor:["#ff6ee2", "#5cd3ff"]}
                           ]);
   const allElems = useRef();                      
   
-
   let demoVideoHeight;
   // let mobileMode, _mobileMode;
   // let widerMode, _widerMode;
@@ -94,7 +96,7 @@ const HomeLayout = () =>{
   //   console.log('working')
   //   work_hookTest('custom hook is testing')
   //   skill_hookTest('what is wrong with you?')
-    
+
     mobileMode.current = innerWidth <= 800 ? true : false; 
     widerMode.current = innerWidth >= 1400 ? true : false; 
     _mobileMode.current = mobileMode.current;
@@ -103,6 +105,7 @@ const HomeLayout = () =>{
     allElems.current = menuValues.current.map((elem)=>{
       return document.getElementById(elem.id);
     })
+
   
     homeGsapSet(menuExtended.current, true);
     updateSvgFrameValues();
@@ -156,9 +159,11 @@ const HomeLayout = () =>{
 
     useEffect(()=>{
 
+
       let updateResize = () =>{
         _mobileMode.current = innerWidth <= 800 ? true : false; 
         _widerMode.current = innerWidth >= 1400 ? true : false;
+
 
         homeGsapSet(menuExtended.current, mobileMode.current !== _mobileMode.current)
 
@@ -183,7 +188,7 @@ const HomeLayout = () =>{
           console.log('changed')
           widerMode.current = !widerMode.current;
         }
-    }
+      }
       window.addEventListener('resize',updateResize);
       return ()=>{
         window.removeEventListener('resize',updateResize);
@@ -196,9 +201,6 @@ const HomeLayout = () =>{
     rect.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
     rect.setAttributeNS(null, "height", biggerElem.current.clientHeight);
   }
-  
-
- 
 
 
   
@@ -231,9 +233,11 @@ const HomeLayout = () =>{
       addCSSmenutransition(null, ...allElems.current);
       addCSSmenutransition(null, biggerElem.current);
 
+
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
+  
       eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage']);
 
       if(innerWidth < 800 ){
@@ -374,6 +378,7 @@ const HomeLayout = () =>{
         console.log('if')
         menuExtended.current = true;
         biggerElem.current = elem;
+        biggerElemRect.current = document.getElementById(elemParentId+"SvgFrame");
         console.log('menuExtended.current turn to true')
   
         demoVideoHeight = getDemoVideoHeight(menuExtended.current);
