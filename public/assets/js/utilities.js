@@ -66,6 +66,18 @@ export function getDemoVideoHeight(menuExpanded){
   }
     return demoVideoHeight;
 }
+export function addCSSmenutransition(biggerElemId, ...elems){
+  elems.forEach((e)=>{
+    if(biggerElemId !== e.parentElement.id){
+
+      e.classList.add('menutransition');
+      console.log('e',e)
+      setTimeout(() => {
+        e.classList.remove('menutransition');
+      }, TV.menuDuration * 1000 );
+    }
+  })
+}
 
 export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
  
@@ -96,12 +108,12 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
     }
   }
   
-  allMenusInOrder.forEach((e)=>{
-    e.classList.add('menutransition');
-    if( e === svgFramePackage ){
-      e.firstElementChild.classList.add("menutransition");
-    }
-  })
+  // allMenusInOrder.forEach((e)=>{
+  //   e.classList.add('menutransition');
+  //   if( e === svgFramePackage ){
+  //     e.firstElementChild.classList.add("menutransition");
+  //   }
+  // })
 
   
   
@@ -118,14 +130,14 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
   //   let getOrder = allMenusInOrder[i][0]-1
   //   reOrder.splice(getOrder,1,getValuesInOrder[i]);
   // }
-  setTimeout(() => {
-    allMenusInOrder.forEach((e)=>{
-      e.classList.remove("menutransition")
-      if (e == svgFramePackage) {
-        e.firstElementChild.classList.remove("menutransition");
-      }
-    })
-  }, TV.menuDuration * 1000 );
+  // setTimeout(() => {
+  //   allMenusInOrder.forEach((e)=>{
+  //     e.classList.remove("menutransition")
+  //     if (e == svgFramePackage) {
+  //       e.firstElementChild.classList.remove("menutransition");
+  //     }
+  //   })
+  // }, TV.menuDuration * 1000 );
 
   var result = 
     { LI: getValuesInOrder, 

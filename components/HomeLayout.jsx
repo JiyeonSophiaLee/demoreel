@@ -4,14 +4,14 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
-import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
 import {gsap, Sine} from 'gsap';
 
 
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
 export const MenuSizeContext = createContext();
-
+export const DisableClickContext = createContext();
 
 
 
@@ -35,8 +35,17 @@ const logoDisplayReducer = (state,action)=>{
       state = { logo_heigher: "none", logo_wider:"initial"}
       return state
     }
+  } 
+}
+const disableClickReducer = (state, action)=>{
+  switch(action){
+    case "enable":
+      false; break;
+    case "disable":
+      true;  break;
+    default:
+      state;
   }
- 
 }
 
 const HomeLayout = () =>{ 
@@ -53,7 +62,7 @@ const HomeLayout = () =>{
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
   const extendingRequestAnimRef = useRef();
   const wavyAnimTL = useRef(null);
-  const testTL = useRef()
+  
   // const [wavyAnimTL,setWavyAnimTL] = useState(null);
   // const wavyAnimTL = useRef(null);
   const biggerElem = useRef(null);
@@ -76,6 +85,7 @@ const HomeLayout = () =>{
                             {id:"paint", order:3, stopColor:["#ffa934","#30ab98"], strokeColor:["#ffa934","#30ab98"]},
                             {id:"info",   order:4, stopColor:["#ff6ee2","#5cd3ff"], strokeColor:["#ff6ee2","#5cd3ff"]}
                           ]);
+  const allElems = useRef();                      
   
 
   let demoVideoHeight;
@@ -84,6 +94,7 @@ const HomeLayout = () =>{
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
+  const [disableClick, disableClickDispatch] = useReducer(logoDisplayReducer,'disable');
   
 
   
@@ -97,6 +108,10 @@ const HomeLayout = () =>{
     widerMode.current = innerWidth >= 1400 ? true : false; 
     _mobileMode.current = mobileMode.current;
     _widerMode.current = widerMode.current;
+
+    allElems.current = menuValues.current.map((elem)=>{
+      return document.getElementById(elem.id);
+    })
   
     homeGsapSet(menuExtended.current, true);
     updateSvgFrameValues();
@@ -121,6 +136,7 @@ const HomeLayout = () =>{
         _svgFrameDefault = TV.svgFrameDefaultSizeSmallerSize;
       }
     }
+  
 
     setSvgFrameValues({ ...svgFrameValues,
                       svgFrameDefault: {width:_svgFrameDefault,  height:_svgFrameDefault},
@@ -133,18 +149,15 @@ const HomeLayout = () =>{
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
       if(menuExtended.current){
-        console.log('menuExtended.current: ',menuExtended.current)
-        // menuValues.current.forEach(()=>{
-        // //   if(biggerElem.current.parentElement.id === menuValues[i]){
-        // //     eval(biggerElem.current.parentElement.id + "_changeHierarchySvgFramePack")(svgFrameValues, "100%");
-        // //   }else{
-        // //     eval(menuValues[i] + "_changeHierarchySvgFramePack")(svgFrameValues);
-        // //   }
-        // })
+        menuValues.current.forEach((elem)=>{
+          if(biggerElem.current.parentElement.id !== elem.id){
+            eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
+          }
+        })
       }else{
         console.log('else', menuValues.current.length)
-        menuValues.current.forEach((value)=>{
-          eval(value['id'] + "_changeHierarchySvgFramePack")(svgFrameValues);
+        menuValues.current.forEach((elem)=>{
+          eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
         });
       }
     }
@@ -219,20 +232,35 @@ const HomeLayout = () =>{
     return new Promise((resolve, reject)=>{  
       const NF = TV['menuDuration']*60;
       const rect = document.getElementById(elemParentId+"SvgFrame");
+      
       let f = 0;
       let dir = 1;
       
+
+      addCSSmenutransition(null, ...allElems.current);
+      addCSSmenutransition(null, biggerElem.current);
+
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
       eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage']);
-      // if(innerWidth < 800 ){
-      //   menuValues.current.forEach((elem)=>{
-      //     if(biggerElem.current.parentElement.id !== elem.id){
-      //       // eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues);
-      //     }
-      //   })
-      // }
+
+      if(innerWidth < 800 ){
+        const size = TV.svgFrameDefaultSizeSmallerSize;
+        const childElems = allElems.current.map((e)=>e.firstElementChild);
+
+        addCSSmenutransition(elemParentId, ...childElems);
+        setSvgFrameValues({...svgFrameValues, svgFrameDefault:{width:size, height:size}})
+        
+        menuValues.current.forEach((elem)=>{
+          if(biggerElem.current.parentElement.id !== elem.id){
+            const rect = document.getElementById(elem.id+"SvgFrame");
+            rect.setAttributeNS(null, "width" , size);
+            rect.setAttributeNS(null, "height", size);
+          }
+        })
+      }           
+      
 
       function anim(){
         f += dir;
@@ -282,11 +310,8 @@ const HomeLayout = () =>{
           wavyAnimTL.current = gsap.timeline({
             onUpdate: update
           });
-        // } else {
-        //   // wavyAnimTL.current.resume();
-        //   console.log('???????')
-        //   // wavyAnimTL.current.remove(tween1)
-        //   // wavyAnimTL.current.remove(tween2)
+        } else {
+          wavyAnimTL.current.resume();
         }
   
         
@@ -336,15 +361,13 @@ const HomeLayout = () =>{
         return wavyAnimTL.current
       
       }else{
-        console.log('wavyAnimTL', wavyAnimTL)
-        // if(wavyAnimTL!==null){
-        //   if(!wavyAnimTL.current.paused()){
-        //     wavyAnimTL.current = wavyAnimTL.current.pause()
-        //     wavyPath1.setAttribute('d', "");
-        //     wavyPath2.setAttribute('d', "");
-        //   }
-        // }
-        // return wavyAnimTL.current
+        if(wavyAnimTL!==null){
+          if(!wavyAnimTL.current.paused()){
+            wavyAnimTL.current = wavyAnimTL.current.pause()
+            wavyPath1.setAttribute('d', "");
+            wavyPath2.setAttribute('d', "");
+          }
+        }
       }
       resolve();
     })
@@ -364,7 +387,6 @@ const HomeLayout = () =>{
   
         demoVideoHeight = getDemoVideoHeight(menuExtended.current);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        
         
         
 
@@ -422,7 +444,9 @@ const HomeLayout = () =>{
             <ExtendMenuContext.Provider value={extendMenu}>
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
-                  <HomeLayoutRender refs={{demoRef, logoRef}} menuValues={menuValues.current} values={svgFrameValuesImmutable.current}/>
+                  <DisableClickContext.Provider  value={{disableClick, disableClickDispatch}}>
+                    <HomeLayoutRender refs={{demoRef, logoRef}} menuValues={menuValues.current} values={svgFrameValuesImmutable.current}/>
+                  </DisableClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
             </ExtendMenuContext.Provider>
