@@ -13,7 +13,7 @@ import InfoContent from './menu/info/InfoContent.jsx'
 function Menu(props){
   console.log('----------Menu-----------')
   return useMemo(()=>{
-    return <MenuRender menuValues={props.menuValues} values={props.values}></MenuRender>
+    return <MenuRender vals={props.vals}></MenuRender>
   },[])
 }
 
@@ -22,29 +22,29 @@ function MenuRender(props){
   console.log('----------MenuRender----------')
   return (
     <section id = "menu">
-      <MenuComponent values = {{id:props.menuValues[0].id,
-                                order:props.menuValues[0].order,
-                                stopColor:props.menuValues[0]["stopColor"],
-                                strokeColor:props.menuValues[0]["strokeColor"],
-                                svgFrameValuesImmutable: props.values, 
+      <MenuComponent vals = {{id:props.vals.menuValues[0].id,
+                                order:props.vals.menuValues[0].order,
+                                stopColor:props.vals.menuValues[0]["stopColor"],
+                                strokeColor:props.vals.menuValues[0]["strokeColor"],
+                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable, 
                                 ivory:<SvgIvory/>, 
                                 contents:<WorkContent/> }}/>
-      <MenuComponent values = {{id:props.menuValues[1].id,
-                                order:props.menuValues[1].order,
-                                stopColor:props.menuValues[1]["stopColor"],
-                                strokeColor:props.menuValues[1]["strokeColor"],
-                                svgFrameValuesImmutable: props.values }}/>
-      <MenuComponent values = {{id:props.menuValues[2].id,
-                                order:props.menuValues[2].order,
-                                stopColor:props.menuValues[2]["stopColor"],
-                                strokeColor:props.menuValues[2]["strokeColor"],
-                                svgFrameValuesImmutable: props.values, 
+      <MenuComponent vals = {{id:props.vals.menuValues[1].id,
+                                order:props.vals.menuValues[1].order,
+                                stopColor:props.vals.menuValues[1]["stopColor"],
+                                strokeColor:props.vals.menuValues[1]["strokeColor"],
+                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable }}/>
+      <MenuComponent vals = {{id:props.vals.menuValues[2].id,
+                                order:props.vals.menuValues[2].order,
+                                stopColor:props.vals.menuValues[2]["stopColor"],
+                                strokeColor:props.vals.menuValues[2]["strokeColor"],
+                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable, 
                                 contents:<PaintContent/> }}/>
-      <MenuComponent values = {{id:props.menuValues[3].id,
-                                order:props.menuValues[3].order,
-                                stopColor:props.menuValues[3]["stopColor"],
-                                strokeColor:props.menuValues[3]["strokeColor"],
-                                svgFrameValuesImmutable: props.values, 
+      <MenuComponent vals = {{id:props.vals.menuValues[3].id,
+                                order:props.vals.menuValues[3].order,
+                                stopColor:props.vals.menuValues[3]["stopColor"],
+                                strokeColor:props.vals.menuValues[3]["strokeColor"],
+                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable, 
                                 contents:<InfoContent/>}}/>
     </section>
     )

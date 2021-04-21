@@ -37,16 +37,6 @@ const logoDisplayReducer = (state,action)=>{
     }
   } 
 }
-const disableClickReducer = (state, action)=>{
-  switch(action){
-    case "enable":
-      false; break;
-    case "disable":
-      true;  break;
-    default:
-      state;
-  }
-}
 
 const HomeLayout = () =>{ 
   console.log('---HomeLayout---')
@@ -56,6 +46,7 @@ const HomeLayout = () =>{
   const [info_setLI_size, info_setsvgFramePackSize, info_styleLI, info_styleSvgFramePack, info_changeHierarchySvgFramePack, info_hookTest] = useMenuSize('info');
 
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
+  const [enableClick, setEnableClick] = useState(true)
   const [svgFrameValues, setSvgFrameValues] = useState({svgFrameDefault:undefined, radius:undefined, wavyPath:undefined, extraSpace:undefined, strokeWidth:{rect:'0px',wavy:'0px'}});
   const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
   // let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false};
@@ -94,7 +85,7 @@ const HomeLayout = () =>{
   
   
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer,{logo_heigher:'none', logo_wider:'none'});
-  const [disableClick, disableClickDispatch] = useReducer(logoDisplayReducer,'disable');
+
   
 
   
@@ -444,9 +435,7 @@ const HomeLayout = () =>{
             <ExtendMenuContext.Provider value={extendMenu}>
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
-                  <DisableClickContext.Provider  value={{disableClick, disableClickDispatch}}>
-                    <HomeLayoutRender refs={{demoRef, logoRef}} menuValues={menuValues.current} values={svgFrameValuesImmutable.current}/>
-                  </DisableClickContext.Provider>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
             </ExtendMenuContext.Provider>
@@ -458,8 +447,9 @@ function HomeLayoutRender(props){
   console.log('--------------HomeLayoutRender-----------------')
   return (
     <>
-      <Demo refs={props.refs}/>
-      <Menu menuValues={props.menuValues} values={props.values}/>
+      <Demo refs={props.vals.refs}/>
+      <Menu vals={{menuValues:props.vals.menuValues, 
+                   svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
     </>
   )
 }
