@@ -71,7 +71,6 @@ export function addCSSmenutransition(biggerElemId, ...elems){
     if(biggerElemId !== e.parentElement.id){
 
       e.classList.add('menutransition');
-      console.log('e',e)
       setTimeout(() => {
         e.classList.remove('menutransition');
       }, TV.menuDuration * 1000 );
