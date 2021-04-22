@@ -44,13 +44,20 @@ function SvgFramePack(props){
       noen2Ref.current.classList.add(`${props.vals.id}Neon2`)
   },[])
 
+
+  
+  //if svgFrame div is not included in this component and put in into SvgFramePackRender,
+  //  'enableClickContenxt' didn't affect to the svgFrame div. 
+  //  if put 'enableClickcontext' as a dependency, it worked, but it rerendered all its children, which is svgFrame
+  //  so, I just bring the div in here.
+  //  I thought I put it into MenuComponentRender, but now, I just kept it in here.
   const mouseLeaveHandler = useCallback(()=>{
-    if(!menuExtended.current){
+    if(enableClickContext !== props.vals.id){
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`)
       noen2Ref.current.classList.remove(`${props.vals.id}Neon2`)
     }
-  },[menuExtended])
+  },[enableClickContext])
 
   
   const onClick = ((e)=>{
@@ -59,11 +66,17 @@ function SvgFramePack(props){
       menuExtended.current = !menuExtended.current
     }
   })
-    
 
-
+  
   return useMemo(()=>{
-    return <SvgFramePackRender vals={{...props.vals, refs:{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef, contentRef}, menuSizeContext:props.vals.menuSizeContext, onClick:onClick, svgFrameRef:svgFrameRef, handlers:{mouseEnterHandler, mouseLeaveHandler} }}/>
+    return (
+      <>
+        <div className="svgFramePack" onClick={onClick} ref={svgFrameRef} style = { props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
+          <SvgFramePackRender vals={{...props.vals, refs:{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef}, menuSizeContext:props.vals.menuSizeContext, svgFrameRef:svgFrameRef}}/>
+        </div>
+        <ContentRender vals={{ref:contentRef, contents: props.vals.contents}}/>
+      </>
+      )
   },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack])
 }
 
@@ -71,26 +84,30 @@ function SvgFramePackRender(props){
   console.log('-------SvgFramePackRender----------')
     return(
       <>
-        <div className="svgFramePack" onClick={props.vals.onClick} ref={props.vals.svgFrameRef} style = { props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack} onMouseEnter={props.vals.handlers.mouseEnterHandler} onMouseLeave={props.vals.handlers.mouseLeaveHandler}>
-            <div className="menuText" ref={props.vals.refs.textRef}>{props.vals.id.toUpperCase()}</div>
-            <div className="neon neon1"  ref={props.vals.refs.noen1Ref}></div>
-            <div className="neon neon2"  ref={props.vals.refs.noen2Ref}></div>
-            <SvgFrame 
-              vals = {{id: props.vals.id,
-                      stopColor: props.vals.stopColor,
-                      strokeColor: props.vals.strokeColor,
-                      ivory: props.vals.ivory,
-                      menuSizeContext: props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"],
-                      svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-                      refs: {stopColor1Ref:props.vals.refs.stopColor1Ref, stopColor2Ref:props.vals.refs.stopColor2Ref},
-              }}
-            />
-        </div>
-        <div className="contents" ref={props.vals.refs.contentRef}>
-            {props.vals.contents}
-        </div>
+        <div className="menuText" ref={props.vals.refs.textRef}>{props.vals.id.toUpperCase()}</div>
+        <div className="neon neon1"  ref={props.vals.refs.noen1Ref}></div>
+        <div className="neon neon2"  ref={props.vals.refs.noen2Ref}></div>
+        <SvgFrame 
+          vals = {{id: props.vals.id,
+                  stopColor: props.vals.stopColor,
+                  strokeColor: props.vals.strokeColor,
+                  ivory: props.vals.ivory,
+                  menuSizeContext: props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"],
+                  svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
+                  refs: {stopColor1Ref:props.vals.refs.stopColor1Ref, stopColor2Ref:props.vals.refs.stopColor2Ref},
+          }}
+        />
       </>
+
     )
 }
-
+function ContentRender(props){
+  return useMemo(()=>{
+    return (
+      <div className="contents" ref={props.vals.ref}>
+        {props.vals.contents}
+      </div>
+    )
+  },[])
+}
 export default SvgFramePack;

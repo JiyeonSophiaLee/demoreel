@@ -54,7 +54,7 @@ const HomeLayout = () =>{
   const wavyAnim = useRef({TL:null, points:null});
   const [enableClick,setEnableClick] = useState(true)
 
-  const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElem:null, biggerElemRect:null, biggeredElem:null})
+  const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null})
 
 
   const demoRef = useRef(null);
@@ -140,7 +140,7 @@ const HomeLayout = () =>{
     if(svgFrameValues.radius !== undefined){
       if(click.current.menuExtended){
         menuValues.current.forEach((elem)=>{
-          if(biggerElem.current.parentElement.id !== elem.id){
+          if(click.current.biggerElemParentId !== elem.id){
             eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
           }
         })
@@ -153,50 +153,50 @@ const HomeLayout = () =>{
     }
   },[svgFrameValues])
 
-    useEffect(()=>{
+  useEffect(()=>{
 
 
-      let updateResize = () =>{
-        _mobileMode.current = innerWidth <= 800 ? true : false; 
-        _widerMode.current = innerWidth >= 1400 ? true : false;
+    let updateResize = () =>{
+      _mobileMode.current = innerWidth <= 800 ? true : false; 
+      _widerMode.current = innerWidth >= 1400 ? true : false;
 
 
-        homeGsapSet(click.current.menuExtended, mobileMode.current !== _mobileMode.current)
+      homeGsapSet(click.current.menuExtended, mobileMode.current !== _mobileMode.current)
 
-        if( click.current.menuExtended ) {
-          console.log('resize is working')
-          remainExtendingMenu();
-          createWavyAnimation(biggerElem.current.parentElement.id, {width:biggerElem.current.clientWidth, height:biggerElem.current.clientHeight})
-        }
-        // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
-
-        if(mobileMode.current !== _mobileMode.current || widerMode.current !== _widerMode.current ){
-          console.log('view is changing');
-          updateSvgFrameValues();
-        }
-
-        
-        if(mobileMode.current !== _mobileMode.current){
-          console.log('changed')
-          mobileMode.current = !mobileMode.current;
-        }
-        if(widerMode.current !== _widerMode.current){
-          console.log('changed')
-          widerMode.current = !widerMode.current;
-        }
+      if( click.current.menuExtended ) {
+        console.log('resize is working')
+        remainExtendingMenu();
+        createWavyAnimation({width:click.current.biggerElem.clientWidth, height:click.current.biggerElem.clientHeight})
       }
-      window.addEventListener('resize',updateResize);
-      return ()=>{
-        window.removeEventListener('resize',updateResize);
+      // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
+
+      if(mobileMode.current !== _mobileMode.current || widerMode.current !== _widerMode.current ){
+        console.log('view is changing');
+        updateSvgFrameValues();
       }
-    },[svgFrameValues])
 
-  function remainExtendingMenu(){
-    const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
+      
+      if(mobileMode.current !== _mobileMode.current){
+        console.log('changed')
+        mobileMode.current = !mobileMode.current;
+      }
+      if(widerMode.current !== _widerMode.current){
+        console.log('changed')
+        widerMode.current = !widerMode.current;
+      }
+    }
+    window.addEventListener('resize',updateResize);
+    return ()=>{
+      window.removeEventListener('resize',updateResize);
+    }
+  },[click, svgFrameValues])
 
-    rect.setAttributeNS(null, "width" , biggerElem.current.clientWidth);
-    rect.setAttributeNS(null, "height", biggerElem.current.clientHeight);
-  }
+  const remainExtendingMenu = useCallback(()=>{
+    // const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
+
+    click.current.biggerElemRect.setAttributeNS(null, "width" , click.current.biggerElem.clientWidth);
+    click.current.biggerElemRect.setAttributeNS(null, "height", click.current.biggerElem.clientHeight);
+  },[click])
 
 
   
@@ -216,8 +216,10 @@ const HomeLayout = () =>{
   //   })
   // }
 
-    
-  const callToUnSymetryEachMenu = useCallback((extendingSize, elemParentId)=>{
+
+  // -----   the reason I put svgFrameValue as an argument, not just using svgFrameValue as a Ref,
+  // ----- is I don't want to rerender all this functions whenever svgFrameValues changes.
+  const callToUnSymetryEachMenu = useCallback((_svgFrameValues, extendingSize, elemParentId)=>{
     return new Promise((resolve, reject)=>{  
       const NF = TV['menuDuration']*60;
       
@@ -233,18 +235,20 @@ const HomeLayout = () =>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
   
-      eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, extendingSize['svgFramePackage']);
+      eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, extendingSize['svgFramePackage']);
 
       if(innerWidth < 800 ){
         const size = TV.svgFrameDefaultSizeSmallerSize;
         const childElems = allElems.current.map((e)=>e.firstElementChild);
 
         addCSSmenutransition(elemParentId, ...childElems);
-        setSvgFrameValues({...svgFrameValues, svgFrameDefault:{width:size, height:size}})
         
         menuValues.current.forEach((elem)=>{
-          if(click.current.biggerElem.parentElement.id !== elem.id){
+          if(click.current.biggerElemParentId !== elem.id){
             const rect = document.getElementById(elem.id+"SvgFrame");
+
+            eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues,{width:size, height:size});
+            
             rect.setAttributeNS(null, "width" , size);
             rect.setAttributeNS(null, "height", size);
           }
@@ -263,22 +267,22 @@ const HomeLayout = () =>{
         if(!(f % NF)){
           console.log("=======finished=======");
           // onAnim = false;
-          eval(elemParentId + "_changeHierarchySvgFramePack")(svgFrameValues, {width:"100%",height:"100%"});
+          eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, {width:"100%",height:"100%"});
           cancelAnimationFrame(extendingRequestAnimRef.current);
           resolve();
         }
       }
       anim();
     })
-  },[svgFrameValues])
+  },[])
 
 
   
-   const createWavyAnimation = useCallback((id, extendingSize)=>{
+   const createWavyAnimation = useCallback((extendingSize)=>{
     return new Promise((resolve,reject)=>{
       // let wavyAnimationTL = null;
      
-
+      
       if(window.innerWidth > 800){
         let dataPoints, pointsTween1, pointsTween2;
 
@@ -300,7 +304,6 @@ const HomeLayout = () =>{
         }
   
         dataPoints = getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmutable.current);
-
       
         wavyAnim.current.points = {points1 : dataPoints.points1, points2 : dataPoints.points2};
 
@@ -363,10 +366,11 @@ const HomeLayout = () =>{
     }else{
       if( click.current.menuExtended=== false){
         console.log('if')
-        setEnableClick(false)
+        setEnableClick(elemParentId)
         click.current.onAnim = true;
         click.current.menuExtended = true;
         click.current.biggerElem = elem;
+        click.current.biggerElemParentId = elemParentId;
         click.current.biggerElemRect = document.getElementById(elemParentId+"SvgFrame");
         click.current.wavyPath1 = document.getElementById(elemParentId + 'SvgWavy1');
         click.current.wavyPath2 = document.getElementById(elemParentId + 'SvgWavy2');
@@ -382,10 +386,10 @@ const HomeLayout = () =>{
           logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
           document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
           // svgFrameRef.extendMenuIf(demoVideoHeight),
-          callToUnSymetryEachMenu(extendingSize, elemParentId)
+          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId)
           // test()
         ]).then(()=>{
-          createWavyAnimation(elemParentId, extendingSize['svgFramePackage']);
+          createWavyAnimation(extendingSize['svgFramePackage']);
           textRef.style.display = 'none';
           contentRef.style.display ='initial';
           contentRef.style.zIndex =3;
