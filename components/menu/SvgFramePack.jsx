@@ -10,7 +10,6 @@ function SvgFramePack(props){
   const enableClickContext = useContext(EnableClickContext);
 
 
-  const menuExtended = useRef(false)
   const svgFrameRef = useRef();
   const noen1Ref = useRef(null);
   const noen2Ref = useRef(null);
@@ -60,12 +59,11 @@ function SvgFramePack(props){
   },[enableClickContext])
 
   
-  const onClick = ((e)=>{
-    if(enableClickContext){
+  const onClick = (e)=>{
+    
       extendMenuContext(e.currentTarget, props.vals.order, textRef.current, contentRef.current);
-      menuExtended.current = !menuExtended.current
-    }
-  })
+ 
+  }
 
   
   return useMemo(()=>{

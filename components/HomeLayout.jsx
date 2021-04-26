@@ -1,5 +1,6 @@
 import Demo from './Demo.jsx'
 import Menu from './Menu.jsx'
+import Astronaut from './Astronaut.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef, useMemo} from "react"
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
@@ -381,22 +382,22 @@ const HomeLayout = () =>{
         
         
 
-        Promise.all([
-          homeGsapTransition(click.current.menuExtended),
-          logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-          document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
-          // svgFrameRef.extendMenuIf(demoVideoHeight),
-          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId)
-          // test()
-        ]).then(()=>{
-          createWavyAnimation(extendingSize['svgFramePackage']);
-          textRef.style.display = 'none';
-          contentRef.style.display ='initial';
-          contentRef.style.zIndex =3;
-          // disableClick()
-        }).then(()=>{
-          // click.current.onAnim =false;
-        })
+        // Promise.all([
+        //   homeGsapTransition(click.current.menuExtended),
+        //   logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+        //   document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+        //   // svgFrameRef.extendMenuIf(demoVideoHeight),
+        //   callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId)
+        //   // test()
+        // ]).then(()=>{
+        //   createWavyAnimation(extendingSize['svgFramePackage']);
+        //   textRef.style.display = 'none';
+        //   contentRef.style.display ='initial';
+        //   contentRef.style.zIndex =3;
+        //   // disableClick()
+        // }).then(()=>{
+        //   // click.current.onAnim =false;
+        // })
         
         
   
@@ -457,6 +458,7 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
+      <Astronaut/>
     </>
   )
 }
