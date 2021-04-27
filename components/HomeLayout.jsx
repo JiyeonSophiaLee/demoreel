@@ -53,10 +53,10 @@ const HomeLayout = () =>{
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
-  const [enableClick,setEnableClick] = useState(true)
+  const [enableClick,setEnableClick] = useState(true);
 
   const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null})
-
+  const astronautActions = useRef(null);
 
   const demoRef = useRef(null);
   const logoRef = useRef(null);
@@ -380,8 +380,8 @@ const HomeLayout = () =>{
         demoVideoHeight = getDemoVideoHeight(click.current.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
         
-        
-
+        console.log(astronautActions.current[elemParentId])
+        astronautActions.current[elemParentId].current.play()
         // Promise.all([
         //   homeGsapTransition(click.current.menuExtended),
         //   logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
@@ -433,7 +433,7 @@ const HomeLayout = () =>{
 
       
     }
-  },[svgFrameValues]) 
+  },[svgFrameValues ]) 
 
  
    return useMemo(()=>{
@@ -442,7 +442,7 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <EnableClickContext.Provider value = {enableClick}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
                   </EnableClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
@@ -458,7 +458,7 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-      <Astronaut/>
+      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions}}/>
     </>
   )
 }

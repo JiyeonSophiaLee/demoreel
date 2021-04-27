@@ -8,16 +8,19 @@ import * as THREE from 'three';
 import { EnableClickContext} from './HomeLayout.jsx';
 
 
-function Model() {
+function Model(props) {
   const gltf = useLoader(GLTFLoader, './assets/gltf/astronaut_v07.gltf');
-  const mixer = new THREE.AnimationMixer(gltf.scene);
-  const actionNumb = useRef({work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'})
+  const mixer = useRef(new THREE.AnimationMixer(gltf.scene));
 
+  const fallAction = useRef(mixer.current.clipAction( gltf.animations[ 0 ] ));
+  const jumpAction = useRef(mixer.current.clipAction( gltf.animations[ 1 ] ));
+  const walkAction = useRef(mixer.current.clipAction( gltf.animations[ 2 ] ));
+  const waveAction = useRef(mixer.current.clipAction( gltf.animations[ 3 ] ));
 
-  const fallAction = useRef(mixer.clipAction( gltf.animations[ 0 ] ).stop());
-  const jumpAction = useRef(mixer.clipAction( gltf.animations[ 1 ] ).stop());
-  const walkAction = useRef(mixer.clipAction( gltf.animations[ 2 ] ).stop());
-  const waveAction = useRef(mixer.clipAction( gltf.animations[ 3 ] ).stop());
+  useEffect(()=>{
+    props.vals.astronautActions.current = {work: waveAction, skill: walkAction, paint: jumpAction, info: fallAction }
+  },[])
+  
 
 
   gltf.scene.traverse(child=>{
@@ -26,21 +29,19 @@ function Model() {
     }
   })
   useFrame((state, delta)=>{
-    mixer.update(delta)
+    mixer.current.update(delta);
+    state.camera.lookAt(0,1,0)
   })
+
   return  (
-
-    // <Suspense fallback={null}>
       <primitive object={gltf.scene} />
-    // </Suspense>
-
     )
     
   
 }
 
 
-function Astronaut(){
+function Astronaut(props){
 
   return(
     <div id='canvas-container'>
@@ -49,7 +50,7 @@ function Astronaut(){
           {/* <PerspectiveCamera position={[0,0,15]}  /> */}
           <pointLight intensity={1} color="rgb(220,51,35)" position={[-1,3,2]}/>
           <directionalLight intensity={1} color="rgb(43,174,212)" position={[1.5,4,-2]}/>
-          <Model/>
+          <Model vals = {props.vals}/>
         </Suspense>
       </Canvas>
     </div>

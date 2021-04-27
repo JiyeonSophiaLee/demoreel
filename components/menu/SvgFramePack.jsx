@@ -75,7 +75,7 @@ function SvgFramePack(props){
         <ContentRender vals={{ref:contentRef, contents: props.vals.contents}}/>
       </>
       )
-  },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack])
+  },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack,enableClickContext])
 }
 
 function SvgFramePackRender(props){
