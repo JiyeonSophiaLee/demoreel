@@ -12,7 +12,7 @@ import {gsap, Sine} from 'gsap';
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
 export const MenuSizeContext = createContext();
-export const EnableClickContext = createContext();
+export const ClickContext = createContext();
 
 
 
@@ -53,7 +53,7 @@ const HomeLayout = () =>{
   // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
-  const [enableClick,setEnableClick] = useState(true);
+  const [clickContext,setClickContext] = useState(false);
 
   const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null})
   const astronautActions = useRef(null);
@@ -359,6 +359,22 @@ const HomeLayout = () =>{
     })
   },[svgFrameValues]);
 
+  const mouseMoveHandler=useCallback((e)=>{
+    console.log("mouseMoveHandler")
+    // console.log('????',{ x: e.offsetX, y: e.offsetY })
+  },[])
+  useEffect(()=>{
+    console.log('clickcontext is working')
+    // if(clickContext){
+      // console.log('if')
+      window.addEventListener('mousemove', mouseMoveHandler);
+    // }else {
+    //   console.log('else')
+      window.removeEventListener('mousemove', mouseMoveHandler)
+    // };
+    return ()=> window.removeEventListener('mousemove', mouseMoveHandler);
+  },[])
+
   const extendMenu = useCallback((elem, order=0, textRef, contentRef)=>{
     const elemParentId = elem.parentElement.id;
 
@@ -366,8 +382,7 @@ const HomeLayout = () =>{
       return;
     }else{
       if( click.current.menuExtended=== false){
-        console.log('if')
-        setEnableClick(elemParentId)
+        setClickContext(elemParentId)
         click.current.onAnim = true;
         click.current.menuExtended = true;
         click.current.biggerElem = elem;
@@ -380,8 +395,8 @@ const HomeLayout = () =>{
         demoVideoHeight = getDemoVideoHeight(click.current.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
         
-        console.log(astronautActions.current[elemParentId])
-        astronautActions.current[elemParentId].current.play()
+        // console.log(astronautActions.current[elemParentId])
+        // astronautActions.current[elemParentId].current.play()
         // Promise.all([
         //   homeGsapTransition(click.current.menuExtended),
         //   logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
@@ -441,9 +456,9 @@ const HomeLayout = () =>{
             <ExtendMenuContext.Provider value={extendMenu}>
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
-                  <EnableClickContext.Provider value = {enableClick}>
+                  <ClickContext.Provider value = {clickContext}>
                     <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
-                  </EnableClickContext.Provider>
+                  </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
             </ExtendMenuContext.Provider>
@@ -458,7 +473,7 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions}}/>
+      {/* <Astronaut vals={{astronautActions: props.vals.refs.astronautActions}}/> */}
     </>
   )
 }

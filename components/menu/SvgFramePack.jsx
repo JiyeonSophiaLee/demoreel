@@ -2,12 +2,12 @@ import {  useContext, useRef, useEffect, useCallback, useMemo } from "react/cjs/
 import gsap from 'gsap';
 import SvgFrame from './SvgFrame.jsx';
 
-import { ExtendMenuContext, EnableClickContext} from '../HomeLayout.jsx';
+import { ExtendMenuContext, ClickContext} from '../HomeLayout.jsx';
 
 function SvgFramePack(props){
   console.log('-------SvgFramePack----------')
   const extendMenuContext = useContext(ExtendMenuContext);
-  const enableClickContext = useContext(EnableClickContext);
+  const clickContext = useContext(ClickContext);
 
 
   const svgFrameRef = useRef();
@@ -51,12 +51,12 @@ function SvgFramePack(props){
   //  so, I just bring the div in here.
   //  I thought I put it into MenuComponentRender, but now, I just kept it in here.
   const mouseLeaveHandler = useCallback(()=>{
-    if(enableClickContext !== props.vals.id){
+    if(clickContext !== props.vals.id){
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`)
       noen2Ref.current.classList.remove(`${props.vals.id}Neon2`)
     }
-  },[enableClickContext])
+  },[clickContext])
 
   
   const onClick = (e)=>{
@@ -75,7 +75,7 @@ function SvgFramePack(props){
         <ContentRender vals={{ref:contentRef, contents: props.vals.contents}}/>
       </>
       )
-  },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack,enableClickContext])
+  },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack])
 }
 
 function SvgFramePackRender(props){
