@@ -5,9 +5,9 @@ import SvgFrame from './SvgFrame.jsx';
 import { ExtendMenuContext, ClickContext} from '../HomeLayout.jsx';
 
 function SvgFramePack(props){
-  console.log('-------SvgFramePack----------')
   const extendMenuContext = useContext(ExtendMenuContext);
   const clickContext = useContext(ClickContext);
+  console.log('-------SvgFramePack----------',clickContext)
 
 
   const svgFrameRef = useRef();

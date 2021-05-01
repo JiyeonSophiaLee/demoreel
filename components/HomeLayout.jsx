@@ -5,7 +5,7 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
-import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition, callAstronaut} from '../public/assets/js/utilities.js'
 import {gsap, Sine} from 'gsap';
 
 
@@ -54,9 +54,10 @@ const HomeLayout = () =>{
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
   const [clickContext,setClickContext] = useState(false);
-
   const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null})
+  
   const astronautActions = useRef(null);
+  const cameraRef = useRef(null)
 
   const demoRef = useRef(null);
   const logoRef = useRef(null);
@@ -359,21 +360,21 @@ const HomeLayout = () =>{
     })
   },[svgFrameValues]);
 
-  const mouseMoveHandler=useCallback((e)=>{
-    console.log("mouseMoveHandler")
-    // console.log('????',{ x: e.offsetX, y: e.offsetY })
+ const mouseMoveHandler=useCallback((e)=>{
+  cameraRef.current.position.x =10;
   },[])
   useEffect(()=>{
-    console.log('clickcontext is working')
-    // if(clickContext){
-      // console.log('if')
+    console.log('clickcontext is working', clickContext)
+    if(clickContext !== false ){
+      console.log('if')
       window.addEventListener('mousemove', mouseMoveHandler);
-    // }else {
-    //   console.log('else')
+    }else {
+      console.log('else')
       window.removeEventListener('mousemove', mouseMoveHandler)
-    // };
+    };
     return ()=> window.removeEventListener('mousemove', mouseMoveHandler);
-  },[])
+  },[clickContext])
+
 
   const extendMenu = useCallback((elem, order=0, textRef, contentRef)=>{
     const elemParentId = elem.parentElement.id;
@@ -390,11 +391,12 @@ const HomeLayout = () =>{
         click.current.biggerElemRect = document.getElementById(elemParentId+"SvgFrame");
         click.current.wavyPath1 = document.getElementById(elemParentId + 'SvgWavy1');
         click.current.wavyPath2 = document.getElementById(elemParentId + 'SvgWavy2');
-
+        
   
         demoVideoHeight = getDemoVideoHeight(click.current.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        
+
+        callAstronaut(cameraRef.current)
         // console.log(astronautActions.current[elemParentId])
         // astronautActions.current[elemParentId].current.play()
         // Promise.all([
@@ -457,7 +459,7 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <ClickContext.Provider value = {clickContext}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions, cameraRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
                   </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
@@ -473,7 +475,7 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-      {/* <Astronaut vals={{astronautActions: props.vals.refs.astronautActions}}/> */}
+      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions, cameraRef: props.vals.refs.cameraRef}}/>
     </>
   )
 }

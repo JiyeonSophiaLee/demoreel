@@ -6,7 +6,7 @@ import {PerspectiveCamera} from "@react-three/drei";
 import { GLTFLoader } from '../public/assets/gltf/scripts/GLTFLoader.js';
 // import Model from './Astronaut_v07'
 import * as THREE from 'three';
-import { EnableClickContext} from './HomeLayout.jsx';
+import { ClickContext} from './HomeLayout.jsx';
 
 function Model(props) {
   const gltf = useLoader(GLTFLoader, './assets/gltf/astronaut_v07.gltf');
@@ -40,52 +40,26 @@ function Model(props) {
   
 }
 
-// function DirLight(){
-//   const [ref,light] = useResource();
-//   return(
-//     <>
-//       <directionalLight 
-//             ref={ref}
-//             castShadow 
-//             intensity={10} 
-//             color="rgb(43,174,212)"
-//             position={[1.5,4,-2]}
-//             shadow-mapSize-width = {1024}
-//             shadow-mapSize-height = {1024}
-//             shadow-camera-far={40}
-//             shadow-camera-near={0.1}
-//             shadow-camera-left={-10}
-//             shadow-camera-right={10}
-//             shadow-camera-top={10}
-//             shadow-camera-bottom={-10}
-//               />
-//               {light && (
-//                 <>
-//                   <primitive object={light.target} position={[-3, 0, 0]} />
-//                   <directionalLightHelper args={[light, 5]} />
-//                 </>
-//               )}
-//     </>
-//   )
-
-// }
-
 function Rig() {
-  const { camera, mouse } = useThree()
-  const vec = new THREE.Vector3()
-  return useFrame(() => {
-    // console.log('???',mouse)
-    camera.position.lerp(vec.set(mouse.x * 30, mouse.y * 110, camera.position.z), 20)})
+  const clickContext = useContext(ClickContext)
+  const { camera } = useThree()
+  // const vec = new THREE.Vector3()
+
+  console.log('Rif is called',clickContext);
+
+  
+ 
+  // // camera.position.lerp(vec.set(mouse.x * 30, mouse.y * 110, camera.position.z), 20)
+  return <mesh onPointerMove={(e)=>console.log('ee',e)}/>
 }
 function Astronaut(props){
   const [pixelRatio, setPixelRatio] = useState(1);
   const mouse = useRef([0,0]);
   // const onMouseMove =(e)=>{console.log(e)}
-  const cameraRef = useRef()
+  console.log('props.vals.cameraRef', props.vals.cameraRef)
 
   useEffect(()=>{ 
     setPixelRatio(window.devicePixelRatio)
-    console.log('cameraRef', cameraRef.current)
     // dirLitRef.current.target = [-3,0,0];
   },[])
 
@@ -102,7 +76,7 @@ function Astronaut(props){
         onMouseMove={({ clientX: x, clientY: y }) => console.log(clientX)}
         >
         <Suspense fallback={null}>
-          {/* <PerspectiveCamera ref={cameraRef} position={[0,0,5]} makeDefault lookAt={new THREE.Vector3(0, 1, 0)}/> */}
+          <PerspectiveCamera ref={props.vals.cameraRef} position={[0,0,5]} makeDefault lookAt={new THREE.Vector3(0, 1, 0)}/>
           <pointLight intensity={1} color="rgb(220,51,35)" position={[-1,3,2]}  />
           <directionalLight 
             castShadow 

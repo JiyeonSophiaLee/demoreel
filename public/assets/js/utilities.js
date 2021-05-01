@@ -489,3 +489,67 @@ export function getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmut
   }
 
 };
+
+
+//Threejs ---------------------------------
+
+export function callAstronaut(camera, elemId){
+  let camGoalPositionX, camGoalPositionY, camGoalPositionZ;
+  let camGaolRotationX, camGaolRotationY, camGaolRotationZ;
+    if(elemId === 'work'){
+      camGoalPositionX = 0;
+      camGoalPositionY = 1;
+      camGoalPositionZ = 0;
+      
+      camGaolRotationX = 0;
+      camGaolRotationY = 0;
+      camGaolRotationZ = 0;
+      // camGoalPositionX = 5 + innerHeight/1400 ;
+      // camGoalPositionY = 1.3;
+      // camGoalPositionZ = innerWidth/470 - 0.97
+      
+      // camGaolRotationX = 0;
+      // camGaolRotationY = 1.7;
+      // camGaolRotationZ = -0.2;
+    }else if(elemId === 'skill'){
+      camGoalPositionX = 0.05 + innerWidth/1000 - innerHeight/2400;
+      camGoalPositionY = 1.67 ;
+      camGoalPositionZ = 3.27;
+
+      camGaolRotationX = -0.25;
+      camGaolRotationY = -0.2;
+      camGaolRotationZ = 0;
+    }else if(elemId === 'paint'){
+      camGoalPositionX = 4.11- innerWidth/860 + innerHeight/1000; 
+      camGoalPositionY = innerWidth/2100 + 3.4;
+      camGoalPositionZ = innerWidth/400 + 1.4;
+
+      camGaolRotationX = -1.2;
+      camGaolRotationY = 0.9;
+      camGaolRotationZ = 1;
+    }else if(elemId === 'info'){
+      camGoalPositionX = -2.5 + innerWidth/1225 - innerHeight/2000;
+      camGoalPositionY = 4.44 - innerWidth/2550;
+      camGoalPositionZ = 4;
+
+      camGaolRotationX = -0.96;
+      camGaolRotationY = -0.65;
+      camGaolRotationZ = -0.71;
+    }
+
+
+
+    camera.position.x = camGoalPositionX;
+    console.log(camera.position)
+    // camera.position.y = camGoalPositionY;
+    // camera.position.z = camGoalPositionZ;
+
+    // camera.rotation.x = camGaolRotationX;
+    // camera.rotation.y = camGaolRotationY;
+    // camera.rotation.z = camGaolRotationZ;
+
+
+    // callClientX = cameraPositionX;
+    // callClientY = cameraPositionY;
+
+}
