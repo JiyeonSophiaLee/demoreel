@@ -7,7 +7,7 @@ import { ExtendMenuContext, ClickContext} from '../HomeLayout.jsx';
 function SvgFramePack(props){
   const extendMenuContext = useContext(ExtendMenuContext);
   const clickContext = useContext(ClickContext);
-  console.log('-------SvgFramePack----------',clickContext)
+  console.log('-------SvgFramePack----------')
 
 
   const svgFrameRef = useRef();
@@ -51,7 +51,7 @@ function SvgFramePack(props){
   //  so, I just bring the div in here.
   //  I thought I put it into MenuComponentRender, but now, I just kept it in here.
   const mouseLeaveHandler = useCallback(()=>{
-    if(clickContext !== props.vals.id){
+    if(clickContext.biggerElemParentId !== props.vals.id){
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`)
       noen2Ref.current.classList.remove(`${props.vals.id}Neon2`)
