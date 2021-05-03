@@ -447,7 +447,7 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <ClickContext.Provider value = {clickContext}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current}}/>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
                   </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>

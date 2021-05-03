@@ -493,63 +493,74 @@ export function getDataPoints(extendingSize, svgFrameValues, svgFrameValuesImmut
 
 //Threejs ---------------------------------
 
-export function callAstronaut(camera, elemId){
-  let camGoalPositionX, camGoalPositionY, camGoalPositionZ;
-  let camGaolRotationX, camGaolRotationY, camGaolRotationZ;
+export function callAstronaut(elemId){
+
+  let camGoal = {position:{x:null, y:null, z:null},
+                 rotation:{x:null, y:null, z:null}}
     if(elemId === 'work'){
-      camGoalPositionX = 0;
-      camGoalPositionY = 1;
-      camGoalPositionZ = 0;
+      camGoal.position.x = 5 + innerHeight/1400 ;
+      camGoal.position.y = 1.3;
+      camGoal.position.z = innerWidth/470 - 0.97
       
-      camGaolRotationX = 0;
-      camGaolRotationY = 0;
-      camGaolRotationZ = 0;
-      // camGoalPositionX = 5 + innerHeight/1400 ;
-      // camGoalPositionY = 1.3;
-      // camGoalPositionZ = innerWidth/470 - 0.97
-      
-      // camGaolRotationX = 0;
-      // camGaolRotationY = 1.7;
-      // camGaolRotationZ = -0.2;
+      camGoal.rotation.x = 0;
+      camGoal.rotation.y = 1.7;
+      camGoal.rotation.z = -0.2;
     }else if(elemId === 'skill'){
-      camGoalPositionX = 0.05 + innerWidth/1000 - innerHeight/2400;
-      camGoalPositionY = 1.67 ;
-      camGoalPositionZ = 3.27;
+      camGoal.position.x = 0.05 + innerWidth/1000 - innerHeight/2400;
+      camGoal.position.y = 1.67 ;
+      camGoal.position.z = 3.27;
 
-      camGaolRotationX = -0.25;
-      camGaolRotationY = -0.2;
-      camGaolRotationZ = 0;
+      camGoal.rotation.x = -0.25;
+      camGoal.rotation.y = -0.2;
+      camGoal.rotation.z = 0;
     }else if(elemId === 'paint'){
-      camGoalPositionX = 4.11- innerWidth/860 + innerHeight/1000; 
-      camGoalPositionY = innerWidth/2100 + 3.4;
-      camGoalPositionZ = innerWidth/400 + 1.4;
+      camGoal.position.x = 4.11- innerWidth/860 + innerHeight/1000; 
+      camGoal.position.y = innerWidth/2100 + 3.4;
+      camGoal.position.z = innerWidth/400 + 1.4;
 
-      camGaolRotationX = -1.2;
-      camGaolRotationY = 0.9;
-      camGaolRotationZ = 1;
+      camGoal.rotation.x = -1.2;
+      camGoal.rotation.y = 0.9;
+      camGoal.rotation.z = 1;
     }else if(elemId === 'info'){
-      camGoalPositionX = -2.5 + innerWidth/1225 - innerHeight/2000;
-      camGoalPositionY = 4.44 - innerWidth/2550;
-      camGoalPositionZ = 4;
+      camGoal.position.x = -2.5 + innerWidth/1225 - innerHeight/2000;
+      camGoal.position.y = 4.44 - innerWidth/2550;
+      camGoal.position.z = 4;
 
-      camGaolRotationX = -0.96;
-      camGaolRotationY = -0.65;
-      camGaolRotationZ = -0.71;
+      camGoal.rotation.x = -0.96;
+      camGoal.rotation.y = -0.65;
+      camGoal.rotation.z = -0.71;
     }
 
+    return camGoal
 
+    // // if(biggeredElem ===null){
+    // //   camera.position.x = camGoalPositionX;
+    // //   camera.position.y = camGoalPositionY;
+    // //   camera.position.z = camGoalPositionZ;
+  
+    // //   camera.rotation.x = camGaolRotationX;
+    // //   camera.rotation.y = camGaolRotationY;
+    // //   camera.rotation.z = camGaolRotationZ;
+    // // }else{
+    //   cameraChange(camera,{x:camGoalPositionX, y:camGoalPositionY, z:camGoalPositionZ},{x:camGaolRotationX, y:camGaolRotationY, z:camGaolRotationZ})
+    // // }
 
-    camera.position.x = camGoalPositionX;
-    console.log(camera.position)
-    // camera.position.y = camGoalPositionY;
-    // camera.position.z = camGoalPositionZ;
+    // // gsap.to(camera.position,{
+    // //   duration:1,
+    // //   x:camGoalPositionX,
+    // //   y:camGoalPositionY,
+    // //   z:camGoalPositionZ,
+    // //   ease:"none"
+    // // })
+    // // gsap.to(camera.rotation,{
+    // //   duration:1,
+    // //   x:camGaolRotationX,
+    // //   y:camGaolRotationY,
+    // //   z:camGaolRotationZ,
+    // //   ease:"none"
+    // // },0)
+    // // callClientX = cameraPositionX;
+    // // callClientY = cameraPositionY;
 
-    // camera.rotation.x = camGaolRotationX;
-    // camera.rotation.y = camGaolRotationY;
-    // camera.rotation.z = camGaolRotationZ;
-
-
-    // callClientX = cameraPositionX;
-    // callClientY = cameraPositionY;
 
 }
