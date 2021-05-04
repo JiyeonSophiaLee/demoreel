@@ -114,6 +114,7 @@
 
 #demo, #menu{
   width:50%;
+  // pointer-events: none;
 }
   @media (max-width:800px){
     #demo,#menu{

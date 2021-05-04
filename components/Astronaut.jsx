@@ -44,37 +44,87 @@ function Model(props) {
 
 function Rig(props) {
   console.log('-------Rig-----------' )
-  const { camera, mouse } = useThree();
-  const [camGoal,setGoal] = useState({position:{x:0,y:0,z:5}, rotation:{x:0,y:0,z:0}});
+  const { camera } = useThree();
+  const [camGoal,setCamGoal] = useState({position:{x:0,y:0,z:5}, rotation:{x:0,y:0,z:0}, on:false});
   const vec = new THREE.Vector3();
-  let mouseX= 0;
-  let mouseY= 0;
-
+  // let mouseX= 0;
+  // let mouseY= 0;
+  var lastMove = Date.now();
   
   useEffect(()=>{
     if(props.vals.clickContext.menuExtended!==false){
-      setGoal( callAstronaut(props.vals.clickContext.biggerElemParentId) );
+      setCamGoal( {on:true, ...callAstronaut(props.vals.clickContext.biggerElemParentId)} );
     }
   },[props.vals.clickContext])
+  
+  const mouseMoveHandler = (e)=>{
+    if (Date.now() - lastMove < 30) { 
+      return;
+    } else {
+      lastMove = Date.now();
+    }
 
+    camera.position.x = e.clientX * 0.001;
+    camera.position.y = camGoal.position.y;
+    camera.position.z = camGoal.position.z;
+    // mouseX = e.clientX;
+    // mouseY = e.clientY;
+    console.log("in mousemove event mouseX",e.clientX,camera.position.x)
+  }
+    
+
+  useEffect(() => {
+    if (camGoal.on===false){
+      window.addEventListener("mousemove", mouseMoveHandler);
+    }
+    return () => window.removeEventListener("mousemove", mouseMoveHandler);
+  },[camGoal]);
+
+  
   useFrame(() =>{
-    if(camGoal.position.x === camera.position.x){
-      // camera.position.x = camGoal.position.x
-      // camera.position.y = camGoal.position.y
-      // camera.position.z = camGoal.position.z
-      camera.position.lerp(vec.set(mouseX * 2, mouseY * 1, camera.position.z), 0.1)
+    // console.log('mouse',mouse.x)
+    if(camGoal.on ===false){
+      // console.log('if')
+      // console.log('mouseX', mouseX)
+      // camera.position.lerp(vec.set(mouseX * 10, mouseY * 10, camera.position.z), 0.1)
     }else{
+      // console.log('else')
       camera.position.lerp(vec.set(camGoal.position.x,camGoal.position.y,camGoal.position.z), 0.1)
+      console.log(camGoal.position.x,camera.position.x)
+      if(camGoal.position.x === parseFloat(camera.position.x.toFixed(2))) {
+        setCamGoal({...camGoal, on:false});
+        console.log('camGoal.on',camGoal.on)
+      }
+
     }
   })
-  // // // camera.position.lerp(vec.set(mouse.x * 30, mouse.y * 110, camera.position.z), 20)
-  return <mesh />
+  return <>
+  {/* <Mouse vals={setCamGoal}/> */}
+  </>
+}
+function Mouse(props){
+  
+  const mouseMoveHandler = (e)=>{
+    // mouseX = e.clientX;
+    // mouseY = e.clientY;
+    console.log('mouseX ',e.clientX)
+    props.va
+  }
+  useEffect(() => {
+    // if (clickContext.menuExtended!=false){
+    //   console.log('addEventListener')
+      window.addEventListener("mousemove", mouseMoveHandler);
+    // }
+    return () => window.removeEventListener("mousemove", mouseMoveHandler);
+  },[]);
+
+  return <></>
 }
 function Astronaut(props){
   const [pixelRatio, setPixelRatio] = useState(1);
   const clickContext = useContext(ClickContext);
   const cameraRef = useRef(null);
-  console.log('---------Astronaut----------', clickContext)
+  console.log('---------Astronaut----------')
 
   useEffect(()=>{ 
     setPixelRatio(window.devicePixelRatio)
@@ -110,18 +160,18 @@ function Astronaut(props){
   //   }
   // },[clickContext])
   
-  const mouseMoveHandler = (e)=>{
-    // mouseX = e.clientX;
-    // mouseY = e.clientY;
-    console.log('mouseX ',e.clientX)
-  }
-  useEffect(() => {
-    // if (clickContext.menuExtended!=false){
-    //   console.log('addEventListener')
-      window.addEventListener("mousemove", mouseMoveHandler);
-    // }
-    return () => window.removeEventListener("mousemove", mouseMoveHandler);
-  },[clickContext]);
+  // const mouseMoveHandler = (e)=>{
+  //   // mouseX = e.clientX;
+  //   // mouseY = e.clientY;
+  //   console.log('mouseX ',e.clientX)
+  // }
+  // useEffect(() => {
+  //   // if (clickContext.menuExtended!=false){
+  //   //   console.log('addEventListener')
+  //     window.addEventListener("mousemove", mouseMoveHandler);
+  //   // }
+  //   return () => window.removeEventListener("mousemove", mouseMoveHandler);
+  // },[clickContext]);
 
   return(
     <div id='canvas-container' >
