@@ -54,8 +54,7 @@ const HomeLayout = () =>{
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
   const [clickContext,setClickContext] = useState({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null, wavyPath:[]});
-  // const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null})
-  
+  const cameraRef = useRef(null)
   const astronautActions = useRef(null);
 
   const demoRef = useRef(null);
@@ -383,7 +382,15 @@ const HomeLayout = () =>{
   
         demoVideoHeight = getDemoVideoHeight(clickContext.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-
+        const camGoal = callAstronaut(elemParentId);
+          gsap.to(cameraRef.current.position,{
+            duration:1,
+            x:camGoal.position.x,
+            y:camGoal.position.y,
+            z:camGoal.position.z,
+            ease:"none"
+          })
+          
         // callAstronaut(cameraRef.current, elemParentId, clickContext.biggeredElem)
         // console.log(astronautActions.current[elemParentId])
         // astronautActions.current[elemParentId].current.play()
@@ -447,7 +454,7 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <ClickContext.Provider value = {clickContext}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions, cameraRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
                   </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
@@ -463,7 +470,7 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions}}/>
+      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions, cameraRef:props.vals.refs.cameraRef}}/>
     </>
   )
 }
