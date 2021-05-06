@@ -45,7 +45,7 @@ var clock = new THREE.Clock();
 
 
 
-Astronaut();
+// Astronaut();
 
 
 

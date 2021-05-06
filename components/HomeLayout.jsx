@@ -1,11 +1,12 @@
 import Demo from './Demo.jsx'
 import Menu from './Menu.jsx'
-import Astronaut from './Astronaut.jsx'
+// import Astronaut from './Astronaut.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef, useMemo} from "react"
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
-import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition, callAstronaut} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
+import astronaut,{callAstronaut} from '../public/assets/js/astronaut.js'
 import {gsap, Sine} from 'gsap';
 
 
@@ -49,11 +50,12 @@ const HomeLayout = () =>{
   // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
   const [svgFrameValues, setSvgFrameValues] = useState({svgFrameDefault:undefined, radius:undefined, wavyPath:undefined, extraSpace:undefined, strokeWidth:{rect:'0px',wavy:'0px'}});
   const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
-  // let _svgFrameValues = {x:0, y:0, border:5, multiply:3, scale:1, speed:[2,3], fill:'none', radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false};
-  // const svgFrameValuesRef = useRef({radius:undefined, wavyPath:undefined, extraSpace:undefined, _menuExtended.current: false});
+
+  const [clickContext,setClickContext] = useState({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null, wavyPath:[]});
+
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
-  const [clickContext,setClickContext] = useState({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null, wavyPath:[]});
+
   const cameraRef = useRef(null)
   const astronautActions = useRef(null);
 
@@ -102,7 +104,7 @@ const HomeLayout = () =>{
       return document.getElementById(elem.id);
     })
 
-  
+    astronaut();
     homeGsapSet(clickContext.menuExtended, true);
     updateSvgFrameValues();
   },[])
@@ -379,17 +381,17 @@ const HomeLayout = () =>{
 
     
         
-  
+        callAstronaut(elemParentId)
         demoVideoHeight = getDemoVideoHeight(clickContext.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        const camGoal = callAstronaut(elemParentId);
-          gsap.to(cameraRef.current.position,{
-            duration:1,
-            x:camGoal.position.x,
-            y:camGoal.position.y,
-            z:camGoal.position.z,
-            ease:"none"
-          })
+        // const camGoal = callAstronaut(elemParentId);
+        //   gsap.to(cameraRef.current.position,{
+        //     duration:1,
+        //     x:camGoal.position.x,
+        //     y:camGoal.position.y,
+        //     z:camGoal.position.z,
+        //     ease:"none"
+        //   })
           
         // callAstronaut(cameraRef.current, elemParentId, clickContext.biggeredElem)
         // console.log(astronautActions.current[elemParentId])
@@ -470,7 +472,8 @@ function HomeLayoutRender(props){
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-      <Astronaut vals={{astronautActions: props.vals.refs.astronautActions, cameraRef:props.vals.refs.cameraRef}}/>
+                   <div id="threeJSCanvas"></div>
+      {/* <Astronaut vals={{astronautActions: props.vals.refs.astronautActions, cameraRef:props.vals.refs.cameraRef}}/> */}
     </>
   )
 }
