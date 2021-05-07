@@ -562,10 +562,8 @@ export function callAstronaut(elem,biggeredElem){
       cameraPositionY = innerWidth/2100 + 3.4;
       cameraPositionZ = innerWidth/400 + 1.4;
 
-
-
       cameraRotationX = -1.2;
-      cameraRotationY = 0.9;
+      cameraRotationY = 1;
       cameraRotationZ = 1;
 
   }else{

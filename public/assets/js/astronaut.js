@@ -1,15 +1,15 @@
 import TV from './transitionValue.js'
 import * as THREE from '../gltf/scripts/three.module.js';
 import {GLTFLoader} from '../gltf/scripts/GLTFLoader.js';
+import {GUI} from '../gltf/scripts/dat.gui.module.js';
 
 // const threeJSCanvas = document.getElementById('threeJSCanvas');
 // const threejsBlocker = document.getElementById('threejsBlocker');
-const vecP = new THREE.Vector3();
-const vecR = new THREE.Vector3();
+const vec = new THREE.Vector3();
 const matchingActions = {work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'};
   
   
-let camera, renderer, scene, dirLight, pointLight;
+let camera, renderer, scene, dirLight, pointLight, sky0, sky1, sky2, sky3;
 let click=false;
 var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAction ;
 
@@ -71,10 +71,10 @@ export default function astronaut(){
  
 
 
-  let sky0 = getSky(16, '../assets/images/hdr/space_00.jpg');
-  let sky1 = getSky(16, '../assets/images/hdr/space_01.jpg');
-  let sky2 = getSky(16, '../assets/images/hdr/space_02.jpg');
-  let sky3 = getSky(16, '../assets/images/hdr/space_03.jpg');
+  sky0 = getSky(16, '../assets/images/hdr/space_00.jpg');
+  sky1 = getSky(16, '../assets/images/hdr/space_01.jpg');
+  sky2 = getSky(16, '../assets/images/hdr/space_02.jpg');
+  sky3 = getSky(16, '../assets/images/hdr/space_03.jpg');
   let ground = getSphere(5);
   ground.position.y = -ground.geometry.parameters.radius;
 
@@ -117,12 +117,26 @@ export default function astronaut(){
   });
 
   window.addEventListener('mousemove',getCurrentMouse, false);
+
+  guiCamera();
+}
+function guiCamera(){
+  const gui = new GUI();
+  const position =  gui.addFolder('position');
+  const rotation =  gui.addFolder('rotation');
+  position.add(camera.position,'x', -10, 10);
+  position.add(camera.position,'y', -10, 10);
+  position.add(camera.position,'z', -10, 10);
+  rotation.add(camera.rotation,'x', -10, 10);
+  rotation.add(camera.rotation,'y', -10, 10);
+  rotation.add(camera.rotation,'z', -10, 10);
 }
 
 function getCurrentMouse(e){
-  // console.log(e.clientX)
-  mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
-  mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
+  if(!click){
+    mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
+    mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
+  }
 }
 
 
@@ -133,10 +147,10 @@ function animate(){
   mixer.update( delta );
 
   if(click){
-    camera.position.lerp(vecP.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
+    camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
     camera.quaternion.slerp( slerpRotation, 0.1 );
   }else {
-    camera.position.lerp(vecP.set( mouseX , mouseY, camera.position.z), 0.1)
+    // camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
   }
   
   renderer.render( scene, camera);
@@ -145,6 +159,8 @@ function animate(){
 function onClick(){
   lerpingAni = requestAnimationFrame(onClick);
   if(parseFloat(cameraSet.position.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
+    mouseX = cameraSet.position.x;
+    mouseY = cameraSet.position.y;
     click = false;
     cancelAnimationFrame(lerpingAni);
   }
@@ -258,21 +274,20 @@ export function callAstronaut(elemId,biggeredElemId=null){
   actions[matchingActions[elemId]].play();
 
 
-  //   sky0.material.side = 0;
-  //   sky1.material.side = 0;
-  //   sky2.material.side = 0;
-  //   sky3.material.side = 0;
+    sky0.material.side = THREE.FrontSide;
+    sky1.material.side = THREE.FrontSide;
+    sky2.material.side = THREE.FrontSide;
+    sky3.material.side = THREE.FrontSide;
 
 
   if(elemId == 'work'){
-    
 
-    //   sky0.material.side = 1;
+      sky0.material.side = THREE.BackSide;
 
-    //   dirLight.position.set(0.4, 6, -2.7);
-    //   dirLight.color = {r: 0.8, g: 0.45, b: 0.17};
-    //   pointLight.position.set(1.3, 1.6, 2.6);
-    //   pointLight.color = {r: 1, g: 0.2, b: 0.14};
+      dirLight.position.set(0.4, 6, -2.7);
+      dirLight.color = {r: 0.8, g: 0.45, b: 0.17};
+      pointLight.position.set(1.3, 1.6, 2.6);
+      pointLight.color = {r: 1, g: 0.2, b: 0.14};
 
       cameraSet.position.x = 5 + innerHeight/1400 ;
       cameraSet.position.y = 1.3;
@@ -287,14 +302,13 @@ export function callAstronaut(elemId,biggeredElemId=null){
 
   
   }else if (elemId == 'skill'){
-      // pointLight.intensity = 2;
 
-      // sky1.material.side = 1;
+      sky1.material.side = THREE.BackSide;
 
-      // dirLight.position.set(1.3, 4, -2);
-      // dirLight.color = {r: 0.74, g: 0.14, b: 1};
-      // pointLight.position.set(0.5, 3.3, 2);
-      // pointLight.color = {r: 1, g: 0.22, b: 0.23};
+      dirLight.position.set(1.3, 4, -2);
+      dirLight.color = {r: 0.74, g: 0.14, b: 1};
+      pointLight.position.set(0.5, 3.3, 2);
+      pointLight.color = {r: 1, g: 0.22, b: 0.23};
 
       cameraSet.position.x = 0.05 + innerWidth/1000 - innerHeight/2400;
       cameraSet.position.y = 1.67 ;
@@ -307,33 +321,31 @@ export function callAstronaut(elemId,biggeredElemId=null){
       
       
   }else if (elemId == 'paint') {
-      // pointLight.intensity = 2;
 
-      // sky2.material.side = 1;
+      sky2.material.side = THREE.BackSide;
 
-      // dirLight.position.set(5.55, 7.77, -6.3);
-      // dirLight.color = {r: 1, g: 0.66, b: 0.2};
-      // pointLight.position.set(-2.6, 3.6, 4.45);
-      // pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
+      dirLight.position.set(5.55, 7.77, -6.3);
+      dirLight.color = {r: 1, g: 0.66, b: 0.2};
+      pointLight.position.set(-2.6, 3.6, 4.45);
+      pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
 
       
-      cameraSet.position.x = 4.11- innerWidth/860 + innerHeight/1000; 
+      cameraSet.position.x = 2.11- innerWidth/860 + innerHeight/1000; 
       cameraSet.position.y = innerWidth/2100 + 3.4;
       cameraSet.position.z = innerWidth/400 + 1.4;
 
       cameraSet.rotation.x = -1.2;
-      cameraSet.rotation.y = 0.9;
-      cameraSet.rotation.z = 1;
+      cameraSet.rotation.y = 0.7;
+      cameraSet.rotation.z = 0.7;
 
   }else{
-      // pointLight.intensity = 1.5;
 
-      // sky3.material.side = 1;
+      sky3.material.side = THREE.BackSide;
 
-      // dirLight.position.set(4.45, 5.46, 2.7);
-      // dirLight.color = {r: 1, g: 0.28, b: 0.83};
-      // pointLight.position.set(-3.9, 5.1, 6.2);
-      // pointLight.color = {r: 0.36, g: 0.82, b: 1};
+      dirLight.position.set(4.45, 5.46, 2.7);
+      dirLight.color = {r: 1, g: 0.28, b: 0.83};
+      pointLight.position.set(-3.9, 5.1, 6.2);
+      pointLight.color = {r: 0.36, g: 0.82, b: 1};
 
       cameraSet.position.x = -2.5 + innerWidth/1225 - innerHeight/2000;
       cameraSet.position.y = 4.44 - innerWidth/2550;
@@ -366,7 +378,7 @@ export function callAstronaut(elemId,biggeredElemId=null){
   // }else{
     // const vec = new THREE.Vector3();
     // camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.5)
-    // camera.position.x = cameraSet.position.x;
+    // camera.position.x = cameraSet.position.x
     // camera.position.y = cameraSet.position.y;
     // camera.position.z = cameraSet.position.z;
   //   camera.rotation.x = cameraSet.rotation.x;
