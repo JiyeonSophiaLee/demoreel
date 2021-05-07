@@ -4,14 +4,14 @@ import {GLTFLoader} from '../gltf/scripts/GLTFLoader.js';
 
 // const threeJSCanvas = document.getElementById('threeJSCanvas');
 // const threejsBlocker = document.getElementById('threejsBlocker');
-const vec = new THREE.Vector3();
-const matchingActions = {'work':'waveAction', 'skill':'walkAction', 'paint':'jumpAction', 'info': 'fallAction'};
+const vecP = new THREE.Vector3();
+const vecR = new THREE.Vector3();
+const matchingActions = {work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'};
   
   
-var container, controls;
 let camera, renderer, scene, dirLight, pointLight;
 let click=false;
-var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAction ,stats;
+var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAction ;
 
 let mouseX = 0;
 let mouseY = 0;
@@ -25,7 +25,9 @@ const mouseMultiplier = 0.001;
 const cameraChangeDuration = 60;
 let cameraMoveframe = 0;
 var requestAniThreeJS, cameraChangeAni = null;
-let cameraPositionX, cameraPositionY, cameraPositionZ, cameraRotationX, cameraRotationY, cameraRotationZ;
+let cameraSet  = {position:{x:0,y:0,z:0}, rotation:{x:0,y:0,z:0}};
+let slerpRotation = {};
+let lerpingAni = false;
 let positionXdiff, positionYdiff, positionZdiff, rotationXdiff, rotationYdiff, rotationZdiff;
 
 
@@ -54,9 +56,10 @@ export default function astronaut(){
     
 
   pointLight = new THREE.PointLight('rgb(220,51,35)', 1 ,20);
+  pointLight.intensity = 0;
   pointLight.position.set(-1,3,2,4);
-  // pointLight.intensity = 0;
   dirLight = new THREE.DirectionalLight('rgb(43,174,212)', 1,20);
+  dirLight.intensity = 0;
   dirLight.position.set(1.5,4,-2);
   dirLight.target.position.x = -3;
   dirLight.castShadow = true;
@@ -113,32 +116,13 @@ export default function astronaut(){
     animate();
   });
 
-  
+  window.addEventListener('mousemove',getCurrentMouse, false);
 }
 
-
-// Astronaut();
-
-
-
-export function astronautss() {
-
-    
-  
-  setRendererSize();
-  
-  
-    
-  
-  setCameraAspect();
-    
-  
-
-  window.addEventListener('mousemove',getMouseMove, false);
-  window.addEventListener( 'resize', onWindowResize, false );
-
-  
-    
+function getCurrentMouse(e){
+  // console.log(e.clientX)
+  mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
+  mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
 }
 
 
@@ -148,12 +132,22 @@ function animate(){
   let delta = clock.getDelta();
   mixer.update( delta );
 
-  if(click) camera.position.lerp(vec.set(cameraPositionX,cameraPositionY,cameraPositionZ), 0.1)
+  if(click){
+    camera.position.lerp(vecP.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
+    camera.quaternion.slerp( slerpRotation, 0.1 );
+  }else {
+    camera.position.lerp(vecP.set( mouseX , mouseY, camera.position.z), 0.1)
+  }
   
-  // controls.update();
-  // stats.update();
-  // updateCameraMouse();
   renderer.render( scene, camera);
+}
+
+function onClick(){
+  lerpingAni = requestAnimationFrame(onClick);
+  if(parseFloat(cameraSet.position.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
+    click = false;
+    cancelAnimationFrame(lerpingAni);
+  }
 }
 
 //-----------set camera and renderer for minHeight and minWidth -------------//
@@ -206,18 +200,6 @@ function getSphere(size) {
 	return mesh;
 }
 
-function getMouseMove(event){
-  mouseX = (event.clientX - window.innerWidth /2 );
-  mouseY = (event.clientY - window.innerHeight /2 );
-}
-
-function updateCameraMouse(){
-  // //   // const timer = 0.0001*Date.now();
-  if(cameraChangeAni == null){
-    camera.position.x = ( mouseX * mouseMultiplier) + callClientX ;
-    camera.position.y = ( mouseY * mouseMultiplier) + callClientY ;
-  }
-}
 
 function onWindowResize() {
   // renderer.setSize( window.innerWidth, window.innerHeight );
@@ -248,32 +230,6 @@ function setWeight( action, weight ) {
     action.setEffectiveWeight( weight );
 
 }
-function cameraChange(){
-  cameraMoveframe += 1;
-  cameraChangeAni = requestAnimationFrame(cameraChange);
-
-
-  camera.position.x += positionXdiff;
-  camera.position.y += positionYdiff;
-  camera.position.z += positionZdiff;
-
-  camera.rotation.x += rotationXdiff;
-  camera.rotation.y += rotationYdiff;
-  camera.rotation.z += rotationZdiff;
-
-
-  if(!(cameraMoveframe % cameraChangeDuration)){
-    cancelAnimationFrame(cameraChangeAni);
-    cameraChangeAni= null;
-    cameraMoveframe= 0;
-
-    // console.log(mouseX)
-    callClientX = cameraPositionX - (mouseX * mouseMultiplier);
-    callClientY = cameraPositionY - (mouseY * mouseMultiplier);  
-    return
-  }
-}
-
 function stopAllActions(){
   for(let action in actions){
     actions[action].stop();
@@ -289,16 +245,17 @@ function stopAllActions(){
 
 
 
-export function callAstronaut(elemId,biggeredElem=null){
+export function callAstronaut(elemId,biggeredElemId=null){
   click = true;
 
-  // if(biggeredElem == null){
-  //   // threejsBlocker.style.display = 'none';
-  //   dirLight.intensity = 1;
-  // }else{
-  //   executeCrossFade(actions[matchingActions[biggeredElem.id]],actions[matchingActions[elem.id]],1.0);
-  // }
-  // actions[matchingActions[elem.id]].play();
+  if(biggeredElemId == null){
+    // threejsBlocker.style.display = 'none';
+    dirLight.intensity = 1;
+    pointLight.intensity = 2;
+  }else{
+    executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
+  }
+  actions[matchingActions[elemId]].play();
 
 
   //   sky0.material.side = 0;
@@ -308,7 +265,7 @@ export function callAstronaut(elemId,biggeredElem=null){
 
 
   if(elemId == 'work'){
-    // pointLight.intensity = 2;
+    
 
     //   sky0.material.side = 1;
 
@@ -317,13 +274,13 @@ export function callAstronaut(elemId,biggeredElem=null){
     //   pointLight.position.set(1.3, 1.6, 2.6);
     //   pointLight.color = {r: 1, g: 0.2, b: 0.14};
 
-      cameraPositionX = 5 + innerHeight/1400 ;
-      cameraPositionY = 1.3;
-      cameraPositionZ = innerWidth/470 - 0.97
+      cameraSet.position.x = 5 + innerHeight/1400 ;
+      cameraSet.position.y = 1.3;
+      cameraSet.position.z = innerWidth/470 - 0.97
       
-      // cameraRotationX = 0;
-      // cameraRotationY = 1.7;
-      // cameraRotationZ = -0.2;
+      cameraSet.rotation.x = 0;
+      cameraSet.rotation.y = 1.7;
+      cameraSet.rotation.z = -0.2;
 
 
 
@@ -339,13 +296,13 @@ export function callAstronaut(elemId,biggeredElem=null){
       // pointLight.position.set(0.5, 3.3, 2);
       // pointLight.color = {r: 1, g: 0.22, b: 0.23};
 
-      cameraPositionX = 0.05 + innerWidth/1000 - innerHeight/2400;
-      cameraPositionY = 1.67 ;
-      cameraPositionZ = 3.27;
+      cameraSet.position.x = 0.05 + innerWidth/1000 - innerHeight/2400;
+      cameraSet.position.y = 1.67 ;
+      cameraSet.position.z = 3.27;
 
-      // cameraRotationX = -0.25;
-      // cameraRotationY = -0.2;
-      // cameraRotationZ = 0;
+      cameraSet.rotation.x = -0.25;
+      cameraSet.rotation.y = -0.2;
+      cameraSet.rotation.z = 0;
 
       
       
@@ -360,15 +317,13 @@ export function callAstronaut(elemId,biggeredElem=null){
       // pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
 
       
-      cameraPositionX = 4.11- innerWidth/860 + innerHeight/1000; 
-      cameraPositionY = innerWidth/2100 + 3.4;
-      cameraPositionZ = innerWidth/400 + 1.4;
+      cameraSet.position.x = 4.11- innerWidth/860 + innerHeight/1000; 
+      cameraSet.position.y = innerWidth/2100 + 3.4;
+      cameraSet.position.z = innerWidth/400 + 1.4;
 
-
-
-      // cameraRotationX = -1.2;
-      // cameraRotationY = 0.9;
-      // cameraRotationZ = 1;
+      cameraSet.rotation.x = -1.2;
+      cameraSet.rotation.y = 0.9;
+      cameraSet.rotation.z = 1;
 
   }else{
       // pointLight.intensity = 1.5;
@@ -380,45 +335,47 @@ export function callAstronaut(elemId,biggeredElem=null){
       // pointLight.position.set(-3.9, 5.1, 6.2);
       // pointLight.color = {r: 0.36, g: 0.82, b: 1};
 
-      cameraPositionX = -2.5 + innerWidth/1225 - innerHeight/2000;
-      cameraPositionY = 4.44 - innerWidth/2550;
-      cameraPositionZ = 4;
+      cameraSet.position.x = -2.5 + innerWidth/1225 - innerHeight/2000;
+      cameraSet.position.y = 4.44 - innerWidth/2550;
+      cameraSet.position.z = 4;
 
-      // cameraRotationX = -0.96;
-      // cameraRotationY = -0.65;
-      // cameraRotationZ = -0.71;
+      cameraSet.rotation.x = -0.96;
+      cameraSet.rotation.y = -0.65;
+      cameraSet.rotation.z = -0.71;
 
   }
 
-  
+  let {x,y,z} = cameraSet.rotation;
+  slerpRotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(x,y,z, 'YXZ'));
+  click=true;
+  onClick();
 
-
-  // if(biggeredElem != null){
+  // if(biggeredElemId != null){
       
-  //     positionXdiff = (cameraPositionX - camera.position.x) / cameraChangeDuration;
-  //     positionYdiff = (cameraPositionY - camera.position.y) / cameraChangeDuration;
-  //     positionZdiff = (cameraPositionZ - camera.position.z) / cameraChangeDuration;
+  //     positionXdiff = (cameraSet.position.x - camera.position.x) / cameraChangeDuration;
+  //     positionYdiff = (cameraSet.position.y - camera.position.y) / cameraChangeDuration;
+  //     positionZdiff = (cameraSet.position.z - camera.position.z) / cameraChangeDuration;
 
-  //     rotationXdiff = (cameraRotationX - camera.rotation.x) / cameraChangeDuration;
-  //     rotationYdiff = (cameraRotationY - camera.rotation.y) / cameraChangeDuration;
-  //     rotationZdiff = (cameraRotationZ - camera.rotation.z) / cameraChangeDuration;
+  //     rotationXdiff = (cameraSet.rotation.x - camera.rotation.x) / cameraChangeDuration;
+  //     rotationYdiff = (cameraSet.rotation.y - camera.rotation.y) / cameraChangeDuration;
+  //     rotationZdiff = (ameraSet.rotation.z - camera.rotation.z) / cameraChangeDuration;
       
       
 
   //     cameraChange();
   // }else{
     // const vec = new THREE.Vector3();
-    // camera.position.lerp(vec.set(cameraPositionX,cameraPositionY,cameraPositionZ), 0.5)
-    // camera.position.x = cameraPositionX;
-    // camera.position.y = cameraPositionY;
-    // camera.position.z = cameraPositionZ;
-  //   camera.rotation.x = cameraRotationX;
-  //   camera.rotation.y = cameraRotationY;
-  //   camera.rotation.z = cameraRotationZ;
+    // camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.5)
+    // camera.position.x = cameraSet.position.x;
+    // camera.position.y = cameraSet.position.y;
+    // camera.position.z = cameraSet.position.z;
+  //   camera.rotation.x = cameraSet.rotation.x;
+  //   camera.rotation.y = cameraSet.rotation.y;
+  //   camera.rotation.z = cameraSet.rotation.z;
 
 
-  //   callClientX = cameraPositionX;
-  //   callClientY = cameraPositionY;
+  //   callClientX = cameraSet.position.x;
+  //   callClientY = cameraSet.position.y;
   // }
   
 }
