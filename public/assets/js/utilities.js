@@ -67,15 +67,19 @@ export function getDemoVideoHeight(menuExpanded){
     return demoVideoHeight;
 }
 export function addCSSmenutransition(biggerElemId, ...elems){
-  elems.forEach((e)=>{
-    if(biggerElemId !== e.parentElement.id){
+  console.log('biggerElemId',biggerElemId)
+  console.log('...elems',elems)
+  // elems.forEach((e)=>{
+  //   console.log('e',e)
+  //   console.log('e.id',e.id)
+  //   // if(biggerElemId !== e.id){
 
-      e.classList.add('menutransition');
-      setTimeout(() => {
-        e.classList.remove('menutransition');
-      }, TV.menuDuration * 1000 );
-    }
-  })
+  //   //   e.classList.add('menutransition');
+  //   //   setTimeout(() => {
+  //   //     e.classList.remove('menutransition');
+  //   //   }, TV.menuDuration * 1000 );
+  //   // }
+  // })
 }
 
 export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){

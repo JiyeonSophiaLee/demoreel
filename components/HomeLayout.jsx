@@ -56,9 +56,6 @@ const HomeLayout = () =>{
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
 
-  const cameraRef = useRef(null)
-  const astronautActions = useRef(null);
-
   const demoRef = useRef(null);
   const logoRef = useRef(null);
 
@@ -380,38 +377,30 @@ const HomeLayout = () =>{
         })
 
     
-        
-        callAstronaut(elemParentId)
+        console.log('clickContext.menuExtended',clickContext.menuExtended)
+
         demoVideoHeight = getDemoVideoHeight(clickContext.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        // const camGoal = callAstronaut(elemParentId);
-        //   gsap.to(cameraRef.current.position,{
-        //     duration:1,
-        //     x:camGoal.position.x,
-        //     y:camGoal.position.y,
-        //     z:camGoal.position.z,
-        //     ease:"none"
-        //   })
-          
-        // callAstronaut(cameraRef.current, elemParentId, clickContext.biggeredElem)
-        // console.log(astronautActions.current[elemParentId])
-        // astronautActions.current[elemParentId].current.play()
-        // Promise.all([
-        //   homeGsapTransition(clickContext.menuExtended),
-        //   logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-        //   document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
-        //   // svgFrameRef.extendMenuIf(demoVideoHeight),
-        //   callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId)
-        //   // test()
-        // ]).then(()=>{
-        //   createWavyAnimation(extendingSize['svgFramePackage']);
-        //   textRef.style.display = 'none';
-        //   contentRef.style.display ='initial';
-        //   contentRef.style.zIndex =3;
-        //   // disableClick()
-        // }).then(()=>{
-        //   // clickContext.onAnim =false;
-        // })
+
+
+        console.log('clickContext.menuExtended')
+        Promise.all([
+          homeGsapTransition(true),
+          logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+          document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+          // svgFrameRef.extendMenuIf(demoVideoHeight),
+          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId),
+          // callAstronaut(elemParentId)
+          // // test()
+        ]).then(()=>{
+          // createWavyAnimation(extendingSize['svgFramePackage']);
+          // textRef.style.display = 'none';
+          // contentRef.style.display ='initial';
+          // contentRef.style.zIndex =3;
+          // // disableClick()
+        }).then(()=>{
+          // clickContext.onAnim =false;
+        })
         
         
   
@@ -456,7 +445,7 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <ClickContext.Provider value = {clickContext}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef, astronautActions, cameraRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
+                    <HomeLayoutRender vals={{refs:{demoRef, logoRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
                   </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
