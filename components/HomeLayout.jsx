@@ -51,7 +51,8 @@ const HomeLayout = () =>{
   const [svgFrameValues, setSvgFrameValues] = useState({svgFrameDefault:undefined, radius:undefined, wavyPath:undefined, extraSpace:undefined, strokeWidth:{rect:'0px',wavy:'0px'}});
   const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
 
-  const [clickContext,setClickContext] = useState({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggeredElem:null, wavyPath:[]});
+  const [clickContext,setClickContext] = useState({on:false, bigger:null, biggered:null});
+  const click = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, neonRef:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, biggeredNeonRef:[], wavyPath:[]});
 
   const extendingRequestAnimRef = useRef(null);
   const wavyAnim = useRef({TL:null, points:null});
@@ -101,8 +102,8 @@ const HomeLayout = () =>{
       return document.getElementById(elem.id);
     })
 
-    astronaut();
-    homeGsapSet(clickContext.menuExtended, true);
+    // astronaut();
+    homeGsapSet(click.current.menuExtended, true);
     updateSvgFrameValues();
   },[])
 
@@ -119,7 +120,7 @@ const HomeLayout = () =>{
     }else if(innerWidth > 800){
       _svgFrameDefault = TV.svgFrameDefaultSize;
     }else{
-      if(clickContext.menuExtended == false){
+      if(click.current.menuExtended == false){
         _svgFrameDefault = TV.svgFrameDefaultSize800;
       }else{
         _svgFrameDefault = TV.svgFrameDefaultSizeSmallerSize;
@@ -137,14 +138,13 @@ const HomeLayout = () =>{
 
   useEffect(()=>{
     if(svgFrameValues.radius !== undefined){
-      if(clickContext.menuExtended){
+      if(click.current.menuExtended){
         menuValues.current.forEach((elem)=>{
-          if(clickContext.biggerElemParentId !== elem.id){
+          if(click.current.biggerElemParentId !== elem.id){
             eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
           }
         })
       }else{
-        console.log('else', menuValues.current.length)
         menuValues.current.forEach((elem)=>{
           eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
         });
@@ -160,12 +160,12 @@ const HomeLayout = () =>{
       _widerMode.current = innerWidth >= 1400 ? true : false;
 
 
-      homeGsapSet(clickContext.menuExtended, mobileMode.current !== _mobileMode.current)
+      homeGsapSet(click.current.menuExtended, mobileMode.current !== _mobileMode.current)
 
-      if( clickContext.menuExtended ) {
+      if( click.current.menuExtended ) {
         console.log('resize is working')
         remainExtendingMenu();
-        createWavyAnimation({width:clickContext.biggerElem.clientWidth, height:clickContext.biggerElem.clientHeight})
+        createWavyAnimation({width:click.current.biggerElem.clientWidth, height:click.current.biggerElem.clientHeight})
       }
       // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
 
@@ -188,14 +188,14 @@ const HomeLayout = () =>{
     return ()=>{
       window.removeEventListener('resize',updateResize);
     }
-  },[clickContext, svgFrameValues])
+  },[svgFrameValues])
 
   const remainExtendingMenu = useCallback(()=>{
     // const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
 
-    clickContext.biggerElemRect.setAttributeNS(null, "width" , clickContext.biggerElem.clientWidth);
-    clickContext.biggerElemRect.setAttributeNS(null, "height", clickContext.biggerElem.clientHeight);
-  },[clickContext])
+    click.current.biggerElemRect.setAttributeNS(null, "width" , click.current.biggerElem.clientWidth);
+    click.current.biggerElemRect.setAttributeNS(null, "height", click.current.biggerElem.clientHeight);
+  },[])
 
 
   
@@ -224,17 +224,29 @@ const HomeLayout = () =>{
       
       let f = 0;
       let dir = 1;
+      console.log('clickContext')
+
+
       
 
       addCSSmenutransition(null, ...allElems.current);
-      addCSSmenutransition(null, clickContext.biggerElem);
-
+      addCSSmenutransition(null, click.current.biggerElem);
 
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
   
       eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, extendingSize['svgFramePackage']);
+
+
+
+
+      if(click.current.biggeredElemParentId !== null){
+        addCSSmenutransition(null, click.current.biggeredElem);
+        eval(click.current.biggeredElemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues,{width:_svgFrameValues.svgFrameDefault.width, height:_svgFrameValues.svgFrameDefault.height})
+      }
+
+
 
       if(innerWidth < 800 ){
         const size = TV.svgFrameDefaultSizeSmallerSize;
@@ -243,7 +255,7 @@ const HomeLayout = () =>{
         addCSSmenutransition(elemParentId, ...childElems);
         
         menuValues.current.forEach((elem)=>{
-          if(clickContext.biggerElemParentId !== elem.id){
+          if(click.current.biggerElemParentId !== elem.id){
             const rect = document.getElementById(elem.id+"SvgFrame");
 
             eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues,{width:size, height:size});
@@ -253,14 +265,17 @@ const HomeLayout = () =>{
           }
         })
       }           
-      
+      console.log('click.current.biggerElemRect',click.current.biggerElemRect)
 
       function anim(){
         f += dir;
-        clickContext.biggerElemRect.setAttributeNS(null, "width" , clickContext.biggerElem.clientWidth);
-        clickContext.biggerElemRect.setAttributeNS(null, "height", clickContext.biggerElem.clientHeight);
+        click.current.biggerElemRect.setAttributeNS(null, "width" , click.current.biggerElem.clientWidth);
+        click.current.biggerElemRect.setAttributeNS(null, "height", click.current.biggerElem.clientHeight);
 
-
+        if(click.current.biggeredElemParentId !== null){
+          click.current.biggeredElemRect.setAttributeNS(null, "width" , click.current.biggeredElem.clientWidth);
+          click.current.biggeredElemRect.setAttributeNS(null, "width" , click.current.biggeredElem.clientWidth);
+        }
         extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
         if(!(f % NF)){
@@ -338,8 +353,8 @@ const HomeLayout = () =>{
         }
         
         function update() {
-          clickContext.wavyPath[0].setAttribute('d', tweenCardinal(wavyAnim.current.points.points1, true, 1));
-          clickContext.wavyPath[1].setAttribute('d', tweenCardinal(wavyAnim.current.points.points2, true, 1));
+          click.current.wavyPath[0].setAttribute('d', tweenCardinal(wavyAnim.current.points.points1, true, 1));
+          click.current.wavyPath[1].setAttribute('d', tweenCardinal(wavyAnim.current.points.points2, true, 1));
         }
       
         return wavyAnim.current.TL
@@ -348,8 +363,8 @@ const HomeLayout = () =>{
         if(wavyAnim.current.TL !== null){
           if(!wavyAnim.current.TL.paused()){
             wavyAnim.current.TL = wavyAnim.current.TL.pause()
-            clickContext.wavyPath[0].setAttribute('d', "");
-            clickContext.wavyPath[1].setAttribute('d', "");
+            click.current.wavyPath[0].setAttribute('d', "");
+            click.current.wavyPath[1].setAttribute('d', "");
           }
         }
       }
@@ -359,59 +374,107 @@ const HomeLayout = () =>{
 
 
 
-  const extendMenu = useCallback((elem, order=0, textRef, contentRef)=>{
+  const extendMenu = useCallback((elem, order=0, textRef, contentRef, neonRef)=>{
     const elemParentId = elem.parentElement.id;
 
-    if(clickContext.onAnim===true){
+    if(click.current.onAnim===true){
       return;
     }else{
-      if( clickContext.menuExtended=== false){
-        setClickContext({...clickContext, 
-          onAnim:true, 
-          menuExtended:true, 
-          biggerElemParentId:elemParentId, 
-          biggerElem:elem, 
-          biggerElemRect:document.getElementById(elemParentId+"SvgFrame"),
-          wavyPath: [document.getElementById(elemParentId + 'SvgWavy1'),
-                    document.getElementById(elemParentId + 'SvgWavy2')]
-        })
+      if( click.current.menuExtended=== false){
+        
+        click.current.onAnim=true;
+        setClickContext({on:true, bigger:elemParentId , biggered:null})
+        click.current.menuExtended=true;
+        click.current.biggerElemParentId=elemParentId; 
+        click.current.biggerElem=elem;
+        click.current.biggerElemRect=document.getElementById(elemParentId+"SvgFrame"),
+        click.current.wavyPath= [document.getElementById(elemParentId + 'SvgWavy1'), document.getElementById(elemParentId + 'SvgWavy2')];
+        click.current.textRef = textRef;
+        click.current.contentRef = contentRef;
+        click.current.neonRef = neonRef;
 
     
-        console.log('clickContext.menuExtended',clickContext.menuExtended)
+      
 
-        demoVideoHeight = getDemoVideoHeight(clickContext.menuExtended);
+
+        demoVideoHeight = getDemoVideoHeight(click.current.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
 
 
-        console.log('clickContext.menuExtended')
         Promise.all([
-          homeGsapTransition(true),
+          homeGsapTransition(click.current.menuExtended),
           logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-          document.getElementById(elemParentId + 'SvgFrame').setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+          click.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
           // svgFrameRef.extendMenuIf(demoVideoHeight),
           callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId),
           // callAstronaut(elemParentId)
           // // test()
         ]).then(()=>{
-          // createWavyAnimation(extendingSize['svgFramePackage']);
-          // textRef.style.display = 'none';
-          // contentRef.style.display ='initial';
-          // contentRef.style.zIndex =3;
-          // // disableClick()
+          createWavyAnimation(extendingSize['svgFramePackage']);
+          textRef.style.display = 'none';
+          contentRef.style.display ='initial';
+          contentRef.style.zIndex =3;
+          // disableClick()
         }).then(()=>{
-          // clickContext.onAnim =false;
+          click.current.onAnim =false;
         })
         
         
   
   
-      }else if( clickContext.biggerElem !== elem && svgFrameRef !== null){
-  //       console.log('else if')
-  //       biggeredElem = biggerElem;
-  //       biggerElem = elem;
+      }else if( click.current.biggerElemParentId !== elemParentId){
+        console.log('else if');
+        const biggeredWavyPath = click.current.wavyPath;
+        const biggeredText = click.current.textRef;
+        const biggeredContentRef = click.current.contentRef;
+        const biggeredNeonRef = click.current.neonRef;
+
+        click.current.onAnim=true;
+        setClickContext({on:true, bigger:elemParentId , biggered:click.current.biggerElemParentId});
+        click.current.biggeredElem = click.current.biggerElem;
+        click.current.biggeredElemParentId = click.current.biggerElemParentId;
+        click.current.biggeredElemRect= click.current.biggerElemRect;
+        click.current.biggerElem = elem;
+        click.current.biggerElemParentId = elemParentId; 
+        click.current.biggerElem = elem;
+        click.current.biggerElemRect = document.getElementById(elemParentId+"SvgFrame");
+        click.current.wavyPath = [document.getElementById(elemParentId + 'SvgWavy1'), document.getElementById(elemParentId + 'SvgWavy2')]
+        click.current.textRef = textRef;
+        click.current.contentRef = contentRef;
+        click.current.neonRef = neonRef;
+        
+        console.log('neonRef',neonRef[0].current)
   
-      
-      
+        demoVideoHeight = getDemoVideoHeight(click.current.menuExtended);
+        let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+
+        
+        Promise.all([
+          biggeredWavyPath[0].setAttribute('d',''),
+          biggeredWavyPath[1].setAttribute('d',''),
+          click.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${click.current.biggeredElemParentId}SvgFrameStopColor)`),
+          click.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+          // svgFrameRef.extendMenuIf(demoVideoHeight),
+          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId),
+          biggeredText.style.display = 'initial',
+          biggeredContentRef.style.display = 'none',
+          biggeredContentRef.style.zIndex = -1,
+          // biggeredNeonRef[0].current.style.visibility = 'hidden',
+          // biggeredNeonRef[1].current.style.visibility = 'hidden'
+          // callAstronaut(elemParentId)
+          // // test()
+        ]).then(()=>{
+          createWavyAnimation(extendingSize['svgFramePackage']);
+          textRef.style.display = 'none';
+          contentRef.style.display ='initial';
+          contentRef.style.zIndex =3;
+          // disableClick()
+        }).then(()=>{
+          click.current.onAnim =false;
+          // neonRef[0].current.style.visibility = 'visible',
+          // neonRef[1].current.style.visibility = 'visible'
+        })
+        
       }else{
   //       if( menuExtended.current ){
   //         menuExtended.current = false;

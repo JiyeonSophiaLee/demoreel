@@ -67,19 +67,14 @@ export function getDemoVideoHeight(menuExpanded){
     return demoVideoHeight;
 }
 export function addCSSmenutransition(biggerElemId, ...elems){
-  console.log('biggerElemId',biggerElemId)
-  console.log('...elems',elems)
-  // elems.forEach((e)=>{
-  //   console.log('e',e)
-  //   console.log('e.id',e.id)
-  //   // if(biggerElemId !== e.id){
-
-  //   //   e.classList.add('menutransition');
-  //   //   setTimeout(() => {
-  //   //     e.classList.remove('menutransition');
-  //   //   }, TV.menuDuration * 1000 );
-  //   // }
-  // })
+  elems.forEach((e)=>{
+    if(biggerElemId !== e.id){
+      e.classList.add('menutransition');
+      setTimeout(() => {
+        e.classList.remove('menutransition');
+      }, TV.menuDuration * 1000 );
+    }
+  })
 }
 
 export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
@@ -151,7 +146,6 @@ export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
 }
 
 function getExtendMenuSize (demoVideoHeight, elem) {
-  console.log('hello this is working', demoVideoHeight)
   let extendMenuSizeWidth, extendMenuSizeHeight;
   let padding = getPadding(elem); 
 
@@ -170,15 +164,11 @@ function getExtendMenuSize (demoVideoHeight, elem) {
   }else{
     extendMenuSizeWidth = getWidth.call(this, window.innerWidth > TV.masterMinWidth ? document.body.clientWidth : TV.masterMinWidth );
     extendMenuSizeHeight = getHeight.call(this, window.innerHeight > TV.masterMinHeight ? document.body.clientHeight : TV.masterMinHeight)
-    console.log("extendMenuSizeWidth",extendMenuSizeWidth)
-    console.log("extendMenuSizeHeight",extendMenuSizeHeight)
 
     function getWidth(totalWidth){
-      console.log('totalWidth: ',totalWidth)
       return (totalWidth - padding["menuPaddingWidth"] ) * ( TV.unSymetryEachMenu / 100) - padding["liPaddingWidth"] ;
     }
     function getHeight(totalHeight){
-      console.log('totalWidth: ',totalHeight, logo.clientHeight, demoVideoHeight, padding["menuPaddingHeight"], TV.unSymetryEachMenu / 100, padding["liPaddingHeight"])
       return (totalHeight - logo.clientHeight - demoVideoHeight - padding["menuPaddingHeight"]) * (TV.unSymetryEachMenu / 100) - padding["liPaddingHeight"] ;
     }
   }
