@@ -11,27 +11,24 @@ function useImageContent(useImageContent){
             const content = [];    
             project.fileNames.forEach((name,i)=>{
               let _name = project.src+name;
-              let _className = project.artstation !== null ? "" : project.main === i ? 'mainContent content' : 'subContent content';
-              let _image = <Image layout="responsive" key={_name} width={project.size.width} height={project.size.height} alt={project.alt} src={_name} className={_className}/>;
-              
-              console.log('project.artstation', project)
+              let _className = project.main === i ? 'mainContent content' : 'subContent content';
+              let _image = <Image layout="responsive" key={_name} width={project.size.width} height={project.size.height} alt={project.alt} src={_name} />;
+              let output;
 
               if(project.artstation!==null){
-                let className = project.main === i ? 'mainContent content' : 'subContent content';
-                let output = <a herf={project.artstation} key={_name} target="_blank" className={className}>{_image}</a>;
-                
-                  if(project.main === i){
-                    content.splice(0,0,output)
-                  }else{
-                    content.push(output)
-                  }
-                }else{
-                  if(project.main === i){
-                    content.splice(0,0,_image)
-                  }else{
-                    content.push(_image)
-                  }
-                }
+                // let className = project.main === i ? 'mainContent content' : 'subContent content';
+                output = <a herf={project.artstation} key={_name} target="_blank" className={_className}>{_image}</a>;
+              }else{
+                output = <div className={_className}>{_image}</div>;
+              }
+
+
+
+              if(project.main === i){
+                content.splice(0,0,output)
+              }else{
+                content.push(output)
+              }
               
             })
             return content
