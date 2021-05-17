@@ -35,7 +35,7 @@ function SvgFramePack(props){
                                                       duration:0.6,
                                                       ease: "Sine.inOut"
                                                     },0)
-  },[clickContext])
+  },[])
 
   const mouseEnterHandler = useCallback(()=>{
       neonOnTL.current.play();
@@ -51,7 +51,17 @@ function SvgFramePack(props){
   //  so, I just bring the div in here.
   //  I thought I put it into MenuComponentRender, but now, I just kept it in here.
   const mouseLeaveHandler = useCallback(()=>{
-    if(clickContext.on === false && clickContext.bigger!== props.vals.id){
+    if(clickContext.bigger!== props.vals.id){
+      neonOnTL.current.reverse();
+      noen1Ref.current.classList.remove(`${props.vals.id}Neon1`)
+      noen2Ref.current.classList.remove(`${props.vals.id}Neon2`)
+    }
+  },[clickContext])
+
+  useEffect(()=>{
+    //this is for "click off event".
+    console.log('clickContext', clickContext)
+    if(clickContext.biggered === props.vals.id){
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`)
       noen2Ref.current.classList.remove(`${props.vals.id}Neon2`)
@@ -61,7 +71,7 @@ function SvgFramePack(props){
   
   const onClick = (e)=>{
     
-      extendMenuContext(e.currentTarget, props.vals.order, textRef.current, contentRef.current,[noen1Ref,noen2Ref]);
+      extendMenuContext(e.currentTarget, props.vals.order, textRef.current, contentRef.current,[noen1Ref.current, noen2Ref.current]);
  
   }
 

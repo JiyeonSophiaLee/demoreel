@@ -22,7 +22,7 @@ function MenuComponent (props){
 
 
   function MenuComponentRender(props){
-    console.log('---------MenuComponentRender---------')
+    console.log('---------MenuComponentRender---------',props.vals.id,props.vals.menuSizeContext)
 
     return(
       <li id={props.vals.id} style = {props.vals.menuSizeContext[props.vals.id+"_styleLI"]} > 

@@ -29,9 +29,9 @@
       max-width:100%;
     }
   
-    // .content{
-    //   box-sizing: initial;
-    // }
+    .content{
+      box-sizing: initial;
+    }
     // img,iframe{
     //   border-radius: 0.7rem;
     //   /* padding: 0.1vw; */
@@ -40,9 +40,9 @@
     //   /* height:-webkit-fill-available; */
     //   /* object-fit: cover; */
     // }
-    > div{
+    > .videos{
       position: relative;
-      /* border-radius: 20px; */
+      /* border-radius: 20px; */ 
       /* object-fit: cover; */
       padding: 28.125% 0; 
       iframe{

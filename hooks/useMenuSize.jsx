@@ -20,7 +20,7 @@ function useMenuSize(id){
     console.log(word)
   }
 
-  const styleLI =  useMemo(() => (LI_size ),[LI_size["width"]])
+  const styleLI =  useMemo(() => (LI_size ),[LI_size["width"], LI_size["height"]])
   const styleSvgFramePack = useMemo(()=>({
     style_svgFramePack: svgFramePackSize,
     style_canvas: canvasSize,
@@ -33,6 +33,7 @@ function useMenuSize(id){
   const changeHierarchySvgFramePack= useCallback((svgFrameValues, extendMenuSize='none')=>{
 
       let size = extendMenuSize==='none' ? svgFrameValues['svgFrameDefault'] : extendMenuSize;
+      console.log('size',size)
 
       setsvgFramePackSize({width:size['width'], height:size['height']});
       if(wavyPath["strokeWidth"] !== svgFrameValues["strokeWidth"]){
