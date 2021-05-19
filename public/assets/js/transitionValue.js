@@ -44,10 +44,11 @@ export {
 }
 
 
-const rootFontSize = 16;
+
 
 export function convertToPix(unit){
   console.log('unit,',unit)
+  const rootFontSize = 16;
   const splitUnits = unit.match( /([\d\.]+)(.*)/);
   switch(splitUnits[2]){
     case "rem":
@@ -122,6 +123,16 @@ const transitionValue ={
   // skillTLEase : "power2.inOut",
   // skillTLDuration800 : 1,
   // skillTLEase800 : "bounce.out"
+  halfCircleSize: variable.halfCircleSize,
+  halfCircleSizeEnd: variable.halfCircleSizeEnd,
+  halfBarHeight: variable.halfBarHeight,
+  halfCircleSize1400: variable.halfCircleSize1400,
+  halfCircleSizeEnd1400: variable.halfCircleSizeEnd1400,
+  halfBarHeight1400: variable.halfBarHeight1400,
+  halfCircleSize800: variable.halfCircleSize800,
+  halfCircleSizeEnd800: variable.halfCircleSizeEnd800,
+  halfBarHeight800: variable.halfBarHeight800
+
 }
 
 export default transitionValue;

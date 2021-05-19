@@ -6,6 +6,7 @@ import SvgIvory from './menu/SvgIvory.jsx'
 import WorkContent from './menu/work/WorkContent.jsx'
 import PaintContent from './menu/paint/PaintContent.jsx'
 import InfoContent from './menu/info/InfoContent.jsx'
+import SkillContent from './menu/skill/SkillContent.jsx'
 
 
 // import { SvgFrameContext } from './HomeLayout.jsx';
@@ -33,7 +34,8 @@ function MenuRender(props){
                                 order:props.vals.menuValues[1].order,
                                 stopColor:props.vals.menuValues[1]["stopColor"],
                                 strokeColor:props.vals.menuValues[1]["strokeColor"],
-                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable }}/>
+                                svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
+                                contents:<SkillContent/> }}/>
       <MenuComponent vals = {{id:props.vals.menuValues[2].id,
                                 order:props.vals.menuValues[2].order,
                                 stopColor:props.vals.menuValues[2]["stopColor"],

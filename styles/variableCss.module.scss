@@ -19,6 +19,20 @@ $liPadding: 0.85vw;
 $liPadding800: 0.5rem;
 $liPadding1400: 0.8rem;
 
+
+$halfCircleSize :1.8rem;
+$halfCircleSizeEnd :1.5rem;
+$halfBarHeight :0.45rem;
+
+$halfCircleSize1400 :2rem;
+$halfCircleSizeEnd1400 :1.7rem;
+$halfBarHeight1400 :0.5rem;
+
+$halfCircleSize800 :1.8rem;
+$halfCircleSizeEnd800 :1.6rem;
+$halfBarHeight800 :0.4rem;
+
+
 :export{
   masterMinWidth: $masterMinWidth;
   masterMaxWidth: $masterMaxWidth;
@@ -32,4 +46,14 @@ $liPadding1400: 0.8rem;
   liPadding: $liPadding;
   liPadding800: $liPadding800;
   liPadding1400: $liPadding1400;
+  
+  halfCircleSize: $halfCircleSize;
+  halfCircleSizeEnd: $halfCircleSizeEnd;
+  halfBarHeight: $halfBarHeight;
+  halfCircleSize1400: $halfCircleSize1400;
+  halfCircleSizeEnd1400: $halfCircleSizeEnd1400;
+  halfBarHeight1400: $halfBarHeight1400;
+  halfCircleSize800: $halfCircleSize800;
+  halfCircleSizeEnd800: $halfCircleSizeEnd800;
+  halfBarHeight800: $halfBarHeight800;
 }

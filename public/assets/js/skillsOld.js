@@ -1,54 +1,105 @@
-import TV, { convertToPix } from './transitionValue.js'
+// console.log('skills.js is working');
+import * as ISU from '/assets/js/InitialSetUp.js';
+import _Maya from  '/assets/images/icons/Maya.png';
+import _Vray from  '/assets/images/icons/Vray.png';
+import _Arnold from  '/assets/images/icons/Arnold.png';
+import _Zbrush from  '/assets/images/icons/Zbrush.png';
+import _Houdini from  '/assets/images/icons/Houdini.png';
+import _MarvelousDesigner from  '/assets/images/icons/MarvelousDesigner.png';
+import _SubstancePainter from  '/assets/images/icons/SubstancePainter.png';
+import _SubstanceDesigner from  '/assets/images/icons/SubstanceDesigner.png';
+import _Mari from  '/assets/images/icons/Mari.png';
+import _Mudbox from  '/assets/images/icons/Mudbox.png';
+import _Photoshop from  '/assets/images/icons/Photoshop.png';
+import _threeDCoat from  '/assets/images/icons/threeDCoat.png';
+import _RezomUV from  '/assets/images/icons/RezomUV.png';
+import _AfterEffects from  '/assets/images/icons/AfterEffects.png';
+import _Nuke from  '/assets/images/icons/Nuke.png';
+import _Python from  '/assets/images/icons/Python.png';
+import _HTML from  '/assets/images/icons/HTML.png';
+import _Javascript from  '/assets/images/icons/Javascript.png';
+import _CSS3 from  '/assets/images/icons/CSS3.png';
+import _ThreeJS from  '/assets/images/icons/ThreeJS.png';
+import _GreenSock from  '/assets/images/icons/GreenSock.png';
 
-const HalfCircleSize = TV.halfCircleSize;
-const HalfCircleSizeEnd = TV.halfCircleSizeEnd;
-const HalfBarHeight = TV.halfBarHeight;
 
-const HalfCircleSize1400 = TV.halfCircleSize1400;
-const HalfCircleSizeEnd1400 = TV.halfCircleSizeEnd1400;
-const HalfBarHeight1400 = TV.halfBarHeight1400;
 
-const HalfCircleSize800 = TV.halfCircleSize800;
-const HalfCircleSizeEnd800 = TV.halfCircleSizeEnd800;
-const HalfBarHeight800 = TV.halfBarHeight800;
+const Maya = _Maya;
+const Vray = _Vray;
+const Arnold = _Arnold;
+const Zbrush = _Zbrush;
+const Houdini = _Houdini;
+const MarvelousDesigner = _MarvelousDesigner;
+const SubstancePainter = _SubstancePainter;
+const SubstanceDesigner = _SubstanceDesigner;
+const Mudbox = _Mudbox;
+const Mari = _Mari;
+const Photoshop = _Photoshop;
+const threeDCoat = _threeDCoat;
+const RezomUV = _RezomUV;
+const AfterEffects = _AfterEffects;
+const Nuke = _Nuke;
+const Python = _Python;
+const HTML = _HTML;
+const Javascript = _Javascript;
+const ThreeJS = _ThreeJS;
+const GreenSock = _GreenSock;
+const CSS3 = _CSS3;
+
+
+const HalfCircleSize = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize');
+const HalfCircleSizeEnd = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd');
+const HalfBarHeight = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight');
+
+const HalfCircleSize1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize1400');
+const HalfCircleSizeEnd1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd1400');
+const HalfBarHeight1400 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight1400');
+
+const HalfCircleSize800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize800');
+const HalfCircleSizeEnd800 = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSizeEnd800');
+const HalfBarHeight800 = getComputedStyle(document.documentElement).getPropertyValue('--halfBarHeight800');
 
 let halfCircleSize;
-// let halfCircleSizeNumb;
+let halfCircleSizeNumb;
 
 let halfCircleSizeEnd;
-// let halfCircleSizeEndNumb;
+let halfCircleSizeEndNumb;
 
 let halfBarHeight;
-// let halfBarHeightNumb;
+let halfBarHeightNumb;
 
-// const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize').replace(/[0-9]/g, '');
+const UNIT = getComputedStyle(document.documentElement).getPropertyValue('--halfCircleSize').replace(/[0-9]/g, '');
 
 
 
 let hasTouchScreen = false;
-// if ("maxTouchPoints" in navigator) {
-//     hasTouchScreen = navigator.maxTouchPoints > 0;
-// } else if ("msMaxTouchPoints" in navigator) {
-//     hasTouchScreen = navigator.msMaxTouchPoints > 0;
-// } else {
-//     let mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-//     if (mQ && mQ.media === "(pointer:coarse)") {
-//         hasTouchScreen = !!mQ.matches;
-//     } else if ('orientation' in window) {
-//         hasTouchScreen = true; // deprecated, but good fallback
-//     } else {
-//         // Only as a last resort, fall back to user agent sniffing
-//         let UA = navigator.userAgent;
-//         hasTouchScreen = (
-//             /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-//             /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
-//         );
-//     }
-// }
+if ("maxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.maxTouchPoints > 0;
+} else if ("msMaxTouchPoints" in navigator) {
+    hasTouchScreen = navigator.msMaxTouchPoints > 0;
+} else {
+    let mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+    if (mQ && mQ.media === "(pointer:coarse)") {
+        hasTouchScreen = !!mQ.matches;
+    } else if ('orientation' in window) {
+        hasTouchScreen = true; // deprecated, but good fallback
+    } else {
+        // Only as a last resort, fall back to user agent sniffing
+        let UA = navigator.userAgent;
+        hasTouchScreen = (
+            /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+            /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+        );
+    }
+}
 
 
 
-// setUnitSize();
+setUnitSize();
+
+
+
+
 
 
 function setUnitSize(){
@@ -67,54 +118,46 @@ function setUnitSize(){
   halfCircleSizeEnd = eval('HalfCircleSizeEnd'+screenSize)
   halfBarHeight = eval('HalfBarHeight'+screenSize)
 
-  // halfCircleSizeNumb = parseFloat(halfCircleSize);
-  // halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
-  // halfBarHeightNumb = parseFloat(halfBarHeight);
+  halfCircleSizeNumb = parseFloat(halfCircleSize);
+  halfCircleSizeEndNumb = parseFloat(halfCircleSizeEnd);
+  halfBarHeightNumb = parseFloat(halfBarHeight);
   
 }
-function SetProperty(name, path, percent, color, date, size){
-  this.name = name;
-  this.path = path;
-  this.percent = percent;
-  this.color = color;
-  this.date = date;
-  this.size = size;
+
+
+const skillList = {
+  'Maya'              :{ 'name':'Maya',               'width':80, 'color': ['#92c6cc', '#106768'], 'date': 'from 2007'},
+  'Vray'              :{ 'name':'Vray',               'width':82, 'color': ['#fba547', '#8fb6e2'], 'date': 'from 2014'},
+  'Arnold'            :{ 'name':'Arnold',             'width':85, 'color': ['#8dc9d2', '#1f6571'], 'date': 'from 2017'},
+  'Zbrush'            :{ 'name':'Zbrush',             'width':60, 'color': ['#464646', '#242424'], 'date': 'from 2015'},
+  'Houdini'           :{ 'name':'Houdini',            'width':15, 'color': ['#fece5f', '#f05023'], 'date': 'from 2018'},
+  'MarvelousDesigner' :{ 'name':`Marvelous Designer`, 'width':20, 'color': ['#ffea1e', '#0a0a0a'], 'date': 'from 2014'},
+  'SubstancePainter'  :{ 'name':`Substance Painter`,  'width':40, 'color': ['#e2212f', '#e2212f'], 'date': 'from 2015'},
+  'SubstanceDesigner' :{ 'name':`Substance Designer`, 'width':30, 'color': ['#ef4c25', '#ef4c25'], 'date': 'from 2016'},
+  'Mari'              :{ 'name':'Mari',               'width':70, 'color': ['#fcc021', '#000000'], 'date': 'from 2011'},
+  'Mudbox'            :{ 'name':'Mudbox',             'width':90, 'color': ['#ea6741', '#791217'], 'date': 'from 2010'},
+  'Photoshop'         :{ 'name':'Photoshop',          'width':85, 'color': ['#85bff9', '#2c286f'], 'date': 'from 2007'},
+  'threeDCoat'        :{ 'name':`3D Coat`,            'width':75, 'color': ['#41919e', '#41919e'], 'date': 'from 2016'},
+  'RezomUV'           :{ 'name':`Rezom UV`,           'width':60, 'color': ['#ef4000', '#b83808'], 'date': 'from 2014'},
+  'AfterEffects'      :{ 'name':`After Effects`,      'width':60, 'color': ['#c88fff', '#312963'], 'date': 'from 2018'},
+  'Nuke'              :{ 'name':'Nuke',               'width':70, 'color': ['#f9b41a', '#000000'], 'date': 'from 2011'},
+  'HTML'              :{ 'name':'HTML',               'width':95, 'color': ['#d1382b', '#e93e30'], 'date': 'from 2019'},
+  'CSS3'              :{ 'name':'CSS3',               'width':80, 'color': ['#29a5d1', '#208db8'], 'date': 'from 2019'},
+  'Javascript'        :{ 'name':'Javascript',         'width':70, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'ThreeJS'           :{ 'name':'ThreeJS',            'width':75, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'GreenSock'         :{ 'name':'Green Sock',         'width':75, 'color': ['#efd93b', '#f5e695'], 'date': 'from 2019'},
+  'Python'            :{ 'name':'Python',             'width':45, 'color': ['#3774a8',' #ffd647'], 'date': 'from 2019'}
 }
-const Maya              = new SetProperty('Maya'              ,'/assets/images/icons/Maya.png'             , 80, ['#92c6cc', '#106768'], 'from 2007', 500 );
-const Vray              = new SetProperty('Vray'              ,'/assets/images/icons/Vray.png'             , 82, ['#fba547', '#8fb6e2'], 'from 2014', 512 );
-const Arnold            = new SetProperty('Arnold'            ,'/assets/images/icons/Arnold.png'           , 85, ['#8dc9d2', '#1f6571'], 'from 2017', 400 );
-const Zbrush            = new SetProperty('Zbrush'            ,'/assets/images/icons/Zbrush.png'           , 60, ['#464646', '#242424'], 'from 2015', 3737);
-const Houdini           = new SetProperty('Houdini'           ,'/assets/images/icons/Houdini.png'          , 15, ['#fece5f', '#f05023'], 'from 2018', 309 );
-const MarvelousDesigner = new SetProperty('Marvelous Designer','/assets/images/icons/MarvelousDesigner.png', 20, ['#ffea1e', '#0a0a0a'], 'from 2014', 256 );
-const SubstancePainter  = new SetProperty('Substance Painter' ,'/assets/images/icons/SubstancePainter.png' , 40, ['#e2212f', '#e2212f'], 'from 2015', 648 );
-const SubstanceDesigner = new SetProperty('Substance Designer','/assets/images/icons/SubstanceDesigner.png', 30, ['#ef4c25', '#ef4c25'], 'from 2016', 648 );
-const Mari              = new SetProperty('Mari'              ,'/assets/images/icons/Mari.png'             , 70, ['#fcc021', '#000000'], 'from 2011', 500 );
-const Mudbox            = new SetProperty('Mudbox'            ,'/assets/images/icons/Mudbox.png'           , 90, ['#ea6741', '#791217'], 'from 2010', 256 );
-const Photoshop         = new SetProperty('Photoshop'         ,'/assets/images/icons/Photoshop.png'        , 85, ['#85bff9', '#2c286f'], 'from 2007', 271 );
-const threeDCoat        = new SetProperty('3D Coat'           ,'/assets/images/icons/threeDCoat.png'       , 75, ['#41919e', '#41919e'], 'from 2016', 1540);
-const RezomUV           = new SetProperty('Rezom UV'          ,'/assets/images/icons/RezomUV.png'          , 60, ['#ef4000', '#b83808'], 'from 2014', 1000);
-const AfterEffects      = new SetProperty('After Effects'     ,'/assets/images/icons/AfterEffects.png'     , 60, ['#c88fff', '#312963'], 'from 2018', 512 );
-const Nuke              = new SetProperty('Nuke'              ,'/assets/images/icons/Nuke.png'             , 70, ['#f9b41a', '#000000'], 'from 2011', 526 );
-const HTML              = new SetProperty('HTML'              ,'/assets/images/icons/HTML.png'             , 95, ['#d1382b', '#e93e30'], 'from 2019', 256 );
-const CSS3              = new SetProperty('CSS3'              ,'/assets/images/icons/CSS3.png'             , 80, ['#29a5d1', '#208db8'], 'from 2019', 526 );
-const Javascript        = new SetProperty('Javascript'        ,'/assets/images/icons/Javascript.png'       , 70, ['#efd93b', '#f5e695'], 'from 2019', 288 );
-const ThreeJS           = new SetProperty('ThreeJS'           ,'/assets/images/icons/ThreeJS.png'          , 75, ['#efd93b', '#f5e695'], 'from 2019', 1034);
-const GreenSock         = new SetProperty('Green Sock'        ,'/assets/images/icons/GreenSock.png'        , 75, ['#efd93b', '#f5e695'], 'from 2019', 1483);
-const Python            = new SetProperty('Python'            ,'/assets/images/icons/Python.png'           , 45, ['#3774a8', '#ffd647'], 'from 2019', 360 );
-
-const skillList = [Maya,Vray,Arnold,Zbrush,Houdini,MarvelousDesigner,SubstancePainter,SubstanceDesigner,Mari,Mudbox,Photoshop,threeDCoat,RezomUV,AfterEffects,Nuke,HTML,CSS3,Javascript,ThreeJS,GreenSock,Python]
-export default skillList;
-
 // const SkillsTLPath = '/assets/images/icons/';
-export const colorOffset = ['10%','90%'];
+const colorOffset = ['10%','90%'];
 // const RANDOM_COLOR = ['#628ba7','#dadbe0','#b1b4e1','#8f9ca0','#001f44','#fe9ac3','#fde6c7','#ffaeaa','#fe5f7c','#ffb582','#30d9e7','#00bcad','#00a295','#007bc8','#006ebe'];
-export const RANDOM_COLOR = ['#dc6c6c','#dc6cae','#dc6cc8','#816cdc','#6ca1dc','#6cdccb','#6cdc6f','#b1dc6c','#dccd6c','#dc9e6c'];
-export const startRandomColor = 4;
+const RANDOM_COLOR = ['#dc6c6c','#dc6cae','#dc6cc8','#816cdc','#6ca1dc','#6cdccb','#6cdc6f','#b1dc6c','#dccd6c','#dc9e6c'];
+
 
 // createSkillSet();
 // window.addEventListener('resize', SkillsTLUpdate);
 
-export function Skills(id,skillListTL){
+export default function Skills(id,skillListTL){
   this.id = id;
   this.skillListTL = skillListTL;
 
@@ -939,26 +982,26 @@ SkillsTL.prototype.getExpandGraph = function(){
 
 
 
-// const MayaTL = new SkillsTL('Maya');
-// const VrayTL = new SkillsTL('Vray');
-// const ArnoldTL = new SkillsTL('Arnold');
-// const ZbrushTL = new SkillsTL('Zbrush');
-// const HoudiniTL = new SkillsTL('Houdini');
-// const MarvelousDesignerTL = new SkillsTL('MarvelousDesigner');
-// const SubstancePainterTL = new SkillsTL('SubstancePainter');
-// const SubstanceDesignerTL = new SkillsTL('SubstanceDesigner');
-// const MariTL = new SkillsTL('Mari')
-// const MudboxTL = new SkillsTL('Mudbox');
-// const PhotoshopTL = new SkillsTL('Photoshop');
-// const threeDCoatTL = new SkillsTL('threeDCoat');
-// const RezomUVTL = new SkillsTL('RezomUV');
-// const AfterEffectsTL = new SkillsTL('AfterEffects');
-// const NukeTL = new SkillsTL('Nuke');
-// const PythonTL = new SkillsTL('Python');
-// const HTMLTL = new SkillsTL('HTML');
-// const JavascriptTL = new SkillsTL('Javascript');
-// const ThreeJSTL = new SkillsTL('ThreeJS');
-// const GreenSockTL = new SkillsTL('GreenSock');
-// const CSS3TL = new SkillsTL('CSS3');
+const MayaTL = new SkillsTL('Maya');
+const VrayTL = new SkillsTL('Vray');
+const ArnoldTL = new SkillsTL('Arnold');
+const ZbrushTL = new SkillsTL('Zbrush');
+const HoudiniTL = new SkillsTL('Houdini');
+const MarvelousDesignerTL = new SkillsTL('MarvelousDesigner');
+const SubstancePainterTL = new SkillsTL('SubstancePainter');
+const SubstanceDesignerTL = new SkillsTL('SubstanceDesigner');
+const MariTL = new SkillsTL('Mari')
+const MudboxTL = new SkillsTL('Mudbox');
+const PhotoshopTL = new SkillsTL('Photoshop');
+const threeDCoatTL = new SkillsTL('threeDCoat');
+const RezomUVTL = new SkillsTL('RezomUV');
+const AfterEffectsTL = new SkillsTL('AfterEffects');
+const NukeTL = new SkillsTL('Nuke');
+const PythonTL = new SkillsTL('Python');
+const HTMLTL = new SkillsTL('HTML');
+const JavascriptTL = new SkillsTL('Javascript');
+const ThreeJSTL = new SkillsTL('ThreeJS');
+const GreenSockTL = new SkillsTL('GreenSock');
+const CSS3TL = new SkillsTL('CSS3');
 
-// export const skillListTL = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,ThreeJSTL,GreenSockTL,CSS3TL]
+export const skillListTL = [MayaTL,VrayTL,ArnoldTL,ZbrushTL,HoudiniTL,MarvelousDesignerTL,SubstancePainterTL,SubstanceDesignerTL,MariTL,MudboxTL,PhotoshopTL,threeDCoatTL,RezomUVTL,AfterEffectsTL,NukeTL,PythonTL,HTMLTL,JavascriptTL,ThreeJSTL,GreenSockTL,CSS3TL]
