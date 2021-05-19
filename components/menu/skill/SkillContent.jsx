@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState, useContext } from 'react/cjs/react.development';
-import skillList, {colorOffset, RANDOM_COLOR, startRandomColor} from '../../../public/assets/js/skills.js';
+import skillList, {colorOffset, RANDOM_COLOR, startRandomColor, hasTouchScreen} from '../../../public/assets/js/skills.js';
 import TV, { convertToPix } from '../../../public/assets/js/transitionValue.js';
 import { ClickContext } from '../../HomeLayout.jsx';
+import {gsap} from 'gsap';
 
 function SkillContent(){
-  const clickContext = useContext(ClickContext);
+  // const clickContext = useContext(ClickContext);
   const [skillHalfSize,setSkillHalfSize] = useState({circle:0,circleEnd:0,barHeight:0, pxCircle:0, pxCircleEnd:0, pxBarHeight:0});
+  const skillTL = useRef({});
+  const touchScreen = useRef();
 
   const getStops = useCallback((skill,j)=>{
     console.log('check if it working again')
@@ -31,10 +34,18 @@ function SkillContent(){
 
     setSkillHalfSize({circle:circle, circleEnd:circleEnd, barHeight:barHeight, pxCircle:convertToPix(circle), pxCircleEnd:convertToPix(circleEnd), pxBarHeight:convertToPix(barHeight)})
   },[])
+  const onMouseEnter = useCallback((e)=>{
+    // let touchScreen = hasTouchScreen();
+    // if(!touchScreen) console.log(skillTL.current[e.target.id])
+  },[])
 
 
   useEffect(()=>{
-    setUnitSize()
+    setUnitSize();
+    skillList.map((skill,j)=>{
+      skillTL.current[skill.name.replace(/\s/g, '')]=gsap.timeline({paused:true});
+    })
+    touchScreen.current = hasTouchScreen();
   },[])
 
   return(
@@ -42,7 +53,7 @@ function SkillContent(){
        {skillList.map((skill,j)=>{
           const skillName = skill.name.replace(/\s/g, '');
           return (
-            <div id={skillName} className="skillTrunk" key={skill.path}>
+            <div id={skillName} className="skillTrunk" key={skill.path} onMouseEnter={onMouseEnter}>
               <div className="skillBranch">
                 <div className="skillImage">
                   <div>
