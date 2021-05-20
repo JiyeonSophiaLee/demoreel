@@ -14,6 +14,7 @@ export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
 export const MenuSizeContext = createContext();
 export const ClickContext = createContext();
+export const ClickAfterContext = createContext();
 
 
 
@@ -52,6 +53,7 @@ const HomeLayout = () =>{
   const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
 
   const [clickContext,setClickContext] = useState({on:false, bigger:null, biggered:null});
+  const [clickAfterContext,setClickAfterContext] = useState(null);
   const clickRef = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]});
 
   const extendingRequestAnimRef = useRef(null);
@@ -370,7 +372,7 @@ const HomeLayout = () =>{
     })
   },[svgFrameValues]);
 
-
+  // useEffect(()=>{setClickAfterContext('skill');},[])
 
   const extendMenu = useCallback((elem, order=0, textRef, contentRef, neonRefs)=>{
     const elemParentId = elem.parentElement.id;
@@ -412,6 +414,7 @@ const HomeLayout = () =>{
           textRef.style.display = 'none';
           contentRef.style.display ='initial';
           contentRef.style.zIndex =3;
+          setClickAfterContext(elemParentId);
           // disableClick()
         }).then(()=>{
           clickRef.current.onAnim =false;
@@ -469,6 +472,7 @@ const HomeLayout = () =>{
           contentRef.style.zIndex =3;
           biggeredNeonRefs[0].style.visibility = 'visible';
           biggeredNeonRefs[1].style.visibility = 'visible';
+          setClickAfterContext(elemParentId);
         }).then(()=>{
           clickRef.current.onAnim =false;
         })
@@ -506,13 +510,15 @@ const HomeLayout = () =>{
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
                   <ClickContext.Provider value = {clickContext}>
-                    <HomeLayoutRender vals={{refs:{demoRef, logoRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
+                    <ClickAfterContext.Provider value = {clickAfterContext}>
+                      <HomeLayoutRender vals={{refs:{demoRef, logoRef}, menuValues:menuValues.current, svgFrameValuesImmutable:svgFrameValuesImmutable.current, clickContext:clickContext}}/>
+                    </ClickAfterContext.Provider>
                   </ClickContext.Provider>
                 </MenuSizeContext.Provider>
               </LogoDisplayContext.Provider>
             </ExtendMenuContext.Provider>
     </div>
-  },[logoDisplay, work_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack, clickContext]);
+  },[logoDisplay, work_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack, clickContext, clickAfterContext]);
 } 
 
 function HomeLayoutRender(props){

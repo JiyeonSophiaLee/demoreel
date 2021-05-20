@@ -110,6 +110,7 @@ function SvgFramePackRender(props){
     )
 }
 function ContentRender(props){
+  console.log('----------ContentRender----------------')
   return useMemo(()=>{
     return (
       <div className="contents" ref={props.vals.ref}>

@@ -119,10 +119,12 @@ const transitionValue ={
   svgFrameDefaultSizeSmallerSize : "5rem",
   svgFrameDefaultSize800 : "7rem",
   svgFrameDefaultSize1400 : "8.7rem",
-  // skillTLDuration : 2.5,
-  // skillTLEase : "power2.inOut",
-  // skillTLDuration800 : 1,
-  // skillTLEase800 : "bounce.out"
+  
+  skillTLDuration : 2.5,
+  skillTLEase : "power2.inOut",
+  skillTLDuration800 : 1,
+  skillTLEase800 : "bounce.out",
+  
   halfCircleSize: variable.halfCircleSize,
   halfCircleSizeEnd: variable.halfCircleSizeEnd,
   halfBarHeight: variable.halfBarHeight,

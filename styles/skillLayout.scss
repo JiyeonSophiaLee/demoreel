@@ -98,7 +98,7 @@
           .percent{
             font-size: 1.5rem;
             fill: white;
-            text-shadow:2px 2px 3px rgba(30,30,30,0.7);
+            text-shadow:2px 2px 3px rgb(30,30,30);
           }
         }
         /**
@@ -191,11 +191,13 @@
         * 3.2 Skill Graph (SVG Graph) (media query)
         * --------------------------------------
         */
-        .skillGraph .barHead2,.barTail2{
-          display: initial;
-        }
-        .skillGraph .percent{     
-          font-size: 1.3rem;
+        .skillGraph {
+          .barHead2,.barTail2{
+          display: initial
+          };
+          .percent{     
+            font-size: 1.3rem;
+          }
         }
         /**
         * 3.3 Skill Info (media query)
