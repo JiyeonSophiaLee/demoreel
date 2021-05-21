@@ -5,6 +5,7 @@ import {gsap} from 'gsap';
 import TV from '../public/assets/js/transitionValue'
 
 function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
+  console.log('-----------useSkillList---------------')
   const callGraphTL = useRef();
   const callGraphTL800 = useRef();
   const expandGraphTL = useRef();
@@ -48,7 +49,6 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
       const color2 = RANDOM_COLOR[(startRandomColor + 1 +j)%10];
       const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd) * skill.percent / 100;
 
-        console.log('skillHalfSize.pxCircle',skillHalfSize,skillHalfSize.pxCircle)
       expandGraphTL.current
         .fromTo(skillColor1Ref.current,{
             stopColor: color1
@@ -166,61 +166,72 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
   const onMouseLeave = useCallback((e)=>{
     if(!touchScreen.current) expandGraphTL.current.reverse()
   },[])
-  const updateResize = useCallback(()=>{
-    const svgWidth = svgRef.current.clientWidth;
-    const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
 
-    rootRef.current.style.height = '';
-
-    console.log('skillHalfSize',skillHalfSize)
-    // if(innerWidth > 800){
-      // rootRef.current.style.width = barEndPosition +'px';
-    //   rootRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
-    //   rootRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;
-    // }else{
-    //   rootRef.current.style.width = svgWidth - skillHalfSize.pxCircleEnd*2 + 'px';
-    //   rootRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle * 0.5 - skillHalfSize.pxBarHeight);
-    //   rootRef.current.style.height = skillHalfSize.pxCircle*2 + skillHalfSize.pxBarHeight*2 + 'px';
-    // }
-    // rootRef.current.setAttributeNS(null,'x',skillHalfSize.pxCircle);
-
-    
-    // barHead1Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
-    // barHead1Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle);
-    // barHead1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
-
-    // if(innerWidth > 800){
-    //   barHead2Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
-    //   barHead2Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle*2);
-    //   barHead2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
-    // }
-
-
-    // if(innerWidth > 800){
-    //   barTail1Ref.current.setAttributeNS(null,'cx',barEndPosition + skillHalfSize.pxCircle);
-    // }else{
-    //   barTail1Ref.current.setAttributeNS(null,'cx',svgWidth - skillHalfSize.pxCircleEnd);
-    // }
-    // barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.pxCircle);
-    // barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
-
-    // if(innerWidth <= 800){
-    //   barTail2Ref.current.setAttributeNS(null,'cx', svgWidth - skillHalfSize.pxCircleEnd);
-    //   barTail2Ref.current.setAttributeNS(null, 'cy', skillHalfSize.pxCircle*2);
-    //   barTail2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
-    // }
-  },[skillHalfSize])
-
+  // function debounce(fn, ms) {
+  //   let timer
+  //   return () => {
+  //     clearTimeout(timer)
+  //     timer = setTimeout(() => {
+  //       timer = null
+  //       fn.apply(this, arguments)
+  //     }, ms)
+  //   };
+  // }
   useEffect(()=>{
     callGraphTL.current = gsap.timeline({paused:true});
     callGraphTL800.current = gsap.timeline({paused:true});
     expandGraphTL.current = gsap.timeline({paused:true});
     touchScreen.current = hasTouchScreen();
+  },[])
+  useEffect(()=>{
+    const updateResize=()=>{
+      const svgWidth = svgRef.current.clientWidth;
+      const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
+  
+      rootRef.current.style.height = '';
+
+      if(innerWidth > 800){
+        barRef.current.style.width = barEndPosition +'px';
+        barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
+        barRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;
+      }else{
+        barRef.current.style.width = svgWidth - skillHalfSize.pxCircleEnd*2 + 'px';
+        barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle * 0.5 - skillHalfSize.pxBarHeight);
+        barRef.current.style.height = skillHalfSize.pxCircle*2 + skillHalfSize.pxBarHeight*2 + 'px';
+      }
+      barRef.current.setAttributeNS(null,'x',skillHalfSize.pxCircle);
+  
+      
+      barHead1Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
+      barHead1Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle);
+      barHead1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
+  
+      if(innerWidth > 800){
+        barHead2Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
+        barHead2Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle*2);
+        barHead2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
+      }
+  
+  
+      if(innerWidth > 800){
+        barTail1Ref.current.setAttributeNS(null,'cx',barEndPosition + skillHalfSize.pxCircle);
+      }else{
+        barTail1Ref.current.setAttributeNS(null,'cx',svgWidth - skillHalfSize.pxCircleEnd);
+      }
+      barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.pxCircle);
+      barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
+  
+      if(innerWidth <= 800){
+        barTail2Ref.current.setAttributeNS(null,'cx', svgWidth - skillHalfSize.pxCircleEnd);
+        barTail2Ref.current.setAttributeNS(null, 'cy', skillHalfSize.pxCircle*2);
+        barTail2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
+      }
+    }
     window.addEventListener('resize',updateResize);
     return ()=>{
       window.removeEventListener('resize',updateResize);
     }
-  },[])
+  },[skillHalfSize])
 
   useEffect(()=>{
     if(clickAfterContext === "skill"){
@@ -372,9 +383,7 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
           <div className="skillImage">
             <div>
               <p>{skill.name}</p>
-              <div className="image">
-                <Image layout="responsive" width={skill.size} height={skill.size} src={skill.path} alt={skill.name+" icon"}/>
-              </div>
+              <img className="image" src={skill.path} alt={skill.name+" icon"}/>
             </div>
           </div>
           <svg className="skillGraph" ref={svgRef}>

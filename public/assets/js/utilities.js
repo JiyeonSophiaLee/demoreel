@@ -69,6 +69,7 @@ export function getDemoVideoHeight(menuExpanded){
 export function addCSSmenutransition(biggerElemId, ...elems){
   elems.forEach((e)=>{
     if(biggerElemId !== e.id){
+      console.log('e.id',e.id)
       e.classList.add('menutransition');
       setTimeout(() => {
         e.classList.remove('menutransition');

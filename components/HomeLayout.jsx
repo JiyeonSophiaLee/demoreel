@@ -161,7 +161,7 @@ const HomeLayout = () =>{
       _mobileMode.current = innerWidth <= 800 ? true : false; 
       _widerMode.current = innerWidth >= 1400 ? true : false;
 
-
+      
       homeGsapSet(clickRef.current.menuExtended, mobileMode.current !== _mobileMode.current)
 
       if( clickRef.current.menuExtended ) {
@@ -217,10 +217,9 @@ const HomeLayout = () =>{
   //   })
   // }
 
-
   // -----   the reason I put svgFrameValue as an argument, not just using svgFrameValue as a Ref,
   // ----- is I don't want to rerender all this functions whenever svgFrameValues changes.
-  const callToUnSymetryEachMenu = useCallback((_svgFrameValues, extendingSize, elemParentId)=>{
+  const transformAllEachMenus = useCallback((_svgFrameValues, extendingSize, elemParentId)=>{
     return new Promise((resolve, reject)=>{  
       const NF = TV['menuDuration']*60;
       
@@ -228,16 +227,14 @@ const HomeLayout = () =>{
       let dir = 1;
 
       addCSSmenutransition(null, ...allElems.current);
-      addCSSmenutransition(null, clickRef.current.biggerElem);
-
       extendingSize.LI.forEach((obj)=>{
         eval(obj['elemId'] + "_setLI_size")({width:obj.width, height:obj.height});
       })
   
-      eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, extendingSize['svgFramePackage']);
-
-
-
+      if(clickRef.current.biggerElem !== null){
+        addCSSmenutransition(null, clickRef.current.biggerElem);
+        eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, extendingSize['svgFramePackage']);
+      }
 
       if(clickRef.current.biggeredElemParentId !== null){
         addCSSmenutransition(null, clickRef.current.biggeredElem);
@@ -247,7 +244,7 @@ const HomeLayout = () =>{
 
 
       if(innerWidth < 800 ){
-        const size = TV.svgFrameDefaultSizeSmallerSize;
+        const size = clickRef.current.biggerElem !== null ? TV.svgFrameDefaultSizeSmallerSize : _svgFrameValues['svgFrameDefault'];
         const childElems = allElems.current.map((e)=>e.firstElementChild);
 
         addCSSmenutransition(elemParentId, ...childElems);
@@ -267,8 +264,10 @@ const HomeLayout = () =>{
 
       function anim(){
         f += dir;
-        clickRef.current.biggerElemRect.setAttributeNS(null, "width" , clickRef.current.biggerElem.clientWidth);
-        clickRef.current.biggerElemRect.setAttributeNS(null, "height", clickRef.current.biggerElem.clientHeight);
+        if(clickRef.current.biggerElem !== null){
+          clickRef.current.biggerElemRect.setAttributeNS(null, "width" , clickRef.current.biggerElem.clientWidth);
+          clickRef.current.biggerElemRect.setAttributeNS(null, "height", clickRef.current.biggerElem.clientHeight);
+        }
 
         if(clickRef.current.biggeredElemParentId !== null){
           clickRef.current.biggeredElemRect.setAttributeNS(null, "width" , clickRef.current.biggeredElem.clientWidth);
@@ -279,7 +278,9 @@ const HomeLayout = () =>{
         if(!(f % NF)){
           console.log("=======finished=======");
           // onAnim = false;
-          eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, {width:"100%",height:"100%"});
+          if(clickRef.current.biggerElem !== null) eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, {width:"100%",height:"100%"});
+          else eval(elemParentId + "_changeHierarchySvgFramePack")(_svgFrameValues, {width: _svgFrameValues['svgFrameDefault'],height: _svgFrameValues['svgFrameDefault']});
+
           cancelAnimationFrame(extendingRequestAnimRef.current);
           console.log('resolve?')
           resolve();
@@ -288,21 +289,15 @@ const HomeLayout = () =>{
       anim();
     })
   },[])
-
+  
 
   
-   const createWavyAnimation = useCallback((extendingSize)=>{
+  const createWavyAnimation = useCallback((extendingSize)=>{
     console.log('createWavyAnimation is working');
     return new Promise((resolve,reject)=>{
-      // let wavyAnimationTL = null;
-  
-      
+
       if(window.innerWidth > 800){
         let dataPoints, pointsTween1, pointsTween2;
-
-
-   
-        
 
         if(svgFrameValues.wavyPath > extendingSize['width'] / 2){
           return setSvgFrameValues({...svgFrameValues, wavyPath: extendingSize['width']/2})
@@ -344,8 +339,6 @@ const HomeLayout = () =>{
             yoyo: true,
             ease: Sine.easeInOut
           });
-          
-    
 
           wavyAnim.current.TL.add(tween1, -random(duration))
           wavyAnim.current.TL.add(tween2, -random(duration))
@@ -395,18 +388,17 @@ const HomeLayout = () =>{
 
     
       
-        console.log('neonRefs',neonRefs)
 
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
         let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
-
+        console.log('extendingSize',extendingSize)
 
         Promise.all([
           homeGsapTransition(clickRef.current.menuExtended),
           logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
           clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
           // svgFrameRef.extendMenuIf(demoVideoHeight),
-          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
           // callAstronaut(elemParentId)
           // // test()
         ]).then(()=>{
@@ -457,7 +449,7 @@ const HomeLayout = () =>{
           biggeredWavyPath[1].setAttribute('d',''),
           clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
           clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
-          callToUnSymetryEachMenu(svgFrameValues, extendingSize, elemParentId),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
           biggeredText.style.display = 'initial',
           biggeredContentRef.style.display = 'none',
           biggeredContentRef.style.zIndex = -1,
@@ -478,25 +470,43 @@ const HomeLayout = () =>{
         })
         
       }else{
-  //       if( menuExtended.current ){
-  //         menuExtended.current = false;
-  //         biggeredElem = null;
-  //         biggerElem = null;
-    
-  //         demoVideoHeight = getDemoVideoHeight(menuExtended.current)
-  //         console.log('svgFrameValues====> ',svgFrameValues)
-    
-  //         Promise.all([
-  //           utilityMenuIf(menuExtended.current),
-  //           logoDisplayDispatch({ demoClientHeight: demo.clientHeight, logoClientWidth: innerWidth  * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
-  //           test()
-  //         ]).then(()=>{
-  //           disableClick()
-  //         })
-  //       }
-      
-  
-  //     }
+        console.log('else');
+        const biggeredWavyPath = clickRef.current.wavyPath;
+        const biggeredText = clickRef.current.textRef;
+        const biggeredContentRef = clickRef.current.contentRef;
+        const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+
+        clickRef.current.onAnim=true;
+        setClickContext({on:false, bigger:null , biggered:null});
+        clickRef.current.biggeredElem = clickRef.current.biggerElem;
+        clickRef.current.biggeredElemParentId = clickRef.current.biggerElemParentId;
+        clickRef.current.biggeredElemRect= clickRef.current.biggerElemRect;
+        clickRef.current.biggerElem = null;
+
+
+        demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
+        let extendingSize = {LI:[{elemId:"work", width:"50%", height:"50%"},
+                                 {elemId:"skill", width:"50%", height:"50%"},
+                                 {elemId:"paint", width:"50%", height:"50%"},
+                                 {elemId:"info", width:"50%", height:"50%"}]};
+
+
+        wavyAnim.current.TL.pause(0);
+        
+        Promise.all([
+          biggeredWavyPath[0].setAttribute('d',''),
+          biggeredWavyPath[1].setAttribute('d',''),
+          clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+          biggeredText.style.display = 'initial',
+          biggeredContentRef.style.display = 'none',
+          biggeredContentRef.style.zIndex = -1,
+          biggeredNeonRefs[0].style.visibility = 'hidden',
+          biggeredNeonRefs[1].style.visibility = 'hidden',
+          // callAstronaut(elemParentId)
+        ]).then(()=>{
+          // clickRef = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]});
+        })
     }
 
       
