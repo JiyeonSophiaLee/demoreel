@@ -82,7 +82,9 @@ function SvgFramePack(props){
         <div className="svgFramePack" onClick={onClick} ref={svgFrameRef} style = { props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack} onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
           <SvgFramePackRender vals={{...props.vals, refs:{noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef}, menuSizeContext:props.vals.menuSizeContext, svgFrameRef:svgFrameRef}}/>
         </div>
-        <ContentRender vals={{ref:contentRef, contents: props.vals.contents}}/>
+        <div className="contents" ref={contentRef} onClick={onClick}>
+          <ContentRender vals={{contents: props.vals.contents}}/>
+        </div>
       </>
       )
   },[props.vals.menuSizeContext[props.vals.id+"_styleSvgFramePack"].style_svgFramePack])
@@ -113,9 +115,9 @@ function ContentRender(props){
   console.log('----------ContentRender----------------')
   return useMemo(()=>{
     return (
-      <div className="contents" ref={props.vals.ref}>
+      <>
         {props.vals.contents}
-      </div>
+      </>
     )
   },[])
 }

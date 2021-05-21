@@ -482,9 +482,9 @@ const HomeLayout = () =>{
         clickRef.current.biggeredElemParentId = clickRef.current.biggerElemParentId;
         clickRef.current.biggeredElemRect= clickRef.current.biggerElemRect;
         clickRef.current.biggerElem = null;
+        clickRef.current.menuExtended = false;
 
 
-        demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
         let extendingSize = {LI:[{elemId:"work", width:"50%", height:"50%"},
                                  {elemId:"skill", width:"50%", height:"50%"},
                                  {elemId:"paint", width:"50%", height:"50%"},
@@ -494,6 +494,8 @@ const HomeLayout = () =>{
         wavyAnim.current.TL.pause(0);
         
         Promise.all([
+          homeGsapTransition(clickRef.current.menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
           biggeredWavyPath[0].setAttribute('d',''),
           biggeredWavyPath[1].setAttribute('d',''),
           clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
@@ -505,7 +507,7 @@ const HomeLayout = () =>{
           biggeredNeonRefs[1].style.visibility = 'hidden',
           // callAstronaut(elemParentId)
         ]).then(()=>{
-          // clickRef = useRef({onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]});
+          clickRef.current = {onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]};
         })
     }
 
