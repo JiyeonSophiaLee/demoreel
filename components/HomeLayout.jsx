@@ -5,7 +5,7 @@ import {createContext, useEffect, useState, useContext, useReducer, memo, useCal
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
 import useMenuSize from "../hooks/useMenuSize";
-import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, transformToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
 import astronaut,{callAstronaut} from '../public/assets/js/astronaut.js'
 import {gsap, Sine} from 'gsap';
 
@@ -368,6 +368,7 @@ const HomeLayout = () =>{
   // useEffect(()=>{setClickAfterContext('skill');},[])
 
   const extendMenu = useCallback((elem, order=0, textRef, contentRef, neonRefs)=>{
+    console.log('elem', elem)
     const elemParentId = elem.parentElement.id;
 
     if(clickRef.current.onAnim===true){
@@ -390,7 +391,7 @@ const HomeLayout = () =>{
       
 
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-        let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+        let extendingSize = getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order);
         console.log('extendingSize',extendingSize)
 
         Promise.all([
@@ -439,7 +440,7 @@ const HomeLayout = () =>{
         
   
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-        let extendingSize = transformToUnSymetryEachMenu(demoVideoHeight, elem, order);
+        let extendingSize = getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order);
 
 
         wavyAnim.current.TL.pause(0);

@@ -8,7 +8,7 @@ function InfoTop(){
         <div id="myPic">
           <div id="myPicBG"/>
           <div id="myPicImage">
-            <Image src="/assets/images/pictures/myPic.jpg" alt="Picture of Sophia" width={512} height={512}/>
+            <Image src="/assets/images/pictures/myPic.jpg" alt="Picture of Sophia" width={1027} height={1028}/>
           </div>
         </div>
         <main id="myPicInfo">

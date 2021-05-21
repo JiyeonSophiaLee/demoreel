@@ -2,6 +2,10 @@ import Image from 'next/image'
 
 
 function useImageContent(useImageContent){
+    const onClick = (e,url)=>{
+      e.stopPropagation()
+      window.open(url)
+    }
     const loadingImages = 
       <div className="alinedImages">
         {useImageContent.map((project)=>{
@@ -17,7 +21,7 @@ function useImageContent(useImageContent){
 
               if(project.artstation!==null){
                 // let className = project.main === i ? 'mainContent content' : 'subContent content';
-                output = <a herf={project.artstation} key={_name} target="_blank" className={_className}>{_image}</a>;
+                output = <a onClick={(e)=>onClick(e,project.artstation)} herf={project.artstation} key={_name} target="_blank" className={_className}>{_image}</a>;
               }else{
                 output = <div className={_className} key={_name}>{_image}</div>;
               }

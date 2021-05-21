@@ -1,5 +1,5 @@
 import {gsap, Sine} from 'gsap';
-import TV from './transitionValue.js'
+import TV, {convertToPix} from './transitionValue.js'
 
 
 
@@ -78,7 +78,7 @@ export function addCSSmenutransition(biggerElemId, ...elems){
   })
 }
 
-export function transformToUnSymetryEachMenu(demoVideoHeight, elem, order){
+export function getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order){
  
   const LI = elem.parentElement.parentElement;
   const svgFramePackage = elem.parentElement;
@@ -246,6 +246,8 @@ function homeGsapTransitionToUnSymetry(){
 }
 
 function homeGsapTransitionToSymetry(){
+  console.log('height before', innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16)
+  console.log('height after', innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16)
   gsap.fromTo(
     master,{
       maxWidth: 100 + "%",
@@ -265,7 +267,8 @@ function homeGsapTransitionToSymetry(){
   // Unlike the homeGsapTransitionToUnSymetry( demoVideo have to translate with regualr maxWidth ),
   //   this homeGsapTransitionToSymetry have maxWidth, which translate to two way to get height for demovideo
   //   so I gave a condition for it.
-  if(innerWidth < TV.masterMaxWidth){
+  if(innerWidth < convertToPix(TV.masterMaxWidth)){
+    console.log('right?')
       gsap.fromTo(
           demoVideo,{
             width: TV.unSymetryDemoVideoWidth + '%',
@@ -277,6 +280,7 @@ function homeGsapTransitionToSymetry(){
           }
         )
   }else{
+    console.log('really?')
       gsap.fromTo(
         demoVideo,{
           width: TV.unSymetryDemoVideoWidth + '%',
