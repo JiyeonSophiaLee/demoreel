@@ -38,129 +38,137 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
     });
     return stops;
   },[])
-  // useEffect(()=>{
-  //   console.log('skillColor1Ref: ',skillColor1Ref.current)
-  // },[])
+
+  useEffect(()=>{
+    callGraphTL.current = gsap.timeline({paused:true});
+    callGraphTL800.current = gsap.timeline({paused:true});
+    expandGraphTL.current = gsap.timeline({paused:true});
+    touchScreen.current = hasTouchScreen();
+  },[])
   
   const onMouseEnter = useCallback((e)=>{
+    console.log('touchScreen.current',touchScreen.current)
     if(!touchScreen.current){
-      const svgWidth = svgRef.current.clientWidth;
-      const color1 = RANDOM_COLOR[(startRandomColor + 0 +j)%10];
-      const color2 = RANDOM_COLOR[(startRandomColor + 1 +j)%10];
-      const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd) * skill.percent / 100;
+      if(innerWidth>800){
 
-      expandGraphTL.current
-        .fromTo(skillColor1Ref.current,{
-            stopColor: color1
-          },{
-            stopColor:'#ffffff',
-            duration:1,
-            ease:"power2.inOut"
-          },0
+        const svgWidth = svgRef.current.clientWidth;
+        const color1 = RANDOM_COLOR[(startRandomColor + 0 +j)%10];
+        const color2 = RANDOM_COLOR[(startRandomColor + 1 +j)%10];
+        const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd) * skill.percent / 100;
+  
+        expandGraphTL.current
+          .fromTo(skillColor1Ref.current,{
+              stopColor: color1
+            },{
+              stopColor:'#ffffff',
+              duration:1,
+              ease:"power2.inOut"
+            },0
+          )
+          .fromTo(skillColor2Ref.current,{
+              stopColor: color2
+            },{
+              stopColor:'#ffffff',
+              duration:1,
+              ease:"power2.inOut"
+            },0
+          )
+  
+          .to(barRef.current,{   
+              scaleY:2.3,
+              duration:1,
+              transformOrigin:"center center",
+              ease: "elastic.out(1, 0.3)"
+            },0
+          )
+          .fromTo(barRef.current,{
+              width: barEndPosition
+            },{   
+              width: svgWidth - skillHalfSize.pxCircleEnd*2,
+              duration:1,
+              ease: "bounce.out"
+            },0
+          )
+  
+          .fromTo(barHead1Ref.current,{
+              attr:{fill:color1}
+            },{
+              attr:{fill:'#ffffff'},
+              duration:1,
+              ease: "power2.inOut"
+            },0
+          )
+          .to(barHead1Ref.current,
+            {
+              scale:0.95,
+              transformOrigin:"center center",
+              duration:0.5,
+              ease: "elastic.out(1, 0.3)"
+            },
+            0
+          )
+          .to(barHead1Ref.current,
+            {
+              scale:1,
+              transformOrigin:"center center",
+              duration:0.5,
+              ease: "elastic.out(1, 0.3)"
+            },0.5
+          )
+  
+          .fromTo(barTail1Ref.current,{
+            attr:{fill:color2}
+            },{
+              attr:{fill:'#ffffff'},
+              duration:1,
+              ease: "power2.inOut"
+            },0
+          )
+          .fromTo(barTail1Ref.current,{
+              attr:{cx: barEndPosition + skillHalfSize.pxCircle},
+            },{
+              attr:{cx: svgWidth - skillHalfSize.pxCircleEnd},
+              duration:1,
+              ease: "bounce.out"
+            },0
+          )
+  
+          .fromTo(percentRef.current,
+            {
+              attr:{transform:`matrix(1,0,0,1,${barEndPosition + skillHalfSize.pxCircle},${skillHalfSize.pxCircle})`},
+            },{
+              attr:{transform:`matrix(1,0,0,1,${svgWidth - skillHalfSize.pxCircleEnd},${skillHalfSize.pxCircle})`},
+              duration:1,
+              ease: "bounce.out"
+            },
+            0
+          )
+  
+          .to([textNameBgRef.current, textDateBgRef.current],
+            {
+              scaleY:1,
+              duration:0.3,
+              stagger: 0.3,
+              ease:"power2.inOut"
+            },0
+          )
+          .to([textNameBgRef.current, textDateBgRef.current],
+            {
+              scaleY:0,
+              duration:0.3,
+              stagger: 0.3,
+              ease:"power2.inOut"
+            },0.3
+          )
+          .to([textNameRef.current, textDateRef.current],
+            {
+              opacity:1,
+              duration:0.1,
+              stagger: 0.3,
+            },0.3
         )
-        .fromTo(skillColor2Ref.current,{
-            stopColor: color2
-          },{
-            stopColor:'#ffffff',
-            duration:1,
-            ease:"power2.inOut"
-          },0
-        )
-
-        .to(barRef.current,{   
-            scaleY:2.3,
-            duration:1,
-            transformOrigin:"center center",
-            ease: "elastic.out(1, 0.3)"
-          },0
-        )
-        .fromTo(barRef.current,{
-            width: barEndPosition
-          },{   
-            width: svgWidth - skillHalfSize.pxCircleEnd*2,
-            duration:1,
-            ease: "bounce.out"
-          },0
-        )
-
-        .fromTo(barHead1Ref.current,{
-            attr:{fill:color1}
-          },{
-            attr:{fill:'#ffffff'},
-            duration:1,
-            ease: "power2.inOut"
-          },0
-        )
-        .to(barHead1Ref.current,
-          {
-            scale:0.95,
-            transformOrigin:"center center",
-            duration:0.5,
-            ease: "elastic.out(1, 0.3)"
-          },
-          0
-        )
-        .to(barHead1Ref.current,
-          {
-            scale:1,
-            transformOrigin:"center center",
-            duration:0.5,
-            ease: "elastic.out(1, 0.3)"
-          },0.5
-        )
-
-        .fromTo(barTail1Ref.current,{
-          attr:{fill:color2}
-          },{
-            attr:{fill:'#ffffff'},
-            duration:1,
-            ease: "power2.inOut"
-          },0
-        )
-        .fromTo(barTail1Ref.current,{
-            attr:{cx: barEndPosition + skillHalfSize.pxCircle},
-          },{
-            attr:{cx: svgWidth - skillHalfSize.pxCircleEnd},
-            duration:1,
-            ease: "bounce.out"
-          },0
-        )
-
-        .fromTo(percentRef.current,
-          {
-            attr:{transform:`matrix(1,0,0,1,${barEndPosition + skillHalfSize.pxCircle},${skillHalfSize.pxCircle})`},
-          },{
-            attr:{transform:`matrix(1,0,0,1,${svgWidth - skillHalfSize.pxCircleEnd},${skillHalfSize.pxCircle})`},
-            duration:1,
-            ease: "bounce.out"
-          },
-          0
-        )
-
-        .to([textNameBgRef.current, textDateBgRef.current],
-          {
-            scaleY:1,
-            duration:0.3,
-            stagger: 0.3,
-            ease:"power2.inOut"
-          },0
-        )
-        .to([textNameBgRef.current, textDateBgRef.current],
-          {
-            scaleY:0,
-            duration:0.3,
-            stagger: 0.3,
-            ease:"power2.inOut"
-          },0.3
-        )
-        .to([textNameRef.current, textDateRef.current],
-          {
-            opacity:1,
-            duration:0.1,
-            stagger: 0.3,
-          },0.3
-      )
-      expandGraphTL.current.play();
+        expandGraphTL.current.play();
+      }
     }
   },[skillHalfSize])
   const onMouseLeave = useCallback((e)=>{
@@ -177,54 +185,65 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
   //     }, ms)
   //   };
   // }
-  useEffect(()=>{
-    callGraphTL.current = gsap.timeline({paused:true});
-    callGraphTL800.current = gsap.timeline({paused:true});
-    expandGraphTL.current = gsap.timeline({paused:true});
-    touchScreen.current = hasTouchScreen();
-  },[])
+
   useEffect(()=>{
     const updateResize=()=>{
-      const svgWidth = svgRef.current.clientWidth;
-      const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
-  
-      rootRef.current.style.height = '';
+      if(clickAfterContext === "skill"){
 
-      if(innerWidth > 800){
-        barRef.current.style.width = barEndPosition +'px';
-        barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
-        barRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;
-      }else{
-        barRef.current.style.width = svgWidth - skillHalfSize.pxCircleEnd*2 + 'px';
-        barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle * 0.5 - skillHalfSize.pxBarHeight);
-        barRef.current.style.height = skillHalfSize.pxCircle*2 + skillHalfSize.pxBarHeight*2 + 'px';
-      }
-      barRef.current.setAttributeNS(null,'x',skillHalfSize.pxCircle);
+        const svgWidth = svgRef.current.clientWidth;
+        const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
+    
+        rootRef.current.style.height = '';
   
-      
-      barHead1Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
-      barHead1Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle);
-      barHead1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
+        if(innerWidth > 800){
+          barRef.current.style.width = barEndPosition +'px';
+          barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
+          barRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;
+        }else{
+          barRef.current.style.width = svgWidth - skillHalfSize.pxCircleEnd*2 + 'px';
+          barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle * 0.5 - skillHalfSize.pxBarHeight);
+          barRef.current.style.height = skillHalfSize.pxCircle*2 + skillHalfSize.pxBarHeight*2 + 'px';
+        }
+        barRef.current.setAttributeNS(null,'x',skillHalfSize.pxCircle);
+    
+        
+        barHead1Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
+        barHead1Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle);
+        barHead1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
+    
+        if(innerWidth > 800){
+          barHead2Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
+          barHead2Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle*2);
+          barHead2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
+        }
+    
+    
+        if(innerWidth > 800){
+          barTail1Ref.current.setAttributeNS(null,'cx',barEndPosition + skillHalfSize.pxCircle);
+        }else{
+          barTail1Ref.current.setAttributeNS(null,'cx',svgWidth - skillHalfSize.pxCircleEnd);
+        }
+        barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.pxCircle);
+        barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
+    
+        if(innerWidth <= 800){
+          barTail2Ref.current.setAttributeNS(null,'cx', svgWidth - skillHalfSize.pxCircleEnd);
+          barTail2Ref.current.setAttributeNS(null, 'cy', skillHalfSize.pxCircle*2);
+          barTail2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
+        }
   
-      if(innerWidth > 800){
-        barHead2Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
-        barHead2Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle*2);
-        barHead2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
-      }
-  
-  
-      if(innerWidth > 800){
-        barTail1Ref.current.setAttributeNS(null,'cx',barEndPosition + skillHalfSize.pxCircle);
-      }else{
-        barTail1Ref.current.setAttributeNS(null,'cx',svgWidth - skillHalfSize.pxCircleEnd);
-      }
-      barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.pxCircle);
-      barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
-  
-      if(innerWidth <= 800){
-        barTail2Ref.current.setAttributeNS(null,'cx', svgWidth - skillHalfSize.pxCircleEnd);
-        barTail2Ref.current.setAttributeNS(null, 'cy', skillHalfSize.pxCircle*2);
-        barTail2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircleEnd);
+        
+        if(innerWidth > 800){
+          percentRef.current.setAttributeNS(null,'transform', `matrix(1,0,0,1,${barEndPosition + skillHalfSize.pxCircle},${skillHalfSize.pxCircle})`);
+          [textNameRef,textDateRef].forEach(text=>{
+            text.current.style.opacity = 0;
+          })
+        }else{
+          percentRef.current.setAttributeNS(null, 'transform',`matrix(1,0,0,1,${skillHalfSize.pxCircle},${skillHalfSize.pxCircle * 2.35})`);
+          [textNameRef,textDateRef].forEach(text=>{
+            text.current.style.opacity = 1;
+          })
+        }
       }
     }
     window.addEventListener('resize',updateResize);

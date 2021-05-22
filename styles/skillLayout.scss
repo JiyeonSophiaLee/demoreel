@@ -204,7 +204,12 @@
         * --------------------------------------
         */
         .skillInfo{
-          font-size: 0.95rem;
+          .skillInfo_Name{
+            font-size: 1.3rem;
+          }
+          .skillInfo_Date{
+            font-size: 1.2rem;
+          }
           > div {
             left: #{$halfCircleSize800*2};
             width: calc(100% - #{$halfCircleSize800*2});
@@ -255,11 +260,7 @@
         flex-wrap: wrap;
       }
     }
-    @media (max-width: 600px){
-      #skill .skillRoot .skillTrunk .skillBranch .skillInfo{
-        font-size: 1rem;
-      }
-    }
+    
     @media (min-width:950px){
       #skill .skillRoot .skillTrunk .skillBranch .skillInfo{
         font-size: 1.25rem;

@@ -263,12 +263,14 @@ function stopAllActions(){
 
 export function callAstronaut(elemId,biggeredElemId=null){
   click = true;
+  console.log('biggeredElemId', biggeredElemId)
 
   if(biggeredElemId == null){
     // threejsBlocker.style.display = 'none';
     dirLight.intensity = 1;
-    pointLight.intensity = 2;
+    // pointLight.intensity = 2;
   }else{
+    console.log('elemId', elemId)
     executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
   }
   actions[matchingActions[elemId]].play();
@@ -362,49 +364,23 @@ export function callAstronaut(elemId,biggeredElemId=null){
   click=true;
   onClick();
 
-  // if(biggeredElemId != null){
-      
-  //     positionXdiff = (cameraSet.position.x - camera.position.x) / cameraChangeDuration;
-  //     positionYdiff = (cameraSet.position.y - camera.position.y) / cameraChangeDuration;
-  //     positionZdiff = (cameraSet.position.z - camera.position.z) / cameraChangeDuration;
-
-  //     rotationXdiff = (cameraSet.rotation.x - camera.rotation.x) / cameraChangeDuration;
-  //     rotationYdiff = (cameraSet.rotation.y - camera.rotation.y) / cameraChangeDuration;
-  //     rotationZdiff = (ameraSet.rotation.z - camera.rotation.z) / cameraChangeDuration;
-      
-      
-
-  //     cameraChange();
-  // }else{
-    // const vec = new THREE.Vector3();
-    // camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.5)
-    // camera.position.x = cameraSet.position.x
-    // camera.position.y = cameraSet.position.y;
-    // camera.position.z = cameraSet.position.z;
-  //   camera.rotation.x = cameraSet.rotation.x;
-  //   camera.rotation.y = cameraSet.rotation.y;
-  //   camera.rotation.z = cameraSet.rotation.z;
-
-
-  //   callClientX = cameraSet.position.x;
-  //   callClientY = cameraSet.position.y;
-  // }
-  
 }
 
 export function pauseAstronaut(){
 
 //   threejsBlocker.style.display = 'initial';
 
-  sky0.material.side = 0;
-  sky1.material.side = 0;
-  sky2.material.side = 0;
-  sky3.material.side = 0;
+  sky0.material.side = THREE.FrontSide;
+  sky1.material.side = THREE.FrontSide;
+  sky2.material.side = THREE.FrontSide;
+  sky3.material.side = THREE.FrontSide;
 
   dirLight.intensity = 0;
   pointLight.intensity = 0;
 
-  stopAllActions();
+  for(let action in actions){
+    actions[action].stop();
+  }
 
 }
 
