@@ -10,7 +10,7 @@ function SkillContent(){
   console.log('--------SkillContent----------')
   const clickAfterContext = useContext(ClickAfterContext);
   const [skillHalfSize,setSkillHalfSize] = useState({circle:0,circleEnd:0,barHeight:0, pxCircle:0, pxCircleEnd:0, pxBarHeight:0});
-
+  const mode = useRef({mobileMode:null, _mobileMode:null, widerMode:null, _widerMode:null});
 
   const setUnitSize = useCallback(()=>{
     let screenSize;
@@ -27,8 +27,29 @@ function SkillContent(){
 
   useEffect(()=>{
     setUnitSize();
+    mode.current.mobileMode = innerWidth <= 800 ? true : false; 
+    mode.current.widerMode = innerWidth >= 1400 ? true : false; 
+    mode.current._mobileMode = mode.current.mobileMode;
+    mode.current._widerMode = mode.current.widerMode;
   },[])
-
+  useEffect(()=>{
+    const updateResize = () =>{
+      mode.current._mobileMode = innerWidth <= 800 ? true : false; 
+      mode.current._widerMode = innerWidth >= 1400 ? true : false;
+      if(mode.current.mobileMode !== mode.current._mobileMode){
+        mode.current.mobileMode = !mode.current.mobileMode;
+        setUnitSize();
+      }
+      if(mode.current.widerMode !== mode.current._widerMode){
+        mode.current.widerMode = !mode.current.widerMode;
+        setUnitSize();
+      }
+    }
+    window.addEventListener('resize',updateResize);
+    return ()=>{
+      window.removeEventListener('resize',updateResize);
+    }
+  },[])
 
   return useMemo(()=>{
     return <SkillContentRender vals={{skillHalfSize, clickAfterContext}}/>

@@ -188,14 +188,16 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
 
   useEffect(()=>{
     const updateResize=()=>{
+      
+      console.log('clickAfterContext',clickAfterContext === "skill")
       if(clickAfterContext === "skill"){
         const svgWidth = svgRef.current.clientWidth;
         const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
     
         rootRef.current.style.height = '';
   
+        
         if(innerWidth > 800){
-          console.log('barRef', barRef.current.clientWidth)
           barRef.current.style.width = barEndPosition +'px';
           barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
           barRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;
@@ -212,6 +214,7 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
         barHead1Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
     
         if(innerWidth > 800){
+          console.log('skillHalfSize.pxCircle*2',skillHalfSize.pxCircle*2)
           barHead2Ref.current.setAttributeNS(null,'cx',skillHalfSize.pxCircle);
           barHead2Ref.current.setAttributeNS(null,'cy',skillHalfSize.pxCircle*2);
           barHead2Ref.current.setAttributeNS(null,'r', skillHalfSize.pxCircle);
@@ -244,13 +247,18 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
             text.current.style.opacity = 1;
           })
         }
+        if(callGraphTL.current !== null){
+          callGraphTL.current.clear();
+          callGraphTL800.current.clear();
+          expandGraphTL.current.clear();
+        }
       }
     }
     window.addEventListener('resize',updateResize);
     return ()=>{
       window.removeEventListener('resize',updateResize);
     }
-  },[skillHalfSize])
+  },[skillHalfSize, clickAfterContext])
 
   useEffect(()=>{
     if(clickAfterContext === "skill"){
@@ -393,7 +401,7 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
           callGraphTL800.current.play();
       }
     }
-  },[skillHalfSize,clickAfterContext])
+  },[clickAfterContext])
 
   const skillName = skill.name.replace(/\s/g, '');
   const htmlOutput =
