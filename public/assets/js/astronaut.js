@@ -119,7 +119,7 @@ export default function astronaut(){
   window.addEventListener('mousemove',getCurrentMouse, false);
   window.addEventListener( 'resize', onWindowResize, false );
 
-  guiCamera();
+  // guiCamera();
 }
 function guiCamera(){
   const gui = new GUI();
@@ -367,7 +367,13 @@ export function pauseAstronaut(){
 }
 
 
-
+export function removeScene(){
+  if(scene){
+    while(scene.children.length > 0){ 
+      scene.remove(scene.children[0]); 
+    }
+  }
+}
 
 
 

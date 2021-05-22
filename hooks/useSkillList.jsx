@@ -189,13 +189,13 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
   useEffect(()=>{
     const updateResize=()=>{
       if(clickAfterContext === "skill"){
-
         const svgWidth = svgRef.current.clientWidth;
         const barEndPosition = ( svgWidth - skillHalfSize.pxCircle - skillHalfSize.pxCircleEnd ) * skill.percent / 100;
     
         rootRef.current.style.height = '';
   
         if(innerWidth > 800){
+          console.log('barRef', barRef.current.clientWidth)
           barRef.current.style.width = barEndPosition +'px';
           barRef.current.setAttributeNS(null,'y', skillHalfSize.pxCircle - skillHalfSize.pxBarHeight);
           barRef.current.style.height = `calc(${skillHalfSize.barHeight}*2)`;

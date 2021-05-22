@@ -198,9 +198,9 @@ function getPadding (elem){
 
 
 export function homeGsapTransition(menuExtended){
-  
   if(innerWidth > 800){
     if(menuExtended){
+      console.log('homeGsapTransition')
       homeGsapTransitionToUnSymetry();
     }else{
       homeGsapTransitionToSymetry();
@@ -277,7 +277,6 @@ function homeGsapTransitionToSymetry(){
           }
         )
   }else{
-    console.log('result', convertToPix(TV.masterMaxWidth) * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16)
       gsap.fromTo(
         demoVideo,{
           width: TV.unSymetryDemoVideoWidth + '%',

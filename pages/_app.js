@@ -4,6 +4,7 @@ import '../styles/infoLayout.scss'
 import '../styles/imageLayout.scss'
 import '../styles/skillLayout.scss'
 import '../styles/threeJsLayout.scss'
+import '../styles/loaderLayout.scss'
 // import { createStore } from 'redux';
 // import allReducers from '../redux/reducers'
 

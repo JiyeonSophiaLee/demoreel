@@ -4,10 +4,10 @@ import Menu from './Menu.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef, useMemo} from "react"
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
-import loaderAnim from '../public/assets/js/loader.js'
+// import loaderAnim from '../public/assets/js/loader.js'
 import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
-import astronaut,{callAstronaut, pauseAstronaut} from '../public/assets/js/astronaut.js'
+import astronaut,{callAstronaut, pauseAstronaut, removeScene} from '../public/assets/js/astronaut.js'
 import {gsap, Sine} from 'gsap';
 
 
@@ -49,7 +49,8 @@ const HomeLayout = () =>{
   const [paint_setLI_size, paint_setsvgFramePackSize, paint_styleLI, paint_styleSvgFramePack,  paint_changeHierarchySvgFramePack] = useMenuSize('paint');
   const [info_setLI_size, info_setsvgFramePackSize, info_styleLI, info_styleSvgFramePack, info_changeHierarchySvgFramePack] = useMenuSize('info');
 
-  // const [svgFrameValues, setSvgFrameValues] = useState({ svgValues:"none", set:"none"});
+  const lighterVersion = useRef(false);
+  
   const [svgFrameValues, setSvgFrameValues] = useState({svgFrameDefault:undefined, radius:undefined, wavyPath:undefined, extraSpace:undefined, strokeWidth:{rect:'0px',wavy:'0px'}});
   const svgFrameValuesImmutable = useRef({x:0, y:0, rx:5, ry:5, multiply:3, scale:1, speed:[2,3], fill:'none'})
 
@@ -89,15 +90,11 @@ const HomeLayout = () =>{
 
   
 
-  
 
   useEffect(()=>{
-  //   console.log('working')
-  //   work_hookTest('custom hook is testing')
-  //   skill_hookTest('what is wrong with you?')
-    window.onload = function(){
-      loaderAnim();
-    }
+    // window.onload = function(){
+    //   loaderAnim();
+    // }
     mobileMode.current = innerWidth <= 800 ? true : false; 
     widerMode.current = innerWidth >= 1400 ? true : false; 
     _mobileMode.current = mobileMode.current;
@@ -395,14 +392,17 @@ const HomeLayout = () =>{
 
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
         let extendingSize = getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order);
-        console.log('extendingSize',extendingSize)
+
+        function checkCallingAstronaut(){
+          if(!lighterVersion.current) callAstronaut(elemParentId)
+        }
 
         Promise.all([
           homeGsapTransition(clickRef.current.menuExtended),
           logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
           clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
           transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-          callAstronaut(elemParentId)
+          checkCallingAstronaut()
         ]).then(()=>{
           createWavyAnimation(extendingSize['svgFramePackage']);
           textRef.style.display = 'none';
@@ -442,8 +442,11 @@ const HomeLayout = () =>{
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
         let extendingSize = getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order);
 
-        if(innerWidth>800){
-          wavyAnim.current.TL.pause(0);
+        if(innerWidth>800) wavyAnim.current.TL.pause(0)
+
+
+        function checkCallingAstronaut(){
+          if(!lighterVersion.current) callAstronaut(elemParentId, clickRef.current.biggeredElemParentId)
         }
         
         Promise.all([
@@ -457,7 +460,7 @@ const HomeLayout = () =>{
           biggeredContentRef.style.zIndex = -1,
           biggeredNeonRefs[0].style.visibility = 'hidden',
           biggeredNeonRefs[1].style.visibility = 'hidden',
-          callAstronaut(elemParentId, clickRef.current.biggeredElemParentId)
+          checkCallingAstronaut()
         ]).then(()=>{
           createWavyAnimation(extendingSize['svgFramePackage']);
           textRef.style.display = 'none';
@@ -492,9 +495,11 @@ const HomeLayout = () =>{
                                  {elemId:"info", width:"50%", height:"50%"}]};
 
 
-        wavyAnim.current.TL.pause(0);
-        console.log('innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}',innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100)
-        
+        if(innerWidth>800) wavyAnim.current.TL.pause(0);
+        function checkCallingAstronaut(){
+          if(!lighterVersion.current) pauseAstronaut()
+        }
+
         Promise.all([
           homeGsapTransition(clickRef.current.menuExtended),
           logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
@@ -507,7 +512,7 @@ const HomeLayout = () =>{
           biggeredContentRef.style.zIndex = -1,
           biggeredNeonRefs[0].style.visibility = 'hidden',
           biggeredNeonRefs[1].style.visibility = 'hidden',
-          pauseAstronaut()
+          checkCallingAstronaut()
         ]).then(()=>{
           neonRefs[0].style.visibility = 'visible';
           neonRefs[1].style.visibility = 'visible';
@@ -519,9 +524,35 @@ const HomeLayout = () =>{
     }
   },[svgFrameValues ]) 
 
+
+  //=================loader=====================//
+
+  const openLighterVersion = useCallback(()=>{
+    lighterVersion.current = true;
+    removeScene();
+    document.getElementById('lighterVersion').innerHTML = 'This is lighter version'
+  },[])
+
+  useEffect(()=>{
+    window.addEventListener("load", function(event) {
+      console.log('working?')
+      document.getElementById('loaderAnim').classList.add('loaderFadeOutTrans');
+      setTimeout(() => {
+        document.getElementById('loaderContainer').style.display = 'none';
+      }, 1200);
+    });
+  },[])
+
+  //=================loader=====================//
  
    return useMemo(()=>{
     return <div id = "master" >
+            <div id="loaderContainer">
+              <div id="loaderAnim">Load&nbsp;&nbsp;ng</div>
+              <div id="lighterVersion" onClick={openLighterVersion}>  
+                Click to the lighter version <br /> which doesn't contain THREE JS
+              </div>
+            </div>
             <ExtendMenuContext.Provider value={extendMenu}>
               <LogoDisplayContext.Provider  value={{logoDisplay, logoDisplayDispatch}}> 
                 <MenuSizeContext.Provider  value={{work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
@@ -541,7 +572,6 @@ function HomeLayoutRender(props){
   console.log('--------------HomeLayoutRender-----------------')
   return (
     <> 
-      <div id="loaderContainer"/>
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>

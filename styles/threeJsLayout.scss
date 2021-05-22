@@ -1,5 +1,8 @@
+@import "./variableCss.module.scss";
+
+
 // #threejsBlocker{
-//     background:var(--backgroundColor);
+//     background:$backgroundColor;
 //     position:fixed;
 //     top:0;
 //     left:0;
