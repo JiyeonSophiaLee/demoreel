@@ -133,10 +133,10 @@ function guiCamera(){
 }
 
 function getCurrentMouse(e){
-  console.log('??')
   if(!click){
     mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
     mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
+    
   }
 }
 
@@ -147,11 +147,12 @@ function animate(){
   let delta = clock.getDelta();
   mixer.update( delta );
 
+  // console.log('mouseX',mouseX)
   if(click){
     camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
     camera.quaternion.slerp( slerpRotation, 0.1 );
   }else {
-    // camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
+    camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
   }
   
   renderer.render( scene, camera);
@@ -159,7 +160,8 @@ function animate(){
 
 function onClick(){
   lerpingAni = requestAnimationFrame(onClick);
-  if(parseFloat(cameraSet.position.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
+  console.log('1')
+  if(parseFloat(cameraSet.position.y.toFixed(2)) === parseFloat(camera.position.y.toFixed(2))){
     mouseX = cameraSet.position.x;
     mouseY = cameraSet.position.y;
     click = false;
@@ -264,14 +266,12 @@ function stopAllActions(){
 
 export function callAstronaut(elemId,biggeredElemId=null){
   click = true;
-  console.log('biggeredElemId', biggeredElemId)
 
   if(biggeredElemId == null){
     // threejsBlocker.style.display = 'none';
     dirLight.intensity = 1;
     // pointLight.intensity = 2;
   }else{
-    console.log('elemId', elemId)
     executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
   }
   actions[matchingActions[elemId]].play();
