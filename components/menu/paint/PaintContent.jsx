@@ -1,18 +1,10 @@
-import { paintImages } from '../../../public/assets/js/images.js'
-import useImageContent from '../../../hooks/useImageContent.jsx'
+import { paintImages } from "../../../public/assets/js/images.js";
+import useImageContent from "../../../hooks/useImageContent.jsx";
 
-
-
-function PaintContent(){
-  
+function PaintContent() {
   const loadingImages = useImageContent(paintImages);
 
-
-  return(
-    <>
-      { loadingImages }
-    </>
-  )
+  return <>{loadingImages}</>;
 }
 
-export default PaintContent
+export default PaintContent;

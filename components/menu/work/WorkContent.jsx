@@ -1,18 +1,10 @@
-import { workImages } from '../../../public/assets/js/images.js'
-import useImageContent from '../../../hooks/useImageContent.jsx'
+import { workImages } from "../../../public/assets/js/images.js";
+import useImageContent from "../../../hooks/useImageContent.jsx";
 
-
-
-function WorkContent(){
-  
+function WorkContent() {
   const loadingImages = useImageContent(workImages);
 
-
-  return(
-    <>
-      { loadingImages }
-    </>
-  )
+  return <>{loadingImages}</>;
 }
 
-export default WorkContent
+export default WorkContent;
