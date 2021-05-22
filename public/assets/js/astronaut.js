@@ -117,6 +117,7 @@ export default function astronaut(){
   });
 
   window.addEventListener('mousemove',getCurrentMouse, false);
+  window.addEventListener( 'resize', onWindowResize, false );
 
   guiCamera();
 }
@@ -132,8 +133,27 @@ function guiCamera(){
   rotation.add(camera.rotation,'z', -10, 10);
 }
 
+function onWindowResize() {
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  camera.aspect = window.innerWidth / window.innerHeight;
+  // setCameraAspect();
+  camera.updateProjectionMatrix();
+
+  // animate();
+}
+
+
+
+var lastMove = Date.now();
+
 function getCurrentMouse(e){
   if(!click){
+    if (Date.now() - lastMove < 30) { 
+      return;
+    } else {
+      lastMove = Date.now();
+    }
+
     mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
     mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
     
@@ -142,6 +162,7 @@ function getCurrentMouse(e){
 
 
 function animate(){
+  
   requestAniThreeJS = requestAnimationFrame(animate);
 
   let delta = clock.getDelta();
@@ -160,7 +181,7 @@ function animate(){
 
 function onClick(){
   lerpingAni = requestAnimationFrame(onClick);
-  console.log('1')
+
   if(parseFloat(cameraSet.position.y.toFixed(2)) === parseFloat(camera.position.y.toFixed(2))){
     mouseX = cameraSet.position.x;
     mouseY = cameraSet.position.y;
@@ -169,28 +190,6 @@ function onClick(){
   }
 }
 
-//-----------set camera and renderer for minHeight and minWidth -------------//
-
-function setRendererSize(){
-  if(window.innerWidth > TV.masterMinWidth && window.innerHeight > TV.masterMinHeight){
-    renderer.setSize( window.innerWidth, window.innerHeight );
-  }else if(window.innerWidth > TV.masterMinWidth && window.innerHeight <= TV.masterMinHeight){
-    renderer.setSize( document.body.clientWidth, TV.masterMinHeight );
-  }else{
-    renderer.setSize( TV.masterMinWidth, document.body.clientHeight );
-  }
-}
-
-function setCameraAspect(){
-  if(window.innerWidth > TV.masterMinWidth && window.innerHeight > TV.masterMinHeight){
-    camera.aspect = window.innerWidth / window.innerHeight ;
-  }else if(window.innerWidth > TV.masterMinWidth && window.innerHeight <= TV.masterMinHeight){
-    camera.aspect = window.innerWidth / TV.masterMinHeight;
-  }else{
-    camera.aspect = TV.masterMinWidth / window.innerHeight;
-  }
-  
-}
 
 
 //-----------------------------------//
@@ -220,17 +219,6 @@ function getSphere(size) {
 }
 
 
-function onWindowResize() {
-  // renderer.setSize( window.innerWidth, window.innerHeight );
-  setRendererSize();
-  // camera.aspect = window.innerWidth / window.innerHeight;
-  setCameraAspect();
-  camera.updateProjectionMatrix();
-
-  animate();
-}
-
-
 
 
 //------------ function for crossing actions ------------//
@@ -249,13 +237,6 @@ function setWeight( action, weight ) {
     action.setEffectiveWeight( weight );
 
 }
-function stopAllActions(){
-  for(let action in actions){
-    actions[action].stop();
-  }
-}
-
-
 
 
 
@@ -268,9 +249,9 @@ export function callAstronaut(elemId,biggeredElemId=null){
   click = true;
 
   if(biggeredElemId == null){
-    // threejsBlocker.style.display = 'none';
+    document.getElementById("threeJSCover").style.display = 'none';
     dirLight.intensity = 1;
-    // pointLight.intensity = 2;
+    pointLight.intensity = 1;
   }else{
     executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
   }
@@ -369,7 +350,7 @@ export function callAstronaut(elemId,biggeredElemId=null){
 
 export function pauseAstronaut(){
 
-//   threejsBlocker.style.display = 'initial';
+  document.getElementById("threeJSCover").style.display = 'initial';
 
   sky0.material.side = THREE.FrontSide;
   sky1.material.side = THREE.FrontSide;

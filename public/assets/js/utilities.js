@@ -246,14 +246,12 @@ function homeGsapTransitionToUnSymetry(){
 }
 
 function homeGsapTransitionToSymetry(){
-  console.log('height before', innerWidth * (100-TV.unSymetryDemoMenu)/100 * TV.unSymetryDemoVideoWidth/100 * 9/16)
-  console.log('height after', innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16)
-  gsap.fromTo(
+ gsap.fromTo(
     master,{
       maxWidth: 100 + "%",
       duration: 1
     },{
-      maxWidth: TV.masterMaxWidth +'px'
+      maxWidth: TV.masterMaxWidth 
     }
   )
   gsap.fromTo(
@@ -268,7 +266,6 @@ function homeGsapTransitionToSymetry(){
   //   this homeGsapTransitionToSymetry have maxWidth, which translate to two way to get height for demovideo
   //   so I gave a condition for it.
   if(innerWidth < convertToPix(TV.masterMaxWidth)){
-    console.log('right?')
       gsap.fromTo(
           demoVideo,{
             width: TV.unSymetryDemoVideoWidth + '%',
@@ -280,7 +277,7 @@ function homeGsapTransitionToSymetry(){
           }
         )
   }else{
-    console.log('really?')
+    console.log('result', convertToPix(TV.masterMaxWidth) * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16)
       gsap.fromTo(
         demoVideo,{
           width: TV.unSymetryDemoVideoWidth + '%',
@@ -288,12 +285,13 @@ function homeGsapTransitionToSymetry(){
           duration: TV.menuDuration
         },{
           width: TV.symetryDemoVideoWidth + '%',
-          height: TV.masterMaxWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
+          height: convertToPix(TV.masterMaxWidth) * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
         }
       )
     }
 }
-
+// TV.masterMaxWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
+// innerWidth * TV.symetryDemoMenu/100 * TV.symetryDemoVideoWidth/100 * 9/16
 function homeGsapTransitionToUnSymetry800(){
   gsap.fromTo(
     demoVideo,{

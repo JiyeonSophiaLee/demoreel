@@ -46,7 +46,7 @@ LOADER_CONTAINDER.appendChild(lighterVersion);
 window.onload = function(){
   loaderAnim();
 }
-function loaderAnim(){
+export default function loaderAnim(){
   LOADER__.classList.add('loaderFadeOutTrans');
 
   setTimeout(() => {

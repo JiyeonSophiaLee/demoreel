@@ -4,6 +4,7 @@ import Menu from './Menu.jsx'
 import {createContext, useEffect, useState, useContext, useReducer, memo, useCallback, useRef, useMemo} from "react"
 // import gsap from 'gsap';
 import TV, { convertToPix } from '../public/assets/js/transitionValue'
+import loaderAnim from '../public/assets/js/loader.js'
 import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from '../public/assets/js/utilities.js'
 import astronaut,{callAstronaut, pauseAstronaut} from '../public/assets/js/astronaut.js'
@@ -94,7 +95,9 @@ const HomeLayout = () =>{
   //   console.log('working')
   //   work_hookTest('custom hook is testing')
   //   skill_hookTest('what is wrong with you?')
-
+    window.onload = function(){
+      loaderAnim();
+    }
     mobileMode.current = innerWidth <= 800 ? true : false; 
     widerMode.current = innerWidth >= 1400 ? true : false; 
     _mobileMode.current = mobileMode.current;
@@ -395,17 +398,17 @@ const HomeLayout = () =>{
         console.log('extendingSize',extendingSize)
 
         Promise.all([
-          // homeGsapTransition(clickRef.current.menuExtended),
-          // logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
-          // clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
-          // transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+          homeGsapTransition(clickRef.current.menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.unSymetryDemoMenu) / 100 * TV.logoWidth / 100}),
+          clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
           callAstronaut(elemParentId)
         ]).then(()=>{
-          // createWavyAnimation(extendingSize['svgFramePackage']);
-          // textRef.style.display = 'none';
-          // contentRef.style.display ='initial';
-          // contentRef.style.zIndex =3;
-          // setClickAfterContext(elemParentId);
+          createWavyAnimation(extendingSize['svgFramePackage']);
+          textRef.style.display = 'none';
+          contentRef.style.display ='initial';
+          contentRef.style.zIndex =3;
+          setClickAfterContext(elemParentId);
         }).then(()=>{
           clickRef.current.onAnim =false;
         })
@@ -439,30 +442,30 @@ const HomeLayout = () =>{
         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
         let extendingSize = getValuesToUnSymetryEachMenu(demoVideoHeight, elem, order);
 
-        // if(innerWidth>800){
-        //   wavyAnim.current.TL.pause(0);
-        // }
+        if(innerWidth>800){
+          wavyAnim.current.TL.pause(0);
+        }
         
         Promise.all([
-          // biggeredWavyPath[0].setAttribute('d',''),
-          // biggeredWavyPath[1].setAttribute('d',''),
-          // clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
-          // clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
-          // transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-          // biggeredText.style.display = 'initial',
-          // biggeredContentRef.style.display = 'none',
-          // biggeredContentRef.style.zIndex = -1,
-          // biggeredNeonRefs[0].style.visibility = 'hidden',
-          // biggeredNeonRefs[1].style.visibility = 'hidden',
+          biggeredWavyPath[0].setAttribute('d',''),
+          biggeredWavyPath[1].setAttribute('d',''),
+          clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
+          clickRef.current.biggerElemRect.setAttributeNS(null, 'stroke', 'url(#SvgIvory)'),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+          biggeredText.style.display = 'initial',
+          biggeredContentRef.style.display = 'none',
+          biggeredContentRef.style.zIndex = -1,
+          biggeredNeonRefs[0].style.visibility = 'hidden',
+          biggeredNeonRefs[1].style.visibility = 'hidden',
           callAstronaut(elemParentId, clickRef.current.biggeredElemParentId)
         ]).then(()=>{
-          // createWavyAnimation(extendingSize['svgFramePackage']);
-          // textRef.style.display = 'none';
-          // contentRef.style.display ='initial';
-          // contentRef.style.zIndex =3;
-          // biggeredNeonRefs[0].style.visibility = 'visible';
-          // biggeredNeonRefs[1].style.visibility = 'visible';
-          // setClickAfterContext(elemParentId);
+          createWavyAnimation(extendingSize['svgFramePackage']);
+          textRef.style.display = 'none';
+          contentRef.style.display ='initial';
+          contentRef.style.zIndex =3;
+          biggeredNeonRefs[0].style.visibility = 'visible';
+          biggeredNeonRefs[1].style.visibility = 'visible';
+          setClickAfterContext(elemParentId);
         }).then(()=>{
           clickRef.current.onAnim =false;
         })
@@ -490,25 +493,25 @@ const HomeLayout = () =>{
 
 
         wavyAnim.current.TL.pause(0);
-
+        console.log('innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}',innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100)
         
         Promise.all([
-          // homeGsapTransition(clickRef.current.menuExtended),
-          // logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
-          // biggeredWavyPath[0].setAttribute('d',''),
-          // biggeredWavyPath[1].setAttribute('d',''),
-          // clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
-          // transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-          // biggeredText.style.display = 'initial',
-          // biggeredContentRef.style.display = 'none',
-          // biggeredContentRef.style.zIndex = -1,
-          // biggeredNeonRefs[0].style.visibility = 'hidden',
-          // biggeredNeonRefs[1].style.visibility = 'hidden',
+          homeGsapTransition(clickRef.current.menuExtended),
+          logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: innerWidth * (100 - TV.symetryDemoMenu) / 100 * TV.logoWidth / 100}),
+          biggeredWavyPath[0].setAttribute('d',''),
+          biggeredWavyPath[1].setAttribute('d',''),
+          clickRef.current.biggeredElemRect.setAttributeNS(null, 'stroke', `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
+          transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+          biggeredText.style.display = 'initial',
+          biggeredContentRef.style.display = 'none',
+          biggeredContentRef.style.zIndex = -1,
+          biggeredNeonRefs[0].style.visibility = 'hidden',
+          biggeredNeonRefs[1].style.visibility = 'hidden',
           pauseAstronaut()
         ]).then(()=>{
-          // neonRefs[0].style.visibility = 'visible';
-          // neonRefs[1].style.visibility = 'visible';
-          // clickRef.current = {onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]};
+          neonRefs[0].style.visibility = 'visible';
+          neonRefs[1].style.visibility = 'visible';
+          clickRef.current = {onAnim:false, active:true, menuExtended:false, biggerElemParentId:null, biggerElem:null, biggerElemRect:null, biggerNeonRefs:[], biggeredElem:null, biggeredElemParentId:null, biggeredElemRect:null, wavyPath:[]};
         })
     }
 
@@ -537,11 +540,14 @@ const HomeLayout = () =>{
 function HomeLayoutRender(props){
   console.log('--------------HomeLayoutRender-----------------')
   return (
-    <>
+    <> 
+      <div id="loaderContainer"/>
       <Demo refs={props.vals.refs}/>
       <Menu vals={{menuValues:props.vals.menuValues, 
                    svgFrameValuesImmutable:props.vals.svgFrameValuesImmutable}}/>
-                   <div id="threeJSCanvas"></div>
+                   
+      <div id="threeJSCover"></div>
+      <div id="threeJSCanvas"></div>
     </>
   )
 }
