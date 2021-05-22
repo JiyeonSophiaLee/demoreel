@@ -133,6 +133,7 @@ function guiCamera(){
 }
 
 function getCurrentMouse(e){
+  console.log('??')
   if(!click){
     mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
     mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);

@@ -333,6 +333,7 @@ function getSphere(size) {
 }
 
 function getMouseMove(event){
+  console.log('event?')
   mouseX = (event.clientX - window.innerWidth /2 );
   mouseY = (event.clientY - window.innerHeight /2 );
 }
@@ -562,8 +563,10 @@ export function callAstronaut(elem,biggeredElem){
       cameraPositionY = innerWidth/2100 + 3.4;
       cameraPositionZ = innerWidth/400 + 1.4;
 
+
+
       cameraRotationX = -1.2;
-      cameraRotationY = 1;
+      cameraRotationY = 0.9;
       cameraRotationZ = 1;
 
   }else{
