@@ -1,4 +1,4 @@
-import { memo } from "react/cjs/react.development";
+import { memo } from "react";
 import Image from "next/image";
 
 function InfoTop() {

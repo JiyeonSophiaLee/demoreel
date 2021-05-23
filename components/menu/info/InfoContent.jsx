@@ -1,4 +1,4 @@
-import { memo } from "react/cjs/react.development";
+import { memo } from "react";
 import InfoTop from "./InfoTop.jsx";
 import InfoBot from "./InfoBot.jsx";
 

@@ -1,4 +1,4 @@
-import { memo } from "react/cjs/react.development";
+import { memo } from "react";
 
 function InfoBotSummary() {
   console.log("---infoBotSummary---");

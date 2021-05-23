@@ -1,6 +1,6 @@
 import skillList, {colorOffset, RANDOM_COLOR, startRandomColor, hasTouchScreen} from '../public/assets/js/skills.js';
 import Image from 'next/image';
-import { useCallback, useState, useEffect, useRef } from 'react/cjs/react.development';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import {gsap} from 'gsap';
 import TV from '../public/assets/js/transitionValue'
 
