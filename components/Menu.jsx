@@ -1,11 +1,11 @@
 import { memo, useMemo, useRef } from "react";
 
-import MenuComponent from "./menu/MenuComponent.jsx";
-import SvgIvory from "./menu/SvgIvory.jsx";
-import WorkContent from "./menu/work/WorkContent.jsx";
-import PaintContent from "./menu/paint/PaintContent.jsx";
-import InfoContent from "./menu/info/InfoContent.jsx";
-import SkillContent from "./menu/skill/SkillContent.jsx";
+// import MenuComponent from "./menu/MenuComponent.jsx";
+// import SvgIvory from "./menu/SvgIvory.jsx";
+// import WorkContent from "./menu/work/WorkContent.jsx";
+// import PaintContent from "./menu/paint/PaintContent.jsx";
+// import InfoContent from "./menu/info/InfoContent.jsx";
+// import SkillContent from "./menu/skill/SkillContent.jsx";
 
 // import { SvgFrameContext } from './HomeLayout.jsx';
 
@@ -20,7 +20,7 @@ function MenuRender(props) {
   console.log("----------MenuRender----------");
   return (
     <section id="menu">
-      <MenuComponent
+      {/* <MenuComponent
         vals={{
           id: props.vals.menuValues[0].id,
           order: props.vals.menuValues[0].order,
@@ -60,7 +60,7 @@ function MenuRender(props) {
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
           contents: <InfoContent />,
         }}
-      />
+      /> */}
     </section>
   );
 }

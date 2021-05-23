@@ -1,18 +1,6 @@
-// import variable from '../styles/variableCss.module.scss';
-// import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
-import {
-  useState,
-  useEffect,
-  createContext,
-  useRef,
-  useReducer,
-  memo,
-  useMemo,
-} from "react";
-import { useContext } from "react/cjs/react.development";
-// import TV from '../public/assets/js/transitionValue';
+import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo, useContext} from "react";
+// import { useContext } from "react/cjs/react.development";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
-// import { homeGsapSet } from '../public/assets/js/utilities.js'
 
 function Demo(props) {
   console.log("---DEMO---");
@@ -20,7 +8,6 @@ function Demo(props) {
   const logoRef = useRef(null);
   const demoVideoRef = useRef(null);
   const logoDisplayContext = useContext(LogoDisplayContext);
-
   const extendMenuContext = useContext(ExtendMenuContext);
   let mobileMode, _mobileMode;
   let checkLogoHigher, _checkLogoHigher;
@@ -82,52 +69,27 @@ function Demo(props) {
 
   return useMemo(() => {
     return (
-      <DemoRender
-        demoRef={demoRef}
-        logoRef={logoRef}
-        demoVideoRef={demoVideoRef}
-        onClick={onClick}
-        context={logoDisplayContext}
-      ></DemoRender>
+      // <div></div>
+      <DemoRender demoRef={demoRef} logoRef={logoRef} demoVideoRef={demoVideoRef} onClick={onClick} context={logoDisplayContext}></DemoRender>
     );
-  }, [
-    logoDisplayContext.logoDisplay.logo_heigher,
-    logoDisplayContext.logoDisplay.logo_wider,
-  ]);
+  }, [ logoDisplayContext.logoDisplay.logo_heigher, logoDisplayContext.logoDisplay.logo_wider]);
 }
 
 function DemoRender(props) {
   console.log("----------DemoRender-----------");
-  useEffect(() => {
-    // props.refs.demoRef.current = props.demoRef;
-    // props.refs.logoRef.current = props.demoRef;
-  }, []);
 
   return (
     <section id="demo" ref={props.demoRef}>
-      <header id="logo" ref={props.logoRef} onClick={props.onClick}>
-        <img
-          id="logo_heigher"
-          src="/assets/images/logo/logo_heigher.svg"
-          style={{ display: props.context.logoDisplay.logo_heigher }}
-        />
-        <img
-          id="logo_wider"
-          src="/assets/images/logo/logo_wider.svg"
-          style={{ display: props.context.logoDisplay.logo_wider }}
-        />
-      </header>
-      <header id="demoVideo" ref={props.demoVideoRef}>
-        <iframe
-          src="https://player.vimeo.com/video/553396949?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        ></iframe>
-        <div id="demoVideoBgCSSAnim"></div>
-      </header>
-      <div id="demoSVG" className="blurSVG"></div>
-    </section>
+       <header id="logo" ref={props.logoRef} onClick={props.onClick}>
+         <img id="logo_heigher" src="/assets/images/logo/logo_heigher.svg" style={{ display: props.context.logoDisplay.logo_heigher }} />
+         <img id="logo_wider" src="/assets/images/logo/logo_wider.svg" style={{ display: props.context.logoDisplay.logo_wider }}/>
+       </header>
+       <header id="demoVideo" ref={props.demoVideoRef}>
+         <iframe src="https://player.vimeo.com/video/553396949?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
+         <div id="demoVideoBgCSSAnim"></div>
+       </header>
+       <div id="demoSVG" className="blurSVG"></div>
+     </section>
   );
 }
 export default Demo;
