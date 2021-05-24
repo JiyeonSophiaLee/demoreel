@@ -1,11 +1,11 @@
 import {createContext,useEffect,useState,useReducer,useCallback,useRef,useMemo} from "react";
 import Demo from "./Demo.jsx";
-// import Menu from "./Menu.jsx";
+import Menu from "./Menu.jsx";
 import TV from "../public/assets/js/transitionValue";
 import useMenuSize from "../hooks/useMenuSize";
-// import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from "../public/assets/js/utilities.js";
+import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from "../public/assets/js/utilities.js";
 import astronaut, { callAstronaut, pauseAstronaut, removeScene} from "../public/assets/js/astronaut.js";
-// import { gsap, Sine } from "gsap";
+import { gsap, Sine } from "gsap";
 
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
@@ -127,559 +127,558 @@ const HomeLayout = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (svgFrameValues.radius !== undefined) {
-  //     if (clickRef.current.menuExtended) {
-  //       menuValues.current.forEach((elem) => {
-  //         if (clickRef.current.biggerElemParentId !== elem.id) {
-  //           eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
-  //         }
-  //       });
-  //     } else {
-  //       menuValues.current.forEach((elem) => {
-  //         eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
-  //       });
-  //     }
-  //   }
-  // }, [svgFrameValues]);
+  useEffect(() => {
+    if (svgFrameValues.radius !== undefined) {
+      if (clickRef.current.menuExtended) {
+        menuValues.current.forEach((elem) => {
+          if (clickRef.current.biggerElemParentId !== elem.id) {
+            eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
+          }
+        });
+      } else {
+        menuValues.current.forEach((elem) => {
+          eval(elem.id + "_changeHierarchySvgFramePack")(svgFrameValues);
+        });
+      }
+    }
+  }, [svgFrameValues]);
 
-  // useEffect(() => {
-  //   let updateResize = () => {
-  //     _mobileMode.current = innerWidth <= 800 ? true : false;
-  //     _widerMode.current = innerWidth >= 1400 ? true : false;
+  useEffect(() => {
+    let updateResize = () => {
+      _mobileMode.current = innerWidth <= 800 ? true : false;
+      _widerMode.current = innerWidth >= 1400 ? true : false;
 
-  //     homeGsapSet(
-  //       clickRef.current.menuExtended,
-  //       mobileMode.current !== _mobileMode.current
-  //     );
+      homeGsapSet(
+        clickRef.current.menuExtended,
+        mobileMode.current !== _mobileMode.current
+      );
 
-  //     if (clickRef.current.menuExtended) {
-  //       console.log("resize is working");
-  //       remainExtendingMenu();
-  //       createWavyAnimation({
-  //         width: clickRef.current.biggerElem.clientWidth,
-  //         height: clickRef.current.biggerElem.clientHeight,
-  //       });
-  //     }
-  //     // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
+      if (clickRef.current.menuExtended) {
+        console.log("resize is working");
+        remainExtendingMenu();
+        createWavyAnimation({
+          width: clickRef.current.biggerElem.clientWidth,
+          height: clickRef.current.biggerElem.clientHeight,
+        });
+      }
+      // if( menuExtended.current ) {console.log('<<<<<<<<<<');work_changeHierarchySvgFramePack(svgFrameValues,{width:"100%",height:"100%"});}
 
-  //     if (
-  //       mobileMode.current !== _mobileMode.current ||
-  //       widerMode.current !== _widerMode.current
-  //     ) {
-  //       console.log("view is changing");
-  //       updateSvgFrameValues();
-  //     }
+      if (
+        mobileMode.current !== _mobileMode.current ||
+        widerMode.current !== _widerMode.current
+      ) {
+        console.log("view is changing");
+        updateSvgFrameValues();
+      }
 
-  //     if (mobileMode.current !== _mobileMode.current) {
-  //       console.log("changed");
-  //       mobileMode.current = !mobileMode.current;
-  //     }
-  //     if (widerMode.current !== _widerMode.current) {
-  //       console.log("changed");
-  //       widerMode.current = !widerMode.current;
-  //     }
-  //   };
-  //   window.addEventListener("resize", updateResize);
-  //   return () => {
-  //     window.removeEventListener("resize", updateResize);
-  //   };
-  // }, [svgFrameValues]);
+      if (mobileMode.current !== _mobileMode.current) {
+        console.log("changed");
+        mobileMode.current = !mobileMode.current;
+      }
+      if (widerMode.current !== _widerMode.current) {
+        console.log("changed");
+        widerMode.current = !widerMode.current;
+      }
+    };
+    window.addEventListener("resize", updateResize);
+    return () => {
+      window.removeEventListener("resize", updateResize);
+    };
+  }, [svgFrameValues]);
 
-  // const remainExtendingMenu = useCallback(() => {
-  //   // const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
+  const remainExtendingMenu = useCallback(() => {
+    // const rect = document.getElementById(biggerElem.current.parentElement.id+"SvgFrame");
 
-  //   clickRef.current.biggerElemRect.setAttributeNS(
-  //     null,
-  //     "width",
-  //     clickRef.current.biggerElem.clientWidth
-  //   );
-  //   clickRef.current.biggerElemRect.setAttributeNS(
-  //     null,
-  //     "height",
-  //     clickRef.current.biggerElem.clientHeight
-  //   );
-  // }, []);
+    clickRef.current.biggerElemRect.setAttributeNS(
+      null,
+      "width",
+      clickRef.current.biggerElem.clientWidth
+    );
+    clickRef.current.biggerElemRect.setAttributeNS(
+      null,
+      "height",
+      clickRef.current.biggerElem.clientHeight
+    );
+  }, []);
 
-  // // function test(){
-  // //   return new Promise((resolve, reject)=>{
-  // //     setTimeout(() => {
-  // //       console.log('finish');
-  // //       resolve();
-  // //     }, 1000);
-  // //   })
-  // // }
-  // // function disableClick(){
-  // //   return new Promise((resolve, reject)=>{
-  // //     activeClick = false;
-  // //     console.log(activeClick);
-  // //     resolve();
-  // //   })
-  // // }
-
-  // // -----   the reason I put svgFrameValue as an argument, not just using svgFrameValue as a Ref,
-  // // ----- is I don't want to rerender all this functions whenever svgFrameValues changes.
-  // const transformAllEachMenus = useCallback(
-  //   (_svgFrameValues, extendingSize, elemParentId) => {
-  //     return new Promise((resolve, reject) => {
-  //       const NF = TV["menuDuration"] * 60;
-
-  //       let f = 0;
-  //       let dir = 1;
-
-  //       addCSSmenutransition(null, ...allElems.current);
-  //       extendingSize.LI.forEach((obj) => {
-  //         eval(obj["elemId"] + "_setLI_size")({
-  //           width: obj.width,
-  //           height: obj.height,
-  //         });
-  //       });
-
-  //       if (clickRef.current.biggerElem !== null) {
-  //         addCSSmenutransition(null, clickRef.current.biggerElem);
-  //         eval(elemParentId + "_changeHierarchySvgFramePack")(
-  //           _svgFrameValues,
-  //           extendingSize["svgFramePackage"]
-  //         );
-  //       }
-
-  //       if (clickRef.current.biggeredElemParentId !== null) {
-  //         addCSSmenutransition(null, clickRef.current.biggeredElem);
-  //         eval(
-  //           clickRef.current.biggeredElemParentId +
-  //             "_changeHierarchySvgFramePack"
-  //         )(_svgFrameValues, {
-  //           width: _svgFrameValues.svgFrameDefault.width,
-  //           height: _svgFrameValues.svgFrameDefault.height,
-  //         });
-  //       }
-
-  //       if (innerWidth < 800) {
-  //         const size =
-  //           clickRef.current.biggerElem !== null
-  //             ? TV.svgFrameDefaultSizeSmallerSize
-  //             : _svgFrameValues["svgFrameDefault"];
-  //         const childElems = allElems.current.map((e) => e.firstElementChild);
-
-  //         addCSSmenutransition(elemParentId, ...childElems);
-
-  //         menuValues.current.forEach((elem) => {
-  //           if (clickRef.current.biggerElemParentId !== elem.id) {
-  //             const rect = document.getElementById(elem.id + "SvgFrame");
-
-  //             eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues, {
-  //               width: size,
-  //               height: size,
-  //             });
-
-  //             rect.setAttributeNS(null, "width", size);
-  //             rect.setAttributeNS(null, "height", size);
-  //           }
-  //         });
-  //       }
-
-  //       function anim() {
-  //         f += dir;
-  //         if (clickRef.current.biggerElem !== null) {
-  //           clickRef.current.biggerElemRect.setAttributeNS(
-  //             null,
-  //             "width",
-  //             clickRef.current.biggerElem.clientWidth
-  //           );
-  //           clickRef.current.biggerElemRect.setAttributeNS(
-  //             null,
-  //             "height",
-  //             clickRef.current.biggerElem.clientHeight
-  //           );
-  //         }
-
-  //         if (clickRef.current.biggeredElemParentId !== null) {
-  //           clickRef.current.biggeredElemRect.setAttributeNS(
-  //             null,
-  //             "width",
-  //             clickRef.current.biggeredElem.clientWidth
-  //           );
-  //           clickRef.current.biggeredElemRect.setAttributeNS(
-  //             null,
-  //             "width",
-  //             clickRef.current.biggeredElem.clientWidth
-  //           );
-  //         }
-  //         extendingRequestAnimRef.current = requestAnimationFrame(anim);
-
-  //         if (!(f % NF)) {
-  //           console.log("=======finished=======");
-  //           // onAnim = false;
-  //           if (clickRef.current.biggerElem !== null)
-  //             eval(elemParentId + "_changeHierarchySvgFramePack")(
-  //               _svgFrameValues,
-  //               { width: "100%", height: "100%" }
-  //             );
-  //           else
-  //             eval(elemParentId + "_changeHierarchySvgFramePack")(
-  //               _svgFrameValues,
-  //               {
-  //                 width: _svgFrameValues["svgFrameDefault"],
-  //                 height: _svgFrameValues["svgFrameDefault"],
-  //               }
-  //             );
-
-  //           cancelAnimationFrame(extendingRequestAnimRef.current);
-  //           console.log("resolve?");
-  //           resolve();
-  //         }
-  //       }
-  //       anim();
-  //     });
-  //   },
-  //   []
-  // );
-
-  // const createWavyAnimation = useCallback(
-  //   (extendingSize) => {
-  //     console.log("createWavyAnimation is working");
-  //     return new Promise((resolve, reject) => {
-  //       if (window.innerWidth > 800) {
-  //         let dataPoints, pointsTween1, pointsTween2;
-
-  //         if (svgFrameValues.wavyPath > extendingSize["width"] / 2) {
-  //           return setSvgFrameValues({
-  //             ...svgFrameValues,
-  //             wavyPath: extendingSize["width"] / 2,
-  //           });
-  //         }
-
-  //         if (wavyAnim.current.TL === null) {
-  //           wavyAnim.current.TL = gsap.timeline({
-  //             onUpdate: update,
-  //           });
-  //         } else {
-  //           wavyAnim.current.TL.resume();
-  //         }
-
-  //         dataPoints = getDataPoints(
-  //           extendingSize,
-  //           svgFrameValues,
-  //           svgFrameValuesImmutable.current
-  //         );
-
-  //         wavyAnim.current.points = {
-  //           points1: dataPoints.points1,
-  //           points2: dataPoints.points2,
-  //         };
-
-  //         pointsTween1 = dataPoints.pointsTween1;
-  //         pointsTween2 = dataPoints.pointsTween2;
-
-  //         for (let i = 0; i < wavyAnim.current.points.points1.length; i++) {
-  //           let duration = random(
-  //             svgFrameValuesImmutable.current["speed"][0],
-  //             svgFrameValuesImmutable.current["speed"][1]
-  //           );
-
-  //           let tween1 = gsap.to(wavyAnim.current.points.points1[i], {
-  //             duration: duration,
-  //             x: pointsTween1[i].x,
-  //             y: pointsTween1[i].y,
-  //             repeat: -1,
-  //             yoyo: true,
-  //             ease: Sine.easeInOut,
-  //           });
-
-  //           let tween2 = gsap.to(wavyAnim.current.points.points2[i], {
-  //             duration: duration,
-  //             x: pointsTween2[i].x,
-  //             y: pointsTween2[i].y,
-  //             repeat: -1,
-  //             yoyo: true,
-  //             ease: Sine.easeInOut,
-  //           });
-
-  //           wavyAnim.current.TL.add(tween1, -random(duration));
-  //           wavyAnim.current.TL.add(tween2, -random(duration));
-  //         }
-
-  //         function update() {
-  //           clickRef.current.wavyPath[0].setAttribute(
-  //             "d",
-  //             tweenCardinal(wavyAnim.current.points.points1, true, 1)
-  //           );
-  //           clickRef.current.wavyPath[1].setAttribute(
-  //             "d",
-  //             tweenCardinal(wavyAnim.current.points.points2, true, 1)
-  //           );
-  //         }
-
-  //         return wavyAnim.current.TL;
-  //       } else {
-  //         if (wavyAnim.current.TL !== null) {
-  //           if (!wavyAnim.current.TL.paused()) {
-  //             wavyAnim.current.TL = wavyAnim.current.TL.pause();
-  //             clickRef.current.wavyPath[0].setAttribute("d", "");
-  //             clickRef.current.wavyPath[1].setAttribute("d", "");
-  //           }
-  //         }
-  //       }
+  // function test(){
+  //   return new Promise((resolve, reject)=>{
+  //     setTimeout(() => {
+  //       console.log('finish');
   //       resolve();
-  //     });
-  //   },
-  //   [svgFrameValues]
-  // );
+  //     }, 1000);
+  //   })
+  // }
+  // function disableClick(){
+  //   return new Promise((resolve, reject)=>{
+  //     activeClick = false;
+  //     console.log(activeClick);
+  //     resolve();
+  //   })
+  // }
 
-  // // useEffect(()=>{setClickAfterContext('skill');},[])
+  // -----   the reason I put svgFrameValue as an argument, not just using svgFrameValue as a Ref,
+  // ----- is I don't want to rerender all this functions whenever svgFrameValues changes.
+  const transformAllEachMenus = useCallback(
+    (_svgFrameValues, extendingSize, elemParentId) => {
+      return new Promise((resolve, reject) => {
+        const NF = TV["menuDuration"] * 60;
 
-  const extendMenu = useCallback(
-  //   (elem, order = 0, textRef, contentRef, neonRefs) => {
-  //     console.log("elem", elem);
-  //     const elemParentId = elem.parentElement.id;
+        let f = 0;
+        let dir = 1;
 
-  //     if (clickRef.current.onAnim === true) {
-  //       return;
-  //     } else {
-  //       if (clickRef.current.menuExtended === false) {
-  //         clickRef.current.onAnim = true;
-  //         setClickContext({ on: true, bigger: elemParentId, biggered: null });
-  //         clickRef.current.menuExtended = true;
-  //         clickRef.current.biggerElemParentId = elemParentId;
-  //         clickRef.current.biggerElem = elem;
-  //         (clickRef.current.biggerElemRect = document.getElementById(
-  //           elemParentId + "SvgFrame"
-  //         )),
-  //           (clickRef.current.wavyPath = [
-  //             document.getElementById(elemParentId + "SvgWavy1"),
-  //             document.getElementById(elemParentId + "SvgWavy2"),
-  //           ]);
-  //         clickRef.current.textRef = textRef;
-  //         clickRef.current.contentRef = contentRef;
-  //         clickRef.current.biggerNeonRefs = neonRefs;
+        addCSSmenutransition(null, ...allElems.current);
+        extendingSize.LI.forEach((obj) => {
+          eval(obj["elemId"] + "_setLI_size")({
+            width: obj.width,
+            height: obj.height,
+          });
+        });
 
-  //         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-  //         let extendingSize = getValuesToUnSymetryEachMenu(
-  //           demoVideoHeight,
-  //           elem,
-  //           order
-  //         );
+        if (clickRef.current.biggerElem !== null) {
+          addCSSmenutransition(null, clickRef.current.biggerElem);
+          eval(elemParentId + "_changeHierarchySvgFramePack")(
+            _svgFrameValues,
+            extendingSize["svgFramePackage"]
+          );
+        }
 
-  //         function checkCallingAstronaut() {
-  //           if (!lighterVersion.current) callAstronaut(elemParentId);
-  //         }
+        if (clickRef.current.biggeredElemParentId !== null) {
+          addCSSmenutransition(null, clickRef.current.biggeredElem);
+          eval(
+            clickRef.current.biggeredElemParentId +
+              "_changeHierarchySvgFramePack"
+          )(_svgFrameValues, {
+            width: _svgFrameValues.svgFrameDefault.width,
+            height: _svgFrameValues.svgFrameDefault.height,
+          });
+        }
 
-  //         Promise.all([
-  //           homeGsapTransition(clickRef.current.menuExtended),
-  //           logoDisplayDispatch({
-  //             demoClientHeight: demoRef.current.clientHeight,
-  //             logoClientWidth:
-  //               (((innerWidth * (100 - TV.unSymetryDemoMenu)) / 100) *
-  //                 TV.logoWidth) /
-  //               100,
-  //           }),
-  //           clickRef.current.biggerElemRect.setAttributeNS(
-  //             null,
-  //             "stroke",
-  //             "url(#SvgIvory)"
-  //           ),
-  //           transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-  //           checkCallingAstronaut(),
-  //         ])
-  //           .then(() => {
-  //             createWavyAnimation(extendingSize["svgFramePackage"]);
-  //             textRef.style.display = "none";
-  //             contentRef.style.display = "initial";
-  //             contentRef.style.zIndex = 3;
-  //             setClickAfterContext(elemParentId);
-  //           })
-  //           .then(() => {
-  //             clickRef.current.onAnim = false;
-  //           });
-  //       } else if (clickRef.current.biggerElemParentId !== elemParentId) {
-  //         console.log("else if");
-  //         const biggeredWavyPath = clickRef.current.wavyPath;
-  //         const biggeredText = clickRef.current.textRef;
-  //         const biggeredContentRef = clickRef.current.contentRef;
-  //         const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+        if (innerWidth < 800) {
+          const size =
+            clickRef.current.biggerElem !== null
+              ? TV.svgFrameDefaultSizeSmallerSize
+              : _svgFrameValues["svgFrameDefault"];
+          const childElems = allElems.current.map((e) => e.firstElementChild);
 
-  //         clickRef.current.onAnim = true;
-  //         setClickContext({
-  //           on: true,
-  //           bigger: elemParentId,
-  //           biggered: clickRef.current.biggerElemParentId,
-  //         });
-  //         clickRef.current.biggeredElem = clickRef.current.biggerElem;
-  //         clickRef.current.biggeredElemParentId =
-  //           clickRef.current.biggerElemParentId;
-  //         clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
-  //         clickRef.current.biggerElem = elem;
-  //         clickRef.current.biggerElemParentId = elemParentId;
-  //         clickRef.current.biggerElem = elem;
-  //         clickRef.current.biggerElemRect = document.getElementById(
-  //           elemParentId + "SvgFrame"
-  //         );
-  //         clickRef.current.wavyPath = [
-  //           document.getElementById(elemParentId + "SvgWavy1"),
-  //           document.getElementById(elemParentId + "SvgWavy2"),
-  //         ];
-  //         clickRef.current.textRef = textRef;
-  //         clickRef.current.contentRef = contentRef;
-  //         clickRef.current.biggerNeonRefs = neonRefs;
+          addCSSmenutransition(elemParentId, ...childElems);
 
-  //         demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-  //         let extendingSize = getValuesToUnSymetryEachMenu(
-  //           demoVideoHeight,
-  //           elem,
-  //           order
-  //         );
+          menuValues.current.forEach((elem) => {
+            if (clickRef.current.biggerElemParentId !== elem.id) {
+              const rect = document.getElementById(elem.id + "SvgFrame");
 
-  //         if (innerWidth > 800) wavyAnim.current.TL.pause(0);
+              eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues, {
+                width: size,
+                height: size,
+              });
 
-  //         function checkCallingAstronaut() {
-  //           if (!lighterVersion.current)
-  //             callAstronaut(
-  //               elemParentId,
-  //               clickRef.current.biggeredElemParentId
-  //             );
-  //         }
+              rect.setAttributeNS(null, "width", size);
+              rect.setAttributeNS(null, "height", size);
+            }
+          });
+        }
 
-  //         Promise.all([
-  //           biggeredWavyPath[0].setAttribute("d", ""),
-  //           biggeredWavyPath[1].setAttribute("d", ""),
-  //           clickRef.current.biggeredElemRect.setAttributeNS(
-  //             null,
-  //             "stroke",
-  //             `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`
-  //           ),
-  //           clickRef.current.biggerElemRect.setAttributeNS(
-  //             null,
-  //             "stroke",
-  //             "url(#SvgIvory)"
-  //           ),
-  //           transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-  //           (biggeredText.style.display = "initial"),
-  //           (biggeredContentRef.style.display = "none"),
-  //           (biggeredContentRef.style.zIndex = -1),
-  //           (biggeredNeonRefs[0].style.visibility = "hidden"),
-  //           (biggeredNeonRefs[1].style.visibility = "hidden"),
-  //           checkCallingAstronaut(),
-  //         ])
-  //           .then(() => {
-  //             createWavyAnimation(extendingSize["svgFramePackage"]);
-  //             textRef.style.display = "none";
-  //             contentRef.style.display = "initial";
-  //             contentRef.style.zIndex = 3;
-  //             biggeredNeonRefs[0].style.visibility = "visible";
-  //             biggeredNeonRefs[1].style.visibility = "visible";
-  //             setClickAfterContext(elemParentId);
-  //           })
-  //           .then(() => {
-  //             clickRef.current.onAnim = false;
-  //           });
-  //       } else {
-  //         console.log("else");
-  //         const biggeredWavyPath = clickRef.current.wavyPath;
-  //         const biggeredText = clickRef.current.textRef;
-  //         const biggeredContentRef = clickRef.current.contentRef;
-  //         const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+        function anim() {
+          f += dir;
+          if (clickRef.current.biggerElem !== null) {
+            clickRef.current.biggerElemRect.setAttributeNS(
+              null,
+              "width",
+              clickRef.current.biggerElem.clientWidth
+            );
+            clickRef.current.biggerElemRect.setAttributeNS(
+              null,
+              "height",
+              clickRef.current.biggerElem.clientHeight
+            );
+          }
 
-  //         clickRef.current.onAnim = true;
-  //         setClickContext({ on: false, bigger: null, biggered: null });
-  //         clickRef.current.biggeredElem = clickRef.current.biggerElem;
-  //         clickRef.current.biggeredElemParentId =
-  //           clickRef.current.biggerElemParentId;
-  //         clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
-  //         clickRef.current.biggerElem = null;
-  //         clickRef.current.menuExtended = false;
+          if (clickRef.current.biggeredElemParentId !== null) {
+            clickRef.current.biggeredElemRect.setAttributeNS(
+              null,
+              "width",
+              clickRef.current.biggeredElem.clientWidth
+            );
+            clickRef.current.biggeredElemRect.setAttributeNS(
+              null,
+              "width",
+              clickRef.current.biggeredElem.clientWidth
+            );
+          }
+          extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
-  //         let extendingSize = {
-  //           LI: [
-  //             { elemId: "work", width: "50%", height: "50%" },
-  //             { elemId: "skill", width: "50%", height: "50%" },
-  //             { elemId: "paint", width: "50%", height: "50%" },
-  //             { elemId: "info", width: "50%", height: "50%" },
-  //           ],
-  //         };
+          if (!(f % NF)) {
+            console.log("=======finished=======");
+            // onAnim = false;
+            if (clickRef.current.biggerElem !== null)
+              eval(elemParentId + "_changeHierarchySvgFramePack")(
+                _svgFrameValues,
+                { width: "100%", height: "100%" }
+              );
+            else
+              eval(elemParentId + "_changeHierarchySvgFramePack")(
+                _svgFrameValues,
+                {
+                  width: _svgFrameValues["svgFrameDefault"],
+                  height: _svgFrameValues["svgFrameDefault"],
+                }
+              );
 
-  //         if (innerWidth > 800) wavyAnim.current.TL.pause(0);
-  //         function checkCallingAstronaut() {
-  //           if (!lighterVersion.current) pauseAstronaut();
-  //         }
+            cancelAnimationFrame(extendingRequestAnimRef.current);
+            console.log("resolve?");
+            resolve();
+          }
+        }
+        anim();
+      });
+    },
+    []
+  );
 
-  //         Promise.all([
-  //           homeGsapTransition(clickRef.current.menuExtended),
-  //           logoDisplayDispatch({
-  //             demoClientHeight: demoRef.current.clientHeight,
-  //             logoClientWidth:
-  //               (((innerWidth * (100 - TV.symetryDemoMenu)) / 100) *
-  //                 TV.logoWidth) /
-  //               100,
-  //           }),
-  //           biggeredWavyPath[0].setAttribute("d", ""),
-  //           biggeredWavyPath[1].setAttribute("d", ""),
-  //           clickRef.current.biggeredElemRect.setAttributeNS(
-  //             null,
-  //             "stroke",
-  //             `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`
-  //           ),
-  //           transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-  //           (biggeredText.style.display = "initial"),
-  //           (biggeredContentRef.style.display = "none"),
-  //           (biggeredContentRef.style.zIndex = -1),
-  //           (biggeredNeonRefs[0].style.visibility = "hidden"),
-  //           (biggeredNeonRefs[1].style.visibility = "hidden"),
-  //           checkCallingAstronaut(),
-  //           setClickAfterContext(null),
-  //         ]).then(() => {
-  //           neonRefs[0].style.visibility = "visible";
-  //           neonRefs[1].style.visibility = "visible";
-  //           clickRef.current = {
-  //             onAnim: false,
-  //             active: true,
-  //             menuExtended: false,
-  //             biggerElemParentId: null,
-  //             biggerElem: null,
-  //             biggerElemRect: null,
-  //             biggerNeonRefs: [],
-  //             biggeredElem: null,
-  //             biggeredElemParentId: null,
-  //             biggeredElemRect: null,
-  //             wavyPath: [],
-  //           };
-  //         });
-  //       }
-  //     }
-  //   },
+  const createWavyAnimation = useCallback(
+    (extendingSize) => {
+      console.log("createWavyAnimation is working");
+      return new Promise((resolve, reject) => {
+        if (window.innerWidth > 800) {
+          let dataPoints, pointsTween1, pointsTween2;
+
+          if (svgFrameValues.wavyPath > extendingSize["width"] / 2) {
+            return setSvgFrameValues({
+              ...svgFrameValues,
+              wavyPath: extendingSize["width"] / 2,
+            });
+          }
+
+          if (wavyAnim.current.TL === null) {
+            wavyAnim.current.TL = gsap.timeline({
+              onUpdate: update,
+            });
+          } else {
+            wavyAnim.current.TL.resume();
+          }
+
+          dataPoints = getDataPoints(
+            extendingSize,
+            svgFrameValues,
+            svgFrameValuesImmutable.current
+          );
+
+          wavyAnim.current.points = {
+            points1: dataPoints.points1,
+            points2: dataPoints.points2,
+          };
+
+          pointsTween1 = dataPoints.pointsTween1;
+          pointsTween2 = dataPoints.pointsTween2;
+
+          for (let i = 0; i < wavyAnim.current.points.points1.length; i++) {
+            let duration = random(
+              svgFrameValuesImmutable.current["speed"][0],
+              svgFrameValuesImmutable.current["speed"][1]
+            );
+
+            let tween1 = gsap.to(wavyAnim.current.points.points1[i], {
+              duration: duration,
+              x: pointsTween1[i].x,
+              y: pointsTween1[i].y,
+              repeat: -1,
+              yoyo: true,
+              ease: Sine.easeInOut,
+            });
+
+            let tween2 = gsap.to(wavyAnim.current.points.points2[i], {
+              duration: duration,
+              x: pointsTween2[i].x,
+              y: pointsTween2[i].y,
+              repeat: -1,
+              yoyo: true,
+              ease: Sine.easeInOut,
+            });
+
+            wavyAnim.current.TL.add(tween1, -random(duration));
+            wavyAnim.current.TL.add(tween2, -random(duration));
+          }
+
+          function update() {
+            clickRef.current.wavyPath[0].setAttribute(
+              "d",
+              tweenCardinal(wavyAnim.current.points.points1, true, 1)
+            );
+            clickRef.current.wavyPath[1].setAttribute(
+              "d",
+              tweenCardinal(wavyAnim.current.points.points2, true, 1)
+            );
+          }
+
+          return wavyAnim.current.TL;
+        } else {
+          if (wavyAnim.current.TL !== null) {
+            if (!wavyAnim.current.TL.paused()) {
+              wavyAnim.current.TL = wavyAnim.current.TL.pause();
+              clickRef.current.wavyPath[0].setAttribute("d", "");
+              clickRef.current.wavyPath[1].setAttribute("d", "");
+            }
+          }
+        }
+        resolve();
+      });
+    },
     [svgFrameValues]
   );
 
-  // //=================loader=====================//
+  // useEffect(()=>{setClickAfterContext('skill');},[])
 
-  // const openLighterVersion = useCallback(() => {
-  //   lighterVersion.current = true;
-  //   removeScene();
-  //   document.getElementById("lighterVersion").innerHTML =
-  //     "This is lighter version";
-  // }, []);
+  const extendMenu = useCallback(
+    (elem, order = 0, textRef, contentRef, neonRefs) => {
+      console.log("elem", elem);
+      const elemParentId = elem.parentElement.id;
 
-  // useEffect(() => {
-  //   window.addEventListener("load", function (event) {
-  //     console.log("working?");
-  //     document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
-  //     setTimeout(() => {
-  //       document.getElementById("loaderContainer").style.display = "none";
-  //     }, 1200);
-  //   });
-  // }, []);
+      if (clickRef.current.onAnim === true) {
+        return;
+      } else {
+        if (clickRef.current.menuExtended === false) {
+          clickRef.current.onAnim = true;
+          setClickContext({ on: true, bigger: elemParentId, biggered: null });
+          clickRef.current.menuExtended = true;
+          clickRef.current.biggerElemParentId = elemParentId;
+          clickRef.current.biggerElem = elem;
+          (clickRef.current.biggerElemRect = document.getElementById(
+            elemParentId + "SvgFrame"
+          )),
+            (clickRef.current.wavyPath = [
+              document.getElementById(elemParentId + "SvgWavy1"),
+              document.getElementById(elemParentId + "SvgWavy2"),
+            ]);
+          clickRef.current.textRef = textRef;
+          clickRef.current.contentRef = contentRef;
+          clickRef.current.biggerNeonRefs = neonRefs;
+
+          demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
+          let extendingSize = getValuesToUnSymetryEachMenu(
+            demoVideoHeight,
+            elem,
+            order
+          );
+
+          function checkCallingAstronaut() {
+            if (!lighterVersion.current) callAstronaut(elemParentId);
+          }
+
+          Promise.all([
+            homeGsapTransition(clickRef.current.menuExtended),
+            logoDisplayDispatch({
+              demoClientHeight: demoRef.current.clientHeight,
+              logoClientWidth:
+                (((innerWidth * (100 - TV.unSymetryDemoMenu)) / 100) *
+                  TV.logoWidth) /
+                100,
+            }),
+            clickRef.current.biggerElemRect.setAttributeNS(
+              null,
+              "stroke",
+              "url(#SvgIvory)"
+            ),
+            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+            checkCallingAstronaut(),
+          ])
+            .then(() => {
+              createWavyAnimation(extendingSize["svgFramePackage"]);
+              textRef.style.display = "none";
+              contentRef.style.display = "initial";
+              contentRef.style.zIndex = 3;
+              setClickAfterContext(elemParentId);
+            })
+            .then(() => {
+              clickRef.current.onAnim = false;
+            });
+        } else if (clickRef.current.biggerElemParentId !== elemParentId) {
+          console.log("else if");
+          const biggeredWavyPath = clickRef.current.wavyPath;
+          const biggeredText = clickRef.current.textRef;
+          const biggeredContentRef = clickRef.current.contentRef;
+          const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+
+          clickRef.current.onAnim = true;
+          setClickContext({
+            on: true,
+            bigger: elemParentId,
+            biggered: clickRef.current.biggerElemParentId,
+          });
+          clickRef.current.biggeredElem = clickRef.current.biggerElem;
+          clickRef.current.biggeredElemParentId =
+            clickRef.current.biggerElemParentId;
+          clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
+          clickRef.current.biggerElem = elem;
+          clickRef.current.biggerElemParentId = elemParentId;
+          clickRef.current.biggerElem = elem;
+          clickRef.current.biggerElemRect = document.getElementById(
+            elemParentId + "SvgFrame"
+          );
+          clickRef.current.wavyPath = [
+            document.getElementById(elemParentId + "SvgWavy1"),
+            document.getElementById(elemParentId + "SvgWavy2"),
+          ];
+          clickRef.current.textRef = textRef;
+          clickRef.current.contentRef = contentRef;
+          clickRef.current.biggerNeonRefs = neonRefs;
+
+          demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
+          let extendingSize = getValuesToUnSymetryEachMenu(
+            demoVideoHeight,
+            elem,
+            order
+          );
+
+          if (innerWidth > 800) wavyAnim.current.TL.pause(0);
+
+          function checkCallingAstronaut() {
+            if (!lighterVersion.current)
+              callAstronaut(
+                elemParentId,
+                clickRef.current.biggeredElemParentId
+              );
+          }
+
+          Promise.all([
+            biggeredWavyPath[0].setAttribute("d", ""),
+            biggeredWavyPath[1].setAttribute("d", ""),
+            clickRef.current.biggeredElemRect.setAttributeNS(
+              null,
+              "stroke",
+              `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`
+            ),
+            clickRef.current.biggerElemRect.setAttributeNS(
+              null,
+              "stroke",
+              "url(#SvgIvory)"
+            ),
+            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+            (biggeredText.style.display = "initial"),
+            (biggeredContentRef.style.display = "none"),
+            (biggeredContentRef.style.zIndex = -1),
+            (biggeredNeonRefs[0].style.visibility = "hidden"),
+            (biggeredNeonRefs[1].style.visibility = "hidden"),
+            checkCallingAstronaut(),
+          ])
+            .then(() => {
+              createWavyAnimation(extendingSize["svgFramePackage"]);
+              textRef.style.display = "none";
+              contentRef.style.display = "initial";
+              contentRef.style.zIndex = 3;
+              biggeredNeonRefs[0].style.visibility = "visible";
+              biggeredNeonRefs[1].style.visibility = "visible";
+              setClickAfterContext(elemParentId);
+            })
+            .then(() => {
+              clickRef.current.onAnim = false;
+            });
+        } else {
+          console.log("else");
+          const biggeredWavyPath = clickRef.current.wavyPath;
+          const biggeredText = clickRef.current.textRef;
+          const biggeredContentRef = clickRef.current.contentRef;
+          const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+
+          clickRef.current.onAnim = true;
+          setClickContext({ on: false, bigger: null, biggered: null });
+          clickRef.current.biggeredElem = clickRef.current.biggerElem;
+          clickRef.current.biggeredElemParentId =
+            clickRef.current.biggerElemParentId;
+          clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
+          clickRef.current.biggerElem = null;
+          clickRef.current.menuExtended = false;
+
+          let extendingSize = {
+            LI: [
+              { elemId: "work", width: "50%", height: "50%" },
+              { elemId: "skill", width: "50%", height: "50%" },
+              { elemId: "paint", width: "50%", height: "50%" },
+              { elemId: "info", width: "50%", height: "50%" },
+            ],
+          };
+
+          if (innerWidth > 800) wavyAnim.current.TL.pause(0);
+          function checkCallingAstronaut() {
+            if (!lighterVersion.current) pauseAstronaut();
+          }
+
+          Promise.all([
+            homeGsapTransition(clickRef.current.menuExtended),
+            logoDisplayDispatch({
+              demoClientHeight: demoRef.current.clientHeight,
+              logoClientWidth:
+                (((innerWidth * (100 - TV.symetryDemoMenu)) / 100) *
+                  TV.logoWidth) /
+                100,
+            }),
+            biggeredWavyPath[0].setAttribute("d", ""),
+            biggeredWavyPath[1].setAttribute("d", ""),
+            clickRef.current.biggeredElemRect.setAttributeNS(
+              null,
+              "stroke",
+              `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`
+            ),
+            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+            (biggeredText.style.display = "initial"),
+            (biggeredContentRef.style.display = "none"),
+            (biggeredContentRef.style.zIndex = -1),
+            (biggeredNeonRefs[0].style.visibility = "hidden"),
+            (biggeredNeonRefs[1].style.visibility = "hidden"),
+            checkCallingAstronaut(),
+            setClickAfterContext(null),
+          ]).then(() => {
+            neonRefs[0].style.visibility = "visible";
+            neonRefs[1].style.visibility = "visible";
+            clickRef.current = {
+              onAnim: false,
+              active: true,
+              menuExtended: false,
+              biggerElemParentId: null,
+              biggerElem: null,
+              biggerElemRect: null,
+              biggerNeonRefs: [],
+              biggeredElem: null,
+              biggeredElemParentId: null,
+              biggeredElemRect: null,
+              wavyPath: [],
+            };
+          });
+        }
+      }
+    },
+    [svgFrameValues]
+  );
+
+  //=================loader=====================//
+
+  const openLighterVersion = useCallback(() => {
+    lighterVersion.current = true;
+    removeScene();
+    document.getElementById("lighterVersion").innerHTML =
+      "This is lighter version";
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("load", function (event) {
+      console.log("working?");
+      document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
+      setTimeout(() => {
+        document.getElementById("loaderContainer").style.display = "none";
+      }, 1200);
+    });
+  }, []);
 
   //=================loader=====================//
 
   return useMemo(() => {
     return (
       <div id="master" style={{color:"white"}}>
-        Hi My naME IS jIYEON LEE
-        {/* <div id="loaderContainer">
+        <div id="loaderContainer">
           <div id="loaderAnim">Load&nbsp;&nbsp;ng</div>
           <div id="lighterVersion" onClick={openLighterVersion}>
             Click to the lighter version <br /> which doesn't contain THREE JS
           </div>
-        </div> */}
+        </div>
         <ExtendMenuContext.Provider value={extendMenu}>
           <LogoDisplayContext.Provider value={{ logoDisplay, logoDisplayDispatch }} >
             <MenuSizeContext.Provider value={{ work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
@@ -701,7 +700,7 @@ function HomeLayoutRender(props) {
   return (
     <>
       <Demo refs={props.vals.refs} />
-      {/* <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} /> */}
+      <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} />
 
       <div id="threeJSCover"></div>
       <div id="threeJSCanvas"></div>

@@ -1,13 +1,12 @@
 import { memo, useMemo, useRef } from "react";
 
-// import MenuComponent from "./menu/MenuComponent.jsx";
-// import SvgIvory from "./menu/SvgIvory.jsx";
-// import WorkContent from "./menu/work/WorkContent.jsx";
+import MenuComponent from "./menu/MenuComponent.jsx";
+import SvgIvory from "./menu/SvgIvory.jsx";
+import WorkContent from "./menu/work/WorkContent.jsx";
 // import PaintContent from "./menu/paint/PaintContent.jsx";
 // import InfoContent from "./menu/info/InfoContent.jsx";
 // import SkillContent from "./menu/skill/SkillContent.jsx";
 
-// import { SvgFrameContext } from './HomeLayout.jsx';
 
 function Menu(props) {
   console.log("----------Menu-----------");
@@ -20,7 +19,7 @@ function MenuRender(props) {
   console.log("----------MenuRender----------");
   return (
     <section id="menu">
-      {/* <MenuComponent
+      <MenuComponent
         vals={{
           id: props.vals.menuValues[0].id,
           order: props.vals.menuValues[0].order,
@@ -38,7 +37,7 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[1]["stopColor"],
           strokeColor: props.vals.menuValues[1]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          contents: <SkillContent />,
+          // contents: <SkillContent />,
         }}
       />
       <MenuComponent
@@ -48,7 +47,7 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[2]["stopColor"],
           strokeColor: props.vals.menuValues[2]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          contents: <PaintContent />,
+          // contents: <PaintContent />,
         }}
       />
       <MenuComponent
@@ -58,9 +57,9 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[3]["stopColor"],
           strokeColor: props.vals.menuValues[3]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          contents: <InfoContent />,
+          // contents: <InfoContent />,
         }}
-      /> */}
+      />
     </section>
   );
 }
