@@ -1,10 +1,14 @@
-import Image from 'next/image'
+
 
 
 function useImageContent(useImageContent){
     const onClick = (e,url)=>{
       e.stopPropagation()
       window.open(url)
+    }
+    const getImg = (name, alt)=>{
+      const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
+      return <img src={url} alt={alt}/>
     }
     const loadingImages = 
       <div className="alinedImages">
@@ -16,7 +20,8 @@ function useImageContent(useImageContent){
             project.fileNames.forEach((name,i)=>{
               let _name = project.src+name;
               let _className = project.main === i ? 'mainContent content' : 'subContent content';
-              let _image = <Image layout="responsive" width={project.size.width} height={project.size.height} alt={project.alt} src={_name} />;
+              // let _image = <Image layout="responsive" width={project.size.width} height={project.size.height} alt={project.alt} src={_name} />;
+              let _image = getImg(_name,project.alt);
               let output;
 
               if(project.artstation!==null){

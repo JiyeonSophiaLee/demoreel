@@ -3,9 +3,9 @@ import { memo, useMemo, useRef } from "react";
 import MenuComponent from "./menu/MenuComponent.jsx";
 import SvgIvory from "./menu/SvgIvory.jsx";
 import WorkContent from "./menu/work/WorkContent.jsx";
-// import PaintContent from "./menu/paint/PaintContent.jsx";
+import PaintContent from "./menu/paint/PaintContent.jsx";
+import SkillContent from "./menu/skill/SkillContent.jsx";
 // import InfoContent from "./menu/info/InfoContent.jsx";
-// import SkillContent from "./menu/skill/SkillContent.jsx";
 
 
 function Menu(props) {
@@ -37,7 +37,7 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[1]["stopColor"],
           strokeColor: props.vals.menuValues[1]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          // contents: <SkillContent />,
+          contents: <SkillContent />,
         }}
       />
       <MenuComponent
@@ -47,7 +47,7 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[2]["stopColor"],
           strokeColor: props.vals.menuValues[2]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          // contents: <PaintContent />,
+          contents: <PaintContent />,
         }}
       />
       <MenuComponent
