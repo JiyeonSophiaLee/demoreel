@@ -89,7 +89,7 @@ const HomeLayout = () => {
     });
 
     astronaut();
-    // homeGsapSet(clickRef.current.menuExtended, true);
+    homeGsapSet(clickRef.current.menuExtended, true);
     updateSvgFrameValues();
   }, []);
 

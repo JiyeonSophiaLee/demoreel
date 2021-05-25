@@ -93,23 +93,14 @@ function SvgFramePack(props) {
           className="svgFramePack"
           onClick={onClick}
           ref={svgFrameRef}
-          style={
-            props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"]
-              .style_svgFramePack
-          }
+          style={ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack}
           onMouseEnter={mouseEnterHandler}
           onMouseLeave={mouseLeaveHandler}
         >
           <SvgFramePackRender
             vals={{
               ...props.vals,
-              refs: {
-                noen1Ref,
-                noen2Ref,
-                stopColor1Ref,
-                stopColor2Ref,
-                textRef,
-              },
+              refs: { noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef},
               menuSizeContext: props.vals.menuSizeContext,
               svgFrameRef: svgFrameRef,
             }}
@@ -120,10 +111,7 @@ function SvgFramePack(props) {
         </div>
       </>
     );
-  }, [
-    props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"]
-      .style_svgFramePack,
-  ]);
+  }, [ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack ]);
 }
 
 function SvgFramePackRender(props) {
@@ -135,7 +123,7 @@ function SvgFramePackRender(props) {
       </div>
       <div className="neon neon1" ref={props.vals.refs.noen1Ref}></div>
       <div className="neon neon2" ref={props.vals.refs.noen2Ref}></div>
-      {/* <SvgFrame
+      <SvgFrame
         vals={{
           id: props.vals.id,
           stopColor: props.vals.stopColor,
@@ -145,7 +133,7 @@ function SvgFramePackRender(props) {
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
           refs: { stopColor1Ref: props.vals.refs.stopColor1Ref, stopColor2Ref: props.vals.refs.stopColor2Ref}
         }}
-      /> */}
+      />
     </>
   );
 }

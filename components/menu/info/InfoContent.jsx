@@ -6,9 +6,9 @@ function InfoContent() {
   console.log("---InfoContent---");
   return (
     <>
-      {/* <InfoTop /> */}
+      <InfoTop />
       <div id="topBotDivider" />
-      {/* <InfoBot /> */}
+      <InfoBot />
     </>
   );
 }

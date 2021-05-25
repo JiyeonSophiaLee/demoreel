@@ -8,7 +8,7 @@ function useImageContent(useImageContent){
     }
     const getImg = (name, alt)=>{
       const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
-      return <img src={url} alt={alt}/>
+      return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
     }
     const loadingImages = 
       <div className="alinedImages">

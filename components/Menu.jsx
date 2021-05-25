@@ -5,7 +5,7 @@ import SvgIvory from "./menu/SvgIvory.jsx";
 import WorkContent from "./menu/work/WorkContent.jsx";
 import PaintContent from "./menu/paint/PaintContent.jsx";
 import SkillContent from "./menu/skill/SkillContent.jsx";
-// import InfoContent from "./menu/info/InfoContent.jsx";
+import InfoContent from "./menu/info/InfoContent.jsx";
 
 
 function Menu(props) {
@@ -57,7 +57,7 @@ function MenuRender(props) {
           stopColor: props.vals.menuValues[3]["stopColor"],
           strokeColor: props.vals.menuValues[3]["strokeColor"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          // contents: <InfoContent />,
+          contents: <InfoContent />,
         }}
       />
     </section>
