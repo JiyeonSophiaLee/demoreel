@@ -1,0 +1,82 @@
+@import "./variableCss.module.scss";
+
+#loaderContainer{
+  position: fixed;
+  top: 0;
+  left: 0;  
+  width: 100%;
+  height: 100%;
+  background: $backgroundColor;
+  opacity: 0.9;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  z-index: 3;
+  #loaderAnim {
+    font-family: 'theboldfont';
+    font-size: 100px;
+    /* height: 6rem; */
+    /* line-height: ; */
+    align-self: center;
+    color: #FFF;
+    position: relative;
+    letter-spacing: 0.3rem;
+  }
+  #loaderAnim::before {
+    content: '';
+    position: absolute;
+    right: 10rem;
+    bottom: 1.6rem;
+    height: 2.3rem;
+    width: 1.1rem;
+    background: currentColor;
+  }
+  #loaderAnim::after {
+    content: '';
+    position: absolute;
+    width: 1.15rem;
+    height: 1.15rem;
+    left: 17.1rem;
+    top: 2.1rem;
+    border-radius: 50%;
+    background: red;
+    animation: loaderAnimation 1s ease-in infinite;
+  }
+
+
+  #lighterVersion{
+    font-family: 'Darker Grotesque';  
+    font-size: 1.6rem;
+    text-align: center;
+    background: rgb(10,10,10);
+    border-radius: 0.3rem;
+    padding: 0.5rem 1.5rem;
+    margin: 1rem;
+    align-self: center;
+    color:burlywood
+
+  }
+}
+
+.loaderFadeOutTrans{
+  transform: scale(2);
+  opacity: 0;
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+@keyframes loaderAnimation {
+  0% {
+    transform: translateY(8px) scaleY(1) scaleX(1.25);
+  }
+  25%, 75% {
+    transform: translateY(-5px) scaleY(1.2) scaleX(1);
+  }
+  50% {
+    transform: translateY(-10px) scaleY(1) scaleX(1);
+  }
+  100% {
+    transform: translateY(8px) scaleY(0.8) scaleX(0.8);
+  }
+}

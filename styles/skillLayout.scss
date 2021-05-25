@@ -1,0 +1,270 @@
+/** If you have any questions, email me.
+/**
+ * Table of Contents:
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ * 3.0 - Each Skills (class = 'skillTrunk')
+ *   3.1 Skill Icon Image
+ *   3.2 Skill Graph (SVG Graph)
+ *     3.2.1 Skill Graph Percent
+ *   3.3 Skill Info
+ *     3.3.1 skillTrunk Info (children of Skill Info)
+ * ----------------------------------------------------------------------------
+ */ 
+
+ @import "./variableCss.module.scss";
+
+
+  
+  
+  /**
+   * 2.0 Font
+   * ----------------------------------------------------------------------------
+   */
+  
+  
+  
+  #skill{
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+
+    /**
+    * 3.0 Each Skills (class = 'skillTrunk')
+    * ----------------------------------------------------------------------------
+    */
+    .skillRoot .skillTrunk {
+      height: #{$halfCircleSize*2};
+      background: rgba(30,30,30, 0.8);
+      padding: 0.5rem;
+      box-sizing: content-box;
+      border-radius: 0.6rem;
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      .skillBranch {
+        height: 100%;
+        width: 95%;
+        display: flex;
+        position: relative;
+          
+        /**
+        * 3.1 Skill Icon Image
+        * --------------------------------------
+        */
+        .skillImage{
+          position: absolute;
+          height: #{$halfCircleSize*2};
+          width: #{$halfCircleSize*2};
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          > div {
+            width: 85%;
+            height: 85%;
+            display: flex;  
+            justify-content: center;
+            align-items: center;
+            background: rgb(30,30,30);
+            border-radius: 2rem;
+            p{
+              display: none;
+            }
+            .image{
+              height: 60%;
+              width: 60%;
+              // display: flex;
+              // align-items: center;
+              // justify-content: center;
+            }
+          }
+        }
+        /**
+        * 3.2 Skill Graph (SVG Graph)
+        * --------------------------------------
+        */
+        .skillGraph{
+          width: 100%;
+          height: 100%;
+          .barBG{
+            fill:#000000;
+            opacity: 0.6;
+          }
+          .barHead2,.barTail2{
+            display: none;
+          }
+          .percent{
+            font-size: 1.5rem;
+            fill: white;
+            text-shadow:2px 2px 3px rgb(30,30,30);
+          }
+        }
+        /**
+        * 3.3 Skill Info
+        * --------------------------------------
+        */
+        .skillInfo{
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          font-size: 1.3rem;
+          color: black;
+          display: flex;
+          align-items: center;
+          > div{
+            display: flex;
+            align-items: center;
+            position: relative;
+            left: #{$halfCircleSize*2};
+            width: calc(100% - #{$halfCircleSize*2} - #{$halfCircleSizeEnd*2});
+            > div{
+              display:flex;
+              margin:auto;
+              ._skillInfo{
+                display: flex;
+                position: relative;
+                div:first-child{
+                  position: relative;
+                  opacity: 0;
+                }
+                div:last-child{
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  transform: scaleY(0);
+                }
+              }
+              .skillInfo_Name {
+                margin-left: auto;
+                margin-right:0.7rem;
+                .skillInfoName{
+                  font-weight:700;
+                }
+              }
+              .skillInfo_Date {
+                margin-right: auto;
+              }
+              .skillInfoBG{
+                border-radius: 0.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  @media (min-width:1100px){
+    #skill{
+      font-size: 1.6rem;
+      line-height: 1.8rem;
+    }
+  }
+
+
+
+  /**
+  * 3.0 Each Skills (class = 'skillTrunk') (media query)
+  * ----------------------------------------------------------------------------
+  */
+  
+  @media (max-width:800px){
+    #skill .skillRoot .skillTrunk {
+      height: #{$halfCircleSize800*3};
+      .skillBranch{
+        /**
+        * 3.1 Skill Icon Image (media query)
+        * --------------------------------------
+        */
+        .skillImage{
+          height: #{$halfCircleSize800*2};
+          width: #{$halfCircleSize800*2};
+          > div {
+            width: 83%;
+            height: 83%;
+          }
+        }
+        /**
+        * 3.2 Skill Graph (SVG Graph) (media query)
+        * --------------------------------------
+        */
+        .skillGraph {
+          .barHead2,.barTail2{
+          display: initial
+          };
+          .percent{     
+            font-size: 1.3rem;
+          }
+        }
+        /**
+        * 3.3 Skill Info (media query)
+        * --------------------------------------
+        */
+        .skillInfo{
+          .skillInfo_Name{
+            font-size: 1.3rem;
+          }
+          .skillInfo_Date{
+            font-size: 1.2rem;
+          }
+          > div {
+            left: #{$halfCircleSize800*2};
+            width: calc(100% - #{$halfCircleSize800*2});
+            > div{
+              flex-wrap:wrap;
+              ._skillInfo{
+                flex-basis: 100%;
+                .skillInfoText{
+                  margin: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width:1400px){
+    #skill .skillRoot .skillTrunk {
+      height: #{$halfCircleSize1400*2};
+      /**
+      * 3.1 Skill Icon Image (media query)
+      * --------------------------------------
+      */
+      .skillBranch{
+        .skillImage {
+          height: #{$halfCircleSize1400*2};
+          width: #{$halfCircleSize1400*2};
+        }
+        .skillGraph .percent{
+          font-size: 1.7rem;
+          font-weight:500;
+        }
+        .skillInfo{
+          font-size: 1.4rem;
+          > div {
+            left: #{$halfCircleSize1400*2};
+            width: calc(100% - #{$halfCircleSize1400*2} - #{$halfCircleSizeEnd1400*2});
+          }
+        }
+      } 
+    }
+  }
+  
+    @media (max-width:630px){
+      #skill .skillRoot .skillTrunk .skillBranch .skillInfo > div {
+        flex-wrap: wrap;
+      }
+    }
+    
+    @media (min-width:950px){
+      #skill .skillRoot .skillTrunk .skillBranch .skillInfo{
+        font-size: 1.25rem;
+      }
+    }
+
+  

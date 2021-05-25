@@ -1,11 +1,43 @@
 {
-  "devDependencies": {
-    "cssnano": "^4.1.10",
-    "pug": "^3.0.0"
+  "name": "demoreel",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
-    "parcel-bundler": "^1.12.4",
-    "regenerator-runtime": "^0.13.7"
+    "@react-three/drei": "^4.2.0",
+    "@react-three/fiber": "^6.0.16",
+    "gsap": "^3.6.0",
+    "image-trace-loader": "^1.0.2",
+    "imagemin-svgo": "^9.0.0",
+    "lqip-loader": "^2.2.1",
+    "next": "10.0.7",
+    "next-compose-plugins": "^2.2.1",
+    "next-images": "^1.7.0",
+    "next-optimized-images": "^2.6.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.2.0",
+    "responsive-loader-sharp": "^0.8.0",
+    "sass": "^1.32.8",
+    "svg-sprite-loader": "^6.0.6",
+    "three": "^0.128.0"
+  },
+  "devDependencies": {
+    "enhanced-resolve": "^5.8.2",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "imagemin-mozjpeg": "^9.0.0",
+    "next-pwa": "^5.2.21",
+    "responsive-loader": "^2.3.0",
+    "sharp": "^0.28.2",
+    "webp-loader": "^0.6.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.7.0"
   }
 }
