@@ -9,50 +9,36 @@ function Demo(props) {
   const demoVideoRef = useRef(null);
   const logoDisplayContext = useContext(LogoDisplayContext);
   const extendMenuContext = useContext(ExtendMenuContext);
-  let mobileMode, _mobileMode;
-  let checkLogoHigher, _checkLogoHigher;
+  const mode =  useRef({ mobileMode: null, _mobileMode: null, checkLogoHigher: null, _checkLogoHigher: null});
+
 
   useEffect(() => {
-    mobileMode = innerWidth <= 800 ? true : false;
-    checkLogoHigher =
-      innerWidth > 800 &&
-      demoRef.current.clientHeight / 3 > (logoRef.current.clientWidth * 4.5) / 6
-        ? true
-        : false;
-    _checkLogoHigher = checkLogoHigher;
-    logoDisplayContext.logoDisplayDispatch({
-      demoClientHeight: demoRef.current.clientHeight,
-      logoClientWidth: logoRef.current.clientWidth,
-    });
+    mode.current.mobileMode = innerWidth <= 800 ? true : false;
+    mode.current.checkLogoHigher = innerWidth > 800 && demoRef.current.clientHeight / 3 > (logoRef.current.clientWidth * 4.5) / 6 ? true : false;
+    mode.current._mobileMode = mode.current.mobileMode;
+    mode.current._checkLogoHigher = mode.current.checkLogoHigher;
+
+    logoDisplayContext.logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth });
     props.refs.demoRef.current = demoRef.current;
     props.refs.logoRef.current = logoRef.current;
+  }, []);
 
+  useEffect(()=>{
     const updateResize = () => {
-      // console.log('demoRef: ',demoRef.current.clientHeight, "demo: ",demo.clientHeight)
-      _mobileMode = innerWidth <= 800 ? true : false;
-      if (mobileMode !== _mobileMode) {
-        mobileMode = _mobileMode;
-        // mobileMode = innerWidth <= 800 ? true : false;
-        logoDisplayContext.logoDisplayDispatch({
-          demoClientHeight: demoRef.current.clientHeight,
-          logoClientWidth: logoRef.current.clientWidth,
-        });
+      mode.current._mobileMode = innerWidth <= 800 ? true : false;
+
+      if (mode.current.mobileMode !== mode.current._mobileMode) {
+        mode.current.mobileMode = !mode.current.mobileMode;
+        logoDisplayContext.logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth });
       }
       if (innerWidth > 800) {
-        _checkLogoHigher =
-          demoRef.current.clientHeight / 3 >
-          (logoRef.current.clientWidth * 4.5) / 6
-            ? true
-            : false;
-        if (checkLogoHigher !== _checkLogoHigher) {
-          checkLogoHigher = !checkLogoHigher;
-          logoDisplayContext.logoDisplayDispatch({
-            demoClientHeight: demoRef.current.clientHeight,
-            logoClientWidth: logoRef.current.clientWidth,
-          });
+        mode.current._checkLogoHigher = demoRef.current.clientHeight / 3 > (logoRef.current.clientWidth * 4.5) / 6 ? true : false;
+        
+        if (mode.current.checkLogoHigher !== mode.current._checkLogoHigher) {
+          mode.current.checkLogoHigher = !mode.current.checkLogoHigher;
+          logoDisplayContext.logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: logoRef.current.clientWidth });
         }
       }
-      // getDemoVideHeight();
     };
 
     window.addEventListener("resize", updateResize);

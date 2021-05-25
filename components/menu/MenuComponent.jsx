@@ -15,10 +15,7 @@ function MenuComponent(props) {
         vals={{ ...props.vals, menuSizeContext: menuSizeContext }}
       ></MenuComponentRender>
     );
-  }, [
-    menuSizeContext[props.vals.id + "_styleLI"],
-    menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack,
-  ]);
+  }, [ menuSizeContext[props.vals.id + "_styleLI"], menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack ]);
 }
 
 function MenuComponentRender(props) {

@@ -77,13 +77,7 @@ function SvgFramePack(props) {
   }, [clickContext]);
 
   const onClick = (e) => {
-    extendMenuContext(
-      e.currentTarget,
-      props.vals.order,
-      textRef.current,
-      contentRef.current,
-      [noen1Ref.current, noen2Ref.current]
-    );
+    extendMenuContext( e.currentTarget, props.vals.order, textRef.current, contentRef.current, [noen1Ref.current, noen2Ref.current] );
   };
 
   return useMemo(() => {
