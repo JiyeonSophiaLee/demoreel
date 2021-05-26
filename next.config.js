@@ -27,7 +27,12 @@ module.exports = withPlugins([
       placeholder: true,
       placeholderSize: 50,
       adapter: require('responsive-loader/sharp')
-    },
-    assetPrefix:'../'
-  }],
-]);
+    }
+    
+  }]
+],{
+  assetPrefix:'../'
+});
+// module.exports = {
+//     assetPrefix:'../'
+// }
