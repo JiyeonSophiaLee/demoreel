@@ -19,7 +19,7 @@ function useImageContent(useImageContent){
           }else{
             const content = [];    
             project.fileNames.forEach((name,i)=>{
-              let _name = project.src+prefix+name;
+              let _name = prefix+project.src+name;
               let _className = project.main === i ? 'mainContent content' : 'subContent content';
               // let _image = <Image layout="responsive" width={project.size.width} height={project.size.height} alt={project.alt} src={_name} />;
               let _image = getImg(_name,project.alt);
