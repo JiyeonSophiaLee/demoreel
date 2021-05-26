@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo, 
 // import { useContext } from "react/cjs/react.development";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
 
-const prefix = '../'
+const prefix = '/demoreel'
 
 function Demo(props) {
   console.log("---DEMO---");
@@ -69,8 +69,8 @@ function DemoRender(props) {
   return (
     <section id="demo" ref={props.demoRef}>
        <header id="logo" ref={props.logoRef} onClick={props.onClick}>
-         <img id="logo_heigher" src={prefix+"assets/images/logo/logo_heigher.svg"} style={{ display: props.context.logoDisplay.logo_heigher }} />
-         <img id="logo_wider" src={prefix+"assets/images/logo/logo_wider.svg"} style={{ display: props.context.logoDisplay.logo_wider }}/>
+         <img id="logo_heigher" src={prefix+"/assets/images/logo/logo_heigher.svg"} style={{ display: props.context.logoDisplay.logo_heigher }} />
+         <img id="logo_wider" src={prefix+"/assets/images/logo/logo_wider.svg"} style={{ display: props.context.logoDisplay.logo_wider }}/>
        </header>
        <header id="demoVideo" ref={props.demoVideoRef}>
          <iframe src="https://player.vimeo.com/video/553396949?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
