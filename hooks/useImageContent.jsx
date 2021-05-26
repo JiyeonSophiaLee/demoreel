@@ -10,7 +10,6 @@ function useImageContent(useImageContent){
       const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
       return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
     }
-    const prefix = ".";
     const loadingImages = 
       <div className="alinedImages">
         {useImageContent.map((project)=>{
@@ -19,7 +18,7 @@ function useImageContent(useImageContent){
           }else{
             const content = [];    
             project.fileNames.forEach((name,i)=>{
-              let _name = prefix+project.src+name;
+              let _name = project.src+name;
               let _className = project.main === i ? 'mainContent content' : 'subContent content';
               // let _image = <Image layout="responsive" width={project.size.width} height={project.size.height} alt={project.alt} src={_name} />;
               let _image = getImg(_name,project.alt);

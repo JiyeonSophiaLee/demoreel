@@ -23,14 +23,11 @@ module.exports = withPlugins([
       quality: 75,
     },
     responsive: {
-        sizes: [300, 600, 1200, 2000],
-        placeholder: true,
-        placeholderSize: 50,
-        adapter: require('responsive-loader/sharp')
-      }
+      sizes: [300, 600, 1200, 2000],
+      placeholder: true,
+      placeholderSize: 50,
+      adapter: require('responsive-loader/sharp')
+    },
+    assetPrefix:'./'
   }],
 ]);
-module.exports = {
-  basePath:'./',
-  assetPrefix:'./'
-}
