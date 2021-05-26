@@ -30,3 +30,7 @@ module.exports = withPlugins([
       }
   }],
 ]);
+module.exports = {
+  basePath:'./',
+  assetPrefix:'./'
+}
