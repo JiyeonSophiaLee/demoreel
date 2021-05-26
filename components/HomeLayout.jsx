@@ -13,6 +13,7 @@ export const MenuSizeContext = createContext();
 export const ClickContext = createContext();
 export const ClickAfterContext = createContext();
 
+
 const logoDisplayReducer = (state, action) => {
   // console.log('logoDisplay reducer is working')
   if (innerWidth != undefined) {
