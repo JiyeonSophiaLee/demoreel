@@ -13,15 +13,15 @@ function useImageContent(useImageContent){
           const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
           return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
         }catch{
-          console.log('web')
+          console.log('local error')
         }
       }else{
         try{
           // return <img src={require("/demoreel/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
-          const url = require("../demoreel"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
+          const url = require("/demoreel"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
           return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
         }catch{
-          console.log('local')
+          console.log('web error')
         }
       }
     }

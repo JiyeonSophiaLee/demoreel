@@ -11,13 +11,13 @@ function InfoTop() {
       try{
         return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
       }catch{
-        console.log('web')
+        console.log('local error mypic')
       }
     }else{
       try{
         return <img src={require("/demoreel/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
       }catch{
-        console.log('local')
+        console.log('web error mypic')
       }
     }
   }
