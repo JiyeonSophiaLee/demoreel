@@ -5,9 +5,12 @@ import {GUI} from '../gltf/scripts/dat.gui.module.js';
 
 // const threeJSCanvas = document.getElementById('threeJSCanvas');
 // const threejsBlocker = document.getElementById('threejsBlocker');
+  
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "..";
+
 const vec = new THREE.Vector3();
 const matchingActions = {work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'};
-  
+
   
 let camera, renderer, scene, dirLight, pointLight, sky0, sky1, sky2, sky3;
 let click=false;
@@ -71,10 +74,10 @@ export default function astronaut(){
  
 
 
-  sky0 = getSky(16, '../assets/images/hdr/space_00.jpg');
-  sky1 = getSky(16, '../assets/images/hdr/space_01.jpg');
-  sky2 = getSky(16, '../assets/images/hdr/space_02.jpg');
-  sky3 = getSky(16, '../assets/images/hdr/space_03.jpg');
+  sky0 = getSky(16, prefix + '/assets/images/hdr/space_00.jpg');
+  sky1 = getSky(16, prefix + '/assets/images/hdr/space_01.jpg');
+  sky2 = getSky(16, prefix + '/assets/images/hdr/space_02.jpg');
+  sky3 = getSky(16, prefix + '/assets/images/hdr/space_03.jpg');
   let ground = getSphere(5);
   ground.position.y = -ground.geometry.parameters.radius;
 
@@ -90,7 +93,7 @@ export default function astronaut(){
 
   
   let loader = new GLTFLoader();
-  loader.load( '../assets/gltf/astronaut_v07.gltf', function ( gltf ) {
+  loader.load( prefix + '/assets/gltf/astronaut_v07.gltf', function ( gltf ) {
     model = gltf.scene;
     scene.add(model);
 

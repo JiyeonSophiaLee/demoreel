@@ -1,16 +1,32 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
+
+const prefix = process.env.NEXT_PUBLIC_PREFIX === undefined ? true : false
+
+
 
 function InfoTop() {
-  console.log("---infoTop---");
+
+  const getImage = ()=>{
+    if(prefix){
+      try{
+        return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
+      }catch{
+        console.log('web')
+      }
+    }else{
+      try{
+        return <img src={require("/demoreel/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
+      }catch{
+        console.log('local')
+      }
+    }
+  }
   return (
     <div id="infoTop">
       <div id="myPic">
         <div id="myPicBG" />
         <div id="myPicImage">
-          <img
-            src={require("../../../public/assets/images/pictures/myPic.jpg??resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")}
-            alt="Picture of Sophia"
-          />
+          {getImage()}
         </div>
       </div>
       <main id="myPicInfo">
