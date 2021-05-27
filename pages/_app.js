@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import '../styles/homeLayout.scss'
 import '../styles/infoLayout.scss'
 import '../styles/imageLayout.scss'

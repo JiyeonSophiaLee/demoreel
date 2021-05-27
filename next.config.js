@@ -31,7 +31,7 @@ module.exports = withPlugins([
     
   }]
 ],{
-  assetPrefix:'/demoreel'
+  assetPrefix: process.env.NEXT_PUBLIC_PREFIX
 });
 // module.exports = {
 //     assetPrefix:'../'

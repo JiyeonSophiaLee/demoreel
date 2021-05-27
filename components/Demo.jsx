@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo, 
 // import { useContext } from "react/cjs/react.development";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
 
-const prefix = '/demoreel'
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
 
 function Demo(props) {
   console.log("---DEMO---");

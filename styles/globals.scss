@@ -1,3 +1,15 @@
+@mixin getPrefix($env) {
+
+  @if $env {
+    
+
+  } @else {
+
+       display: inline-block;
+       width: $width;
+  }
+}
+
 html,
 body {
   width: 100%;
@@ -30,15 +42,17 @@ a {
   height: 100%;
 }
 
-@font-face{
-  font-family: 'GathaSans';
-  src: url(/assets/fonts/GathaSans.ttf);
-  font-display: swap;
-}
-@font-face{
-  font-family: 'theboldfont';
-  src: url(/assets/fonts/theboldfont.woff);
-}
+// ------> this is move to "Head" component.
+// @font-face{
+//   font-family: 'GathaSans';
+//   src: url(/assets/fonts/GathaSans.ttf);
+//   font-display: swap;
+// }
+// @font-face{
+//   font-family: 'theboldfont';
+//   src: url(/assets/fonts/theboldfont.woff);
+// }
+
 @import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap');
 
