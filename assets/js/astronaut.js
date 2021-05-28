@@ -8,11 +8,15 @@ import {GUI} from '../gltf/scripts/dat.gui.module.js';
   
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "..";
 
+const textureLoader = new THREE.TextureLoader();
+let gltfOn = true;
+
 const vec = new THREE.Vector3();
 const matchingActions = {work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'};
 
   
 let camera, renderer, scene, dirLight, pointLight, sky0, sky1, sky2, sky3;
+let skyTextures=[];
 let click=false;
 var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAction ;
 
@@ -36,6 +40,39 @@ let positionXdiff, positionYdiff, positionZdiff, rotationXdiff, rotationYdiff, r
 
 var clock = new THREE.Clock();
 
+
+
+//------------------------------------------
+THREE.TextureLoader.prototype.load = function(url, onLoad, onProgress, onError)
+{
+    var texture = new THREE.Texture();
+    var loader = new THREE.ImageLoader(this.manager);
+    loader.setCrossOrigin(this.crossOrigin);
+    loader.setPath(this.path);
+    var image = loader.load(url, function(image)
+    {
+        texture.image = image;
+        // JPEGs can't have an alpha channel, so memory can be saved by storing them as RGB.
+        var isJPEG = url.search( /\.jpe?g($|\?)/i ) > 0 || url.search( /^data\:image\/jpeg/ ) === 0;
+        texture.format = isJPEG ? THREE.RGBFormat : THREE.RGBAFormat;
+        texture.needsUpdate = true;
+        if(onLoad !== undefined)
+        {
+            onLoad( texture );
+        }
+    }, onProgress, onError);
+
+    // add this function to the texture
+    texture.abort = function()
+    {
+        if(image && typeof image.hasAttribute === 'function')
+        {
+            image.src = '';
+        }
+    };
+    return texture;
+};
+//--------------------------------------------------
 
 export default function astronaut(){
   
@@ -74,6 +111,10 @@ export default function astronaut(){
  
 
 
+  // sky0 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
+  // sky1 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
+  // sky2 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
+  // sky3 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
   sky0 = getSky(16, prefix + '/assets/images/hdr/space_00.jpg');
   sky1 = getSky(16, prefix + '/assets/images/hdr/space_01.jpg');
   sky2 = getSky(16, prefix + '/assets/images/hdr/space_02.jpg');
@@ -171,7 +212,6 @@ function animate(){
   let delta = clock.getDelta();
   mixer.update( delta );
 
-  // console.log('mouseX',mouseX)
   if(click){
     camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
     camera.quaternion.slerp( slerpRotation, 0.1 );
@@ -180,6 +220,10 @@ function animate(){
   }
   
   renderer.render( scene, camera);
+
+  if(!gltfOn){
+    cancelAnimationFrame(requestAniThreeJS)
+  }
 }
 
 function onClick(){
@@ -198,7 +242,10 @@ function onClick(){
 //-----------------------------------//
 function getSky(size,path){
   let skyGeo = new THREE.SphereGeometry(size, 100,100);
-  let skyMesh = new THREE.MeshBasicMaterial( {map:new THREE.TextureLoader().load(path), side:THREE.BackSide} );
+  let textureLoad = textureLoader.load(path)
+  let skyMesh = new THREE.MeshBasicMaterial( {map: textureLoad, side:THREE.BackSide} );
+  // let skyMesh = new THREE.MeshBasicMaterial( {map:new THREE.TextureLoader().load(path), side:THREE.BackSide} );
+  skyTextures.push(textureLoad);
 
   let sky = new THREE.Mesh(skyGeo,skyMesh);
   sky.rotation.y = 10 ;
@@ -220,8 +267,6 @@ function getSphere(size) {
 
 	return mesh;
 }
-
-
 
 
 //------------ function for crossing actions ------------//
@@ -371,13 +416,16 @@ export function pauseAstronaut(){
 
 
 export function removeScene(){
+
+  gltfOn = false;
+  skyTextures.forEach((texture)=>{
+    texture.abort(); 
+  })
   if(scene){
     while(scene.children.length > 0){ 
       scene.remove(scene.children[0]); 
     }
   }
 }
-
-
 
 
