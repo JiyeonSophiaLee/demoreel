@@ -1,15 +1,7 @@
-import {
-  useContext,
-  useRef,
-  useEffect,
-  memo,
-  useMemo,
-  useCallback,
-} from "react";
+import { useContext, useRef, useEffect, memo, useMemo, useCallback} from "react";
 import SvgFramePack from "./SvgFramePack.jsx";
 
 import { MenuSizeContext } from "../HomeLayout.jsx";
-import { useState } from "react/cjs/react.development";
 
 function MenuComponent(props) {
   console.log("---MenuComponent---");
@@ -23,20 +15,14 @@ function MenuComponent(props) {
         vals={{ ...props.vals, menuSizeContext: menuSizeContext }}
       ></MenuComponentRender>
     );
-  }, [
-    menuSizeContext[props.vals.id + "_styleLI"],
-    menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack,
-  ]);
+  }, [ menuSizeContext[props.vals.id + "_styleLI"], menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack ]);
 }
 
 function MenuComponentRender(props) {
   console.log("---------MenuComponentRender---------", props.vals.id);
 
   return (
-    <li
-      id={props.vals.id}
-      style={props.vals.menuSizeContext[props.vals.id + "_styleLI"]}
-    >
+    <li id={props.vals.id} style={props.vals.menuSizeContext[props.vals.id + "_styleLI"]}>
       <SvgFramePack vals={props.vals} />
     </li>
   );

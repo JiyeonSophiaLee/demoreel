@@ -1,8 +1,12 @@
 import skillList, {colorOffset, RANDOM_COLOR, startRandomColor, hasTouchScreen} from '../public/assets/js/skills.js';
-import Image from 'next/image';
 import { useCallback, useState, useEffect, useRef } from 'react';
 import {gsap} from 'gsap';
-import TV from '../public/assets/js/transitionValue'
+import TV from '../public/assets/js/transitionValue';
+
+
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
+
+
 
 function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
   console.log('-----------useSkillList---------------')
@@ -175,16 +179,6 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
     if(!touchScreen.current) expandGraphTL.current.reverse()
   },[])
 
-  // function debounce(fn, ms) {
-  //   let timer
-  //   return () => {
-  //     clearTimeout(timer)
-  //     timer = setTimeout(() => {
-  //       timer = null
-  //       fn.apply(this, arguments)
-  //     }, ms)
-  //   };
-  // }
 
   useEffect(()=>{
     const updateResize=()=>{
@@ -410,7 +404,7 @@ function useSkillList(skill ,j, skillHalfSize, clickAfterContext){
           <div className="skillImage">
             <div>
               <p>{skill.name}</p>
-              <img className="image" src={skill.path} alt={skill.name+" icon"}/>
+              <img className="image" src={prefix + skill.path} alt={skill.name+" icon"}/>
             </div>
           </div>
           <svg className="skillGraph" ref={svgRef}>

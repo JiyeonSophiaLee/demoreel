@@ -1,19 +1,18 @@
-import { memo } from "react";
-import Image from "next/image";
+
+import { memo, useCallback } from "react";
+
 
 function InfoTop() {
-  console.log("---infoTop---");
+
+  const getImage = ()=>{
+    return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
+  }
   return (
     <div id="infoTop">
       <div id="myPic">
         <div id="myPicBG" />
         <div id="myPicImage">
-          <Image
-            src="/assets/images/pictures/myPic.jpg"
-            alt="Picture of Sophia"
-            width={1027}
-            height={1028}
-          />
+          {getImage()}
         </div>
       </div>
       <main id="myPicInfo">

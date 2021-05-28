@@ -1,18 +1,5 @@
-import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-  useMemo,
-} from "react/cjs/react.development";
-import skillList, {
-  colorOffset,
-  RANDOM_COLOR,
-  startRandomColor,
-  hasTouchScreen,
-} from "../../../public/assets/js/skills.js";
+import { useCallback, useEffect, useRef, useState, useContext, useMemo } from "react";
+import skillList, { colorOffset, RANDOM_COLOR, startRandomColor, hasTouchScreen } from "../../../public/assets/js/skills.js";
 import TV, { convertToPix } from "../../../public/assets/js/transitionValue.js";
 import { ClickAfterContext } from "../../HomeLayout.jsx";
 import { gsap } from "gsap";
@@ -21,20 +8,8 @@ import useSkillList from "../../../hooks/useSkillList.jsx";
 function SkillContent() {
   console.log("--------SkillContent----------");
   const clickAfterContext = useContext(ClickAfterContext);
-  const [skillHalfSize, setSkillHalfSize] = useState({
-    circle: 0,
-    circleEnd: 0,
-    barHeight: 0,
-    pxCircle: 0,
-    pxCircleEnd: 0,
-    pxBarHeight: 0,
-  });
-  const mode = useRef({
-    mobileMode: null,
-    _mobileMode: null,
-    widerMode: null,
-    _widerMode: null,
-  });
+  const [skillHalfSize, setSkillHalfSize] = useState({ circle: 0, circleEnd: 0, barHeight: 0, pxCircle: 0, pxCircleEnd: 0, pxBarHeight: 0});
+  const mode = useRef({ mobileMode: null, _mobileMode: null, widerMode: null, _widerMode: null});
 
   const setUnitSize = useCallback(() => {
     let screenSize;

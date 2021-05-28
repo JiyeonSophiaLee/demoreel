@@ -4,10 +4,9 @@ import MenuComponent from "./menu/MenuComponent.jsx";
 import SvgIvory from "./menu/SvgIvory.jsx";
 import WorkContent from "./menu/work/WorkContent.jsx";
 import PaintContent from "./menu/paint/PaintContent.jsx";
-import InfoContent from "./menu/info/InfoContent.jsx";
 import SkillContent from "./menu/skill/SkillContent.jsx";
+import InfoContent from "./menu/info/InfoContent.jsx";
 
-// import { SvgFrameContext } from './HomeLayout.jsx';
 
 function Menu(props) {
   console.log("----------Menu-----------");

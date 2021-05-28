@@ -1,10 +1,5 @@
-import {
-  useContext,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+
+import { useContext, useRef, useEffect, useCallback, useMemo} from "react";
 import gsap from "gsap";
 import SvgFrame from "./SvgFrame.jsx";
 
@@ -83,13 +78,7 @@ function SvgFramePack(props) {
   }, [clickContext]);
 
   const onClick = (e) => {
-    extendMenuContext(
-      e.currentTarget,
-      props.vals.order,
-      textRef.current,
-      contentRef.current,
-      [noen1Ref.current, noen2Ref.current]
-    );
+    extendMenuContext( e.currentTarget, props.vals.order, textRef.current, contentRef.current, [noen1Ref.current, noen2Ref.current] );
   };
 
   return useMemo(() => {
@@ -99,23 +88,14 @@ function SvgFramePack(props) {
           className="svgFramePack"
           onClick={onClick}
           ref={svgFrameRef}
-          style={
-            props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"]
-              .style_svgFramePack
-          }
+          style={ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack}
           onMouseEnter={mouseEnterHandler}
           onMouseLeave={mouseLeaveHandler}
         >
           <SvgFramePackRender
             vals={{
               ...props.vals,
-              refs: {
-                noen1Ref,
-                noen2Ref,
-                stopColor1Ref,
-                stopColor2Ref,
-                textRef,
-              },
+              refs: { noen1Ref, noen2Ref, stopColor1Ref, stopColor2Ref, textRef},
               menuSizeContext: props.vals.menuSizeContext,
               svgFrameRef: svgFrameRef,
             }}
@@ -126,10 +106,7 @@ function SvgFramePack(props) {
         </div>
       </>
     );
-  }, [
-    props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"]
-      .style_svgFramePack,
-  ]);
+  }, [ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack ]);
 }
 
 function SvgFramePackRender(props) {
@@ -147,13 +124,9 @@ function SvgFramePackRender(props) {
           stopColor: props.vals.stopColor,
           strokeColor: props.vals.strokeColor,
           ivory: props.vals.ivory,
-          menuSizeContext:
-            props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"],
+          menuSizeContext: props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"],
           svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable,
-          refs: {
-            stopColor1Ref: props.vals.refs.stopColor1Ref,
-            stopColor2Ref: props.vals.refs.stopColor2Ref,
-          },
+          refs: { stopColor1Ref: props.vals.refs.stopColor1Ref, stopColor2Ref: props.vals.refs.stopColor2Ref}
         }}
       />
     </>

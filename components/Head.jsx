@@ -1,6 +1,26 @@
+import { useThree } from "@react-three/fiber";
 import Head from "next/head";
+import {useEffect} from "react";
+
+
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
+
 
 export default function _Head() {
+  useEffect(()=>{
+    async function loadFonts() {
+      const GathaSans_font = new FontFace('GathaSans', `url(${prefix}/assets/fonts/GathaSans.ttf)`);
+      const theboldfont_font = new FontFace('theboldfont', `url(${prefix}/assets/fonts/theboldfont.woff)`);
+
+      await GathaSans_font.load();
+      await theboldfont_font.load();
+      
+      document.fonts.add(GathaSans_font);
+      document.fonts.add(theboldfont_font);
+    }
+    loadFonts();
+  },[])
+
   return (
     <Head>
       <meta charset="UTF-8" />
@@ -27,7 +47,6 @@ export default function _Head() {
         as="font"
         crossOrigin=""
       />
-      {/* <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script> */}
     </Head>
   );
 }

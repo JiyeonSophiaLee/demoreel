@@ -1,0 +1,281 @@
+@mixin getPrefix($env) {
+
+  @if $env {
+    
+
+  } @else {
+
+       display: inline-block;
+       width: $width;
+  }
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+}
+:root{
+  --neonDuration:1.5s;
+}
+body{
+  background:rgb(30, 30, 30);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
+
+#__next{
+  width: 100%;
+  height: 100%;
+}
+
+// ------> this is move to "Head" component.
+// @font-face{
+//   font-family: 'GathaSans';
+//   src: url(/assets/fonts/GathaSans.ttf);
+//   font-display: swap;
+// }
+// @font-face{
+//   font-family: 'theboldfont';
+//   src: url(/assets/fonts/theboldfont.woff);
+// }
+
+@import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap');
+
+
+
+.menutransition{
+  transition: width 1s ease-in-out, height 1s ease-in-out, flex 1s ease-in-out, max-width 1s ease-in-out;
+}
+
+
+
+
+
+
+/* -----------------------------------WORK NEON------------------------------------------ */
+.workNeon1{
+  animation: workNeon1Ani var(--neonDuration) ease-in-out infinite alternate;
+  --workColor1 : rgba(220, 51, 35, 0.4);
+}
+  @keyframes workNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        -3px -3px 20px var(--workColor1),
+        -6px -6px 35px var(--workColor1),
+        -10px -10px 40px var(--workColor1),
+        inset 3px 3px 10px var(--workColor1),
+        inset 3px 3px 17px var(--workColor1),
+        inset 3px 3px 20px var(--workColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        -3px -3px 10px var(--workColor1),
+        -6px -6px 17px var(--workColor1),
+        -10px -10px 20px var(--workColor1),
+        inset 3px 3px 5px var(--workColor1),
+        inset 3px 3px 8px var(--workColor1),
+        inset 3px 3px 10px var(--workColor1);
+    }
+  }
+.workNeon2{
+  animation: workNeon2Ani var(--neonDuration) ease-in-out infinite alternate;
+  --workColor2 : rgba(212, 116, 43, 0.4);
+}
+  @keyframes workNeon2Ani {
+    from {
+      box-shadow:
+        3px 3px 20px var(--workColor2),
+        6px 6px 35px var(--workColor2),
+        10px 10px 40px var(--workColor2),
+        inset -3px -3px 10px var(--workColor2),
+        inset -3px -3px 17px var(--workColor2),
+        inset -3px -3px 20px var(--workColor2);
+    }
+    to {
+      box-shadow:
+        3px 3px 10px var(--workColor2),
+        6px 6px 17px var(--workColor2),
+        10px 10px 20px var(--workColor2),
+        inset -3px -3px 5px var(--workColor2),
+        inset -3px -3px 8px var(--workColor2),
+        inset -3px -3px 10px var(--workColor2);
+    }
+  }
+/* -----------------------------------SKILL NEON------------------------------------------ */
+.skillNeon1{
+  animation: skillNeon1Ani var(--neonDuration) ease-in-out infinite alternate;
+  --skillColor1 :rgba(168, 63, 209, 0.4);
+}
+  @keyframes skillNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        3px -3px 20px var(--skillColor1),
+        6px -6px 35px var(--skillColor1),
+        10px -10px 40px var(--skillColor1),
+        inset -3px 3px 10px var(--skillColor1),
+        inset -3px 3px 17px var(--skillColor1),
+        inset -3px 3px 20px var(--skillColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        3px -3px 10px var(--skillColor1),
+        6px -6px 17px var(--skillColor1),
+        10px -10px 20px var(--skillColor1),
+        inset -3px 3px 5px var(--skillColor1),
+        inset -3px 3px 8px var(--skillColor1),
+        inset -3px 3px 10px var(--skillColor1);
+    }
+  }
+.skillNeon2{
+  animation: skillNeon2Ani var(--neonDuration) ease-in-out infinite alternate;
+  --skillColor2 :rgba(192, 49, 91, 0.4);
+}
+  @keyframes skillNeon2Ani {
+    from {
+      box-shadow:
+        -3px 3px 20px var(--skillColor2),
+        -6px 6px 35px var(--skillColor2),
+        -10px 10px 40px var(--skillColor2),
+        inset 3px -3px 10px var(--skillColor2),
+        inset 3px -3px 17px var(--skillColor2),
+        inset 3px -3px 20px var(--skillColor2);
+    }
+    to {
+      box-shadow:
+        -3px 3px 10px var(--skillColor2),
+        -6px 6px 17px var(--skillColor2),
+        -10px 10px 20px var(--skillColor2),
+        inset 3px -3px 5px var(--skillColor2),
+        inset 3px -3px 8px var(--skillColor2),
+        inset 3px -3px 10px var(--skillColor2);
+    }
+  }
+/* -----------------------------------PAINT NEON------------------------------------------ */
+.paintNeon1{
+  animation: paintNeon1Ani var(--neonDuration) ease-in-out infinite alternate;
+  --paintColor1 :rgba(225, 149, 46, 0.4);
+}
+  @keyframes paintNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        3px -3px 20px var(--paintColor1),
+        6px -6px 35px var(--paintColor1),
+        10px -10px 40px var(--paintColor1),
+        inset -3px 3px 10px var(--paintColor1),
+        inset -3px 3px 17px var(--paintColor1),
+        inset -3px 3px 20px var(--paintColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        3px -3px 10px var(--paintColor1),
+        6px -6px 17px var(--paintColor1),
+        10px -10px 20px var(--paintColor1),
+        inset -3px 3px 5px var(--paintColor1),
+        inset -3px 3px 8px var(--paintColor1),
+        inset -3px 3px 10px var(--paintColor1);
+    }
+  }
+.paintNeon2{
+  animation: paintNeon2Ani var(--neonDuration) ease-in-out infinite alternate;
+  --paintColor2 :rgba(48, 171, 152, 0.4);
+}
+  @keyframes paintNeon2Ani {
+    from {
+      box-shadow:
+        -3px 3px 20px var(--paintColor2),
+        -6px 6px 35px var(--paintColor2),
+        -10px 10px 40px var(--paintColor2),
+        inset 3px -3px 10px var(--paintColor2),
+        inset 3px -3px 17px var(--paintColor2),
+        inset 3px -3px 20px var(--paintColor2);
+    }
+    to {
+      box-shadow:
+        -3px 3px 10px var(--paintColor2),
+        -6px 6px 17px var(--paintColor2),
+        -10px 10px 20px var(--paintColor2),
+        inset 3px -3px 5px var(--paintColor2),
+        inset 3px -3px 8px var(--paintColor2),
+        inset 3px -3px 10px var(--paintColor2);
+    }
+  }
+/* -----------------------------------INFO NEON------------------------------------------ */
+.infoNeon1{
+  animation: infoNeon1Ani var(--neonDuration) ease-in-out infinite alternate;
+  --infoColor1 :rgba(200, 86, 177, 0.4);
+}
+  @keyframes infoNeon1Ani {
+    from {
+      box-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        -3px -3px 20px var(--infoColor1),
+        -6px -6px 35px var(--infoColor1),
+        -10px -10px 40px var(--infoColor1),
+        inset 3px 3px 10px var(--infoColor1),
+        inset 3px 3px 17px var(--infoColor1),
+        inset 3px 3px 20px var(--infoColor1);
+    }
+    to {
+      box-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        -3px -3px 10px var(--infoColor1),
+        -6px -6px 17px var(--infoColor1),
+        -10px -10px 20px var(--infoColor1),
+        inset 3px 3px 5px var(--infoColor1),
+        inset 3px 3px 8px var(--infoColor1),
+        inset 3px 3px 10px var(--infoColor1);
+    }
+  }
+.infoNeon2{
+  animation: infoNeon2Ani var(--neonDuration) ease-in-out infinite alternate;
+  --infoColor2 : rgba(75, 173, 209, 0.4);
+}
+  @keyframes infoNeon2Ani {
+    from {
+      box-shadow:
+        3px 3px 20px var(--infoColor2),
+        6px 6px 35px var(--infoColor2),
+        10px 10px 40px var(--infoColor2),
+        inset -3px -3px 10px var(--infoColor2),
+        inset -3px -3px 17px var(--infoColor2),
+        inset -3px -3px 20px var(--infoColor2);
+    }
+    to {
+      box-shadow:
+        3px 3px 10px var(--infoColor2),
+        6px 6px 17px var(--infoColor2),
+        10px 10px 20px var(--infoColor2),
+        inset -3px -3px 5px var(--infoColor2),
+        inset -3px -3px 8px var(--infoColor2),
+        inset -3px -3px 10px var(--infoColor2);
+    }
+  }
