@@ -7,23 +7,23 @@ function useImageContent(useImageContent){
       window.open(url)
     }
     const getImg = (name, alt)=>{
-      if(prefix){
-        try{
+      // if(prefix){
+      //   try{
           // return <img src={require("/demoreel/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
           const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
           return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
-        }catch(e){
-          console.log('web error',e)
-        }
-      }else{
-        try{
-          // return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
-          const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
-          return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
-        }catch{
-          console.log('local error')
-        }
-      }
+      //   }catch(e){
+      //     console.log('web error',e)
+      //   }
+      // }else{
+      //   try{
+      //     // return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
+      //     const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")
+      //     return <img src={url.src} srcSet={url.srcSet} alt={alt}/>
+      //   }catch{
+      //     console.log('local error')
+      //   }
+      // }
     }
     const loadingImages = 
       <div className="alinedImages">
