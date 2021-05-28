@@ -548,8 +548,8 @@ const HomeLayout = () => {
   useEffect(() => {
     window.addEventListener("load", function (event) {
       console.log("working?");
-      document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
       setTimeout(() => {
+        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
         document.getElementById("loaderContainer").style.display = "none";
       }, 1200);
     });
@@ -563,7 +563,7 @@ const HomeLayout = () => {
         <div id="loaderContainer">
           <div id="loaderAnim">Load&nbsp;&nbsp;ng</div>
           <div id="lighterVersion" onClick={openLighterVersion}>
-            Click to the lighter version <br /> which doesn't contain THREE JS
+            Click to the see a lighter version <br /> which removes heavy 3D components.
           </div>
         </div>
         <ExtendMenuContext.Provider value={extendMenu}>

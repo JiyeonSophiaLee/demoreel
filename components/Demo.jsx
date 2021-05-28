@@ -1,5 +1,4 @@
 import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo, useContext} from "react";
-// import { useContext } from "react/cjs/react.development";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
 
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
