@@ -1,25 +1,25 @@
 import { memo, useCallback } from "react";
 
-const prefix = process.env.NEXT_PUBLIC_PREFIX === undefined ? true : false
+// const prefix = process.env.NEXT_PUBLIC_PREFIX === undefined ? true : false
 
 
 
 function InfoTop() {
 
   const getImage = ()=>{
-    if(prefix){
-      try{
+    // if(prefix){
+    //   try{
         return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
-      }catch{
-        console.log('local error mypic')
-      }
-    }else{
-      try{
-        return <img src={require("/demoreel/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
-      }catch{
-        console.log('web error mypic')
-      }
-    }
+  //     }catch{
+  //       console.log('local error mypic')
+  //     }
+  //   }else{
+  //     try{
+  //       return <img src={require("../../../public/assets/images/pictures/myPic.jpg?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000")} alt="Picture of Sophia"/>
+  //     }catch{
+  //       console.log('web error mypic')
+  //     }
+  //   }
   }
   return (
     <div id="infoTop">
