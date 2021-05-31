@@ -7,19 +7,19 @@ const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
 
 
 export default function _Head() {
-  useEffect(()=>{
-    async function loadFonts() {
-      const GathaSans_font = new FontFace('GathaSans', `url(${prefix}/assets/fonts/GathaSans.ttf)`);
-      const theboldfont_font = new FontFace('theboldfont', `url(${prefix}/assets/fonts/theboldfont.woff)`);
+  // useEffect(()=>{
+  //   async function loadFonts() {
+  //     const GathaSans_font = new FontFace('GathaSans', `url(${prefix}/assets/fonts/GathaSans.ttf)`);
+  //     const theboldfont_font = new FontFace('theboldfont', `url(${prefix}/assets/fonts/theboldfont.woff)`);
 
-      await GathaSans_font.load();
-      await theboldfont_font.load();
+  //     await GathaSans_font.load();
+  //     await theboldfont_font.load();
       
-      document.fonts.add(GathaSans_font);
-      document.fonts.add(theboldfont_font);
-    }
-    loadFonts();
-  },[])
+  //     document.fonts.add(GathaSans_font);
+  //     document.fonts.add(theboldfont_font);
+  //   }
+  //   loadFonts();
+  // },[])
 
   return (
     <Head>

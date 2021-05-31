@@ -1,14 +1,4 @@
-@mixin getPrefix($env) {
-
-  @if $env {
-    
-
-  } @else {
-
-       display: inline-block;
-       width: $width;
-  }
-}
+$prefix: '/demoreel';
 
 html,
 body {
@@ -43,15 +33,15 @@ a {
 }
 
 // ------> this is move to "Head" component.
-// @font-face{
-//   font-family: 'GathaSans';
-//   src: url(/assets/fonts/GathaSans.ttf);
-//   font-display: swap;
-// }
-// @font-face{
-//   font-family: 'theboldfont';
-//   src: url(/assets/fonts/theboldfont.woff);
-// }
+@font-face{
+  font-family: 'GathaSans';
+  src: url($prefix+ "/assets/fonts/GathaSans.ttf");
+  font-display: swap;
+}
+@font-face{
+  font-family: 'theboldfont';
+  src: url($prefix + "/assets/fonts/theboldfont.woff");
+}
 
 @import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap');
