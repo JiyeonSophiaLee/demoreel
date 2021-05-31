@@ -3,7 +3,7 @@ import { useContext, useRef, useEffect, useCallback, useMemo} from "react";
 import gsap from "gsap";
 import SvgFrame from "./SvgFrame.jsx";
 
-import { ExtendMenuContext, ClickContext } from "../HomeLayout.jsx";
+import { ExtendMenuContext, ClickContext, ClickAfterContext } from "../../HomeLayout.jsx";
 
 function SvgFramePack(props) {
   const extendMenuContext = useContext(ExtendMenuContext);
@@ -134,8 +134,11 @@ function SvgFramePackRender(props) {
 }
 function ContentRender(props) {
   console.log("----------ContentRender----------------");
+
+  const clickAfterContext = useContext(ClickAfterContext);
+
   return useMemo(() => {
-    return <>{props.vals.contents}</>;
-  }, []);
+    return <>{clickAfterContext && props.vals.contents}</>;
+  }, [clickAfterContext]);
 }
 export default SvgFramePack;

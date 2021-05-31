@@ -1,5 +1,5 @@
 import { useContext, useRef, useEffect, memo, useMemo, useCallback} from "react";
-import SvgFramePack from "./SvgFramePack.jsx";
+import SvgFramePack from "./svg/SvgFramePack.jsx";
 
 import { MenuSizeContext } from "../HomeLayout.jsx";
 

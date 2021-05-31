@@ -551,7 +551,7 @@ const HomeLayout = () => {
       setTimeout(() => {
         document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
         document.getElementById("loaderContainer").style.display = "none";
-      }, 1200);
+      }, 600);
     });
   }, []);
 

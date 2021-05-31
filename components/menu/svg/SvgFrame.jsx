@@ -1,6 +1,6 @@
 import { useContext, memo } from "react";
 
-import { MenuSizeContext } from "../HomeLayout.jsx";
+import { MenuSizeContext } from "../../HomeLayout.jsx";
 
 function SvgFrame(props) {
   console.log("-------SvgFrame----------");

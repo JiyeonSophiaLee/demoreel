@@ -1,7 +1,7 @@
 import { memo, useMemo, useRef } from "react";
 
 import MenuComponent from "./menu/MenuComponent.jsx";
-import SvgIvory from "./menu/SvgIvory.jsx";
+import SvgIvory from "./menu/svg/SvgIvory.jsx";
 import WorkContent from "./menu/work/WorkContent.jsx";
 import PaintContent from "./menu/paint/PaintContent.jsx";
 import SkillContent from "./menu/skill/SkillContent.jsx";
