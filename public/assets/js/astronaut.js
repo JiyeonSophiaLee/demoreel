@@ -411,9 +411,7 @@ export function pauseAstronaut(){
   for(let action in actions){
     actions[action].stop();
   }
-
 }
-
 
 export function removeScene(){
 
@@ -428,4 +426,8 @@ export function removeScene(){
   }
 }
 
-
+export function checkActions(){
+  const checkedActions = actions && true;
+  if(!checkedActions) removeScene()
+  return checkedActions ;
+}

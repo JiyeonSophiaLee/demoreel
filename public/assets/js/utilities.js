@@ -5,7 +5,7 @@ import TV, {convertToPix} from './transitionValue.js'
 
 
 export function homeGsapSet(menuExtended,viewChanged){
-
+  console.log('viewChanged',viewChanged)
   if(viewChanged){
     if(innerWidth > 800){
       if(menuExtended){
