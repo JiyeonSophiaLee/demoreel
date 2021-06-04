@@ -4,7 +4,7 @@ import Menu from "./Menu.jsx";
 import TV from "../public/assets/js/transitionValue";
 import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from "../public/assets/js/utilities.js";
-import astronaut, { callAstronaut, pauseAstronaut, removeScene} from "../public/assets/js/astronaut.js";
+import astronaut, { callAstronaut, pauseAstronaut, removeScene, checkActions} from "../public/assets/js/astronaut.js";
 import { gsap, Sine } from "gsap";
 
 export const ExtendMenuContext = createContext();
@@ -81,6 +81,8 @@ const HomeLayout = () => {
     mode.current._mobileMode = innerWidth <= 800 ? true : false;
     mode.current._widerMode = innerWidth >= 1400 ? true : false;
 
+    homeGsapSet( clickRef.current.menuExtended, mode.current.mobileMode !== mode.current._mobileMode )
+
     if (mode.current.mobileMode !== mode.current._mobileMode) {
       mode.current.mobileMode = !mode.current.mobileMode;
       mobile;
@@ -90,6 +92,7 @@ const HomeLayout = () => {
       wider;
     }
   },[])
+  
 
   useEffect(() => {
     mode.current.mobileMode = innerWidth <= 800 ? true : false;
@@ -105,6 +108,21 @@ const HomeLayout = () => {
     homeGsapSet(clickRef.current.menuExtended, true);
     updateSvgFrameValues();
   }, []);
+
+
+  useEffect(() => {
+    window.addEventListener("load", function (event) {
+      console.log("working?");
+      setTimeout(() => {
+        let actions = checkActions();
+        console.log('actions',actions);
+        if(!actions) lighterVersion.current = true;
+        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
+        document.getElementById("loaderContainer").style.display = "none";
+      }, 600);
+    });
+  }, []);
+
 
   const updateSvgFrameValues = useCallback(() => {
     console.log("updateSvgFrameValues is calling");
@@ -160,8 +178,6 @@ const HomeLayout = () => {
     let updateResize = () => {
 
 
-      homeGsapSet( clickRef.current.menuExtended, mode.current.mobileMode !== mode.current._mobileMode );
-
       if (clickRef.current.menuExtended) {
         console.log("resize is working");
         remainExtendingMenu();
@@ -170,7 +186,10 @@ const HomeLayout = () => {
           height: clickRef.current.biggerElem.clientHeight,
         });
       }
-      changeMode(updateSvgFrameValues(),updateSvgFrameValues());
+      changeMode(
+        updateSvgFrameValues(),
+        updateSvgFrameValues()
+       );
       
     };
     window.addEventListener("resize", updateResize);
@@ -381,162 +400,166 @@ const HomeLayout = () => {
 
   // useEffect(()=>{setClickAfterContext('skill');},[])
 
-  const extendMenu = useCallback(
-    (elem, order = 0, textRef, contentRef, neonRefs) => {
-      console.log("elem", elem);
-      const elemParentId = elem.parentElement.id;
+  const extendMenu = useCallback((elem, order = 0, textRef = null, contentRef = null, neonRefs = null) => {
 
       if (clickRef.current.onAnim === true) {
         return;
       } else {
-        if (clickRef.current.menuExtended === false) {
-          clickRef.current.onAnim = true;
-          setClickContext({ on: true, bigger: elemParentId, biggered: null });
-          clickRef.current.menuExtended = true;
-          clickRef.current.biggerElemParentId = elemParentId;
-          clickRef.current.biggerElem = elem;
-          (clickRef.current.biggerElemRect = document.getElementById(
-            elemParentId + "SvgFrame"
-          )),
-            (clickRef.current.wavyPath = [
-              document.getElementById(elemParentId + "SvgWavy1"),
-              document.getElementById(elemParentId + "SvgWavy2"),
-            ]);
-          clickRef.current.textRef = textRef;
-          clickRef.current.contentRef = contentRef;
-          clickRef.current.biggerNeonRefs = neonRefs;
+        if(elem ==='logo'&& !clickRef.current.menuExtended){
+          console.log('fails')
+          return;
+        }else{
+          const elemParentId = elem === 'logo' ? clickRef.current.biggerElemParentId : elem.parentElement.id;
 
-          demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-          let extendingSize = getValuesToUnSymetryEachMenu(
-            demoVideoHeight,
-            elem,
-            order
-          );
-
-          function checkCallingAstronaut() {
-            if (!lighterVersion.current) callAstronaut(elemParentId);
-          }
-
-          Promise.all([
-            homeGsapTransition(clickRef.current.menuExtended),
-            logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: (((innerWidth * (100 - TV.unSymetryDemoMenu)) / 100) * TV.logoWidth) / 100 }),
-            clickRef.current.biggerElemRect.setAttributeNS( null, "stroke", "url(#SvgIvory)"),
-            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-            checkCallingAstronaut(),
-          ])
-            .then(() => {
-              createWavyAnimation(extendingSize["svgFramePackage"]);
-              textRef.style.display = "none";
-              contentRef.style.display = "initial";
-              contentRef.style.zIndex = 3;
-              setClickAfterContext(elemParentId);
-            })
-            .then(() => {
-              clickRef.current.onAnim = false;
-            });
-        } else if (clickRef.current.biggerElemParentId !== elemParentId) {
-          console.log("else if");
-          const biggeredWavyPath = clickRef.current.wavyPath;
-          const biggeredText = clickRef.current.textRef;
-          const biggeredContentRef = clickRef.current.contentRef;
-          const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
-
-          clickRef.current.onAnim = true;
-          setClickContext({ on: true, bigger: elemParentId, biggered: clickRef.current.biggerElemParentId});
-          clickRef.current.biggeredElem = clickRef.current.biggerElem;
-          clickRef.current.biggeredElemParentId = clickRef.current.biggerElemParentId;
-          clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
-          clickRef.current.biggerElem = elem;
-          clickRef.current.biggerElemParentId = elemParentId;
-          clickRef.current.biggerElem = elem;
-          clickRef.current.biggerElemRect = document.getElementById( elemParentId + "SvgFrame" );
-          clickRef.current.wavyPath = [ document.getElementById(elemParentId + "SvgWavy1"), document.getElementById(elemParentId + "SvgWavy2")];
-          clickRef.current.textRef = textRef;
-          clickRef.current.contentRef = contentRef;
-          clickRef.current.biggerNeonRefs = neonRefs;
-
-          demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
-          let extendingSize = getValuesToUnSymetryEachMenu( demoVideoHeight, elem, order );
-
-          if (innerWidth > 800) wavyAnim.current.TL.pause(0);
-
-          function checkCallingAstronaut() {
-            if (!lighterVersion.current) callAstronaut( elemParentId, clickRef.current.biggeredElemParentId );
-          }
-
-          Promise.all([
-            biggeredWavyPath[0].setAttribute("d", ""),
-            biggeredWavyPath[1].setAttribute("d", ""),
-            clickRef.current.biggeredElemRect.setAttributeNS( null, "stroke", `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)` ),
-            clickRef.current.biggerElemRect.setAttributeNS( null, "stroke", "url(#SvgIvory)"),
-            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-            biggeredText.style.display = "initial",
-            biggeredContentRef.style.display = "none",
-            biggeredContentRef.style.zIndex = -1,
-            biggeredNeonRefs[0].style.visibility = "hidden",
-            biggeredNeonRefs[1].style.visibility = "hidden",
-            checkCallingAstronaut(),
-          ])
-            .then(() => {
-              createWavyAnimation(extendingSize["svgFramePackage"]);
-              textRef.style.display = "none";
-              contentRef.style.display = "initial";
-              contentRef.style.zIndex = 3;
+          if (!clickRef.current.menuExtended ) {
+            console.log('if')
+            clickRef.current.onAnim = true;
+            setClickContext({ on: true, bigger: elemParentId, biggered: null });
+            clickRef.current.menuExtended = true;
+            clickRef.current.biggerElemParentId = elemParentId;
+            clickRef.current.biggerElem = elem;
+            (clickRef.current.biggerElemRect = document.getElementById(
+              elemParentId + "SvgFrame"
+            )),
+              (clickRef.current.wavyPath = [
+                document.getElementById(elemParentId + "SvgWavy1"),
+                document.getElementById(elemParentId + "SvgWavy2"),
+              ]);
+            clickRef.current.textRef = textRef;
+            clickRef.current.contentRef = contentRef;
+            clickRef.current.biggerNeonRefs = neonRefs;
+  
+            demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
+            let extendingSize = getValuesToUnSymetryEachMenu(
+              demoVideoHeight,
+              elem,
+              order
+            );
+  
+            function checkCallingAstronaut() {
+              if (!lighterVersion.current) callAstronaut(elemParentId);
+            }
+  
+            Promise.all([
+              homeGsapTransition(clickRef.current.menuExtended),
+              logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: (((innerWidth * (100 - TV.unSymetryDemoMenu)) / 100) * TV.logoWidth) / 100 }),
+              clickRef.current.biggerElemRect.setAttributeNS( null, "stroke", "url(#SvgIvory)"),
+              transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+              checkCallingAstronaut(),
+            ])
+              .then(() => {
+                createWavyAnimation(extendingSize["svgFramePackage"]);
+                textRef.style.display = "none";
+                contentRef.style.display = "initial";
+                contentRef.style.zIndex = 3;
+                setClickAfterContext(elemParentId);
+              })
+              .then(() => {
+                clickRef.current.onAnim = false;
+              });
+          } else if (clickRef.current.biggerElemParentId !== elemParentId ) {
+            console.log("else if");
+            const biggeredWavyPath = clickRef.current.wavyPath;
+            const biggeredText = clickRef.current.textRef;
+            const biggeredContentRef = clickRef.current.contentRef;
+            const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+  
+            clickRef.current.onAnim = true;
+            setClickContext({ on: true, bigger: elemParentId, biggered: clickRef.current.biggerElemParentId});
+            clickRef.current.biggeredElem = clickRef.current.biggerElem;
+            clickRef.current.biggeredElemParentId = clickRef.current.biggerElemParentId;
+            clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
+            clickRef.current.biggerElem = elem;
+            clickRef.current.biggerElemParentId = elemParentId;
+            clickRef.current.biggerElem = elem;
+            clickRef.current.biggerElemRect = document.getElementById( elemParentId + "SvgFrame" );
+            clickRef.current.wavyPath = [ document.getElementById(elemParentId + "SvgWavy1"), document.getElementById(elemParentId + "SvgWavy2")];
+            clickRef.current.textRef = textRef;
+            clickRef.current.contentRef = contentRef;
+            clickRef.current.biggerNeonRefs = neonRefs;
+  
+            demoVideoHeight = getDemoVideoHeight(clickRef.current.menuExtended);
+            let extendingSize = getValuesToUnSymetryEachMenu( demoVideoHeight, elem, order );
+  
+            if (innerWidth > 800) wavyAnim.current.TL.pause(0);
+  
+            function checkCallingAstronaut() {
+              if (!lighterVersion.current) callAstronaut( elemParentId, clickRef.current.biggeredElemParentId );
+            }
+  
+            Promise.all([
+              biggeredWavyPath[0].setAttribute("d", ""),
+              biggeredWavyPath[1].setAttribute("d", ""),
+              clickRef.current.biggeredElemRect.setAttributeNS( null, "stroke", `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)` ),
+              clickRef.current.biggerElemRect.setAttributeNS( null, "stroke", "url(#SvgIvory)"),
+              transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+              biggeredText.style.display = "initial",
+              biggeredContentRef.style.display = "none",
+              biggeredContentRef.style.zIndex = -1,
+              biggeredNeonRefs[0].style.visibility = "hidden",
+              biggeredNeonRefs[1].style.visibility = "hidden",
+              checkCallingAstronaut(),
+            ])
+              .then(() => {
+                createWavyAnimation(extendingSize["svgFramePackage"]);
+                textRef.style.display = "none";
+                contentRef.style.display = "initial";
+                contentRef.style.zIndex = 3;
+                biggeredNeonRefs[0].style.visibility = "visible";
+                biggeredNeonRefs[1].style.visibility = "visible";
+                setClickAfterContext(elemParentId);
+              })
+              .then(() => {
+                clickRef.current.onAnim = false;
+              });
+          } else {
+            console.log("else");
+            const biggeredWavyPath = clickRef.current.wavyPath;
+            const biggeredText = clickRef.current.textRef;
+            const biggeredContentRef = clickRef.current.contentRef;
+            const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+  
+            clickRef.current.onAnim = true;
+            setClickContext({ on: false, bigger: null, biggered: null });
+            clickRef.current.biggeredElem = clickRef.current.biggerElem;
+            clickRef.current.biggeredElemParentId =  clickRef.current.biggerElemParentId;
+            clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
+            clickRef.current.biggerElem = null;
+            clickRef.current.menuExtended = false;
+  
+            let extendingSize = { LI: [ { elemId: "work", width: "50%", height: "50%" }, { elemId: "skill", width: "50%", height: "50%" }, { elemId: "paint", width: "50%", height: "50%" }, { elemId: "info", width: "50%", height: "50%" } ] };
+  
+            if (innerWidth > 800) wavyAnim.current.TL.pause(0);
+            function checkCallingAstronaut() {
+              if (!lighterVersion.current) pauseAstronaut();
+            }
+  
+            Promise.all([
+              homeGsapTransition(clickRef.current.menuExtended),
+              logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: (((innerWidth * (100 - TV.symetryDemoMenu)) / 100) * TV.logoWidth) / 100 }),
+              biggeredWavyPath[0].setAttribute("d", ""),
+              biggeredWavyPath[1].setAttribute("d", ""),
+              clickRef.current.biggeredElemRect.setAttributeNS( null, "stroke", `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
+              transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
+              biggeredText.style.display = "initial",
+              biggeredContentRef.style.display = "none",
+              biggeredContentRef.style.zIndex = -1,
+              biggeredNeonRefs[0].style.visibility = "hidden",
+              biggeredNeonRefs[1].style.visibility = "hidden",
+              checkCallingAstronaut(),
+              setClickAfterContext(null),
+            ]).then(() => {
               biggeredNeonRefs[0].style.visibility = "visible";
               biggeredNeonRefs[1].style.visibility = "visible";
-              setClickAfterContext(elemParentId);
-            })
-            .then(() => {
-              clickRef.current.onAnim = false;
+              clickRef.current = { onAnim: false, active: true, menuExtended: false, biggerElemParentId: null, biggerElem: null, biggerElemRect: null, biggerNeonRefs: [], biggeredElem: null, biggeredElemParentId: null, biggeredElemRect: null, wavyPath: [] };
             });
-        } else {
-          console.log("else");
-          const biggeredWavyPath = clickRef.current.wavyPath;
-          const biggeredText = clickRef.current.textRef;
-          const biggeredContentRef = clickRef.current.contentRef;
-          const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
-
-          clickRef.current.onAnim = true;
-          setClickContext({ on: false, bigger: null, biggered: null });
-          clickRef.current.biggeredElem = clickRef.current.biggerElem;
-          clickRef.current.biggeredElemParentId =  clickRef.current.biggerElemParentId;
-          clickRef.current.biggeredElemRect = clickRef.current.biggerElemRect;
-          clickRef.current.biggerElem = null;
-          clickRef.current.menuExtended = false;
-
-          let extendingSize = { LI: [ { elemId: "work", width: "50%", height: "50%" }, { elemId: "skill", width: "50%", height: "50%" }, { elemId: "paint", width: "50%", height: "50%" }, { elemId: "info", width: "50%", height: "50%" } ] };
-
-          if (innerWidth > 800) wavyAnim.current.TL.pause(0);
-          function checkCallingAstronaut() {
-            if (!lighterVersion.current) pauseAstronaut();
           }
-
-          Promise.all([
-            homeGsapTransition(clickRef.current.menuExtended),
-            logoDisplayDispatch({ demoClientHeight: demoRef.current.clientHeight, logoClientWidth: (((innerWidth * (100 - TV.symetryDemoMenu)) / 100) * TV.logoWidth) / 100 }),
-            biggeredWavyPath[0].setAttribute("d", ""),
-            biggeredWavyPath[1].setAttribute("d", ""),
-            clickRef.current.biggeredElemRect.setAttributeNS( null, "stroke", `url(#${clickRef.current.biggeredElemParentId}SvgFrameStopColor)`),
-            transformAllEachMenus(svgFrameValues, extendingSize, elemParentId),
-            biggeredText.style.display = "initial",
-            biggeredContentRef.style.display = "none",
-            biggeredContentRef.style.zIndex = -1,
-            biggeredNeonRefs[0].style.visibility = "hidden",
-            biggeredNeonRefs[1].style.visibility = "hidden",
-            checkCallingAstronaut(),
-            setClickAfterContext(null),
-          ]).then(() => {
-            neonRefs[0].style.visibility = "visible";
-            neonRefs[1].style.visibility = "visible";
-            clickRef.current = { onAnim: false, active: true, menuExtended: false, biggerElemParentId: null, biggerElem: null, biggerElemRect: null, biggerNeonRefs: [], biggeredElem: null, biggeredElemParentId: null, biggeredElemRect: null, wavyPath: [] };
-          });
         }
       }
     },
     [svgFrameValues]
   );
 
-  //=================loader=====================//
 
   const openLighterVersion = useCallback(() => {
     lighterVersion.current = true;
@@ -544,18 +567,6 @@ const HomeLayout = () => {
     document.getElementById("lighterVersion").innerHTML =
       "This is lighter version";
   }, []);
-
-  useEffect(() => {
-    window.addEventListener("load", function (event) {
-      console.log("working?");
-      setTimeout(() => {
-        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
-        document.getElementById("loaderContainer").style.display = "none";
-      }, 600);
-    });
-  }, []);
-
-  //=================loader=====================//
 
   return useMemo(() => {
     return (

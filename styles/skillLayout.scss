@@ -92,9 +92,9 @@
             fill:#000000;
             opacity: 0.6;
           }
-          .barHead2,.barTail2{
-            display: none;
-          }
+          // .barHead2,.barTail2{
+          //   display: none;
+          // }
           .percent{
             font-size: 1.5rem;
             fill: white;
@@ -192,9 +192,9 @@
         * --------------------------------------
         */
         .skillGraph {
-          .barHead2,.barTail2{
-          display: initial
-          };
+          // .barHead2,.barTail2{
+          // display: initial
+          // };
           .percent{     
             font-size: 1.3rem;
           }
