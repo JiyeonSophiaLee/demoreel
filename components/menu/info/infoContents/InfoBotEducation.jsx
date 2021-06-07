@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 function InfoBotEducation() {
-  console.log("---InfoBotEducation---");
+  // console.log("---InfoBotEducation---");
   return (
     <div id="education">
       <div className="heads">EDUCATION</div>

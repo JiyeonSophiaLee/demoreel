@@ -8,7 +8,7 @@ import { ExtendMenuContext, ClickContext, ClickAfterContext } from "../../HomeLa
 function SvgFramePack(props) {
   const extendMenuContext = useContext(ExtendMenuContext);
   const clickContext = useContext(ClickContext);
-  console.log("-------SvgFramePack----------");
+  // console.log("-------SvgFramePack----------");
 
   const svgFrameRef = useRef();
   const noen1Ref = useRef(null);
@@ -69,7 +69,6 @@ function SvgFramePack(props) {
 
   useEffect(() => {
     //this is for "click off event".
-    console.log("clickContext", clickContext);
     if (clickContext.biggered === props.vals.id) {
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`);
@@ -110,7 +109,7 @@ function SvgFramePack(props) {
 }
 
 function SvgFramePackRender(props) {
-  console.log("-------SvgFramePackRender----------");
+  // console.log("-------SvgFramePackRender----------");
   return (
     <>
       <div className="menuText" ref={props.vals.refs.textRef}>
@@ -135,7 +134,7 @@ function SvgFramePackRender(props) {
 function ContentRender(props) {
   
   const clickAfterContext = useContext(ClickAfterContext);
-  console.log("----------ContentRender----------------",props.vals, clickAfterContext);
+  // console.log("----------ContentRender----------------");
 
   return useMemo(() => {
     return <>{clickAfterContext === props.vals.id && props.vals.contents}</>;

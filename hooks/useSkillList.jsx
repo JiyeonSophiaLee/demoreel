@@ -13,8 +13,8 @@ const skillCondition = ()=>{
 
 
 
-function useSkillList(skill ,j, clickAfterContext){
-  console.log('-----------useSkillList---------------')
+function useSkillList(skill ,j){
+  // console.log('-----------useSkillList---------------')
   // const [skillHalfSize,setSkillHalfSize] = useState({ circle: 0, circleEnd: 0, barHeight: 0, pxCircle: 0, pxCircleEnd: 0, pxBarHeight: 0});
   const skillHalfSize = useRef({ circle: 0, circleEnd: 0, barHeight: 0, pxCircle: 0, pxCircleEnd: 0, pxBarHeight: 0});
   const mode = useRef({ mobileMode: null, _mobileMode: null, widerMode: null, _widerMode: null});
@@ -252,8 +252,6 @@ function useSkillList(skill ,j, clickAfterContext){
   },[])
 
   const callGraph = useCallback(()=>{
-    // console.log('skillHalfSize', skillHalfSize)
-    // if(clickAfterContext === "skill"){
  
 
       barRef.current.style.width = skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd;

@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 function SvgIvory() {
-  console.log("---SvgIvory---");
+  // console.log("---SvgIvory---");
   return (
     <>
       <linearGradient id="SvgIvory">

@@ -1,10 +1,10 @@
-import { useState, useEffect, createContext, useRef, useReducer, memo, useMemo, useContext} from "react";
+import { useEffect, useRef, useMemo, useContext} from "react";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
 
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
 
 function Demo(props) {
-  console.log("---DEMO---");
+  // console.log("---DEMO---");
   const demoRef = useRef(null);
   const logoRef = useRef(null);
   const demoVideoRef = useRef(null);
@@ -63,7 +63,7 @@ function Demo(props) {
 }
 
 function DemoRender(props) {
-  console.log("----------DemoRender-----------");
+  // console.log("----------DemoRender-----------");
 
   return (
     <section id="demo" ref={props.demoRef}>

@@ -4,7 +4,7 @@ import { FaArtstation } from "react-icons/fa";
 import { GoMarkGithub } from "react-icons/go";
 
 function InfoBotContact() {
-  console.log("---InfoBotContact---");
+  // console.log("---InfoBotContact---");
   return (
     <div id="contact">
       <div className="heads">WHERE TO FIND ME</div>

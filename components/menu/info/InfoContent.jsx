@@ -3,7 +3,7 @@ import InfoTop from "./InfoTop.jsx";
 import InfoBot from "./InfoBot.jsx";
 
 function InfoContent() {
-  console.log("---InfoContent---");
+  // console.log("---InfoContent---");
   return (
     <>
       <InfoTop />

@@ -1,5 +1,5 @@
 
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 
 function InfoTop() {

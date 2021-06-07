@@ -1,6 +1,4 @@
-import { useThree } from "@react-three/fiber";
 import Head from "next/head";
-import {useEffect} from "react";
 
 
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "";

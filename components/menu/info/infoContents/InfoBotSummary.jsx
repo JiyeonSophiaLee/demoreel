@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 function InfoBotSummary() {
-  console.log("---infoBotSummary---");
+  // console.log("---infoBotSummary---");
   return (
     <div id="summary">
       <div className="heads">WHO AM I</div>
