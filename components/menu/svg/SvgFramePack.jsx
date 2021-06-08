@@ -134,7 +134,7 @@ function SvgFramePackRender(props) {
 function ContentRender(props) {
   
   const clickAfterContext = useContext(ClickAfterContext);
-  // console.log("----------ContentRender----------------");
+  console.log("----------ContentRender----------------");
 
   return useMemo(() => {
     return <>{clickAfterContext === props.vals.id && props.vals.contents}</>;

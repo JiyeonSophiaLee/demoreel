@@ -577,6 +577,7 @@ const HomeLayout = () => {
               <ClickContext.Provider value={clickContext}>
                 <ClickAfterContext.Provider value={clickAfterContext}>
                   <HomeLayoutRender vals={{ refs: { demoRef, logoRef }, menuValues: menuValues.current, svgFrameValuesImmutable: svgFrameValuesImmutable.current, clickContext: clickContext}}/>
+                  <div id="openProject"></div>
                 </ClickAfterContext.Provider>
               </ClickContext.Provider>
             </MenuSizeContext.Provider>
