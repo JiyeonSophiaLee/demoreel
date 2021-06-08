@@ -5,6 +5,7 @@
  * 2.0 - AlinedImages
  * ----------------------------------------------------------------------------
  */
+  @import "./variableCss.module.scss";
 
   $closeDivSize : 70px;
   
@@ -23,11 +24,17 @@
     display: none;
     text-align: center;
     padding: 70px 10vw;
+    min-width: $masterMinWidth;
 
-    img{
+    .imgs{
       width:100%;
       max-width: 1600px;
+      margin: auto;
+      img{
+        width:100%;
+      }
     }
+    
     #closeDiv{
       position: fixed;
       top: 0;
@@ -40,7 +47,7 @@
 
       #closeDivBotton {
         // position: relative;
-        width: 60%;
+        width: 62%;
         height: 70%;
         display: inline-block;
         // overflow: hidden;

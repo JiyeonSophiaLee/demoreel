@@ -28,11 +28,16 @@ function useImageContent(useImageContent){
     
     console.log('e', e.target.className);
     const images = [...document.querySelectorAll("." + e.target.className)];
+    let artstation;
+    useImageContent.forEach((project)=>{
+      if(project.fileName === e.target.className) artstation = project.artstation;
+    })
     const openProject = document.getElementById('openProject');
     const closeDiv = document.createElement("div");
     const closeDivBotton = document.createElement("div");
     const closeDivBottonChild = document.createElement("div");
     const closeDivBottonBG = document.createElement("div");
+    
 
     closeDivBotton.appendChild(closeDivBottonChild);
     closeDivBotton.appendChild(closeDivBottonBG);
@@ -48,6 +53,7 @@ function useImageContent(useImageContent){
 
     const resize = ()=>{
       const closeDiv = document.getElementById('closeDiv');
+
 
       closeDiv.style.left = innerWidth/2 - closeDiv.clientWidth /2 + 'px';
       console.log('resizing is working',closeDiv.clientWidth);
@@ -66,19 +72,33 @@ function useImageContent(useImageContent){
 
 
     images.forEach((image)=>{
-      // const img = <img src={image.src} srcSet={image.srcset}/>
-      // return img;
       const img = document.createElement("img");
-      const textDiv = document.createElement("div");
-      const text = document.createTextNode("Hello World");
+      const div = document.createElement("div");
+      const a = document.createElement("a");
+      
+      // const textDiv = document.createElement("div");
+      // const text = document.createTextNode("Hello World");
       
       img.src = image.src;
       img.srcset = image.srcset;
-      openProject.appendChild(img);
 
-      textDiv.appendChild(text);
-      textDiv.classList.add('textDiv');
-      openProject.appendChild(textDiv);
+      div.classList.add('imgs');
+      // a.classList.add('imgs');
+
+      if(artstation === null){
+        div.appendChild(img);
+        openProject.appendChild(div);
+      }else{
+        a.appendChild(img);
+        a.href = artstation;
+        a.target = '_blank';
+        div.appendChild(a);
+        openProject.appendChild(div);
+      }
+
+      // textDiv.appendChild(text);
+      // textDiv.classList.add('textDiv');
+      // openProject.appendChild(textDiv);
     })
      
   }
