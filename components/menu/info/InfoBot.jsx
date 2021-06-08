@@ -5,7 +5,7 @@ import InfoBotEducation from "./infoContents/InfoBotEducation.jsx";
 import InfoBotContact from "./infoContents/InfoBotContact.jsx";
 
 function InfoBot() {
-  console.log("---InfoBot---");
+  // console.log("---InfoBot---");
   return (
     <div id="infoBot">
       <InfoBotSummary />

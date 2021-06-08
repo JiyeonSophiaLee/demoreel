@@ -5,7 +5,6 @@ import TV, {convertToPix} from './transitionValue.js'
 
 
 export function homeGsapSet(menuExtended,viewChanged){
-  console.log('viewChanged',viewChanged)
   if(viewChanged){
     if(innerWidth > 800){
       if(menuExtended){
@@ -69,7 +68,6 @@ export function getDemoVideoHeight(menuExpanded){
 export function addCSSmenutransition(biggerElemId, ...elems){
   elems.forEach((e)=>{
     if(biggerElemId !== e.id){
-      console.log('e.id',e.id)
       e.classList.add('menutransition');
       setTimeout(() => {
         e.classList.remove('menutransition');
@@ -200,7 +198,6 @@ function getPadding (elem){
 export function homeGsapTransition(menuExtended){
   if(innerWidth > 800){
     if(menuExtended){
-      console.log('homeGsapTransition')
       homeGsapTransitionToUnSymetry();
     }else{
       homeGsapTransitionToSymetry();

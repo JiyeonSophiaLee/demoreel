@@ -1,12 +1,9 @@
-import { useCallback, useEffect, useRef, useState, useContext, useMemo } from "react";
-import skillList, { colorOffset, RANDOM_COLOR, startRandomColor, hasTouchScreen } from "../../../public/assets/js/skills.js";
-import { ClickAfterContext } from "../../HomeLayout.jsx";
-import { gsap } from "gsap";
+import { memo } from "react";
+import skillList from "../../../public/assets/js/skills.js";
 import useSkillList from "../../../hooks/useSkillList.jsx";
 
 function SkillContent() {
-  console.log("--------SkillContent----------");
-  const clickAfterContext = useContext(ClickAfterContext);
+  // console.log("--------SkillContent----------");
   
 
   // return useMemo(() => {
@@ -15,8 +12,7 @@ function SkillContent() {
         {skillList.map((skill, j) => {
           return useSkillList(
             skill,
-            j,
-            clickAfterContext
+            j
           );
         })}
       </div>
@@ -25,4 +21,4 @@ function SkillContent() {
 }
 
 
-export default SkillContent;
+export default memo(SkillContent);

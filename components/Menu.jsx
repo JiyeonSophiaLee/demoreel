@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 import MenuComponent from "./menu/MenuComponent.jsx";
 import SvgIvory from "./menu/svg/SvgIvory.jsx";
@@ -9,14 +9,14 @@ import InfoContent from "./menu/info/InfoContent.jsx";
 
 
 function Menu(props) {
-  console.log("----------Menu-----------");
+  // console.log("----------Menu-----------");
   return useMemo(() => {
     return <MenuRender vals={props.vals}></MenuRender>;
   }, []);
 }
 
 function MenuRender(props) {
-  console.log("----------MenuRender----------");
+  // console.log("----------MenuRender----------");
   return (
     <section id="menu">
       <MenuComponent

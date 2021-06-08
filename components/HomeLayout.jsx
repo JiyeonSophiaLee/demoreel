@@ -38,7 +38,7 @@ const logoDisplayReducer = (state, action) => {
 };
 
 const HomeLayout = () => {
-  console.log("---HomeLayout---");
+  // console.log("---HomeLayout---");
   const [ work_setLI_size, work_setsvgFramePackSize, work_styleLI, work_styleSvgFramePack, work_changeHierarchySvgFramePack] = useMenuSize("work");
   const [ skill_setLI_size, skill_setsvgFramePackSize, skill_styleLI, skill_styleSvgFramePack, skill_changeHierarchySvgFramePack] = useMenuSize("skill");
   const [ paint_setLI_size, paint_setsvgFramePackSize, paint_styleLI, paint_styleSvgFramePack, paint_changeHierarchySvgFramePack] = useMenuSize("paint");
@@ -112,10 +112,8 @@ const HomeLayout = () => {
 
   useEffect(() => {
     window.addEventListener("load", function (event) {
-      console.log("working?");
       setTimeout(() => {
         let actions = checkActions();
-        console.log('actions',actions);
         if(!actions) lighterVersion.current = true;
         document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
         document.getElementById("loaderContainer").style.display = "none";
@@ -125,7 +123,6 @@ const HomeLayout = () => {
 
 
   const updateSvgFrameValues = useCallback(() => {
-    console.log("updateSvgFrameValues is calling");
     let _radius = innerWidth > 800 ? (innerWidth > 1400 ? 9 : 7) : 5;
     let _wavyPath = Math.abs(innerWidth - innerWidth) * 0.01 + 25;
     let _strokeWidth =
@@ -179,7 +176,6 @@ const HomeLayout = () => {
 
 
       if (clickRef.current.menuExtended) {
-        console.log("resize is working");
         remainExtendingMenu();
         createWavyAnimation({
           width: clickRef.current.biggerElem.clientWidth,
@@ -280,7 +276,7 @@ const HomeLayout = () => {
           extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
           if (!(f % NF)) {
-            console.log("=======finished=======");
+            // console.log("=======finished=======");
             // onAnim = false;
             if (clickRef.current.biggerElem !== null)
               eval(elemParentId + "_changeHierarchySvgFramePack")(
@@ -297,7 +293,6 @@ const HomeLayout = () => {
               );
 
             cancelAnimationFrame(extendingRequestAnimRef.current);
-            console.log("resolve?");
             resolve();
           }
         }
@@ -309,7 +304,7 @@ const HomeLayout = () => {
 
   const createWavyAnimation = useCallback(
     (extendingSize) => {
-      console.log("createWavyAnimation is working");
+      // console.log("createWavyAnimation is working");
       return new Promise((resolve, reject) => {
         if (window.innerWidth > 800) {
           let dataPoints, pointsTween1, pointsTween2;
@@ -406,13 +401,12 @@ const HomeLayout = () => {
         return;
       } else {
         if(elem ==='logo'&& !clickRef.current.menuExtended){
-          console.log('fails')
           return;
         }else{
           const elemParentId = elem === 'logo' ? clickRef.current.biggerElemParentId : elem.parentElement.id;
 
           if (!clickRef.current.menuExtended ) {
-            console.log('if')
+            // console.log('if')
             clickRef.current.onAnim = true;
             setClickContext({ on: true, bigger: elemParentId, biggered: null });
             clickRef.current.menuExtended = true;
@@ -458,7 +452,7 @@ const HomeLayout = () => {
                 clickRef.current.onAnim = false;
               });
           } else if (clickRef.current.biggerElemParentId !== elemParentId ) {
-            console.log("else if");
+            // console.log("else if");
             const biggeredWavyPath = clickRef.current.wavyPath;
             const biggeredText = clickRef.current.textRef;
             const biggeredContentRef = clickRef.current.contentRef;
@@ -513,7 +507,7 @@ const HomeLayout = () => {
                 clickRef.current.onAnim = false;
               });
           } else {
-            console.log("else");
+            // console.log("else");
             const biggeredWavyPath = clickRef.current.wavyPath;
             const biggeredText = clickRef.current.textRef;
             const biggeredContentRef = clickRef.current.contentRef;
@@ -583,6 +577,7 @@ const HomeLayout = () => {
               <ClickContext.Provider value={clickContext}>
                 <ClickAfterContext.Provider value={clickAfterContext}>
                   <HomeLayoutRender vals={{ refs: { demoRef, logoRef }, menuValues: menuValues.current, svgFrameValuesImmutable: svgFrameValuesImmutable.current, clickContext: clickContext}}/>
+                  <div id="openProject"></div>
                 </ClickAfterContext.Provider>
               </ClickContext.Provider>
             </MenuSizeContext.Provider>
@@ -594,7 +589,7 @@ const HomeLayout = () => {
 };
 
 function HomeLayoutRender(props) {
-  console.log("--------------HomeLayoutRender-----------------");
+  // console.log("--------------HomeLayoutRender-----------------");
   return (
     <>
       <Demo refs={props.vals.refs} />
