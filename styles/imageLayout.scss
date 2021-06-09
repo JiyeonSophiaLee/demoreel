@@ -8,6 +8,8 @@
   @import "./variableCss.module.scss";
 
   $closeDivSize : 70px;
+  $openProjectmaxWidth: 1600px;
+  $iconSize: 2vw;
   
   /**
    * 2.0 - AlinedImages
@@ -26,12 +28,63 @@
     padding: 70px 10vw;
     min-width: $masterMinWidth;
 
+    .title{
+      font-family: 'theboldfont';
+      font-size: 6vw;
+      letter-spacing:2px;
+      word-spacing: 10px;
+      // color: transparent;
+      // -webkit-text-stroke: 1px white;
+    }
+
     .imgs{
-      width:100%;
-      max-width: 1600px;
+      width:100%; 
+      max-width: $openProjectmaxWidth;
       margin: auto;
       img{
         width:100%;
+      }
+    }
+    .skillIcons{
+      width:100%;
+      display: flex;
+      > div{
+        display: flex;
+        position: relative;
+        border-radius: $iconSize * 9.5;
+        padding: 0.5%;
+        // margin: auto;
+        // text-align: center;
+
+        > div:first-child{
+          background: rgb(30,30,30);
+          width: $iconSize*2;
+          height: $iconSize*2;
+          // width: $iconSize*2 * 0.85;
+          // height: $iconSize*2 * 0.85;
+          // left: -$iconSize * 0.85;
+          // margin:10%;
+          margin: auto;
+          border-radius: 50%;
+          display: flex;
+          position: relative;
+          // display: inline;
+
+          // text-align: center;
+         
+          img{
+            width: 60%;
+            height: 60%;
+            margin: auto;
+          }
+        }
+        > div:last-child{
+          font-family: 'Text Me One', sans-serif;
+          font-weight: 300;
+          font-size: $iconSize*1.5;
+          margin: auto;
+          padding: 0 $iconSize*0.3;
+        }
       }
     }
     
@@ -127,6 +180,19 @@
       
 
 
+    }
+    
+    @media (max-width:600px){
+      .title{
+        font-size:30px;
+        letter-spacing: 0px;
+        word-spacing: 8px;
+      }
+    }
+    @media (min-width:2000px){
+      .title{
+        font-size:80px
+      }
     }
   }
   @keyframes animCloseButton {
@@ -227,6 +293,5 @@
     }
   }
   
-
 
 

@@ -1,42 +1,46 @@
-import { useRef, useState } from 'react'
-const prefix = process.env.NEXT_PUBLIC_PREFIX;
+// import { useRef, useState } from 'react'
+// const prefix = process.env.NEXT_PUBLIC_PREFIX;
+import skillList, {RANDOM_COLOR} from "../public/assets/js/skills.js";
+
+
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
+
 
 
 function useImageContent(useImageContent){
-  // const [openProject,setOpenProject] = useState(false);
-  // const alinedImagesRef = useRef()
-  // const openProjectRef = useRef()
 
   const onClick = (e)=>{
     e.stopPropagation()
-  
-    // const content = useImageContent.map((project)=>{
-    //   if(e.target.className === project.fileName){
-    //     console.log('project',project)
-    //     const _content = project.files.map((name)=>{
-    //       const _name = project.src + project.fileName + name;  
-    //       console.log('name',_name)
-    //       return getImg(_name, project.alt, project.fileName)
-    //     })
-    //     return _content;
-    //   }else{
-    //     return ;
-    //   }
-    // })
-    // // console.log('content', content)
-    // setOpenProjectImagesContext(content);
-    
-    console.log('e', e.target.className);
+
     const images = [...document.querySelectorAll("." + e.target.className)];
-    let artstation;
+    let artstation, alt;
+    let getSkills = [];
+    let skills= [];
+
     useImageContent.forEach((project)=>{
-      if(project.fileName === e.target.className) artstation = project.artstation;
+      if(project.fileName === e.target.className) {
+        artstation = project.artstation; 
+        alt = project.alt; 
+        getSkills = project.skills;
+      }
     })
+
+    skillList.forEach((skill)=>{
+      getSkills.forEach((getSkill)=>{
+        if(skill.name === getSkill){
+          skills.push(skill);
+        }
+      })
+    })
+
     const openProject = document.getElementById('openProject');
     const closeDiv = document.createElement("div");
     const closeDivBotton = document.createElement("div");
     const closeDivBottonChild = document.createElement("div");
     const closeDivBottonBG = document.createElement("div");
+    const titleDiv = document.createElement('div');
+    const title = document.createTextNode(alt);
+    const skillIcons = document.createElement('div');
     
 
     closeDivBotton.appendChild(closeDivBottonChild);
@@ -45,9 +49,16 @@ function useImageContent(useImageContent){
     openProject.appendChild(closeDiv);
 
 
+    titleDiv.appendChild(title);
+    openProject.appendChild(titleDiv);
+    openProject.appendChild(skillIcons);
+
+
     closeDiv.setAttribute('id','closeDiv');
     closeDivBotton.setAttribute('id','closeDivBotton');
     closeDivBottonBG.setAttribute('id','closeDivBottonBG');
+    titleDiv.setAttribute('class','title');
+    skillIcons.setAttribute('class','skillIcons');
 
 
 
@@ -76,14 +87,10 @@ function useImageContent(useImageContent){
       const div = document.createElement("div");
       const a = document.createElement("a");
       
-      // const textDiv = document.createElement("div");
-      // const text = document.createTextNode("Hello World");
-      
       img.src = image.src;
       img.srcset = image.srcset;
 
       div.classList.add('imgs');
-      // a.classList.add('imgs');
 
       if(artstation === null){
         div.appendChild(img);
@@ -95,12 +102,25 @@ function useImageContent(useImageContent){
         div.appendChild(a);
         openProject.appendChild(div);
       }
-
-      // textDiv.appendChild(text);
-      // textDiv.classList.add('textDiv');
-      // openProject.appendChild(textDiv);
     })
-     
+    skills.forEach((skill,i)=>{
+      const img = document.createElement("img");
+      const div = document.createElement("div");
+      const divRoot = document.createElement("div");
+      const textDiv = document.createElement("div");
+      const text = document.createTextNode(skill.name);
+
+      img.src = prefix + skill.path;
+      img.alt = skill.alt;
+
+      divRoot.style.background = RANDOM_COLOR[i%10];
+
+      div.appendChild(img);
+      divRoot.appendChild(div);
+      textDiv.appendChild(text);
+      divRoot.appendChild(textDiv);
+      skillIcons.appendChild(divRoot)
+    })
   }
   const getImg = (name, alt, fileName)=>{
     const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000");
