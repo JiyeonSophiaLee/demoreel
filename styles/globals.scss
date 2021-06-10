@@ -34,19 +34,20 @@ a {
 }
 
 // ------> this is move to "Head" component.
-@font-face{
-  font-family: 'GathaSans';
-  src: url($prefix+ "/assets/fonts/GathaSans.ttf");
-  font-display: swap;
-}
+// @font-face{
+//   font-family: 'GathaSans';
+//   src: url($prefix+ "/assets/fonts/GathaSans.ttf");
+//   font-display: swap;
+// }
 @font-face{
   font-family: 'theboldfont';
   src: url($prefix + "/assets/fonts/theboldfont.woff");
 }
 
-@import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap');
-
+// @import url('https://fonts.googleapis.com/css?family=Text+Me+One&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap");
 
 
 .menutransition{

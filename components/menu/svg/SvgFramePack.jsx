@@ -68,6 +68,7 @@ function SvgFramePack(props) {
   }, [clickContext]);
 
   useEffect(() => {
+    //this is for "click off event".
     if (clickContext.biggered === props.vals.id || !clickContext.on) {
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`);
