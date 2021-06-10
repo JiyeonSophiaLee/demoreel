@@ -68,8 +68,7 @@ function SvgFramePack(props) {
   }, [clickContext]);
 
   useEffect(() => {
-    //this is for "click off event".
-    if (clickContext.biggered === props.vals.id) {
+    if (clickContext.biggered === props.vals.id || !clickContext.on) {
       neonOnTL.current.reverse();
       noen1Ref.current.classList.remove(`${props.vals.id}Neon1`);
       noen2Ref.current.classList.remove(`${props.vals.id}Neon2`);
@@ -105,7 +104,7 @@ function SvgFramePack(props) {
         </div>
       </>
     );
-  }, [ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack ]);
+  }, [ props.vals.menuSizeContext[props.vals.id + "_styleSvgFramePack"].style_svgFramePack , clickContext]);
 }
 
 function SvgFramePackRender(props) {
@@ -134,7 +133,7 @@ function SvgFramePackRender(props) {
 function ContentRender(props) {
   
   const clickAfterContext = useContext(ClickAfterContext);
-  console.log("----------ContentRender----------------");
+  // console.log("----------ContentRender----------------");
 
   return useMemo(() => {
     return <>{clickAfterContext === props.vals.id && props.vals.contents}</>;

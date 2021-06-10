@@ -59,7 +59,7 @@ function Demo(props) {
       // <div></div>
       <DemoRender demoRef={demoRef} logoRef={logoRef} demoVideoRef={demoVideoRef} onClick={onClick} context={logoDisplayContext}></DemoRender>
     );
-  }, [ logoDisplayContext.logoDisplay.logo_heigher, logoDisplayContext.logoDisplay.logo_wider]);
+  }, [ logoDisplayContext.logoDisplay.logo_heigher, logoDisplayContext.logoDisplay.logo_wider, extendMenuContext]);
 }
 
 function DemoRender(props) {
