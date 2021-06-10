@@ -86,11 +86,12 @@ function SetProperty(name, path, percent, color, date, size){
 }
 const Maya              = new SetProperty('Maya'              ,'/assets/images/icons/Maya.png'             , 80, ['#92c6cc', '#106768'], 'from 2007', 500 );
 const Vray              = new SetProperty('Vray'              ,'/assets/images/icons/Vray.png'             , 82, ['#fba547', '#8fb6e2'], 'from 2014', 512 );
+const Blender           = new SetProperty('Blender'           ,'/assets/images/icons/Blender.png'          , 30, ['#f9b41a', '#000000'], 'from 2020', 526 );
 const Arnold            = new SetProperty('Arnold'            ,'/assets/images/icons/Arnold.png'           , 85, ['#8dc9d2', '#1f6571'], 'from 2017', 400 );
 const Zbrush            = new SetProperty('Zbrush'            ,'/assets/images/icons/Zbrush.png'           , 60, ['#464646', '#242424'], 'from 2015', 3737);
 const Houdini           = new SetProperty('Houdini'           ,'/assets/images/icons/Houdini.png'          , 15, ['#fece5f', '#f05023'], 'from 2018', 309 );
 const MarvelousDesigner = new SetProperty('Marvelous Designer','/assets/images/icons/MarvelousDesigner.png', 20, ['#ffea1e', '#0a0a0a'], 'from 2014', 256 );
-const SubstancePainter  = new SetProperty('Substance Painter' ,'/assets/images/icons/SubstancePainter.png' , 40, ['#e2212f', '#e2212f'], 'from 2015', 648 );
+const SubstancePainter  = new SetProperty('Substance Painter' ,'/assets/images/icons/SubstancePainter.png' , 60, ['#e2212f', '#e2212f'], 'from 2015', 648 );
 const SubstanceDesigner = new SetProperty('Substance Designer','/assets/images/icons/SubstanceDesigner.png', 30, ['#ef4c25', '#ef4c25'], 'from 2016', 648 );
 const Mari              = new SetProperty('Mari'              ,'/assets/images/icons/Mari.png'             , 70, ['#fcc021', '#000000'], 'from 2011', 500 );
 const Mudbox            = new SetProperty('Mudbox'            ,'/assets/images/icons/Mudbox.png'           , 90, ['#ea6741', '#791217'], 'from 2010', 256 );
@@ -102,11 +103,14 @@ const Nuke              = new SetProperty('Nuke'              ,'/assets/images/i
 const HTML              = new SetProperty('HTML'              ,'/assets/images/icons/HTML.png'             , 95, ['#d1382b', '#e93e30'], 'from 2019', 256 );
 const CSS3              = new SetProperty('CSS3'              ,'/assets/images/icons/CSS3.png'             , 80, ['#29a5d1', '#208db8'], 'from 2019', 526 );
 const Javascript        = new SetProperty('Javascript'        ,'/assets/images/icons/Javascript.png'       , 70, ['#efd93b', '#f5e695'], 'from 2019', 288 );
-const ThreeJS           = new SetProperty('ThreeJS'           ,'/assets/images/icons/ThreeJS.png'          , 75, ['#efd93b', '#f5e695'], 'from 2019', 1034);
+const React             = new SetProperty('React'             ,'/assets/images/icons/React.png'            , 85, ['#efd93b', '#f5e695'], 'from 2019', 288 );
+const GLTF              = new SetProperty('GLTF'              ,'/assets/images/icons/Gltf.png'             , 85, ['#efd93b', '#f5e695'], 'from 2021', 288 );
+const ThreeJS           = new SetProperty('ThreeJS'           ,'/assets/images/icons/ThreeJS.png'          , 75, ['#efd93b', '#f5e695'], 'from 2020', 1034);
 const GreenSock         = new SetProperty('Green Sock'        ,'/assets/images/icons/GreenSock.png'        , 75, ['#efd93b', '#f5e695'], 'from 2019', 1483);
 const Python            = new SetProperty('Python'            ,'/assets/images/icons/Python.png'           , 45, ['#3774a8', '#ffd647'], 'from 2019', 360 );
+const CorelPainter      = new SetProperty('Corel Painter'     ,'/assets/images/icons/CorelPainter.png'     , 70, ['#3774a8', '#ffd647'], 'from 2011', 360 );
 
-const skillList = [Maya,Vray,Arnold,Zbrush,Houdini,MarvelousDesigner,SubstancePainter,SubstanceDesigner,Mari,Mudbox,Photoshop,threeDCoat,RezomUV,AfterEffects,Nuke,HTML,CSS3,Javascript,ThreeJS,GreenSock,Python]
+const skillList = [Maya,Vray,Blender,Arnold,Zbrush,Houdini,MarvelousDesigner,SubstancePainter,SubstanceDesigner,Mari,Mudbox,Photoshop,threeDCoat,RezomUV,AfterEffects,Nuke,HTML,CSS3,Javascript,React,GLTF,ThreeJS,GreenSock,Python,CorelPainter]
 export default skillList;
 
 // const SkillsTLPath = '/assets/images/icons/';
