@@ -233,7 +233,7 @@ const HomeLayout = () => {
           addCSSmenutransition(elemParentId, ...childElems);
 
           menuValues.current.forEach((elem) => {
-            if (clickRef.current.biggerElemParentId !== elem.id) {
+            if (clickRef.current.biggerElemParentId !== elem.id || !clickRef.current.menuExtended) {
               const rect = document.getElementById(elem.id + "SvgFrame");
 
               eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues, { width: size, height: size });
