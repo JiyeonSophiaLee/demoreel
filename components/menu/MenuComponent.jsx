@@ -19,7 +19,7 @@ function MenuComponent(props) {
 }
 
 function MenuComponentRender(props) {
-  console.log("---------MenuComponentRender---------");
+  // console.log("---------MenuComponentRender---------");
 
   return (
     <li id={props.vals.id} style={props.vals.menuSizeContext[props.vals.id + "_styleLI"]}>
