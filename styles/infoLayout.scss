@@ -32,7 +32,11 @@
    * 2.1 Top Font
    * --------------------------------------
    */
-  
+   #info{
+
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+   }
     #infoTop{
       padding: 3%;
       #myPic{
@@ -71,11 +75,11 @@
           font-family: 'theboldfont';
           .nameText:nth-child(1){
             font-size: 6vw;
-            line-height: 6vw;
+            // line-height: 6vw;
           }
           .nameText:nth-child(2){
             font-size: 5vw;
-            line-height: 5vw;
+            // line-height: 5vw;
             color: transparent;
             -webkit-text-stroke: 1px white;
           }
@@ -102,22 +106,22 @@
         #infoTop #myPicInfo{
           .myName .nameText .nameText:nth-child(1){
             font-size: 3.2rem;
-            line-height: 3.2rem;
+            // line-height: 3.2rem;
           }
           .myName .nameText .nameText:nth-child(2){
             font-size: 3rem;
-            line-height: 3rem;
+            // line-height: 3rem;
           }
           .position{
             font-size: 1.3rem;
-            line-height: 1.3rem;
+            // line-height: 1.3rem;
           }
         }
       }
       @media (min-width:1400px){
         #infoTop #myPicInfo .myName .nameText .nameText:nth-child(2){
           font-size: 4.5vw;
-          line-height: 4.5vw;
+          // line-height: 4.5vw;
         }
       }
   
@@ -193,10 +197,11 @@
       > div{
         padding-bottom: 15%;
         .heads{
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 500;
           text-align: center;
           margin: 10%;
+          word-break: break-all;
           &::after{
             content: '';
             background: white;
@@ -208,8 +213,9 @@
           }
         }
         .bodies{
-          font-size: 1.5rem;
-          line-height: 1.5rem;
+          font-size: 1.3rem;
+          font-weight: 200;
+          // line-height: 2rem;
           align-self: center;
           width:fit-content;
           .icon{
@@ -222,7 +228,7 @@
           .school{
             .schoolText{
               font-size: 1.7rem;
-              line-height: 1.7rem;
+              // line-height: 1.7rem;
               font-weight: bold;
             }
             .countryText, .dateText{
@@ -268,12 +274,12 @@
       #infoBot{
         > div{     
           .heads{
-            font-size: 3.5rem;
-            line-height: 3.5rem;
+            font-size: 2.5rem;
+            // line-height: 3.5rem;
           }
           .bodies{
-            font-size: 1.7rem;
-            line-height: 1.7rem;
+            font-size: 1.5rem;
+            // line-height: 1.7rem;
             .icon{
               width:3rem;
               height:3rem;
@@ -285,7 +291,7 @@
             .school{
               .schoolText{
                 font-size: 2rem;
-                line-height: 2rem;
+                // line-height: 2rem;
               }
               .countryText, .dateText{
                 font-size: 1.3rem;
