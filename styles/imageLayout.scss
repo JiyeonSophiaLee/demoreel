@@ -7,9 +7,10 @@
  */
   @import "./variableCss.module.scss";
 
-  $closeDivSize : 70px;
+  $closeDivSize : 4.5rem;
   $openProjectmaxWidth: 1600px;
-  $iconSize: 2vw;
+  $iconSize: 1.1rem;
+  $iconSize600: 0.9rem;
   
   /**
    * 2.0 - AlinedImages
@@ -53,7 +54,7 @@
         position: relative;
         border-radius: $iconSize * 9.5;
         padding: 0.5%;
-        // margin: auto;
+        margin: 0.7% 0 0.7% 0.7%;
         // text-align: center;
 
         > div:first-child{
@@ -83,7 +84,7 @@
           font-weight: 300;
           font-size: $iconSize*1.5;
           margin: auto;
-          padding: 0 $iconSize*0.3;
+          padding: 0 $iconSize*0.5;
         }
       }
     }
@@ -181,20 +182,37 @@
 
 
     }
-    
+  } 
     @media (max-width:600px){
-      .title{
-        font-size:30px;
-        letter-spacing: 0px;
-        word-spacing: 8px;
+      #openProject{
+        .title{
+          font-size:2.5rem;
+          letter-spacing: 0 ;
+          word-spacing: 0.8rem;
+        }
+        .skillIcons{
+          > div{
+            border-radius: $iconSize600 * 9.5;
+            > div:first-child{
+              width: $iconSize600*2;
+              height: $iconSize600*2;
+            }
+            > div:last-child{
+              font-size: $iconSize600*1.5;
+              padding: 0 $iconSize600*0.5;
+            }
+          }
+        }
       }
     }
     @media (min-width:2000px){
-      .title{
-        font-size:80px
+      #openProject{
+        .title{
+          font-size:80px
+        }
       }
     }
-  }
+  
   @keyframes animCloseButton {
     0%{
       transform: rotate(0deg);

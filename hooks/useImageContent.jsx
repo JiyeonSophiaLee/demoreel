@@ -67,7 +67,7 @@ function useImageContent(useImageContent){
 
 
       closeDiv.style.left = innerWidth/2 - closeDiv.clientWidth /2 + 'px';
-      console.log('resizing is working',closeDiv.clientWidth);
+      // console.log('resizing is working',closeDiv.clientWidth);
     }
 
     closeDiv.addEventListener('click',()=>{

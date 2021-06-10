@@ -77,7 +77,7 @@ const HomeLayout = () => {
     logo_wider: "none",
   });
 
-  const changeMode= useCallback((mobile=null, wider=null)=>{
+  const changeMode= useCallback(()=>{
     mode.current._mobileMode = innerWidth <= 800 ? true : false;
     mode.current._widerMode = innerWidth >= 1400 ? true : false;
 
@@ -85,11 +85,11 @@ const HomeLayout = () => {
 
     if (mode.current.mobileMode !== mode.current._mobileMode) {
       mode.current.mobileMode = !mode.current.mobileMode;
-      mobile;
+      updateSvgFrameValues();
     }
     if (mode.current.widerMode !== mode.current._widerMode) {
       mode.current.widerMode = !mode.current.widerMode;
-      wider;
+      updateSvgFrameValues();
     }
   },[])
   
@@ -182,10 +182,7 @@ const HomeLayout = () => {
           height: clickRef.current.biggerElem.clientHeight,
         });
       }
-      changeMode(
-        updateSvgFrameValues(),
-        updateSvgFrameValues()
-       );
+      changeMode();
       
     };
     window.addEventListener("resize", updateResize);
@@ -204,8 +201,7 @@ const HomeLayout = () => {
 
   // -----   the reason I put svgFrameValue as an argument, not just using svgFrameValue as a Ref,
   // ----- is I don't want to rerender all this functions whenever svgFrameValues changes.
-  const transformAllEachMenus = useCallback(
-    (_svgFrameValues, extendingSize, elemParentId) => {
+  const transformAllEachMenus = useCallback( (_svgFrameValues, extendingSize, elemParentId) => {
       return new Promise((resolve, reject) => {
         const NF = TV["menuDuration"] * 60;
 
@@ -225,17 +221,19 @@ const HomeLayout = () => {
 
         if (clickRef.current.biggeredElemParentId !== null) {
           addCSSmenutransition(null, clickRef.current.biggeredElem);
+          // console.log('_svgFrameValues',_svgFrameValues)
           eval( clickRef.current.biggeredElemParentId + "_changeHierarchySvgFramePack" )(_svgFrameValues, { width: _svgFrameValues.svgFrameDefault.width, height: _svgFrameValues.svgFrameDefault.height });
         }
 
         if (innerWidth < 800) {
-          const size = clickRef.current.biggerElem !== null  ? TV.svgFrameDefaultSizeSmallerSize : _svgFrameValues["svgFrameDefault"];
+          const size = clickRef.current.biggerElem !== null  ? TV.svgFrameDefaultSizeSmallerSize : TV.svgFrameDefaultSize800;
           const childElems = allElems.current.map((e) => e.firstElementChild);
+          // console.log('size',size)
 
           addCSSmenutransition(elemParentId, ...childElems);
 
           menuValues.current.forEach((elem) => {
-            if (clickRef.current.biggerElemParentId !== elem.id) {
+            if (clickRef.current.biggerElemParentId !== elem.id || !clickRef.current.menuExtended) {
               const rect = document.getElementById(elem.id + "SvgFrame");
 
               eval(elem.id + "_changeHierarchySvgFramePack")(_svgFrameValues, { width: size, height: size });
@@ -393,7 +391,6 @@ const HomeLayout = () => {
     [svgFrameValues]
   );
 
-  // useEffect(()=>{setClickAfterContext('skill');},[])
 
   const extendMenu = useCallback((elem, order = 0, textRef = null, contentRef = null, neonRefs = null) => {
 
@@ -457,6 +454,7 @@ const HomeLayout = () => {
             const biggeredText = clickRef.current.textRef;
             const biggeredContentRef = clickRef.current.contentRef;
             const biggeredNeonRefs = clickRef.current.biggerNeonRefs;
+
   
             clickRef.current.onAnim = true;
             setClickContext({ on: true, bigger: elemParentId, biggered: clickRef.current.biggerElemParentId});
