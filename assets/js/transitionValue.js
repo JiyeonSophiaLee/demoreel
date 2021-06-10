@@ -47,7 +47,6 @@ export {
 
 
 export function convertToPix(unit){
-  console.log('unit,',unit)
   const rootFontSize = 16;
   const splitUnits = unit.match( /([\d\.]+)(.*)/);
   switch(splitUnits[2]){
