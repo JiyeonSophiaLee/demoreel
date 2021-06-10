@@ -90,19 +90,19 @@
   // font-family: 'Text Me One', sans-serif;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-weight: 300;
-  font-size: 2rem;
+  font-size: 3vw;
   color:white;
   position: relative;
   background: rgba(30,30,30,0.5);
 }
   @media (max-width:800px){
     #menu > li .svgFramePack{
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
   }
   @media (min-width:1400px){
     #menu > li .svgFramePack{
-      font-size: 1.8rem;
+      font-size: 2.5rem;
     }
   }
 
@@ -396,7 +396,7 @@
       background:rgba(30,30,30,0.8);
       color:white;
       display: none;
-      font-family: 'Darker Grotesque', sans-serif;
+      // font-family: 'Darker Grotesque', sans-serif;
 
       &::-webkit-scrollbar{
         width: $LiScrollbarWidth;

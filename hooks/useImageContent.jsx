@@ -12,8 +12,9 @@ function useImageContent(useImageContent){
   const onClick = (e)=>{
     e.stopPropagation()
 
+    //--------- get info for images ---------
     const images = [...document.querySelectorAll("." + e.target.className)];
-    let artstation, alt;
+    let artstation, alt, description;
     let getSkills = [];
     let skills= [];
 
@@ -21,6 +22,7 @@ function useImageContent(useImageContent){
       if(project.fileName === e.target.className) {
         artstation = project.artstation; 
         alt = project.alt; 
+        description = project.description; 
         getSkills = project.skills;
       }
     })
@@ -32,7 +34,16 @@ function useImageContent(useImageContent){
         }
       })
     })
+    
+  //--------- loading description ---------
+  const descriptionDiv = document.createElement('div');
+  // if(description !== null){
+    const descriptionText = document.createTextNode(description);
+    descriptionDiv.classList.add('descriptionText')
+    descriptionDiv.appendChild(descriptionText);
+  // }
 
+  //--------- close button and extra---------
     const openProject = document.getElementById('openProject');
     const closeDiv = document.createElement("div");
     const closeDivBotton = document.createElement("div");
@@ -52,6 +63,8 @@ function useImageContent(useImageContent){
     titleDiv.appendChild(title);
     openProject.appendChild(titleDiv);
     openProject.appendChild(skillIcons);
+    
+    description && openProject.appendChild(descriptionDiv);
 
 
     closeDiv.setAttribute('id','closeDiv');
@@ -81,7 +94,7 @@ function useImageContent(useImageContent){
     closeDiv.style.left = innerWidth/2 - closeDiv.clientWidth/2 + 'px';
 
 
-
+  //--------- loading image ---------
     images.forEach((image)=>{
       const img = document.createElement("img");
       const div = document.createElement("div");
@@ -103,6 +116,8 @@ function useImageContent(useImageContent){
         openProject.appendChild(div);
       }
     })
+
+  //--------- loading skill icons ---------
     skills.forEach((skill,i)=>{
       const img = document.createElement("img");
       const div = document.createElement("div");
@@ -112,6 +127,7 @@ function useImageContent(useImageContent){
 
       img.src = prefix + skill.path;
       img.alt = skill.alt;
+      console.log('skill',skill)
 
       divRoot.style.background = RANDOM_COLOR[i%10];
 
@@ -122,6 +138,9 @@ function useImageContent(useImageContent){
       skillIcons.appendChild(divRoot)
     })
   }
+
+  
+  
   const getImg = (name, alt, fileName)=>{
     const url = require("../public"+name+"?resize&sizes[]=300&sizes[]=600&sizes[]=1200sizes[]=2000");
     const img =  <img src={url.src} srcSet={url.srcSet} alt={alt} className={fileName}/>

@@ -11,6 +11,7 @@
   $openProjectmaxWidth: 1600px;
   $iconSize: 1.1rem;
   $iconSize600: 0.9rem;
+  $iconSize800: 1rem;
   
   /**
    * 2.0 - AlinedImages
@@ -49,12 +50,17 @@
     .skillIcons{
       width:100%;
       display: flex;
+      justify-content:center;
+      align-items: center;
+      flex-wrap: wrap;
       > div{
         display: flex;
         position: relative;
         border-radius: $iconSize * 9.5;
-        padding: 0.5%;
+        padding: $iconSize/5;
         margin: 0.7% 0 0.7% 0.7%;
+        justify-content:center;
+        align-items: center;
         // text-align: center;
 
         > div:first-child{
@@ -65,7 +71,7 @@
           // height: $iconSize*2 * 0.85;
           // left: -$iconSize * 0.85;
           // margin:10%;
-          margin: auto;
+          // margin: auto;
           border-radius: 50%;
           display: flex;
           position: relative;
@@ -80,7 +86,7 @@
           }
         }
         > div:last-child{
-          font-family: 'Text Me One', sans-serif;
+          font-family: 'Yanone Kaffeesatz', sans-serif;
           font-weight: 300;
           font-size: $iconSize*1.5;
           margin: auto;
@@ -182,36 +188,65 @@
 
 
     }
+    .descriptionText{
+      font-family: 'Jost', sans-serif;
+      // letter-spacing: 0.1rem;
+      // word-spacing: 0.15rem;
+      font-weight: 300;
+      font-size: 1.4rem;
+      padding: 3% 10%;
+    }
   } 
-    @media (max-width:600px){
-      #openProject{
-        .title{
-          font-size:2.5rem;
-          letter-spacing: 0 ;
-          word-spacing: 0.8rem;
+@media (max-width:600px){
+  #openProject{
+    .title{
+      font-size:2rem;
+      letter-spacing: 0 ;
+      word-spacing: 0.8rem;
+    }
+    .skillIcons{
+      > div{
+        border-radius: $iconSize600 * 9.5;
+        > div:first-child{
+          width: $iconSize600*2;
+          height: $iconSize600*2;
         }
-        .skillIcons{
-          > div{
-            border-radius: $iconSize600 * 9.5;
-            > div:first-child{
-              width: $iconSize600*2;
-              height: $iconSize600*2;
-            }
-            > div:last-child{
-              font-size: $iconSize600*1.5;
-              padding: 0 $iconSize600*0.5;
-            }
-          }
+        > div:last-child{
+          display: none;
+          // font-size: $iconSize600*1;
+          // padding: 0 $iconSize600*0.5;
         }
       }
     }
-    @media (min-width:2000px){
-      #openProject{
-        .title{
-          font-size:80px
+    .descriptionText{
+      font-size: 1.2rem;
+    }
+  }
+}
+@media (max-width:800px){
+  #openProject{
+    .skillIcons{
+      > div{
+        border-radius: $iconSize800 * 9.5;
+        > div:first-child{
+          width: $iconSize800*2;
+          height: $iconSize800*2;
+        }
+        > div:last-child{
+          font-size: $iconSize800*1.5;
+          padding: 0 $iconSize800*0.5;
         }
       }
     }
+  }
+}
+@media (min-width:2000px){
+  #openProject{
+    .title{
+      font-size:80px
+    }
+  }
+}
   
   @keyframes animCloseButton {
     0%{
