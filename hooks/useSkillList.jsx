@@ -442,7 +442,6 @@ function useSkillList(skill ,j){
         const svgLength = svgWidth - skillHalfSize.current.pxCircle*2 - skillHalfSize.current.pxCircleEnd*2;
         const barEndPosition = (svgLength * skill.percent / 100) + skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd ;
    
-        console.log('expandGraphTL.current',expandGraphTL.current)
         expandGraphTL.current
           .fromTo(skillColor1Ref.current,{
               stopColor: color1
