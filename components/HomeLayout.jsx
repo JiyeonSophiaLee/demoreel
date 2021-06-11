@@ -70,12 +70,17 @@ const HomeLayout = () => {
                              { id: "info", order: 4, stopColor: ["rgb(200, 86, 177)", "rgb(75, 173, 209)"], strokeColor: ["#ff6ee2", "#5cd3ff"]}]);
   const allElems = useRef();
 
-  let demoVideoHeight;
-
   const [logoDisplay, logoDisplayDispatch] = useReducer(logoDisplayReducer, {
     logo_heigher: "none",
     logo_wider: "none",
   });
+  const debounceTime = useRef();
+  let demoVideoHeight ;
+
+
+
+
+
 
   const changeMode= useCallback(()=>{
     mode.current._mobileMode = innerWidth <= 800 ? true : false;
@@ -174,13 +179,22 @@ const HomeLayout = () => {
   useEffect(() => {
     let updateResize = () => {
 
+      const debounce = (fn,delay)=>{
+        return function (...args){
+          clearTimeout(debounceTime.current);
+          debounceTime.current = setTimeout(() => {
+            fn(...args);
+          }, delay);
+        }
+      }
+      
 
       if (clickRef.current.menuExtended) {
         remainExtendingMenu();
-        createWavyAnimation({
-          width: clickRef.current.biggerElem.clientWidth,
-          height: clickRef.current.biggerElem.clientHeight,
-        });
+        createWavyAnimation({ width: clickRef.current.biggerElem.clientWidth, height: clickRef.current.biggerElem.clientHeight });
+        debounce(()=>remainExtendingMenu(), 500)();
+        debounce(()=>createWavyAnimation({ width: clickRef.current.biggerElem.clientWidth, height: clickRef.current.biggerElem.clientHeight }), 500)();
+
       }
       changeMode();
       
@@ -247,48 +261,22 @@ const HomeLayout = () => {
         function anim() {
           f += dir;
           if (clickRef.current.biggerElem !== null) {
-            clickRef.current.biggerElemRect.setAttributeNS(
-              null,
-              "width",
-              clickRef.current.biggerElem.clientWidth
-            );
-            clickRef.current.biggerElemRect.setAttributeNS(
-              null,
-              "height",
-              clickRef.current.biggerElem.clientHeight
-            );
+            clickRef.current.biggerElemRect.setAttributeNS( null, "width", clickRef.current.biggerElem.clientWidth );
+            clickRef.current.biggerElemRect.setAttributeNS( null, "height", clickRef.current.biggerElem.clientHeight );
           }
 
           if (clickRef.current.biggeredElemParentId !== null) {
-            clickRef.current.biggeredElemRect.setAttributeNS(
-              null,
-              "width",
-              clickRef.current.biggeredElem.clientWidth
-            );
-            clickRef.current.biggeredElemRect.setAttributeNS(
-              null,
-              "width",
-              clickRef.current.biggeredElem.clientWidth
-            );
+            clickRef.current.biggeredElemRect.setAttributeNS( null, "width", clickRef.current.biggeredElem.clientWidth );
+            clickRef.current.biggeredElemRect.setAttributeNS( null, "width", clickRef.current.biggeredElem.clientWidth );
           }
           extendingRequestAnimRef.current = requestAnimationFrame(anim);
 
           if (!(f % NF)) {
-            // console.log("=======finished=======");
-            // onAnim = false;
             if (clickRef.current.biggerElem !== null)
-              eval(elemParentId + "_changeHierarchySvgFramePack")(
-                _svgFrameValues,
-                { width: "100%", height: "100%" }
-              );
+              eval(elemParentId + "_changeHierarchySvgFramePack")( _svgFrameValues, { width: "100%", height: "100%" } );
             else
-              eval(elemParentId + "_changeHierarchySvgFramePack")(
-                _svgFrameValues,
-                {
-                  width: _svgFrameValues["svgFrameDefault"],
-                  height: _svgFrameValues["svgFrameDefault"],
-                }
-              );
+              eval(elemParentId + "_changeHierarchySvgFramePack")( _svgFrameValues, { width: _svgFrameValues["svgFrameDefault"], height: _svgFrameValues["svgFrameDefault"], } );
+
 
             cancelAnimationFrame(extendingRequestAnimRef.current);
             resolve();
@@ -300,8 +288,7 @@ const HomeLayout = () => {
     []
   );
 
-  const createWavyAnimation = useCallback(
-    (extendingSize) => {
+  const createWavyAnimation = useCallback((extendingSize) => {
       // console.log("createWavyAnimation is working");
       return new Promise((resolve, reject) => {
         if (window.innerWidth > 800) {
