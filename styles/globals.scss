@@ -39,6 +39,10 @@ a {
 //   src: url($prefix+ "/assets/fonts/GathaSans.ttf");
 //   font-display: swap;
 // }
+
+#demo #demoSVG{
+  background: url($prefix +"/assets/images/logo/demoSVG_v08.svg") no-repeat center;
+}
 @font-face{
   font-family: 'theboldfont';
   src: url($prefix + "/assets/fonts/theboldfont.woff");
