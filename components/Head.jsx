@@ -1,23 +1,10 @@
 import Head from "next/head";
 
 
-const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
-
+const prefix = process.env.NEXT_PUBLIC_PREFIX_ || "";
 
 export default function _Head() {
-  // useEffect(()=>{
-  //   async function loadFonts() {
-  //     const GathaSans_font = new FontFace('GathaSans', `url(${prefix}/assets/fonts/GathaSans.ttf)`);
-  //     const theboldfont_font = new FontFace('theboldfont', `url(${prefix}/assets/fonts/theboldfont.woff)`);
 
-  //     await GathaSans_font.load();
-  //     await theboldfont_font.load();
-      
-  //     document.fonts.add(GathaSans_font);
-  //     document.fonts.add(theboldfont_font);
-  //   }
-  //   loadFonts();
-  // },[])
 
   return (
     <Head>
@@ -45,6 +32,7 @@ export default function _Head() {
         as="font"
         crossOrigin=""
       />
+      <link rel="shortcut icon" href={prefix+"/assets/images/favicon/favicon.png"}></link>
     </Head>
   );
 }
