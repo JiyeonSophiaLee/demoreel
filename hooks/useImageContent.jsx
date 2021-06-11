@@ -36,12 +36,11 @@ function useImageContent(useImageContent){
     })
     
   //--------- loading description ---------
-  const descriptionDiv = document.createElement('div');
-  // if(description !== null){
+    const descriptionDiv = document.createElement('div');
     const descriptionText = document.createTextNode(description);
     descriptionDiv.classList.add('descriptionText')
     descriptionDiv.appendChild(descriptionText);
-  // }
+
 
   //--------- close button and extra---------
     const openProject = document.getElementById('openProject');

@@ -1,5 +1,9 @@
-import { useEffect, useRef, useMemo, useContext} from "react";
+import { useEffect, useRef, useMemo, useContext, useCallback} from "react";
 import { ExtendMenuContext, LogoDisplayContext } from "./HomeLayout.jsx";
+import { HiOutlineMail } from "react-icons/hi";
+import { FaArtstation } from "react-icons/fa";
+import { GoMarkGithub } from "react-icons/go";
+import { GrLinkedin } from "react-icons/gr";
 
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
 
@@ -64,18 +68,27 @@ function Demo(props) {
 
 function DemoRender(props) {
   // console.log("----------DemoRender-----------");
-
+  const onClickIcon = useCallback((e)=>{
+    e.stopPropagation();
+    url && window.open(url);
+  },[])
   return (
     <section id="demo" ref={props.demoRef}>
-       <header id="logo" ref={props.logoRef} onClick={props.onClick}>
+      <header id="logo" ref={props.logoRef} onClick={props.onClick}>
          <img id="logo_heigher" src={prefix+"/assets/images/logo/logo_heigher.svg"} style={{ display: props.context.logoDisplay.logo_heigher }} />
          <img id="logo_wider" src={prefix+"/assets/images/logo/logo_wider.svg"} style={{ display: props.context.logoDisplay.logo_wider }}/>
-       </header>
-       <header id="demoVideo" ref={props.demoVideoRef}>
+      </header>
+      <header id="demoVideo" ref={props.demoVideoRef}>
          <iframe src="https://player.vimeo.com/video/553396949?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0&amp;muted=1" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen></iframe>
          <div id="demoVideoBgCSSAnim"></div>
        </header>
-       <div id="demoSVG" className="blurSVG"></div>
+      <header id="demoIcons">
+        <div> <HiOutlineMail className="icon" /> <a href="mailto:jiyeon.sophia.lee@gmail.com" title="email" onClick={onClickIcon}/> </div>
+        <div> <GrLinkedin className="icon" /> <a href="https://www.linkedin.com/in/jiyeon-lee-873397111/" title="_blank" onClick={onClickIcon}/> </div>
+        <div> <GoMarkGithub className="icon" /> <a href="https://github.com/JiyeonSophiaLee" target="_blank" onClick={onClickIcon}/></div>
+        <div> <FaArtstation className="icon" /> <a href="https://www.artstation.com/jiyeon_sophia" title="_blank" onClick={onClickIcon}/> </div>
+      </header>
+      <div id="demoSVG" className="blurSVG"></div>
      </section>
   );
 }
