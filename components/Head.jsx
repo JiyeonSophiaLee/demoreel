@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 
-const prefix = process.env.NEXT_PUBLIC_PREFIX_ || "";
+const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
 
 export default function _Head() {
 
@@ -20,18 +20,6 @@ export default function _Head() {
       />
       <meta name="auto" content="Sophia Jiyeon Lee" />
       <title>Sophia Jiyeon Personal Demo Website</title>
-      <link
-        rel="preload"
-        href="/assets/fonts/GathaSans.ttf"
-        as="font"
-        crossOrigin=""
-      />
-      <link
-        rel="preload"
-        href="/assets/fonts/theboldfont.woff"
-        as="font"
-        crossOrigin=""
-      />
       <link rel="shortcut icon" href={prefix+"/assets/images/favicon/favicon.png"}></link>
     </Head>
   );

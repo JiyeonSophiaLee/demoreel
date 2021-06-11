@@ -260,7 +260,8 @@
  */ 
   #demo #demoSVG{
     content: '';
-    background: url(/assets/images/logo/demoSVG_v08.svg) no-repeat center;
+    // background: url(/assets/images/logo/demoSVG_v08.svg) no-repeat center;
+    //this one went to globals.scss
     filter:blur(3px);
     position: absolute;
     width: 100%;

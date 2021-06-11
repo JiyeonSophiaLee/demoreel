@@ -126,7 +126,6 @@ function useImageContent(useImageContent){
 
       img.src = prefix + skill.path;
       img.alt = skill.alt;
-      console.log('skill',skill)
 
       divRoot.style.background = RANDOM_COLOR[i%10];
 
