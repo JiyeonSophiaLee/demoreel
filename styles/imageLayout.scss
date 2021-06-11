@@ -1,10 +1,26 @@
 /** If you have any questions, email me.
 /**
  * Table of Contents:
- * 1.0 - GroupedImages
- * 2.0 - AlinedImages
+ * 1.0 - Basic Structure
+ * 2.0 - Font
+ * 3.0 - Open Project
+ *   3.1 - Close Icon
+ *   3.2 - Images
+ *   3.3 - Skill Icons
+ * 4.0 - Alined Images
+ * 5.0 - Media Query
+ *   5.1 - Open Project
+ *   1.2 - Alined Images
+ * ----------------------------------------------------------------------------
+ */ 
+
+
+ 
+/**
+ * 1.0 Basic Structure
  * ----------------------------------------------------------------------------
  */
+ 
   @import "./variableCss.module.scss";
 
   $closeDivSize : 4.5rem;
@@ -12,242 +28,8 @@
   $iconSize: 1.1rem;
   $iconSize600: 0.9rem;
   $iconSize800: 1rem;
-  
-  /**
-   * 2.0 - AlinedImages
-   * ----------------------------------------------------------------------------
-   */
-  #openProject{
-    z-index: 4;
-    width: 100%;
-    height:100%;
-    background: rgba(30,30,30,0.85);
-    position: absolute;
-    top:0;
-    left:0;
-    display: none;
-    text-align: center;
-    padding: 70px 10vw;
-    min-width: $masterMinWidth;
-
-    .title{
-      font-family: 'theboldfont';
-      font-size: 6vw;
-      letter-spacing:2px;
-      word-spacing: 10px;
-      // color: transparent;
-      // -webkit-text-stroke: 1px white;
-    }
-
-    .imgs{
-      width:100%; 
-      max-width: $openProjectmaxWidth;
-      margin: auto;
-      img{
-        width:100%;
-      }
-    }
-    .skillIcons{
-      width:100%;
-      display: flex;
-      justify-content:center;
-      align-items: center;
-      flex-wrap: wrap;
-      > div{
-        display: flex;
-        position: relative;
-        border-radius: $iconSize * 9.5;
-        padding: $iconSize/5;
-        margin: 0.7% 0 0.7% 0.7%;
-        justify-content:center;
-        align-items: center;
-        // text-align: center;
-
-        > div:first-child{
-          background: rgb(30,30,30);
-          width: $iconSize*2;
-          height: $iconSize*2;
-          // width: $iconSize*2 * 0.85;
-          // height: $iconSize*2 * 0.85;
-          // left: -$iconSize * 0.85;
-          // margin:10%;
-          // margin: auto;
-          border-radius: 50%;
-          display: flex;
-          position: relative;
-          // display: inline;
-
-          // text-align: center;
-         
-          img{
-            width: 60%;
-            height: 60%;
-            margin: auto;
-          }
-        }
-        > div:last-child{
-          font-family: 'Yanone Kaffeesatz', sans-serif;
-          font-weight: 300;
-          font-size: $iconSize*1.5;
-          margin: auto;
-          padding: 0 $iconSize*0.5;
-        }
-      }
-    }
-    
-    #closeDiv{
-      position: fixed;
-      top: 0;
-      width: $closeDivSize;
-      height: $closeDivSize;
-      overflow: hidden;
-      display: flex;
-
-      // border-radius: 50%;
-
-      #closeDivBotton {
-        // position: relative;
-        width: 62%;
-        height: 70%;
-        display: inline-block;
-        // overflow: hidden;
-        cursor: pointer;
-        border-radius: 50%;
-        padding:3px;
-        margin: auto;
-        
-        animation: animCloseButton 3s ease-in-out infinite;
-
-        &:hover{
-          animation: bigger 0.1s ease-in-out forwards;
-        }
-        > div{
-          width:100%;
-          height: 100%;
-          background: rgb(30,30,30);
-          border-radius: 50%;
-        }
-        #closeDivBottonBG{
-          width:100%;
-          height: 100%;
-          background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
-          // background: blue;
-          border-radius: 50%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          animation: rotate 1.5s linear infinite;
-  
-        }
-        #closeDivBottonBG::before{
-          content: "";
-          width:100%;
-          height: 100%;
-          background: inherit;
-          border-radius: 50%;
-          filter: blur(5px);
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -2;
-        }
-      }
-      #closeDivBotton::before, #closeDivBotton::after {
-        content: "";
-        position: absolute;
-        height: 5px;
-        // width: 100%;
-        // // width: 100%;
-        // top: 50%;
-        // left: 0;
-        margin-top: -1px;
-        background: ivory;
-        border-radius: 5px;
-        top: calc(50% - 1px);
-        width:60%;
-        left: 20%;
-      }
-      #closeDivBotton::before {
-        content: "";
-        -webkit-transform: rotate(45deg);
-        -moz-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        -o-transform: rotate(45deg);
-        transform: rotate(45deg);
-      }
-      #closeDivBotton::after {
-        content: "";
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
-        -o-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-      }
-      
 
 
-    }
-    .descriptionText{
-      font-family: 'Jost', sans-serif;
-      // letter-spacing: 0.1rem;
-      // word-spacing: 0.15rem;
-      font-weight: 300;
-      font-size: 1.4rem;
-      padding: 3% 10%;
-    }
-  } 
-@media (max-width:600px){
-  #openProject{
-    .title{
-      font-size:2rem;
-      letter-spacing: 0 ;
-      word-spacing: 0.8rem;
-    }
-    .skillIcons{
-      > div{
-        border-radius: $iconSize600 * 9.5;
-        > div:first-child{
-          width: $iconSize600*2;
-          height: $iconSize600*2;
-        }
-        > div:last-child{
-          display: none;
-          // font-size: $iconSize600*1;
-          // padding: 0 $iconSize600*0.5;
-        }
-      }
-    }
-    .descriptionText{
-      font-size: 1.2rem;
-    }
-  }
-}
-@media (max-width:800px){
-  #openProject{
-    .skillIcons{
-      > div{
-        border-radius: $iconSize800 * 9.5;
-        > div:first-child{
-          width: $iconSize800*2;
-          height: $iconSize800*2;
-        }
-        > div:last-child{
-          font-size: $iconSize800*1.5;
-          padding: 0 $iconSize800*0.5;
-        }
-      }
-    }
-  }
-}
-@media (min-width:2000px){
-  #openProject{
-    .title{
-      font-size:80px
-    }
-  }
-}
-  
   @keyframes animCloseButton {
     0%{
       transform: rotate(0deg);
@@ -290,44 +72,337 @@
       transform: scale(1.1);
     }
   }
-  .alinedImages{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    padding: 0.5vw;
-    grid-gap: 0.3vw;
-    background: rgba(10, 10, 10, 0.7);
-    
 
-    
-    .mainContent{
-      max-width:100%;
-      grid-row: span 2;
-      grid-column: span 2;
+
+/**
+ * 2.0 Font
+ * ----------------------------------------------------------------------------
+ */
+
+#openProject{
+    .title{
+      font-family: 'theboldfont';
+      font-size: 6vw;
+      letter-spacing:2px;
+      word-spacing: 10px;
+      padding: 2%;
     }
-    .subContent{
-      max-width:100%;
+    .skillIcons{
+      > div{
+        > div:last-child{
+          font-family: 'Yanone Kaffeesatz', sans-serif;
+          font-weight: 300;
+          font-size: $iconSize*1.5;
+          margin: auto;
+          padding: 0 $iconSize*0.5;
+        }
+      }
     }
+    .descriptionText{
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 1.4rem;
+      padding: 2vw 10vw;
+    }
+}
+
+@media (max-width:600px){
+  #openProject{
+    .title{
+      font-size:2rem;
+      letter-spacing: 0 ;
+      word-spacing: 0.8rem;
+    }
+    .descriptionText{
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (min-width:2000px){
+  #openProject{
+    .title{
+      font-size: 5rem;
+    }
+  }
+}
   
-    .content{
-      box-sizing: initial;
-      border-radius: 0.7rem;
+
+/**
+  * 3.0 - Open Project
+  * ----------------------------------------------------------------------------
+  */
+
+#openProject{
+  z-index: 4;
+  width: 100%;
+  height:100%;
+  background: rgba(30,30,30,0.85);
+  position: absolute;
+  top:0;
+  left:0;
+  display: none;
+  text-align: center;
+  padding: 70px 10vw;
+  min-width: $masterMinWidth;
+
+    /**
+      * 3.1 - Close Icon
+      * ----------------------------------------------------------------------------
+      */
+    #closeDiv{
+      position: fixed;
+      top: 0;
+      width: $closeDivSize;
+      height: $closeDivSize;
+      overflow: hidden;
+      display: flex;
+
+      #closeDivBotton {
+        width: 62%;
+        height: 70%;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 50%;
+        padding:3px;
+        margin: auto;
+        animation: animCloseButton 3s ease-in-out infinite;
+
+        &:hover{
+          animation: bigger 0.1s ease-in-out forwards;
+        }
+        > div{
+          width:100%;
+          height: 100%;
+          background: rgb(30,30,30);
+          border-radius: 50%;
+        }
+        #closeDivBottonBG{
+          width:100%;
+          height: 100%;
+          background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
+          border-radius: 50%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          animation: rotate 1.5s linear infinite;
+
+        }
+        #closeDivBottonBG::before{
+          content: "";
+          width:100%;
+          height: 100%;
+          background: inherit;
+          border-radius: 50%;
+          filter: blur(5px);
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -2;
+        }
+      }
+      #closeDivBotton::before, #closeDivBotton::after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        margin-top: -1px;
+        background: ivory;
+        border-radius: 5px;
+        top: calc(50% - 1px);
+        width:60%;
+        left: 20%;
+      }
+      #closeDivBotton::before {
+        content: "";
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      #closeDivBotton::after {
+        content: "";
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+      }
+      
     }
-    img,iframe{
+
+    /**
+      * 3.2 - Images
+      * ----------------------------------------------------------------------------
+      */
+    .imgs{
+      width:100%; 
+      max-width: $openProjectmaxWidth;
+      margin: auto;
+      img{
+        width:100%;
+      }
+
+
+
+    /**
+      * 3.3 - Skill Icons
+      * ----------------------------------------------------------------------------
+      */
+    }
+    .skillIcons{
+      width:100%;
+      display: flex;
+      justify-content:center;
+      align-items: center;
+      flex-wrap: wrap;
+      > div{
+        display: flex;
+        position: relative;
+        margin: 0.7% 0 0.7% 0.7%;
+        justify-content:center;
+        align-items: center;
+        // text-align: center;
+
+        > div:first-child{
+          background: rgb(30,30,30);
+          border-radius: 50%;
+          display: flex;
+          position: relative;
+          
+          img{
+            width: 60%;
+            height: 60%;
+            margin: auto;
+          }
+        }
+        
+      }
+    }
+
+  } 
+
+/**
+  * 4.0 - Skill Icons
+  * ----------------------------------------------------------------------------
+  */
+
+.alinedImages{
+  display: grid;
+  padding: 0.5vw;
+  background: rgba(10, 10, 10, 0.7);
+  
+
+  
+  .mainContent{
+    max-width:100%;
+    grid-row: span 2;
+    grid-column: span 2;
+  }
+  .subContent{
+    max-width:100%;
+  }
+
+  .content{
+    box-sizing: initial;
+  }
+  img,iframe{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  > .videos{
+    position: relative;
+    /* border-radius: 20px; */ 
+    /* object-fit: cover; */
+    padding: 28.125% 0; 
+    iframe{
+      position: absolute;
+      top:0;
+      left:0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
     }
-    > .videos{
-      position: relative;
-      /* border-radius: 20px; */ 
-      /* object-fit: cover; */
-      padding: 28.125% 0; 
-      iframe{
-        position: absolute;
-        top:0;
-        left:0;
-        width: 100%;
-        height: 100%;
+  }
+
+}
+
+
+
+/**
+  * 5.0 - Media Query
+  * ----------------------------------------------------------------------------
+  */
+
+    /**
+    * 5.1 - Open Project
+    * ----------------------------------------------------------------------------
+    */
+
+    #openProject{
+      .skillIcons{
+        > div{
+          border-radius: $iconSize * 9.5;
+          padding: $iconSize/5;
+          > div:first-child{
+            width: $iconSize*2;
+            height: $iconSize*2;
+          }
+          > div:last-child{
+            display: initial;
+            font-size: $iconSize*1.5;
+            padding: 0 $iconSize*0.5;
+          }
+        }
+      }
+    }
+    @media (max-width:600px){
+      #openProject{
+        .skillIcons{
+          > div{
+            border-radius: $iconSize600 * 9.5;
+            > div:first-child{
+              width: $iconSize600*2;
+              height: $iconSize600*2;
+            }
+            > div:last-child{
+              display: none;
+              font-size: $iconSize600*1.5;
+              padding: 0 $iconSize600*0.5;
+            }
+          }
+        }
+      }
+    }
+    @media (max-width:800px){
+      #openProject{
+        .skillIcons{
+          > div{
+            border-radius: $iconSize800 * 9.5;
+            > div:first-child{
+              width: $iconSize800*2;
+              height: $iconSize800*2;
+            }
+            > div:last-child{
+              font-size: $iconSize800*1.5;
+              padding: 0 $iconSize800*0.5;
+            }
+          }
+        }
+      }
+    }
+
+    /**
+      * 5.2 - Alined Images
+      * ----------------------------------------------------------------------------
+      */
+
+    .alinedImages{
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      grid-gap: 0.3vw;
+      img,frame{
+        border-radius: 0.7rem;
       }
     }
     @media (max-width:800px){
@@ -344,7 +419,3 @@
         grid-gap: 0.3rem;
       }
     }
-  }
-  
-
-
