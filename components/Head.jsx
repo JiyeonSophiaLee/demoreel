@@ -20,7 +20,7 @@ export default function _Head() {
       />
       <meta name="auto" content="Sophia Jiyeon Lee" />
       <title>Sophia Jiyeon Personal Demo Website</title>
-      <link rel="shortcut icon" href={prefix+"/assets/images/favicon/favicon_dark.png"}></link>
+      <link rel="shortcut icon" href={prefix+"/assets/images/favicon/favicon.png"}></link>
     </Head>
   );
 }
