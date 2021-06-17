@@ -6,9 +6,9 @@ import TV, { convertToPix } from "../public/assets/js/transitionValue.js";
 
 
 const prefix = process.env.NEXT_PUBLIC_PREFIX || "";
-const skillCondition = ()=>{
-      return  'innerWidth>800 || touchScreen.current ';
-}
+// const skillCondition = ()=>{
+//   return  'innerWidth>800 || touchScreen.current ';
+// }
 
 
 
@@ -131,7 +131,7 @@ function useSkillList(skill ,j){
         barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.current.pxCircle);
         barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.current.pxCircleEnd);
 
-        if(eval(skillCondition())){
+        if(!touchScreen.current){
           barHead2Ref.current.style.display = 'none';
           barTail2Ref.current.style.display = 'none';
 
@@ -252,8 +252,6 @@ function useSkillList(skill ,j){
   },[])
 
   const callGraph = useCallback(()=>{
- 
-
       barRef.current.style.width = skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd;
       barRef.current.style.height = `calc(${skillHalfSize.current.barHeight}*2)`;
       barRef.current.setAttributeNS(null, 'x', skillHalfSize.current.pxCircle);
@@ -274,7 +272,7 @@ function useSkillList(skill ,j){
       percentRef.current.setAttributeNS(null,'transform',`matrix(1,0,0,1,${skillHalfSize.current.pxCircle*3},${skillHalfSize.current.pxCircle})`);
 
 
-      if(eval(skillCondition())){
+      if(!touchScreen.current){
         const svgLength = svgRef.current.clientWidth - skillHalfSize.current.pxCircle*2 - skillHalfSize.current.pxCircleEnd*2;
         const tailStartPosition = skillHalfSize.current.pxCircle*2 + skillHalfSize.current.pxCircleEnd;
         const barEndPosition = (svgLength * skill.percent / 100) + skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd ;
@@ -433,7 +431,7 @@ function useSkillList(skill ,j){
   },[])
 
   const onMouseEnter = useCallback((e)=>{
-    if(eval(skillCondition())){
+    if(!touchScreen.current){
     //   if(innerWidth>800){
 
         const svgWidth = svgRef.current.clientWidth;
@@ -558,7 +556,7 @@ function useSkillList(skill ,j){
     // }
   },[])
   const onMouseLeave = useCallback((e)=>{
-    if(eval(skillCondition())) expandGraphTL.current.reverse()
+    if(!touchScreen.current) expandGraphTL.current.reverse()
   },[])
 
 
