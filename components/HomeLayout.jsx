@@ -6,6 +6,7 @@ import useMenuSize from "../hooks/useMenuSize";
 import { homeGsapSet, getDemoVideoHeight, homeGsapTransition, getValuesToUnSymetryEachMenu, tweenCardinal, getDataPoints, random, addCSSmenutransition} from "../public/assets/js/utilities.js";
 import astronaut, { callAstronaut, pauseAstronaut, removeScene, checkActions} from "../public/assets/js/astronaut.js";
 import { gsap, Sine } from "gsap";
+import * as gtag from '../lib/gtag'
 
 export const ExtendMenuContext = createContext();
 export const LogoDisplayContext = createContext();
@@ -388,6 +389,13 @@ const HomeLayout = () => {
           return;
         }else{
           const elemParentId = elem === 'logo' ? clickRef.current.biggerElemParentId : elem.parentElement.id;
+
+          console.log('gtag',gtag,elemParentId)
+          gtag.event({ 
+            action: "click_menu", 
+            category: elemParentId,
+            label: elemParentId + " label",
+            value: elemParentId + " value" })
 
           if (!clickRef.current.menuExtended ) {
             // console.log('if')
