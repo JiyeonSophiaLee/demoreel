@@ -29,11 +29,9 @@ jobs:
     - run: npm run build
       env:
         NEXT_PUBLIC_PREFIX: '/demoreel'
-        NEXT_PUBLIC_PREFIX2: '/demoreel/public'
     - run: npm run export
       env:
         NEXT_PUBLIC_PREFIX: '/demoreel'
-        NEXT_PUBLIC_PREFIX2: '/demoreel/public'
     - run: touch ./out/.nojekyll
     
     - name: Deploy 🚀

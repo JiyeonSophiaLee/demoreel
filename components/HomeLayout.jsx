@@ -390,7 +390,6 @@ const HomeLayout = () => {
         }else{
           const elemParentId = elem === 'logo' ? clickRef.current.biggerElemParentId : elem.parentElement.id;
 
-          console.log('gtag',gtag,elemParentId)
           gtag.event({ 
             action: "click_menu", 
             category: elemParentId,
