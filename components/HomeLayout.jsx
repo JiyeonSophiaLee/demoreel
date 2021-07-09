@@ -101,6 +101,8 @@ const HomeLayout = () => {
   
 
   useEffect(() => {
+
+
     mode.current.mobileMode = innerWidth <= 800 ? true : false;
     mode.current.widerMode = innerWidth >= 1400 ? true : false;
     mode.current._mobileMode = mode.current.mobileMode;
@@ -117,14 +119,14 @@ const HomeLayout = () => {
 
 
   useEffect(() => {
-    window.addEventListener("load", function (event) {
-      setTimeout(() => {
-        let actions = checkActions();
-        if(!actions) lighterVersion.current = true;
-        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
-        document.getElementById("loaderContainer").style.display = "none";
-      }, 600);
-    });
+    // window.addEventListener("load", function (event) {
+    //   setTimeout(() => {
+    //     let actions = checkActions();
+    //     if(!actions) lighterVersion.current = true;
+    //     document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
+    //     document.getElementById("loaderContainer").style.display = "none";
+    //   }, 600);
+    // });
   }, []);
 
 
@@ -557,12 +559,12 @@ const HomeLayout = () => {
   return useMemo(() => {
     return (
       <div id="master" style={{color:"white"}}>
-        <div id="loaderContainer">
+        {/* <div id="loaderContainer">
           <div id="loaderAnim">Load&nbsp;&nbsp;ng</div>
           <div id="lighterVersion" onClick={openLighterVersion}>
             Click to the see a lighter version <br /> which removes heavy 3D components.
           </div>
-        </div>
+        </div> */}
         <ExtendMenuContext.Provider value={extendMenu}>
           <LogoDisplayContext.Provider value={{ logoDisplay, logoDisplayDispatch }} >
             <MenuSizeContext.Provider value={{ work_styleLI, skill_styleLI, paint_styleLI, info_styleLI, work_styleSvgFramePack, skill_styleSvgFramePack, paint_styleSvgFramePack, info_styleSvgFramePack}}>
@@ -587,7 +589,7 @@ function HomeLayoutRender(props) {
       <Demo refs={props.vals.refs} />
       <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} />
 
-      <div id="threeJSCover"></div>
+      {/* <div id="threeJSCover"></ div> */}
       <div id="threeJSCanvas"></div>
     </>
   );

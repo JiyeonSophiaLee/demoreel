@@ -3,3 +3,6 @@ you have to turn on and off
 
 You have to turn on and off google anaytics
     - in _app.js
+
+when you export and build
+    -npm run build && npm run export
