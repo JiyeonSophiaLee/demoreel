@@ -131,7 +131,7 @@ function useSkillList(skill ,j){
         barTail1Ref.current.setAttributeNS(null,'cy', skillHalfSize.current.pxCircle);
         barTail1Ref.current.setAttributeNS(null,'r', skillHalfSize.current.pxCircleEnd);
 
-        if(!touchScreen.current){
+        if(!touchScreen.current && innerWidth > 800){
           barHead2Ref.current.style.display = 'none';
           barTail2Ref.current.style.display = 'none';
 
@@ -272,7 +272,10 @@ function useSkillList(skill ,j){
       percentRef.current.setAttributeNS(null,'transform',`matrix(1,0,0,1,${skillHalfSize.current.pxCircle*3},${skillHalfSize.current.pxCircle})`);
 
 
-      if(!touchScreen.current){
+      console.log('touchScreen.current',touchScreen.current)
+      console.log('innerWidth < 800',innerWidth < 800)
+      if(!touchScreen.current && innerWidth > 800){
+        console.log('called')
         const svgLength = svgRef.current.clientWidth - skillHalfSize.current.pxCircle*2 - skillHalfSize.current.pxCircleEnd*2;
         const tailStartPosition = skillHalfSize.current.pxCircle*2 + skillHalfSize.current.pxCircleEnd;
         const barEndPosition = (svgLength * skill.percent / 100) + skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd ;
@@ -431,7 +434,7 @@ function useSkillList(skill ,j){
   },[])
 
   const onMouseEnter = useCallback((e)=>{
-    if(!touchScreen.current){
+    if(!touchScreen.current && innerWidth > 800){
     //   if(innerWidth>800){
 
         const svgWidth = svgRef.current.clientWidth;
@@ -556,7 +559,7 @@ function useSkillList(skill ,j){
     // }
   },[])
   const onMouseLeave = useCallback((e)=>{
-    if(!touchScreen.current) expandGraphTL.current.reverse()
+    if(!touchScreen.current && innerWidth > 800) expandGraphTL.current.reverse()
   },[])
 
 

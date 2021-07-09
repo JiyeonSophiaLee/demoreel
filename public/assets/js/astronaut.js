@@ -2,6 +2,7 @@ import TV from './transitionValue.js'
 import * as THREE from '../gltf/scripts/three.module.js';
 import {GLTFLoader} from '../gltf/scripts/GLTFLoader.js';
 import { createElement } from 'react';
+import { XRRay } from 'three';
 // import {GUI} from '../gltf/scripts/dat.gui.module.js';
 
 
@@ -18,39 +19,43 @@ const vec = new THREE.Vector3();
 const matchingActions = {work:'waveAction', skill:'walkAction', paint:'jumpAction', info: 'fallAction'};
 const cameraAnim = {
   work: {
-    position: {px: 4.79, py: 0, pz:2.32}, 
+    position: {px: 5.07, py: 0, pz:2.958}, 
     rotation:{rx:0.42, ry:1.48, rz:-0.56}, 
     aspectPosition:{
-      wider:{widerPx:0, widerPy:0, widerPz:0}, 
-      heigher:{heigherPx:0, heigherPy:0, heigherPz:0}}
+      wider:{widerPx:-0.924, widerPy:0.527, widerPz:1.066}, 
+      heigher:{heigherPx:-3.648, heigherPy:0, heigherPz:1.919}},
+    quaternion:new THREE.Quaternion(-0.03430356804291318, 0.6763339681475928, -0.06450864208842944, 0.7329626619720564) 
   },
   skill: {
-    position: {px: -1.9, py: 0.9, pz:5.5}, 
-    rotation:{rx:-0.17, ry:-0.59, rz:-0.033}, 
+    position: {px: -1.408, py: 0.634, pz:3.451}, 
+    rotation:{rx:-0.03, ry:-0.634, rz:0.016}, 
     aspectPosition:{
-      wider:{widerPx:1.617, widerPy:0.117, widerPz:1.163  }, 
-      heigher:{heigherPx:4.9, heigherPy:2.78, heigherPz:-6.38}}
+      wider:{widerPx:0.627, widerPy:0.14, widerPz:0 }, 
+      heigher:{heigherPx:2.924, heigherPy:0, heigherPz:-4.176}},
+    quaternion:new THREE.Quaternion(-0.016745064547591056, -0.31155838625785837, 0.01227589923402993, 0.9500001458229848) 
   },
   paint: {
-    position: {px: -1.7 , py: 1, pz:4.8}, 
-    rotation:{rx:-0.14, ry:-0.59, rz:-0.033}, 
+    position: {px: 1.408 , py: 4.225, pz: 4.648}, 
+    rotation:{rx:-0.563, ry:0.775, rz:0.211}, 
     aspectPosition:{
-      wider:{widerPx:0, widerPy:0, widerPz:0}, 
-      heigher:{heigherPx:0, heigherPy:0, heigherPz:0}}
+      wider:{widerPx:-1.626, widerPy:0.152, widerPz:0.903}, 
+      heigher:{heigherPx:-2.805, heigherPy:0, heigherPz:0}},
+    quaternion:new THREE.Quaternion(-0.21754441907307373, 0.38806776009190797, -0.010729566484482617, 0.89552371030055) 
   },
   info: {
-    position: {px: -1.7, py: 1, pz:4.8}, 
-    rotation:{rx:-0.17, ry:-0.59, rz:-0.033}, 
+    position: {px: -0.704, py: 4.085, pz:4.93}, 
+    rotation:{rx:-0.636, ry:-0.402, rz:-0.283}, 
     aspectPosition:{
-      wider:{widerPx:0, widerPy:0, widerPz:0}, 
-      heigher:{heigherPx:0, heigherPy:0, heigherPz:0}}
+      wider:{widerPx:1.211, widerPy:0, widerPz:0.568}, 
+      heigher:{heigherPx:-0.774, heigherPy:-1.859, heigherPz:0.466}},
+    quaternion:new THREE.Quaternion(-0.27656611768985595, -0.2309512827764813, -0.06946063850614559, 0.9302407791685854) 
   },
 }
   
-let camera, renderer, scene, dirLight, pointLight, sky0, sky1, sky2, sky3;
+let camera, renderer, scene, dirLight, pointLight, sky0, sky1, sky2, sky3, menuClicked, menuElemId;
 let size = {width:0, height:0}
 let skyTextures=[];
-let click=false;
+let click =false;
 
 var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAction ;
 
@@ -113,20 +118,18 @@ export default function astronaut(){
   size = {width: innerWidth * pixelRatio | 0, height:innerHeight * pixelRatio | 0}
   
   camera = new THREE.PerspectiveCamera( 75, size.width / size.height, 1,  30 );
-
-  
-  // camera.position.set(0,0,5);
-  getCameraPosition(cameraAnim.work);
+  camera.position.set(0,0,5);
+  // getCameraPosition(cameraAnim.work);
   // camera.lookAt(new THREE.Vector3(0, 1, 0));
 
-  window.camera = camera;
-  
-  customGui(camera.position,'x', -10, 10, camera.position.x, 'camera position x: ', '300px')
-  customGui(camera.position,'y', -10, 10, camera.position.y, 'camera position y: ', '300px')
-  customGui(camera.position,'z', -10, 10, camera.position.z, 'camera position z: ', '300px')
-  customGui(camera.rotation,'x', -10, 10, camera.rotation.x, 'camera rotation x: ', '300px')
-  customGui(camera.rotation,'y', -10, 10, camera.rotation.y, 'camera rotation y: ', '300px')
-  customGui(camera.rotation,'z', -10, 10, camera.rotation.z, 'camera rotation z: ', '300px')
+  // window.camera = camera;
+  // customGui(camera.position, 'x', '-20', '20', cameraAnim['paint'].position.px, 'camera position x: ' ,'300px')
+  // customGui(camera.position, 'y', '-20', '20', cameraAnim['paint'].position.py, 'camera position y: ' ,'300px')
+  // customGui(camera.position, 'z', '-20', '20', cameraAnim['paint'].position.pz, 'camera position z: ' ,'300px')
+  // customGui(camera.rotation, 'x', '-20', '20', cameraAnim['paint'].rotation.rx, 'camera rotation x: ' ,'300px')
+  // customGui(camera.rotation, 'y', '-20', '20', cameraAnim['paint'].rotation.ry, 'camera rotation y: ' ,'300px')
+  // customGui(camera.rotation, 'z', '-20', '20', cameraAnim['paint'].rotation.rz, 'camera rotation z: ' ,'300px')
+// console.log(camera.quaternion)
 
  
 
@@ -208,7 +211,7 @@ export default function astronaut(){
     animate();
   });
 
-  window.addEventListener('mousemove',getCurrentMouse, false);
+  // window.addEventListener('mousemove',getCurrentMouse, false);
   window.addEventListener( 'resize', onWindowResize, false );
 
   // guiCamera();
@@ -281,6 +284,7 @@ function guiCamera(){
 
 function onWindowResize() {
   const pixelRatio = Math.min(window.devicePixelRatio,2);
+  const {x,y,z} = getCameraPosition(cameraAnim[menuElemId]);
 
   
   size = {width: innerWidth * pixelRatio | 0, height:innerHeight * pixelRatio | 0}
@@ -288,38 +292,38 @@ function onWindowResize() {
   renderer.setSize(size.width, size.height);
 
   camera.aspect = size.width/size.height;
-  getCameraPosition(cameraAnim.work);
   camera.updateProjectionMatrix();
+
+  cameraSet.position = {x,y,z};
+  mouseX = x;
+  mouseY = y;
+  
 }
 
 function getCameraPosition(defaultValue){
   const {px,py,pz} = defaultValue.position;
-  const {rx,ry,rz} = defaultValue.rotation;
+  // const {rx,ry,rz} = defaultValue.rotation;
   const {widerPx,widerPy,widerPz} = defaultValue.aspectPosition.wider;
   const {heigherPx,heigherPy,heigherPz} = defaultValue.aspectPosition.heigher;
   const screenAspect = size.width / size.height - 1;
-
-
+  let x,y,z;
+  
 
   if( screenAspect > 0){
-    camera.position.set(
-      px + ( screenAspect * widerPx) , 
-      py + ( screenAspect * widerPy) ,
-      pz + ( screenAspect * widerPz) 
-    );
+    x = px + ( screenAspect * widerPx);
+    y = py + ( screenAspect * widerPy);
+    z = pz + ( screenAspect * widerPz);
+
   }else{
-    camera.position.set(
-      px + ( screenAspect * heigherPx) , 
-      py + ( screenAspect * heigherPy) ,
-      pz + ( screenAspect * heigherPz)
-    );
+    x + ( screenAspect * heigherPx); 
+    y + ( screenAspect * heigherPy);
+    z + ( screenAspect * heigherPz);
+    
   }
-  camera.rotation.set(
-    rx ,
-    ry ,
-    rz 
-  )
-  console.log('camera.position',camera.position)
+  camera.position.set(x , y ,z);
+  // camera.rotation.set(rx ,ry ,rz);
+
+  return {x,y,z}
 }
 
 
@@ -348,12 +352,16 @@ function animate(){
   let delta = clock.getDelta();
   mixer.update( delta );
 
-  // if(click){
-  //   camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
-  //   camera.quaternion.slerp( slerpRotation, 0.1 );
-  // }else {
-  //   // camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
-  // }
+  // console.log('click',click)
+  if(click){
+    // console.log('cameraSet.position.x',cameraSet.position.x)
+    camera.position.lerp(vec.set(cameraSet.position.x,cameraSet.position.y,cameraSet.position.z), 0.1);
+    camera.quaternion.slerp( slerpRotation, 0.1 );
+  }else {
+    if(menuClicked){
+      camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
+    }
+  }
   
   renderer.render( scene, camera);
 
@@ -365,7 +373,8 @@ function animate(){
 function onClick(){
   lerpingAni = requestAnimationFrame(onClick);
 
-  if(parseFloat(cameraSet.position.y.toFixed(2)) === parseFloat(camera.position.y.toFixed(2))){
+  if(parseFloat(cameraSet.position.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
+    
     mouseX = cameraSet.position.x;
     mouseY = cameraSet.position.y;
     click = false;
@@ -431,8 +440,7 @@ function setWeight( action, weight ) {
 
 export function callAstronaut(elemId,biggeredElemId=null){
   console.log('called')
-  click = true;
-  elemId = elemId;
+  menuElemId = elemId;
 
   if(biggeredElemId == null){
     // document.getElementById("threeJSCover").style.display = 'none';
@@ -459,14 +467,6 @@ export function callAstronaut(elemId,biggeredElemId=null){
       pointLight.position.set(1.3, 1.6, 2.6);
       pointLight.color = {r: 1, g: 0.2, b: 0.14};
 
-      // cameraSet.position.x = 5 + innerHeight/1400 ;
-      // cameraSet.position.y = 1.3;
-      // cameraSet.position.z = innerWidth/470 - 0.97
-
-      // slerpRotation = cameraAnim.work.quaternion;
-     
-
-  
   }else if (elemId == 'skill'){
 
       sky1.material.side = THREE.BackSide;
@@ -475,14 +475,6 @@ export function callAstronaut(elemId,biggeredElemId=null){
       dirLight.color = {r: 0.74, g: 0.14, b: 1};
       pointLight.position.set(0.5, 3.3, 2);
       pointLight.color = {r: 1, g: 0.22, b: 0.23};
-
-      // cameraSet.position.x = 0.05 + innerWidth/1000 - innerHeight/2400;
-      // cameraSet.position.y = 1.67 ;
-      // cameraSet.position.z = 3.27;
-
-      // slerpRotation = cameraAnim.skill.quaternion;
-      
-      
 
   }else if (elemId == 'paint') {
 
@@ -493,15 +485,6 @@ export function callAstronaut(elemId,biggeredElemId=null){
       pointLight.position.set(-2.6, 3.6, 4.45);
       pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
 
-      
-      // cameraSet.position.x = 2.11- innerWidth/860 + innerHeight/1000; 
-      // cameraSet.position.y = innerWidth/2100 + 3.4;
-      // cameraSet.position.z = innerWidth/400 + 1.4;
-
-
-      // slerpRotation = cameraAnim.paint.quaternion;
-
-
   }else{
 
       sky3.material.side = THREE.BackSide;
@@ -511,28 +494,33 @@ export function callAstronaut(elemId,biggeredElemId=null){
       pointLight.position.set(-3.9, 5.1, 6.2);
       pointLight.color = {r: 0.36, g: 0.82, b: 1};
 
-      // cameraSet.position.x = -2.5 + innerWidth/1225 - innerHeight/2000;
-      // cameraSet.position.y = 4.44 - innerWidth/2550;
-      // cameraSet.position.z = 4;
-
-
-      // slerpRotation = cameraAnim.info.quaternion;
-
   }
+  // customGui(camera.position, 'x', '-20', '20', cameraAnim[elemId].position.px, 'camera position x' ,'300px')
+  // customGui(camera.position, 'y', '-20', '20', cameraAnim[elemId].position.py, 'camera position y' ,'300px')
+  // customGui(camera.position, 'z', '-20', '20', cameraAnim[elemId].position.pz, 'camera position z' ,'300px')
+  // customGui(camera.rotation, 'x', '-20', '20', cameraAnim[elemId].position.rx, 'camera rotation x' ,'300px')
+  // customGui(camera.rotation, 'y', '-20', '20', cameraAnim[elemId].position.ry, 'camera rotation y' ,'300px')
+  // customGui(camera.rotation, 'z', '-20', '20', cameraAnim[elemId].position.rz, 'camera rotation z' ,'300px')
 
-  // cameraSet.position = {x: cameraAnim[elemId].position.px, y: cameraAnim[elemId].position.py, z: cameraAnim[elemId].position.pz} ;
-  // cameraSet.rotation = {x: cameraAnim[elemId].rotation.rx, y: cameraAnim[elemId].rotation.ry, z: cameraAnim[elemId].rotation.rz} ;
-  // const {x,y,z} = cameraSet.rotation;
+  cameraSet.position = {x: cameraAnim[elemId].position.px, y: cameraAnim[elemId].position.py, z: cameraAnim[elemId].position.pz} ;
+  cameraSet.rotation = {x: cameraAnim[elemId].rotation.rx, y: cameraAnim[elemId].rotation.ry, z: cameraAnim[elemId].rotation.rz} ;
+  const {x,y,z} = cameraSet.rotation;
   // slerpRotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(x,y,z, 'YXZ'));
+  // quaternion= new THREE.Quaternion();
+  // slerpRotation = quaternion.setFromAxisAngle( new THREE.Vector3( cameraSet.position.x, cameraSet.position.y, cameraSet.position.z ), Math.PI / 2);
   
   // slerpRotation = new THREE.Quaternion(-0.019951101172801276, 0.663749734595996, 0.017716275344874636, 0.7474786799458846);
-  // console.log(slerpRotation)
+  slerpRotation = cameraAnim[elemId].quaternion;
+  // console.log(x,y,z)
+  // console.log(cameraAnim[elemId].rotation)
   click=true;
+  menuClicked = true;
+  // window.camera =camera
   onClick();
-
 }
 
 export function pauseAstronaut(){
+  menuClicked = false;
 
   document.getElementById("threeJSCover").style.display = 'initial';
 
