@@ -33,18 +33,18 @@ const cameraAnim = {
       heigher:{heigherPx:2.312, heigherPy:-4.446, heigherPz:-6.420}}
   },
   paint: {
-    vector: {px: 1.408 , py: 4.225, pz: 4.648}, 
-    quaternion:{rx:-0.563, ry:0.775, rz:0.211}, 
+    vector: {px: 4.7587 , py: 4.1322, pz: 8.1648}, 
+    quaternion:{rx:-0.16256115424362622, ry:0.41343002640843424, rz:-0.023046249619345094, rw: 0.8956106044333019}, 
     aspectPosition:{
-      wider:{widerPx:0, widerPy:0, widerPz:0}, 
-      heigher:{heigherPx:-2.805, heigherPy:0, heigherPz:0}}
+      wider:{widerPx:-2.015, widerPy:0.1412, widerPz:2.8169}, 
+      heigher:{heigherPx:-10.991, heigherPy:-7.2113, heigherPz:-5.792}}
   },
   info: {
-    vector: {px: 0, py: 4.085, pz:4.93}, 
-    quaternion:{rx:-0.636, ry:-0.402, rz:-0.283}, 
+    vector: {px: -2.314, py: 6.338, pz:7.1074}, 
+    quaternion:{rx:-0.3071622504323486, ry:-0.23802664306761356, rz:-0.05892623608662928, rw: 0.9195229022704985}, 
     aspectPosition:{
-      wider:{widerPx:0, widerPy:0, widerPz:0}, 
-      heigher:{heigherPx:0, heigherPy:0, heigherPz:0}} 
+      wider:{widerPx:1.0304, widerPy:-0.796, widerPz:-0.5528}, 
+      heigher:{heigherPx:4.333, heigherPy:-10.7382, heigherPz:-9.6107}} 
   },
 }
   
@@ -57,6 +57,7 @@ var model, skeleton, mixer, actions, fallAction, jumpAction, walkAction, waveAct
 
 let mouseX = 0;
 let mouseY = 0;
+let mouseZ = 0;
 let callClientX = 0;
 let callClientY = 0;
 const mouseMultiplier = 0.001;
@@ -67,8 +68,8 @@ const mouseMultiplier = 0.001;
 const cameraChangeDuration = 60;
 let cameraMoveframe = 0;
 var requestAniThreeJS, cameraChangeAni = null;
-let cameraSet  = {position:{x:0,y:0,z:0}, rotation:{x:0,y:0,z:0}};
-let slerpRotation = {};
+let cameraSet  = {vector:{x:0,y:0,z:0}, quaternion:{x:0,y:0,z:0,w:0}};
+let slerpRotation, lerpPosition;
 let lerpingAni = false;
 let positionXdiff, positionYdiff, positionZdiff, rotationXdiff, rotationYdiff, rotationZdiff;
 
@@ -113,23 +114,23 @@ export default function astronaut(){
   const pixelRatio = Math.min(window.devicePixelRatio,2);
   size = {width: innerWidth * pixelRatio | 0, height:innerHeight * pixelRatio | 0}
   
-  camera = new THREE.PerspectiveCamera( 45, size.width / size.height, 1,  35 );
-  // getCameraPosition(cameraAnim.skill);
-  // camera.position.copy(cameraAnim.work.vector);
-  // camera.quaternion.copy(cameraAnim.work.quaternion);
+  camera = new THREE.PerspectiveCamera( 45, size.width / size.height, 1,  40 );
+  // getCameraPosition(cameraAnim.info);
+  // camera.position.copy(new THREE.Vector3(cameraAnim.work.vector));
+  // camera.quaternion.copy(new THREE.Quaternion(cameraAnim.work.quaternion));
   camera.position.set(0,0,5);
   camera.lookAt (new THREE.Vector3(0, 1, 0));
 
 
-    customGui(camera.position, 'x', '-20', '20', camera.position.x, 'camera position x: ' ,'300px')
-    customGui(camera.position, 'y', '-20', '20', camera.position.y, 'camera position y: ' ,'300px')
-    customGui(camera.position, 'z', '-20', '20', camera.position.z, 'camera position z: ' ,'300px')
-    customGui(camera.rotation, 'x', '-20', '20', camera.rotation.x, 'camera rotation x: ' ,'300px')
-    customGui(camera.rotation, 'y', '-20', '20', camera.rotation.y, 'camera rotation y: ' ,'300px')
-    customGui(camera.rotation, 'z', '-20', '20', camera.rotation.z, 'camera rotation z: ' ,'300px')
+    // customGui(camera.position, 'x', '-20', '20', camera.position.x, 'camera position x: ' ,'300px')
+    // customGui(camera.position, 'y', '-20', '20', camera.position.y, 'camera position y: ' ,'300px')
+    // customGui(camera.position, 'z', '-20', '20', camera.position.z, 'camera position z: ' ,'300px')
+    // customGui(camera.rotation, 'x', '-20', '20', camera.rotation.x, 'camera rotation x: ' ,'300px')
+    // customGui(camera.rotation, 'y', '-20', '20', camera.rotation.y, 'camera rotation y: ' ,'300px')
+    // customGui(camera.rotation, 'z', '-20', '20', camera.rotation.z, 'camera rotation z: ' ,'300px')
 
 
-  window.camera = camera
+  // window.camera = camera
 // console.log(camera)
 
  
@@ -148,10 +149,10 @@ export default function astronaut(){
     
 
   pointLight = new THREE.PointLight('rgb(220,51,35)', 1 ,20);
-  pointLight.intensity = 1;
+  pointLight.intensity = 0;
   pointLight.position.set(-1,3,2,4);
   dirLight = new THREE.DirectionalLight('rgb(43,174,212)', 1,20);
-  dirLight.intensity = 1;
+  dirLight.intensity = 0;
   dirLight.position.set(1.5,4,-2);
   dirLight.target.position.x = -3;
   dirLight.castShadow = true;
@@ -205,14 +206,14 @@ export default function astronaut(){
     mixer = new THREE.AnimationMixer( model );
     fallAction = mixer.clipAction( gltf.animations[ 0 ] ).stop();
     jumpAction = mixer.clipAction( gltf.animations[ 1 ] ).stop();
-    walkAction = mixer.clipAction( gltf.animations[ 2 ] ).play();
+    walkAction = mixer.clipAction( gltf.animations[ 2 ] ).stop();
     waveAction = mixer.clipAction( gltf.animations[ 3 ] ).stop();
     actions = {'waveAction':waveAction, 'walkAction':walkAction, 'fallAction':fallAction, 'jumpAction':jumpAction };
     
     animate();
   });
 
-  // window.addEventListener('mousemove',getCurrentMouse, false);
+  window.addEventListener('mousemove',getCurrentMouse, false);
   window.addEventListener( 'resize', onWindowResize, false );
 
   // guiCamera();
@@ -278,34 +279,33 @@ function customGui(object, axis, min, max, value, name, width){
 // }
 
 function getCameraPosition(defaultValue){
-  const {px,py,pz} = defaultValue.vector;
+  let {px,py,pz} = defaultValue.vector;
   const {rx,ry,rz,rw} = defaultValue.quaternion;
   const {widerPx,widerPy,widerPz} = defaultValue.aspectPosition.wider;
   const {heigherPx,heigherPy,heigherPz} = defaultValue.aspectPosition.heigher;
   const screenAspect = size.width / size.height - 1;
-  let x,y,z;
+  // let x,y,z;
 
   if( screenAspect > 0){
-    x = px + ( screenAspect * widerPx);
-    y = py + ( screenAspect * widerPy);
-    z = pz + ( screenAspect * widerPz);
+    px = px + ( screenAspect * widerPx);
+    py = py + ( screenAspect * widerPy);
+    pz = pz + ( screenAspect * widerPz);
 
   }else{
-    x = px + ( screenAspect * heigherPx); 
-    y = py + ( screenAspect * heigherPy);
-    z = pz + ( screenAspect * heigherPz);
-
+    px = px + ( screenAspect * heigherPx); 
+    py = py + ( screenAspect * heigherPy);
+    pz = pz + ( screenAspect * heigherPz);
   }
-  camera.position.copy(new THREE.Vector3(x, y, z));
-  camera.quaternion.copy(new THREE.Quaternion(rx, ry, rz, rw));
-
-  return {x,y,z}
+  // camera.position.copy(new THREE.Vector3(px, py, pz));
+  // camera.quaternion.copy(new THREE.Quaternion(rx, ry, rz, rw));
+  
+  return {px,py,pz,rx,ry,rz,rw};
 }
 
 
 function onWindowResize() {
   const pixelRatio = Math.min(window.devicePixelRatio,2);
-  const vector = getCameraPosition(cameraAnim['skill']);
+  const {px,py,pz} = getCameraPosition(cameraAnim[menuElemId]);
 
   
   size = {width: innerWidth * pixelRatio | 0, height:innerHeight * pixelRatio | 0}
@@ -315,9 +315,10 @@ function onWindowResize() {
   camera.aspect = size.width/size.height;
   camera.updateProjectionMatrix();
 
-  // cameraSet.position = {x,y,z};
-  // mouseX = x;
-  // mouseY = y;
+  cameraSet.vector = {x:px,y:py,z:pz};
+  mouseX = px;
+  mouseY = py;
+  mouseZ = pz;
   
 }
 
@@ -334,8 +335,8 @@ function getCurrentMouse(e){
       lastMove = Date.now();
     }
 
-    mouseX = cameraSet.position.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
-    mouseY = cameraSet.position.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
+    mouseX = cameraSet.vector.x + (( e.clientX - window.innerWidth / 2 ) * mouseMultiplier);
+    mouseY = cameraSet.vector.y + (( window.innerHeight /2 - e.clientY ) * mouseMultiplier);
     
   }
 }
@@ -348,14 +349,12 @@ function animate(){
   let delta = clock.getDelta();
   mixer.update( delta );
 
-  // console.log('click',click)
   if(click){
-    // console.log('cameraSet.position.x',cameraSet.position.x)
-    camera.position.lerp(cameraAnim[menuElemId].vector, 0.1);
-    camera.quaternion.slerp( slerpRotation, 0.1 );
+    camera.position.lerp( lerpPosition, 0.1);
+    camera.quaternion.slerp( slerpRotation , 0.1 );
   }else {
     if(menuClicked){
-      camera.position.lerp(vec.set( mouseX , mouseY, camera.position.z), 0.1)
+      camera.position.lerp(vec.set( mouseX , mouseY, mouseZ), 0.1)
     }
   }
   
@@ -369,10 +368,11 @@ function animate(){
 function onClick(){
   lerpingAni = requestAnimationFrame(onClick);
 
-  if(parseFloat(cameraSet.position.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
+  if(parseFloat(cameraSet.vector.x.toFixed(2)) === parseFloat(camera.position.x.toFixed(2))){
     
-    mouseX = cameraSet.position.x;
-    mouseY = cameraSet.position.y;
+    mouseX = cameraSet.vector.x;
+    mouseY = cameraSet.vector.y;
+    mouseZ = cameraSet.vector.z;
     click = false;
     cancelAnimationFrame(lerpingAni);
   }
@@ -435,84 +435,76 @@ function setWeight( action, weight ) {
 
 
 export function callAstronaut(elemId,biggeredElemId=null){
-  // console.log('called')
-  // menuElemId = elemId;
+  console.log('called')
+  menuElemId = elemId;
 
-  // if(biggeredElemId == null){
-  //   // document.getElementById("threeJSCover").style.display = 'none';
-  //   dirLight.intensity = 1;
-  //   pointLight.intensity = 1;
-  // }else{
-  //   executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
-  // }
-  // actions[matchingActions[elemId]].play();
-
-
-  //   sky0.material.side = THREE.FrontSide;
-  //   sky1.material.side = THREE.FrontSide;
-  //   sky2.material.side = THREE.FrontSide;
-  //   sky3.material.side = THREE.FrontSide;
+  if(biggeredElemId == null){
+    document.getElementById("threeJSCover").style.display = 'none';
+    dirLight.intensity = 1;
+    pointLight.intensity = 1;
+  }else{
+    executeCrossFade(actions[matchingActions[biggeredElemId]],actions[matchingActions[elemId]],1.0);
+  }
+  actions[matchingActions[elemId]].play();
 
 
-  // if(elemId == 'work'){
+    sky0.material.side = THREE.FrontSide;
+    sky1.material.side = THREE.FrontSide;
+    sky2.material.side = THREE.FrontSide;
+    sky3.material.side = THREE.FrontSide;
 
-  //     sky0.material.side = THREE.BackSide;
 
-  //     dirLight.position.set(0.4, 6, -2.7);
-  //     dirLight.color = {r: 0.8, g: 0.45, b: 0.17};
-  //     pointLight.position.set(1.3, 1.6, 2.6);
-  //     pointLight.color = {r: 1, g: 0.2, b: 0.14};
+  if(elemId == 'work'){
 
-  // }else if (elemId == 'skill'){
+      sky0.material.side = THREE.BackSide;
 
-  //     sky1.material.side = THREE.BackSide;
+      dirLight.position.set(0.4, 6, -2.7);
+      dirLight.color = {r: 0.8, g: 0.45, b: 0.17};
+      pointLight.position.set(1.3, 1.6, 2.6);
+      pointLight.color = {r: 1, g: 0.2, b: 0.14};
 
-  //     dirLight.position.set(1.3, 4, -2);
-  //     dirLight.color = {r: 0.74, g: 0.14, b: 1};
-  //     pointLight.position.set(0.5, 3.3, 2);
-  //     pointLight.color = {r: 1, g: 0.22, b: 0.23};
+  }else if (elemId == 'skill'){
 
-  // }else if (elemId == 'paint') {
+      sky1.material.side = THREE.BackSide;
 
-  //     sky2.material.side = THREE.BackSide;
+      dirLight.position.set(1.3, 4, -2);
+      dirLight.color = {r: 0.74, g: 0.14, b: 1};
+      pointLight.position.set(0.5, 3.3, 2);
+      pointLight.color = {r: 1, g: 0.22, b: 0.23};
 
-  //     dirLight.position.set(5.55, 7.77, -6.3);
-  //     dirLight.color = {r: 1, g: 0.66, b: 0.2};
-  //     pointLight.position.set(-2.6, 3.6, 4.45);
-  //     pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
+  }else if (elemId == 'paint') {
 
-  // }else{
+      sky2.material.side = THREE.BackSide;
 
-  //     sky3.material.side = THREE.BackSide;
+      dirLight.position.set(5.55, 7.77, -6.3);
+      dirLight.color = {r: 1, g: 0.66, b: 0.2};
+      pointLight.position.set(-2.6, 3.6, 4.45);
+      pointLight.color = {r: 0.18, g: 0.67, b: 0.6};
 
-  //     dirLight.position.set(4.45, 5.46, 2.7);
-  //     dirLight.color = {r: 1, g: 0.28, b: 0.83};
-  //     pointLight.position.set(-3.9, 5.1, 6.2);
-  //     pointLight.color = {r: 0.36, g: 0.82, b: 1};
+  }else{
 
-  // }
-  // // // customGui(camera.position, 'x', '-20', '20', cameraAnim[elemId].position.px, 'camera position x' ,'300px')
-  // // // customGui(camera.position, 'y', '-20', '20', cameraAnim[elemId].position.py, 'camera position y' ,'300px')
-  // // // customGui(camera.position, 'z', '-20', '20', cameraAnim[elemId].position.pz, 'camera position z' ,'300px')
-  // // // customGui(camera.rotation, 'x', '-20', '20', cameraAnim[elemId].position.rx, 'camera rotation x' ,'300px')
-  // // // customGui(camera.rotation, 'y', '-20', '20', cameraAnim[elemId].position.ry, 'camera rotation y' ,'300px')
-  // // // customGui(camera.rotation, 'z', '-20', '20', cameraAnim[elemId].position.rz, 'camera rotation z' ,'300px')
+      sky3.material.side = THREE.BackSide;
 
-  // // cameraSet.position = {x: cameraAnim[elemId].position.px, y: cameraAnim[elemId].position.py, z: cameraAnim[elemId].position.pz} ;
-  // // cameraSet.rotation = {x: cameraAnim[elemId].rotation.rx, y: cameraAnim[elemId].rotation.ry, z: cameraAnim[elemId].rotation.rz} ;
-  // // const {x,y,z} = cameraSet.rotation;
-  // // // slerpRotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(x,y,z, 'YXZ'));
-  // // // quaternion= new THREE.Quaternion();
-  // // // slerpRotation = quaternion.setFromAxisAngle( new THREE.Vector3( cameraSet.position.x, cameraSet.position.y, cameraSet.position.z ), Math.PI / 2);
+      dirLight.position.set(4.45, 5.46, 2.7);
+      dirLight.color = {r: 1, g: 0.28, b: 0.83};
+      pointLight.position.set(-3.9, 5.1, 6.2);
+      pointLight.color = {r: 0.36, g: 0.82, b: 1};
+
+  }
   
-  // // // slerpRotation = new THREE.Quaternion(-0.019951101172801276, 0.663749734595996, 0.017716275344874636, 0.7474786799458846);
-  // // slerpRotation = cameraAnim[elemId].quaternion;
-  // // // console.log(x,y,z)
-  // // // console.log(cameraAnim[elemId].rotation)
-  // // click=true;
-  // // menuClicked = true;
-  // // // window.camera =camera
-  // // onClick();
+
+
+
+  const {px,py,pz,rx,ry,rz,rw} = getCameraPosition(cameraAnim[elemId]);
+  cameraSet.vector = {x:px, y: py, z: pz} ;
+  cameraSet.quaternion = {x: rx, y: ry, z: rz, w: rw} ;
+
+  lerpPosition = new THREE.Vector3(px, py, pz);
+  slerpRotation = new THREE.Quaternion(rx, ry,rz,rw);
+
+  click=true;
+  menuClicked = true;
+  onClick();
 }
 
 export function pauseAstronaut(){
