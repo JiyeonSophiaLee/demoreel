@@ -272,10 +272,7 @@ function useSkillList(skill ,j){
       percentRef.current.setAttributeNS(null,'transform',`matrix(1,0,0,1,${skillHalfSize.current.pxCircle*3},${skillHalfSize.current.pxCircle})`);
 
 
-      console.log('touchScreen.current',touchScreen.current)
-      console.log('innerWidth < 800',innerWidth < 800)
       if(!touchScreen.current && innerWidth > 800){
-        console.log('called')
         const svgLength = svgRef.current.clientWidth - skillHalfSize.current.pxCircle*2 - skillHalfSize.current.pxCircleEnd*2;
         const tailStartPosition = skillHalfSize.current.pxCircle*2 + skillHalfSize.current.pxCircleEnd;
         const barEndPosition = (svgLength * skill.percent / 100) + skillHalfSize.current.pxCircle + skillHalfSize.current.pxCircleEnd ;
