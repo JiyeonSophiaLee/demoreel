@@ -101,6 +101,8 @@ const HomeLayout = () => {
   
 
   useEffect(() => {
+
+
     mode.current.mobileMode = innerWidth <= 800 ? true : false;
     mode.current.widerMode = innerWidth >= 1400 ? true : false;
     mode.current._mobileMode = mode.current.mobileMode;
@@ -116,16 +118,7 @@ const HomeLayout = () => {
   }, []);
 
 
-  useEffect(() => {
-    window.addEventListener("load", function (event) {
-      setTimeout(() => {
-        let actions = checkActions();
-        if(!actions) lighterVersion.current = true;
-        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
-        document.getElementById("loaderContainer").style.display = "none";
-      }, 600);
-    });
-  }, []);
+ 
 
 
   const updateSvgFrameValues = useCallback(() => {
@@ -390,7 +383,6 @@ const HomeLayout = () => {
         }else{
           const elemParentId = elem === 'logo' ? clickRef.current.biggerElemParentId : elem.parentElement.id;
 
-          console.log('gtag',gtag,elemParentId)
           gtag.event({ 
             action: "click_menu", 
             category: elemParentId,
@@ -547,10 +539,19 @@ const HomeLayout = () => {
     [svgFrameValues]
   );
 
-
+  useEffect(() => {
+    window.addEventListener("load", function (event) {
+      setTimeout(() => {
+        let actions = checkActions();
+        if(!actions) lighterVersion.current = true;
+        document.getElementById("loaderAnim").classList.add("loaderFadeOutTrans");
+        document.getElementById("loaderContainer").style.display = "none";
+      }, 600);
+    });
+  }, []);
   const openLighterVersion = useCallback(() => {
     lighterVersion.current = true;
-    removeScene();
+    // removeScene();
     document.getElementById("lighterVersion").innerHTML =
       "This is lighter version";
   }, []);
@@ -588,7 +589,7 @@ function HomeLayoutRender(props) {
       <Demo refs={props.vals.refs} />
       <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} />
 
-      <div id="threeJSCover"></div>
+      <div id="threeJSCover"></ div>
       <div id="threeJSCanvas"></div>
     </>
   );

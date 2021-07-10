@@ -6,9 +6,9 @@ import { GrLinkedin } from "react-icons/gr";
 
 function InfoBotContact() {
   // console.log("---InfoBotContact---");\
-  const onClick = useCallback((e, url)=>{
+  const onClick = useCallback((e)=>{
     e.stopPropagation();
-    url && window.open(url);
+    console.log('none')
   },[])
   return (
     <div id="contact">

@@ -70,7 +70,13 @@ function DemoRender(props) {
   // console.log("----------DemoRender-----------");
   const onClickIcon = useCallback((e)=>{
     e.stopPropagation();
-    url && window.open(url);
+    e.currentTarget.childNodes.forEach((n,i)=>{
+
+      if(n.nodeName ==="A"){
+        window.open(n.href)
+      }
+    })
+
   },[])
   return (
     <section id="demo" ref={props.demoRef}>
@@ -83,10 +89,10 @@ function DemoRender(props) {
          <div id="demoVideoBgCSSAnim"></div>
        </header>
       <header id="demoIcons">
-        <div> <HiOutlineMail className="icon" /> <a href="mailto:jiyeon.sophia.lee@gmail.com" title="email" onClick={onClickIcon}/> </div>
-        <div> <GrLinkedin className="icon" /> <a href="https://www.linkedin.com/in/jiyeon-lee-873397111/" title="_blank" onClick={onClickIcon}/> </div>
-        <div> <GoMarkGithub className="icon" /> <a href="https://github.com/JiyeonSophiaLee" target="_blank" onClick={onClickIcon}/></div>
-        <div> <FaArtstation className="icon" /> <a href="https://www.artstation.com/jiyeon_sophia" title="_blank" onClick={onClickIcon}/> </div>
+        <div onClick={onClickIcon}> <HiOutlineMail className="icon" /> <a href="mailto:jiyeon.sophia.lee@gmail.com" title="email" /> </div>
+        <div onClick={onClickIcon}> <GrLinkedin className="icon" /> <a href="https://www.linkedin.com/in/jiyeon-lee-873397111/" title="_blank" /> </div>
+        <div onClick={onClickIcon}> <GoMarkGithub className="icon" /> <a href="https://github.com/JiyeonSophiaLee" target="_blank" /></div>
+        <div onClick={onClickIcon}> <FaArtstation className="icon" /> <a href="https://www.artstation.com/jiyeon_sophia" title="_blank" /> </div>
       </header>
       <div id="demoSVG" className="blurSVG"></div>
      </section>

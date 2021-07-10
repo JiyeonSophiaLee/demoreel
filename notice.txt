@@ -1,0 +1,8 @@
+you have to turn on and off
+    - prefix in global.scss
+
+You have to turn on and off google anaytics
+    - in _app.js
+
+when you export and build
+    -npm run build && npm run export
