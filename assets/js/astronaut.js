@@ -122,12 +122,12 @@ export default function astronaut(){
   camera.lookAt (new THREE.Vector3(0, 1, 0));
 
 
-    // customGui(camera.position, 'x', '-20', '20', camera.position.x, 'camera position x: ' ,'300px')
-    // customGui(camera.position, 'y', '-20', '20', camera.position.y, 'camera position y: ' ,'300px')
-    // customGui(camera.position, 'z', '-20', '20', camera.position.z, 'camera position z: ' ,'300px')
-    // customGui(camera.rotation, 'x', '-20', '20', camera.rotation.x, 'camera rotation x: ' ,'300px')
-    // customGui(camera.rotation, 'y', '-20', '20', camera.rotation.y, 'camera rotation y: ' ,'300px')
-    // customGui(camera.rotation, 'z', '-20', '20', camera.rotation.z, 'camera rotation z: ' ,'300px')
+  //   customGui(camera.position, 'x', '-20', '20', camera.position.x, 'camera position x: ' ,'300px')
+  //   customGui(camera.position, 'y', '-20', '20', camera.position.y, 'camera position y: ' ,'300px')
+  //   customGui(camera.position, 'z', '-20', '20', camera.position.z, 'camera position z: ' ,'300px')
+  //   customGui(camera.rotation, 'x', '-20', '20', camera.rotation.x, 'camera rotation x: ' ,'300px')
+  //   customGui(camera.rotation, 'y', '-20', '20', camera.rotation.y, 'camera rotation y: ' ,'300px')
+  //   customGui(camera.rotation, 'z', '-20', '20', camera.rotation.z, 'camera rotation z: ' ,'300px')
 
 
   // window.camera = camera
@@ -168,10 +168,10 @@ export default function astronaut(){
   // sky1 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
   // sky2 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
   // sky3 = getSky(16, prefix + '/assets/images/hdr/bigSize.jpg');
-  sky0 = getSky(20, prefix + '/assets/images/hdr/space_00.jpg');
-  sky1 = getSky(20, prefix + '/assets/images/hdr/space_01.jpg');
-  sky2 = getSky(20, prefix + '/assets/images/hdr/space_02.jpg');
-  sky3 = getSky(20, prefix + '/assets/images/hdr/space_03.jpg');
+  sky0 = getSky(20, prefix + '/assets/images/hdr/space_00_darker.jpg');
+  sky1 = getSky(20, prefix + '/assets/images/hdr/space_01_darker.jpg');
+  sky2 = getSky(20, prefix + '/assets/images/hdr/space_02_darker.jpg');
+  sky3 = getSky(20, prefix + '/assets/images/hdr/space_03_darker.jpg');
   let ground = getSphere(5);
   ground.position.y = -ground.geometry.parameters.radius;
 
@@ -212,6 +212,31 @@ export default function astronaut(){
     
     animate();
   });
+
+  
+  const particleGeometry = new THREE.BufferGeometry();
+  const particleTexture = textureLoader.load('/assets/images/alphas/star.jpg')
+  const particleMaterial = new THREE.PointsMaterial({
+    size:0.2, 
+    sizeAttenuation: true, 
+    alphaMap:particleTexture, 
+    color:'white',
+    depthWrite: false,
+    transparent: true});  
+  particleMaterial.depthWrite = false;
+
+  const count = 300;
+  const positions = new Float32Array(count*3);
+
+  for(let i=0; i<count*3; i++){
+    positions[i] = (Math.random()-0.5)*20;
+  }
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
+
+  const particles = new THREE.Points(particleGeometry,particleMaterial);
+  scene.add(particles);
+
+
 
   window.addEventListener('mousemove',getCurrentMouse, false);
   window.addEventListener( 'resize', onWindowResize, false );
