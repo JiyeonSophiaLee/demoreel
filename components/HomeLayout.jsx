@@ -551,7 +551,7 @@ const HomeLayout = () => {
   }, []);
   const openLighterVersion = useCallback(() => {
     lighterVersion.current = true;
-    // removeScene();
+    removeScene();
     document.getElementById("lighterVersion").innerHTML =
       "This is lighter version";
   }, []);
