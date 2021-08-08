@@ -112,8 +112,9 @@ THREE.TextureLoader.prototype.load = function(url, onLoad, onProgress, onError)
 
 export default function astronaut(){
   // const pixelRatio = Math.min(window.devicePixelRatio,2);
-  size = {width: innerWidth, height:innerHeight }
-  
+
+  size = {width: innerWidth , height:innerHeight }
+
   camera = new THREE.PerspectiveCamera( 45, size.width / size.height, 1,  40 );
   // getCameraPosition(cameraAnim.info);
   // camera.position.copy(new THREE.Vector3(cameraAnim.work.vector));
@@ -332,7 +333,8 @@ function onWindowResize() {
   const {px,py,pz} = getCameraPosition(cameraAnim[menuElemId]);
 
   
-  size = {width: innerWidth, height:innerHeight}
+
+  size = {width: innerWidth , height:innerHeight }
 
   renderer.setSize(size.width, size.height);
 
@@ -463,7 +465,7 @@ export function callAstronaut(elemId,biggeredElemId=null){
   menuElemId = elemId;
 
   if(biggeredElemId == null){
-    document.getElementById("threeJSCover").style.display = 'none';
+    if(document.getElementById("threeJSCover")) document.getElementById("threeJSCover").style.display = 'none';
     dirLight.intensity = 1;
     pointLight.intensity = 1;
   }else{
