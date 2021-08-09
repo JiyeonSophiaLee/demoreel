@@ -560,8 +560,6 @@ const HomeLayout = () => {
     return (
       <div id="master" style={{color:"white"}}>
         <div id="loaderContainer">
-        
-          <div id="threeJSCover"></ div> 
           <div id="loaderAnim">Load&nbsp;&nbsp;ng</div>
           <div id="lighterVersion" onClick={openLighterVersion}>
             Click to the see a lighter version <br /> which removes heavy 3D components.
@@ -590,7 +588,7 @@ function HomeLayoutRender(props) {
     <>
       <Demo refs={props.vals.refs} />
       <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} />
-
+      <div id="threeJSCover"></ div> 
       <div id="threeJSCanvas"></div>
     </>
   );
