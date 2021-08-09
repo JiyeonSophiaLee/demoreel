@@ -112,8 +112,9 @@ THREE.TextureLoader.prototype.load = function(url, onLoad, onProgress, onError)
 
 export default function astronaut(){
   // const pixelRatio = Math.min(window.devicePixelRatio,2);
+
   size = {width: innerWidth , height:innerHeight }
-  
+
   camera = new THREE.PerspectiveCamera( 45, size.width / size.height, 1,  40 );
   // getCameraPosition(cameraAnim.info);
   // camera.position.copy(new THREE.Vector3(cameraAnim.work.vector));
@@ -137,7 +138,7 @@ export default function astronaut(){
 
   renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference:"high-performance"});
   renderer.setSize( size.width , size.height );
-  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setPixelRatio( window.desvicePixelRatio );
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
   renderer.outputEncoding = THREE.sRGBEncoding;
@@ -332,6 +333,7 @@ function onWindowResize() {
   const {px,py,pz} = getCameraPosition(cameraAnim[menuElemId]);
 
   
+
   size = {width: innerWidth , height:innerHeight }
 
   renderer.setSize(size.width, size.height);
