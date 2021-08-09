@@ -588,8 +588,7 @@ function HomeLayoutRender(props) {
     <>
       <Demo refs={props.vals.refs} />
       <Menu vals={{ menuValues: props.vals.menuValues, svgFrameValuesImmutable: props.vals.svgFrameValuesImmutable}} />
-
-      <div id="threeJSCover"></ div>
+      <div id="threeJSCover"></ div> 
       <div id="threeJSCanvas"></div>
     </>
   );
